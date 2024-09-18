@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="bg">#FF018786</color>
+    <color name="tranprent_20">#FFFFFF</color>
+    <color name="purple">#4C0C4B</color>
+    <color name="purple1">#264C0C4B</color>
+    <color name="light_purple">#F0E6E4</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorPrimaryDark">#922C88</color>
+    <color name="line_color">#D0D0D0</color>
+    <color name="black_like">#3D3E64</color>
+    <color name="hint_color">#7D84A8</color>
+    <color name="gray">#B9C2CC</color>
+    <color name="offwhite">#F8F7F4</color>
+
+    <color name="line_border_color">#D2CDC9</color>
+    <color name="shadow_color1">#AD735A33</color>
+    <color name="top_bg">#F3F1F1</color>
+    <color name="purple_light">#7E3080</color>
+    <color name="light_pink">#FDF4F7</color>
+    <color name="light_green">#E8F2E3</color>
+    <color name="light_cream">#FBF3E8</color>
+    <color name="light_purple1">#EAEBFD</color>
+    <color name="light_bule">#DCEBF0</color>
+    <color name="grey">#888888</color>
+    <color name="pink1">#F7F2EF</color>
+    <color name="pink2">#FBF4F3</color>
+    <color name="dot_gray">#A0A0A0</color>
+    <color name="shadow_gray">#40837E7E</color>
+    <color name="shadow_gray11">#1A837E7E</color>
+    <color name="red">#ED0606</color>
+    <color name="shadow_color">#99AD735A</color>
+    <color name="light_gray">#dbd3dd</color>
+
+    <color name="purple_gradient_top">#7e3080</color>
+    <color name="purple_gradient_bottom">#541355</color>
+    <color name="bg_color">#F2F0F0</color>
+    <color name="hint_text">#BEBEBE</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_40">#CC000000</color>
+    <color name="sha_gray">#C9C0C0</color>
+
+    <!--<color name="sha_gray">#eaecf6</color>-->
+    <color name="sha_gray1">#40C9C0C0</color>
+    <color name="sha_border">#CBC6C2</color>
+
+    <color name="shimmer_color">#dddddd</color>
+
+    <color name="black_light">#212121</color>
+    <color name="light_gray1">#b7b7b7</color>
+    <color name="dark_red">#ff0000</color>
+    <color name="yellow">#cea465</color>
+    <color name="gray1">#e5e3e3</color>
+
+    <color name="green">#489e53</color>
+    <color name="light_purple2">#D3C6D3</color>
+    <color name="translucent_black">#A6000000</color> <!-- 65% opacity -->
+
+
+    <color name="off_white_top">#F2F0F0</color>
+    <color name="white_bottom">#FFFFFF</color>
+
+    <color name="purple_top">#64125C</color>
+    <color name="purple_bottom">#310C35</color>
+    <color name="shadow">#80A0735A</color>
+    <color name="yellow_dark">#FEE098</color>
+    <color name="black_10">#03000000</color>
+    <color name="grey_light">#6D6C6D</color>
+    <color name="purple_50">#267E3080</color>
+
+
+</resources>

@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+
+    <RelativeLayout
+        android:id="@+id/search_circle_card_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
+        android:background="@color/transparent"
+        android:gravity="center">
+        <!--Bottom Search icon-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/search_circle_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="@drawable/search_bg"
+            android:elevation="@dimen/dimen_2"
+            android:gravity="center"
+            android:outlineAmbientShadowColor="@color/shadow_color"
+            android:outlineSpotShadowColor="@color/shadow_color"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="@dimen/dimen_2">
+
+            <RelativeLayout
+                android:id="@+id/search_circle_rel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/search_circle_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/search_bg"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/bottom_search_icon"
+                    android:layout_width="@dimen/dimen_12"
+                    android:layout_height="@dimen/dimen_12"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!--Popup Option Layout, Curve Cut Layout-->
+        <!--This is use Diamond Detail Screen + Button-->
+        <RelativeLayout
+            android:id="@+id/show_popup_rel"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_below="@+id/search_circle_card"
+            android:background="@color/transparent"
+            android:visibility="gone">
+
+            <!-- Popup 1 -->
+            <RelativeLayout
+                android:id="@+id/card_popup1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_70"
+                android:layout_marginRight="@dimen/dimen_70"
+                android:background="@drawable/border_gray_transparent"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_popup11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_2"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:layout_marginRight="@dimen/dimen_2"
+                    android:layout_marginBottom="@dimen/dimen_2"
+                    android:elevation="@dimen/dimen_5"
+                    android:outlineAmbientShadowColor="@color/shadow_color"
+                    android:outlineSpotShadowColor="@color/shadow_color"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/dimen_10"
+                    app:cardElevation="@dimen/dimen_2">
+
+                    <LinearLayout
+                        android:id="@+id/popup1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_2"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:layout_marginRight="@dimen/dimen_2"
+                        android:layout_marginBottom="@dimen/dimen_2"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/dimen_8"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/dimen_8"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_share_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="Share"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dimen_8"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/dimen_8"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_notify_me_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="Notify Me"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dimen_8"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/dimen_8"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_match_pair_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="Match Pair"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dimen_8"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/dimen_8"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_download_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="Download"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dimen_50"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/dimen_8">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_call_for_enquiry_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="@string/call_for_enquiry"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+            <!--Cros Icon-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/search_circle_card1_cross"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:background="@drawable/search_bg"
+                android:elevation="@dimen/dimen_5"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/shadow_color"
+                android:outlineSpotShadowColor="@color/shadow_color"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="@dimen/dimen_5">
+
+                <RelativeLayout
+                    android:id="@+id/search_circle_rel1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                    <ImageView
+                        android:id="@+id/search_circle_img1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/search_bg"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/bottom_search_icon_cross"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_12"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:src="@drawable/cross"
+                        android:tint="@color/white"
+                        android:visibility="visible"
+                        tools:ignore="UseAppTint" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Curve Cut-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/curve_rel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:background="@drawable/outer_rounded"
+                android:elevation="@dimen/dimen_3"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/dimen_45"
+                app:cardElevation="@dimen/dimen_3">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/outer_rounded"
+                    android:visibility="visible" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+        <!--This is use Search Diamond Screen + Button Show Country List-->
+        <RelativeLayout
+            android:id="@+id/show_popup_rel_country"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_below="@+id/search_circle_card"
+            android:background="@color/transparent"
+            android:visibility="gone">
+
+            <!-- Popup 1 -->
+            <RelativeLayout
+                android:id="@+id/card_popup1_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_70"
+                android:layout_marginRight="@dimen/dimen_70"
+                android:background="@drawable/border_gray_transparent"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_popup11_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_2"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:layout_marginRight="@dimen/dimen_2"
+                    android:layout_marginBottom="@dimen/dimen_2"
+                    android:elevation="@dimen/dimen_5"
+                    android:outlineAmbientShadowColor="@color/shadow_color"
+                    android:outlineSpotShadowColor="@color/shadow_color"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/dimen_10"
+                    app:cardElevation="@dimen/dimen_2">
+
+                    <LinearLayout
+                        android:id="@+id/popup1_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_2"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:layout_marginRight="@dimen/dimen_2"
+                        android:layout_marginBottom="@dimen/dimen_2"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!--Selected Country Layout-->
+                            <RelativeLayout
+                                android:id="@+id/country_layout_rel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_10">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/selected_country_img"
+                                    android:layout_width="@dimen/dimen_20"
+                                    android:layout_height="@dimen/dimen_20"
+                                    android:layout_centerVertical="true" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_10"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:layout_toRightOf="@+id/selected_country_img"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/selected_country_name"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="India"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_14" />
+
+                                    <TextView
+                                        android:id="@+id/selected_country_desc"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="India"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_11" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/country_drop_img"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/down" />
+                            </RelativeLayout>
+
+                            <!--Shadow Line-->
+                            <RelativeLayout
+                                android:id="@+id/view_top_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dimen_3"
+                                android:layout_below="@+id/country_layout_rel"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:background="@drawable/background_bottom_shadow"></RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_view_country_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp"
+                                android:layout_below="@+id/view_top_line"
+                                android:visibility="gone" />
+
+                            <!--Call Enquiry Layout-->
+                            <LinearLayout
+                                android:id="@+id/lin_enquiry"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/recycler_view_country_list"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginBottom="@dimen/dimen_40"
+                                android:paddingTop="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_10">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_15"
+                                    android:layout_height="@dimen/dimen_15"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_call_for_enquiry_bottom" />
+
+                                <TextView
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_20"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:gravity="left"
+                                    android:hint="@string/call_for_enquiry"
+                                    android:text="@string/call_for_enquiry"
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_14" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <!--Cross Icon-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/search_circle_card1_cross_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:background="@drawable/search_bg"
+                android:elevation="@dimen/dimen_5"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/shadow_color"
+                android:outlineSpotShadowColor="@color/shadow_color"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="@dimen/dimen_5">
+
+                <RelativeLayout
+                    android:id="@+id/search_circle_rel1_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                    <ImageView
+                        android:id="@+id/search_circle_img1_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/search_bg"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/bottom_search_icon_cross_country"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_12"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:src="@drawable/cross"
+                        android:tint="@color/white"
+                        android:visibility="visible"
+                        tools:ignore="UseAppTint" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Curve Cut-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/curve_rel_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:background="@drawable/outer_rounded"
+                android:elevation="@dimen/dimen_3"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/dimen_45"
+                app:cardElevation="@dimen/dimen_3">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/outer_rounded"
+                    android:visibility="visible" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_circle_card_lin"
+        android:background="@mipmap/bottom_bg"
+        android:elevation="@dimen/dimen_20"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dimen_35"
+        android:weightSum="5">
+
+        <!-- Home Tab -->
+        <RelativeLayout
+            android:id="@+id/home_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/home_img"
+                android:layout_width="@dimen/dimen_25"
+                android:layout_height="@dimen/dimen_25"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/bottom_home" />
+
+            <TextView
+                android:id="@+id/home_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_img"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="@string/bottomBarHome"
+                android:textColor="@color/purple_light"
+                android:textSize="@dimen/dimen_14" />
+        </RelativeLayout>
+
+        <!-- Categories Tab -->
+        <RelativeLayout
+            android:id="@+id/category_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/categories_img"
+                android:layout_width="@dimen/dimen_25"
+                android:layout_height="@dimen/dimen_25"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/bottom_category" />
+
+            <TextView
+                android:id="@+id/categories_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categories_img"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/bottomBarCategories"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_14" />
+        </RelativeLayout>
+
+        <!-- Wish Tab -->
+        <RelativeLayout
+            android:id="@+id/wishlist_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <!-- Container for cart image and count -->
+            <RelativeLayout
+                android:id="@+id/wishlist_rel1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/wish_img"
+                    android:layout_width="@dimen/dimen_25"
+                    android:layout_height="@dimen/dimen_25"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/bottom_wishlist" />
+
+                <TextView
+                    android:id="@+id/wish_list_count_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="@dimen/dimen_15"
+                    android:layout_height="@dimen/dimen_15"
+                    android:layout_alignTop="@+id/wish_img"
+                    android:layout_alignEnd="@+id/wish_img"
+                    android:layout_marginEnd="-5dp"
+                    android:background="@drawable/cart_count_bg"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_10"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/wish_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wishlist_rel1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/bottomBarWish"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_14" />
+
+
+        </RelativeLayout>
+
+        <!-- Cart Tab -->
+        <RelativeLayout
+            android:id="@+id/cart_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <!-- Container for cart image and count -->
+            <RelativeLayout
+                android:id="@+id/cart_rel1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/cart_img"
+                    android:layout_width="@dimen/dimen_25"
+                    android:layout_height="@dimen/dimen_25"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/bottom_cart" />
+
+                <TextView
+                    android:id="@+id/cart_count_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="@dimen/dimen_15"
+                    android:layout_height="@dimen/dimen_15"
+                    android:layout_alignTop="@+id/cart_img"
+                    android:layout_alignEnd="@+id/cart_img"
+                    android:layout_marginEnd="-5dp"
+                    android:background="@drawable/cart_count_bg"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_10"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/cart_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cart_rel1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/bottomBarCart"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_14" />
+
+
+        </RelativeLayout>
+
+        <!-- Account Tab -->
+        <RelativeLayout
+            android:id="@+id/account_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/account_img"
+                android:layout_width="@dimen/dimen_25"
+                android:layout_height="@dimen/dimen_25"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/bottom_profile" />
+
+            <TextView
+                android:id="@+id/account_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/account_img"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:inputType="textCapSentences"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/bottomBarAccount"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_14" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

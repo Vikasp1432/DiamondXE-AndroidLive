@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_2"
+        android:background="@color/offwhite"
+        app:cardCornerRadius="@dimen/dimen_7">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/country_img"
+            android:layout_width="@dimen/dimen_20"
+            android:layout_height="@dimen/dimen_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:src="@mipmap/phl_diamond" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_toRightOf="@+id/country_img"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/currency_name_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="OTHER"
+                android:text="D"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14" />
+
+            <TextView
+                android:id="@+id/description_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_2"
+                android:hint="OTHER"
+                android:text="D"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_10" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+

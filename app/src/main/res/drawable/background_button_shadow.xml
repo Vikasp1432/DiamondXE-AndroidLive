@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- solids that simulate shadow !-->
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <solid android:color="@color/black_40" />
+            <padding android:top="0.1dp" android:right="0.1dp" android:bottom="0.5dp" android:left="0.1dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <solid android:color="@color/black_40" />
+            <padding android:top="0.1dp" android:right="0.1dp" android:bottom="0.5dp" android:left="0.1dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <solid android:color="@color/black_40" />
+            <padding android:top="0.1dp" android:right="0.2dp" android:bottom="0.5dp" android:left="0.2dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <solid android:color="@color/black_40" />
+            <padding android:top="0.1dp" android:right="0.2dp" android:bottom="0.5dp" android:left="0.2dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <solid android:color="@color/black_40" />
+            <padding android:top="0.1dp" android:right="0.2dp" android:bottom="0.5dp" android:left="0.2dp" />
+        </shape>
+    </item>
+
+    <!-- main background !-->
+    <item>
+        <shape>
+            <corners android:radius="@dimen/dimen_5"></corners>
+            <gradient android:angle="270"
+                android:startColor="@color/purple_gradient_top"
+                android:endColor="@color/purple_gradient_bottom"
+                />
+        </shape>
+    </item>
+
+
+</layer-list>

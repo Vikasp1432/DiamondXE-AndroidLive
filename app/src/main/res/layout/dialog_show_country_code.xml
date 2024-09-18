@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+
+    >
+
+    <View
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_5"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/view_line" />
+
+    <RelativeLayout
+        android:id="@+id/layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:paddingLeft="@dimen/dimen_10"
+        android:paddingRight="@dimen/dimen_10">
+
+        <ImageView
+            android:id="@+id/ib_cross"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            android:src="@mipmap/nav_white_close"
+            android:tint="@color/black"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/SemiBoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/country_list"
+            android:textColor="@color/black"
+            android:textSize="@dimen/navigation_bar_title" />
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/search_et"
+        style="@style/SemiBoldFontType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginRight="@dimen/dimen_15"
+        android:background="@drawable/background_white"
+        android:cursorVisible="true"
+        android:drawableLeft="@mipmap/search_purple"
+        android:drawablePadding="@dimen/dimen_15"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:inputType="textCapSentences"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingTop="@dimen/dimen_10"
+        android:paddingRight="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_10"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_text"
+        android:textCursorDrawable="@drawable/purple_cursor"
+        android:textSize="@dimen/dimen_14"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+</LinearLayout>

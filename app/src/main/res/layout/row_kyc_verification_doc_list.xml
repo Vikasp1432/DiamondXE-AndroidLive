@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_8"
+        android:paddingBottom="@dimen/dimen_8"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/document_name_tv"
+            style="@style/BoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_weight="1.2"
+            android:text="@string/document_type"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14" />
+
+        <TextView
+            android:id="@+id/document_status_tv"
+            style="@style/BoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_weight="0.8"
+            android:background="@drawable/background_pink"
+            android:gravity="center"
+            android:hint="Rejected"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_5"
+            android:text="@string/document_status"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14" />
+
+        <TextView
+            android:id="@+id/document_submitted_date_tv"
+            style="@style/BoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_8"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/submitted_date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

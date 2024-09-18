@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.MyOrder.ReturnOrderListFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/error_tv"
+            style="@style/SemiBoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="-100dp"
+            android:drawableTop="@drawable/no_result_found"
+            android:gravity="center"
+            android:text="@string/no_result_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

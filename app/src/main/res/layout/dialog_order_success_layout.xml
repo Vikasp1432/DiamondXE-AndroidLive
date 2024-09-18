@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_5"
+        android:paddingBottom="@dimen/dimen_20"
+        tools:background="#33ff0000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dialog_white_bg"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/cross_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:src="@drawable/cross" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/BoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Message"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_18"
+                    android:visibility="gone" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/thanks_support" />
+
+                        <TextView
+                            android:id="@+id/message"
+                            style="@style/BoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/dimen_15"
+                            android:gravity="center"
+                            android:inputType="textMultiLine"
+                            android:lineSpacingExtra=".5dp"
+                            android:textColor="@color/purple_light"
+                            android:textSize="@dimen/dimen_16"
+                            tools:text="@string/thanks_you" />
+
+                        <TextView
+                            android:id="@+id/message1"
+                            style="@style/BoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dimen_8"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:layout_marginRight="@dimen/dimen_8"
+                            android:gravity="center"
+                            android:inputType="textMultiLine"
+                            android:lineSpacingExtra="1dp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14"
+                            tools:text="@string/thanks_you_msg" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginTop="@dimen/dimen_25"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:layout_marginBottom="@dimen/dimen_25"
+                            android:background="@drawable/all_side_show_shadow"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_10">
+
+                            <TextView
+                                android:id="@+id/mobile_no_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/dimen_5"
+                                android:layout_marginRight="@dimen/dimen_5"
+                                android:drawableLeft="@drawable/contact_us_nav"
+                                android:drawablePadding="@dimen/dimen_3"
+                                android:gravity="center"
+                                android:text="+91 989 200 3399"
+                                android:textColor="@color/purple"
+                                android:textSize="@dimen/dimen_12" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="@dimen/dimen_25"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:layout_marginRight="@dimen/dimen_8"
+                                android:background="@color/purple"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/email_id_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_5"
+                                android:drawableLeft="@drawable/email_nav_sub"
+                                android:drawablePadding="@dimen/dimen_3"
+                                android:text="support@diamondxe.com"
+                                android:textColor="@color/purple"
+                                android:textSize="@dimen/dimen_12" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </ScrollView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

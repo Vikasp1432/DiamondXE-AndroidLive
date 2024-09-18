@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Outer rectangle with stroke and solid color -->
+    <item android:top="@dimen/dimen_1"
+        android:left="0dp"
+        android:right="0dp"
+        android:bottom="@dimen/dimen_1">
+        <shape android:shape="rectangle">
+            <gradient android:angle="270"
+                android:startColor="@color/purple_gradient_top"
+                android:endColor="@color/purple_gradient_bottom"
+                />
+            <corners android:radius="@dimen/dimen_8"/>
+        </shape>
+
+    </item>
+
+
+    <!--  left shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="180"
+                android:centerColor="#00FF0000"
+                android:centerX="0.99"
+                android:endColor="@color/black_50"
+                android:startColor="#00FF0000" />
+            <corners android:radius="@dimen/dimen_8" />
+        </shape>
+    </item>
+    <!--  right shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="360"
+                android:centerColor="#00FF0000"
+                android:centerX="0.99"
+                android:endColor="@color/black_50"
+                android:startColor="#00FF0000" />
+            <corners android:radius="@dimen/dimen_8" />
+        </shape>
+    </item>
+    <!--  top shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:centerColor="#00FF0000"
+                android:centerY="0"
+                android:endColor="#00FF0000"
+                android:startColor="@color/black_50" />
+            <corners android:radius="@dimen/dimen_8" />
+        </shape>
+    </item>
+    <!--  bottom shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:centerColor="#00FF0000"
+                android:centerY="0.09"
+                android:endColor="#00FF0000"
+                android:startColor="@color/black_50" />
+            <corners android:radius="@dimen/dimen_8" />
+        </shape>
+    </item>
+</layer-list>

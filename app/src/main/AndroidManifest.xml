@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/MyMaterialTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:label"
+        tools:targetApi="31">
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.LoginScreenActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.ForgotPasswordActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.ResetPasswordActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.SignupScreenActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.HomeScreenActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.SearchDiamondsActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.AdvanceFiltersActivity"
+            android:exported="true"
+            android:hardwareAccelerated="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.SearchResultActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.DiamondDetailsActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyCardListScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.ChangePasswordActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.AccountSectionActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PersonalProfileActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.ShippingBillingAddressListActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.AddBillingAddressActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.AddShippingAddressActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.KYCVerificationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.KYCVerificationDocUploadActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Buyer.BuyerKYCVerificationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Buyer.BuyerKYCVerificationDocUploadActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.SupplierSignupWebViewActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.CertificateWebViewActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.NotificationScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Jewellery.JewelleryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.DealerMarkupScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.WalletScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.CustomPaymentScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.Dealer.CustomPaymentHistoryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PaymentStatusScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PlaceOrderScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PaymentProcessedScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PlaceOrderKYCVerificationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PlaceOrderBuyerKYCVerificationDocUploadActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PlaceOrderBuyerKYCVerificationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.PlaceOrder.PlcaeOrderKYCVerificationDocUploadActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.MyOrderListScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.CancelOrderScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.ReturnOrderSummaryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name=".Activity.TransparentActivity"
+            android:label=""
+            android:theme="@style/Theme.Transparent"
+            tools:node="replace" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:exported="true"
+            tools:node="remove"
+            tools:replace="android:exported" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+            android:exported="true"
+            tools:node="remove"
+            tools:replace="android:exported" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:exported="true"
+            tools:node="remove"
+            tools:replace="android:exported" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.diamondxe.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Keep it true in UAT environment for both the flags -->
+        <meta-data
+            android:name="com.phonepe.android.sdk.isUAT"
+            android:value="false" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.isSimulator"
+            android:value="false" />
+
+        <!-- The value will be the MID -->
+        <meta-data
+            android:name="com.phonepe.android.sdk.MerchantId"
+            android:value="DIAMONDXEONLINE" />
+
+        <!--
+        For UAT, App Id is not required.
+        Make sure to add the following and you get the APP Id for Production after UAT Sign-off
+        -->
+        <meta-data
+            android:name="com.phonepe.android.sdk.AppId"
+            android:value="b74e2a4c-7d13-43c5-a115-c0372ed85dbd" />
+    </application>
+
+</manifest>

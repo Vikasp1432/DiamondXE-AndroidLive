@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_5"
+    android:layout_marginRight="@dimen/dimen_5"
+    android:gravity="center">
+
+    <com.dd.ShadowLayout
+        android:id="@+id/shadow_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:sl_dx="0dp"
+        app:sl_dy="0.5dp"
+        app:sl_shadowColor="@color/shadow_color"
+        app:sl_shadowRadius="@dimen/dimen_2">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="0dp"
+            app:cardCornerRadius="@dimen/dimen_5"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_132"
+                android:background="@drawable/border_gray">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/loose_diamond" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_5"
+                    android:text="@string/solitaires"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_12" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </com.dd.ShadowLayout>
+
+</RelativeLayout>
+

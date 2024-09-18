@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_5"
+    android:orientation="vertical"
+    android:padding="0dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_17"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@color/white"
+        android:elevation="@dimen/dimen_8"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dimen_2"
+        app:cardElevation="@dimen/dimen_8">
+
+        <LinearLayout
+            android:id="@+id/mode_payment_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/select_mode_lbl"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_drop_down_color"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="@string/select_reason"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_16" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="false"
+                android:scrollbarThumbVertical="@drawable/scrollbar_background"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/too_expensive_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/too_expensive"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/wrong_diamond_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/wrong_diamond"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/other_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/other"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

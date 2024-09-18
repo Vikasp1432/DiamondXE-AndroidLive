@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="left">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginRight="@dimen/dimen_8"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/purple"
+        android:outlineSpotShadowColor="@color/purple"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dimen_8"
+        app:cardElevation="@dimen/dimen_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dimen_2"
+                        android:layout_toLeftOf="@+id/edit_rel"
+                        android:text="Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_16" />
+
+                    <RelativeLayout
+                        android:id="@+id/edit_rel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/delete_img"
+                            android:layout_width="@dimen/dimen_25"
+                            android:layout_height="@dimen/dimen_25"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:src="@drawable/delete"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/edit_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/delete_img"
+                            android:paddingLeft="@dimen/dimen_8"
+                            android:paddingTop="@dimen/dimen_3"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:paddingBottom="@dimen/dimen_3"
+                            android:src="@drawable/edit"
+
+                            android:visibility="visible" />
+
+                        <RadioButton
+                            android:id="@+id/set_is_default_btn"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_toRightOf="@+id/edit_img"
+                            android:backgroundTint="@color/purple_light"
+                            android:button="@drawable/radio_btn"
+                            android:buttonTint="@color/purple_light"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dimen_5"
+                            android:paddingTop="@dimen/dimen_3"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:paddingBottom="@dimen/dimen_3"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/return_policy_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/dimen_22"
+                        android:background="@drawable/background_black"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:text="@string/return_policy"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_8"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+                <!--Address Layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/address_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:minLines="3"
+                        android:text="Address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/phone_no_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_3"
+                        android:text="Phone Number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/email_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_3"
+                        android:layout_marginBottom="@dimen/dimen_3"
+                        android:text="Email"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/address_type_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_3"
+                        android:text="Address Type"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/is_default_address_lbl"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:background="@drawable/background_default"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_2"
+                android:paddingRight="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_2"
+                android:text="Default"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_14"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
+

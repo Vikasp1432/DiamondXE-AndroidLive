@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_purple">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        android:titleTextColor="@color/black_like"
+        android:visibility="visible"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/menu_img"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_20"
+            app:srcCompat="@drawable/sidemenu" />
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/BoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_toRightOf="@+id/menu_img"
+            android:gravity="left|center"
+            android:text="DiamondXE"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/navigation_bar_title"
+            android:visibility="gone" />
+
+        <ImageView
+            style="@style/BoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_toRightOf="@+id/menu_img"
+            android:gravity="left|center"
+            android:src="@mipmap/diamond_title"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/pincode_img"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toLeftOf="@+id/notification_img"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:visibility="visible"
+
+            app:srcCompat="@drawable/location" />
+
+        <ImageView
+            android:id="@+id/notification_img"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toLeftOf="@+id/flag_img"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            android:visibility="gone"
+            app:srcCompat="@drawable/notification" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/flag_img"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_8"
+            android:paddingRight="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_8"
+            android:src="@mipmap/flag"
+            android:visibility="visible"
+            app:civ_border_color="@color/hint_text"
+            app:civ_border_width="0.1dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

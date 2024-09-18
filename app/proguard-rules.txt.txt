@@ -1,0 +1,13 @@
+# Keep all classes in your specific package
+-keep class com.yourcompany.yourapp.** { *; }
+
+# If `MyClass` and `MyOtherClass` are specific classes within your package
+-keep class com.diamondxe.MyClass { *; }
+-keep class com.diamondxe.MyOtherClass { *; }
+
+# Suppress warnings and keep OkHttp and Picasso classes
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *; }
+
+-dontwarn com.squareup.picasso.**
+-keep class com.squareup.picasso.** { *; }

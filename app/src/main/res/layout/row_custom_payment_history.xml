@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/no_shipping_address_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/purple"
+        android:outlineSpotShadowColor="@color/purple"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dimen_8"
+        app:cardElevation="@dimen/dimen_2">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_time_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_purple"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="06/08/2024, 5:14:24 PM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_8"
+                android:paddingBottom="@dimen/dimen_8"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_id_lbl"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/order_id_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="123456789"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/status_lbl"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/status_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="123456789"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/amount_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="123456789"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mode"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/payment_mode_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:layout_marginRight="@dimen/dimen_2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="12345678922222"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/narration"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+                <TextView
+                    android:id="@+id/remark_tv"
+                    style="@style/BoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:lineSpacingExtra="@dimen/dimen_1"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>
+
+

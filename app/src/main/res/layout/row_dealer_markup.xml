@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_8"
+        android:paddingBottom="@dimen/dimen_8"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/debit_value"
+            style="@style/BoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:text="Debit Value"
+            android:textColor="@color/purple_light"
+            android:textSize="@dimen/dimen_14" />
+
+        <EditText
+            android:id="@+id/natural_et"
+            style="@style/SemiBoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:background="@drawable/all_side_show_shadow_with_white_bg"
+            android:cursorVisible="true"
+            android:gravity="left"
+            android:hint="Enter Value"
+            android:inputType="numberDecimal"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_10"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint_text"
+            android:textCursorDrawable="@drawable/purple_cursor"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="visible" />
+
+
+        <EditText
+            android:id="@+id/lab_grown_et"
+            style="@style/SemiBoldFontType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:background="@drawable/all_side_show_shadow_with_white_bg"
+            android:cursorVisible="true"
+            android:drawablePadding="@dimen/dimen_15"
+            android:hint="Enter Value"
+            android:inputType="numberDecimal"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_10"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint_text"
+            android:textCursorDrawable="@drawable/purple_cursor"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tool_bar_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/purple"
+        android:outlineSpotShadowColor="@color/purple"
+        app:cardElevation="@dimen/dimen_5">
+
+        <RelativeLayout
+            android:id="@+id/tool_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_5">
+
+            <ImageView
+                android:id="@+id/back_img"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:src="@mipmap/ic_back" />
+
+            <TextView
+                android:id="@+id/title_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_toRightOf="@+id/back_img"
+                android:text="@string/personal_profile"
+                android:textColor="@color/purple_light"
+                android:textSize="@dimen/dimen_18" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar_rel"
+        android:layout_below="@+id/tool_bar_card_layout"
+        android:background="@color/bg_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:orientation="vertical">
+
+
+            <!--First Name Last Name Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/first_name_et"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_line_view"
+                        android:cursorVisible="true"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableTint="@color/purple_light"
+                        android:hint="@string/first_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapSentences"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingTop="@dimen/dimen_13"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_13"
+                        android:singleLine="true"
+                        android:textColor="@color/purple_light"
+                        android:textColorHint="@color/light_gray1"
+                        android:textCursorDrawable="@drawable/purple_cursor"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/first_name_error_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text="@string/first_name_require"
+                        android:textColor="@color/dark_red"
+                        android:textSize="@dimen/dimen_9"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/last_name_et"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_line_view"
+                        android:cursorVisible="true"
+                        android:hint="@string/last_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapSentences"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingTop="@dimen/dimen_13"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_13"
+                        android:singleLine="true"
+                        android:textColor="@color/purple_light"
+                        android:textColorHint="@color/light_gray1"
+                        android:textCursorDrawable="@drawable/purple_cursor"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/last_name_error_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text="@string/last_name_require"
+                        android:textColor="@color/dark_red"
+                        android:textSize="@dimen/dimen_9"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--Phone number-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_option_lin"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/mobile_number_lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_gray_view">
+
+                    <LinearLayout
+                        android:id="@+id/country_code_lin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.65"
+                        android:clickable="false"
+                        android:paddingTop="@dimen/dimen_13"
+                        android:paddingBottom="@dimen/dimen_13">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/country_img"
+                            android:layout_width="@dimen/dimen_20"
+                            android:layout_height="@dimen/dimen_20"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:scaleType="centerCrop"
+                            app:civ_border_color="@color/hint_text"
+                            app:civ_border_width="0.1dp" />
+
+                        <TextView
+                            android:id="@+id/country_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@drawable/drop_down"
+                            android:drawablePadding="@dimen/dimen_5"
+                            android:text="+91"
+                            android:textColor="@color/purple_light" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginRight="@dimen/dimen_5"
+                        android:background="@color/purple" />
+
+                    <EditText
+                        android:id="@+id/mobile_number_et"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.35"
+                        android:background="@null"
+                        android:clickable="false"
+                        android:cursorVisible="true"
+                        android:enabled="false"
+                        android:hint="@string/phone_number"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="14"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_13"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_13"
+                        android:singleLine="true"
+                        android:textColor="@color/black_40"
+                        android:textColorHint="@color/black_40"
+                        android:textCursorDrawable="@drawable/purple_cursor"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mobile_number_error_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:text="@string/phone_number_required"
+                    android:textColor="@color/dark_red"
+                    android:textSize="@dimen/dimen_9"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!--Email-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_gray_view"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/email_et"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:clickable="false"
+                        android:cursorVisible="true"
+                        android:enabled="false"
+                        android:hint="@string/enter_your_email_id"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapSentences"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingTop="@dimen/dimen_13"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_13"
+                        android:singleLine="true"
+                        android:textColor="@color/black_40"
+                        android:textColorHint="@color/black_40"
+                        android:textCursorDrawable="@drawable/purple_cursor"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/verify_email_lin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/verify_button_shadow"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/verify_email_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="@string/browse"
+                            android:paddingLeft="@dimen/dimen_15"
+                            android:paddingTop="@dimen/dimen_5"
+                            android:paddingRight="@dimen/dimen_15"
+                            android:paddingBottom="@dimen/dimen_5"
+                            android:text="@string/verify"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen_11" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/buyer_email_verify_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_15"
+                        android:src="@drawable/ic_verify"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/email_error_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:text="@string/email_required"
+                    android:textColor="@color/dark_red"
+                    android:textSize="@dimen/dimen_9"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/company_details_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical">
+
+                <!--Company Name Layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/company_name_et"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_line_view"
+                            android:cursorVisible="true"
+                            android:drawablePadding="@dimen/dimen_10"
+                            android:drawableTint="@color/purple_light"
+                            android:hint="@string/company_name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapSentences"
+                            android:paddingLeft="@dimen/dimen_15"
+                            android:paddingTop="@dimen/dimen_13"
+                            android:paddingRight="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_13"
+                            android:singleLine="true"
+                            android:textColor="@color/purple_light"
+                            android:textColorHint="@color/light_gray1"
+                            android:textCursorDrawable="@drawable/purple_cursor"
+                            android:textSize="@dimen/dimen_14"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/company_name_error_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:text="@string/company_name_require"
+                            android:textColor="@color/dark_red"
+                            android:textSize="@dimen/dimen_9"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!--Email-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/company_email_rel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/border_line_view"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/company_email_et"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:cursorVisible="true"
+                            android:hint="@string/company_email_address"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapSentences"
+                            android:paddingLeft="@dimen/dimen_15"
+                            android:paddingTop="@dimen/dimen_13"
+                            android:paddingRight="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_13"
+                            android:singleLine="true"
+                            android:textColor="@color/purple_light"
+                            android:textColorHint="@color/light_gray1"
+                            android:textCursorDrawable="@drawable/purple_cursor"
+                            android:textSize="@dimen/dimen_14"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:id="@+id/company_verify_email_lin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:layout_weight="1"
+                            android:background="@drawable/verify_button_shadow"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/company_verify_email_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="@string/browse"
+                                android:paddingLeft="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_5"
+                                android:paddingRight="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_5"
+                                android:text="@string/verify"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen_11" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/company_email_error_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text="@string/email_required"
+                        android:textColor="@color/dark_red"
+                        android:textSize="@dimen/dimen_9"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+                <!--Phone number-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/login_option_lin"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/company_mobile_number_lin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_line_view">
+
+                        <LinearLayout
+                            android:id="@+id/company_country_code_lin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.65"
+                            android:clickable="false"
+                            android:paddingTop="@dimen/dimen_13"
+                            android:paddingBottom="@dimen/dimen_13">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/company_country_img"
+                                android:layout_width="@dimen/dimen_20"
+                                android:layout_height="@dimen/dimen_20"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:scaleType="centerCrop"
+                                app:civ_border_color="@color/hint_text"
+                                app:civ_border_width="0.1dp" />
+
+                            <TextView
+                                android:id="@+id/company_country_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_5"
+                                android:drawableRight="@drawable/drop_down"
+                                android:drawablePadding="@dimen/dimen_5"
+                                android:text="+91"
+                                android:textColor="@color/purple_light" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:background="@color/purple" />
+
+                        <EditText
+                            android:id="@+id/company_mobile_number_et"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.35"
+                            android:background="@null"
+                            android:cursorVisible="true"
+                            android:hint="@string/company_contact_no"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="14"
+                            android:paddingLeft="@dimen/dimen_5"
+                            android:paddingTop="@dimen/dimen_13"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:paddingBottom="@dimen/dimen_13"
+                            android:singleLine="true"
+                            android:textColor="@color/purple_light"
+                            android:textColorHint="@color/light_gray1"
+                            android:textCursorDrawable="@drawable/purple_cursor"
+                            android:textSize="@dimen/dimen_14"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/company_mobile_number_error_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text="@string/phone_number_required"
+                        android:textColor="@color/dark_red"
+                        android:textSize="@dimen/dimen_9"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <!--Company Type-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/company_type_lin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_line_view"
+                            android:clickable="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/company_type_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dimen_2"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:cursorVisible="true"
+                                android:hint="@string/select_company_type"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapSentences"
+                                android:paddingLeft="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_13"
+                                android:paddingRight="@dimen/dimen_10"
+                                android:paddingBottom="@dimen/dimen_13"
+                                android:singleLine="true"
+                                android:textColor="@color/purple_light"
+                                android:textColorHint="@color/light_gray1"
+                                android:textCursorDrawable="@drawable/purple_cursor"
+                                android:textSize="@dimen/dimen_14"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/dimen_15"
+                                android:src="@drawable/down_icon" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/company_type_error_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:text="@string/company_type_require"
+                            android:textColor="@color/dark_red"
+                            android:textSize="@dimen/dimen_9"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Business Nature Layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:weightSum="1">
+                    <!--Business Nature Layout-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/business_nature_lin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_line_view">
+
+                            <TextView
+                                android:id="@+id/business_nature_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dimen_2"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:cursorVisible="true"
+                                android:hint="@string/select_business_nature"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapSentences"
+                                android:paddingLeft="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_13"
+                                android:paddingRight="@dimen/dimen_10"
+                                android:paddingBottom="@dimen/dimen_13"
+                                android:singleLine="true"
+                                android:textColor="@color/purple_light"
+                                android:textColorHint="@color/light_gray1"
+                                android:textCursorDrawable="@drawable/purple_cursor"
+                                android:textSize="@dimen/dimen_14"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/dimen_15"
+                                android:src="@drawable/down_icon" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/business_nature_error_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_2"
+                            android:text="@string/business_nature_require"
+                            android:textColor="@color/dark_red"
+                            android:textSize="@dimen/dimen_9"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_top_shadow"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_50"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:elevation="0dp"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_5"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/cancel_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_purple_line_view"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/cancel"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:elevation="0dp"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dimen_5"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/update_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button_shadow"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

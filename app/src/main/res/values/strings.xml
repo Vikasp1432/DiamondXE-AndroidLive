@@ -1,0 +1,714 @@
+<resources>
+    <string name="app_name">DiamondXE</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_home">Home</string>
+
+    <string name="navigation_search_diamond">Search Diamonds</string>
+    <string name="navigation_natural_diamond">Natural Diamond</string>
+    <string name="navigation_lab_grown_diamond">Lab-Grown Diamond</string>
+    <string name="navigation_fancy_diamond">Fancy Colour Diamond</string>
+
+    <string name="navigation_create_diamond">Create Diamonds</string>
+
+    <string name="navigation_Jewellery">Jewellery</string>
+    <string name="navigation_rings">Rings</string>
+    <string name="navigation_earrings">Earrings</string>
+    <string name="navigation_pendent">Pendent</string>
+    <string name="navigation_bracelets">Bracelets</string>
+    <string name="navigation_bangles">Bangles</string>
+
+    <string name="navigation_dxe_luxe">DXE LUXE</string>
+    <string name="navigation_diamond_education">Diamond Education</string>
+
+    <string name="navigation_explore_now">Explore Now</string>
+    <string name="navigation_jeweller">Jeweller</string>
+    <string name="navigation_supplier">Supplier</string>
+
+    <string name="navigation_price_calculator">Price Calculator</string>
+
+    <string name="navigation_more">More</string>
+    <string name="navigation_about_us">About us</string>
+    <string name="navigation_why_us">Why us</string>
+    <string name="navigation_blogs">Blogs</string>
+    <string name="navigation_media_gallery">Media Gallery</string>
+    <string name="navigation_support">Support</string>
+    <string name="navigation_terms_condition">Terms &amp; Conditions</string>
+    <string name="navigation_privacy_policy">Privacy Policy</string>
+
+    <string name="navigation_contact_us">Contact us</string>
+    <string name="navigation_support_email">support@diamondxe.com</string>
+    <string name="navigation_support_number">+91 9892003399</string>
+
+    <string name="navigation_rate_us">Rate us</string>
+    <string name="navigation_logout">Logout</string>
+    <string name="navigation_login">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="rings">Rings</string>
+    <string name="solitaires">Solitaires</string>
+    <string name="earrings">Earrings</string>
+    <string name="pendant">Pendant</string>
+    <string name="bracelet">Bracelet</string>
+    <string name="bangles">Bangles</string>
+    <string name="giftOfChoice">Gift of choice</string>
+    <string name="newArrivals">New Arrivals</string>
+    <string name="topDeals">Top Deals</string>
+    <string name="naturalDiamonds">Natural Diamonds</string>
+    <string name="labGrownDiamonds">Lab-Grown Diamonds</string>
+    <string name="diamondPromises">DiamondXE Promises</string>
+
+    <string name="transParentPrices">Transparent Prices</string>
+    <string name="noHiddenCosts">No hidden costs promote trustworthiness.</string>
+    <string name="exchangeBuyBack">100% Return &amp; Exchange</string>
+    <string name="reliableAfterSales">Reliable after sales support to ensure confident purchases.</string>
+    <string name="certificationLabs">Certification by Trusted Labs</string>
+    <string name="diamondsCertified">Diamonds &amp; Gold certified by gradting laboratories like GIA,  IGI &amp; BIS Hallmark.</string>
+    <string name="doorStepDelivery">Insured doorstep delivery</string>
+    <string name="buyRiskFree">Buy risk-free with secured delivery from our hands to yours.</string>
+    <string name="customerSupport">Dedicated Customer Support</string>
+    <string name="assistanceEveryStep">Assistance at every step for a personalised buying experience.</string>
+
+    <string name="mediaSpotlight">Media Spotlight</string>
+    <string name="customerStories">Customer stories</string>
+
+    <string name="bottomBarHome">Home</string>
+    <string name="bottomBarCategories">Category</string>
+    <string name="bottomBarWish">Wishlist</string>
+    <string name="bottomBarCart">Cart</string>
+    <string name="bottomBarAccount">Account</string>
+
+    <string name="viewAllNews"><u>View All News</u></string>
+
+    <string name="hello_guest">Hello Guest!!!</string>
+    <string name="version_name">Beta Version</string>
+
+    <string name="search_diamond_hint">Search diamond</string>
+    <string name="natural">Natural</string>
+    <string name="lab_grown">Lab Grown</string>
+    <string name="shape">Shapes</string>
+    <string name="diamond_quality">Diamond Quality</string>
+
+    <string name="best">Best</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="price">Price</string>
+
+    <string name="from_with_currency">From</string>
+    <string name="to_with_currency">To</string>
+
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="carat">Carat</string>
+    <string name="color_text">Color</string>
+    <string name="white_text">White</string>
+    <string name="fancy_text">Fancy</string>
+    <string name="clarity">Clarity</string>
+    <string name="certificate">Certificate</string>
+    <string name="fluorescence">Fluorescence</string>
+    <string name="make">Make</string>
+    <string name="returnable">Returnable</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="advance_filters">Advance Filters</string>
+
+    <string name="clear_all">Clear All</string>
+    <string name="apply">Apply</string>
+    <string name="cut">Cut</string>
+    <string name="polish">Polish</string>
+    <string name="symmetry">Symmetry</string>
+    <string name="technology">Technology</string>
+    <string name="fancy_color_intensity">Fancy Color Intensity</string>
+    <string name="select_intensity">Select Intensity</string>
+    <string name="fancy_color_overtone">Fancy Color Overtone</string>
+    <string name="select_overtone">Select Overtone</string>
+
+    <string name="table_string">Table%</string>
+    <string name="from_string">%From</string>
+    <string name="to_string">%To</string>
+
+    <string name="depth_string">Depth%</string>
+
+    <string name="length_string">Length</string>
+    <string name="width_string">Width</string>
+    <string name="depth_string1">Depth</string>
+    <string name="mm_from">mm From</string>
+    <string name="mm_to">mm To</string>
+
+    <string name="crown_string">Crown °</string>
+    <string name="from_string1">From °</string>
+    <string name="to_string1">To °</string>
+    <string name="pavillion_string">Pavillion °</string>
+    <string name="lot_id">Lot ID</string>
+    <string name="location">Location</string>
+    <string name="location_hint">ex: Mumbai, Dubai, Indore, UAE</string>
+    <string name="eye_clean">Eye Clean</string>
+    <string name="shade">Shade</string>
+    <string name="luster">Luster</string>
+
+    <string name="search_result">Search Result</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="diamond_type">Diamond Type</string>
+    <string name="filter_applied">Filter Applied</string>
+
+    <string name="recently_added">Recently Added</string>
+    <string name="price_low_high">Price(Low to High)</string>
+    <string name="price_high_low">Price(High to Low)</string>
+    <string name="size_low_high">Size(Low to High)</string>
+    <string name="size_high_low">Size(High to Low)</string>
+    <string name="return_policy">Returnable within 7 days,\n T&amp;C apply.</string>
+    <string name="no_result_found">No result found</string>
+
+    <string name="go_to_cart">Go to Cart</string>
+
+    <string name="diamond_details">Diamond Details</string>
+    <string name="product_details">Product Details</string>
+    <string name="shipping_taxes_extra">Shipping &amp; Taxes extra</string>
+    <string name="reserve_diamond">Reserve Diamond</string>
+    <string name="select_pin_code">Select Pin-Code</string>
+    <string name="select">Select</string>
+    <string name="measurerements">Measurements</string>
+    <string name="table_string1">Table</string>
+    <string name="crown_height">Crown Height</string>
+    <string name="crown_angle">Crown Angle °</string>
+    <string name="pavilion_depth">Pavilion Depth</string>
+    <string name="pavilion_angle">Pavilion Angle °</string>
+
+    <string name="additional_details">Additional Details</string>
+    <string name="grille_condition_cult">Girdle Condition</string>
+    <string name="culet">Culet</string>
+    <string name="growth_type">Growth Type</string>
+    <string name="inclusions">Inclusions</string>
+    <string name="status">Status</string>
+    <string name="key_to_symbole">Key to Symbols</string>
+    <string name="remark">Remark</string>
+    <string name="report_comments">Report Comments</string>
+    <string name="you_may_also_like">You may also like</string>
+
+    <string name="enter_pin_code">Enter your PinCode</string>
+    <string name="pincode_empowers_msg">The pincode empowers us to deliver your shipment seamlessly and reliably.</string>
+    <string name="locate_me"><u>Locate me</u></string>
+    <string name="submit">Submit</string>
+
+    <string name="image">Image</string>
+    <string name="view_360">360 View</string>
+    <string name="size">Size</string>
+    <string name="diamond_image">Diamond Image</string>
+    <string name="diamond_images">Diamond Images</string>
+    <string name="diamond_size_preview">Diamond Size Preview</string>
+    <string name="diamond_video">Diamond Video</string>
+    <string name="delivering_to">Delivering to</string>
+    <string name="change">Change</string>
+    <string name="reference_purpose_only">*for reference purpose only (Weight in carat)</string>
+
+    <string name="discover_happiness_here">Discover happiness here</string>
+    <string name="browser_our_collection">Browse our collection and find the perfect piece to brighten your day!</string>
+    <string name="tax_and_fee">Including Taxes &amp; Fee</string>
+    <string name="excluding_and_taxes_shipping">excluding taxes &amp; shipping</string>
+    <string name="including_and_taxes_shipping">Including taxes &amp; shipping</string>
+    <string name="place_order">Place Order</string>
+    <string name="empty_cart">Your cart is empty</string>
+    <string name="diamond_are_waiting">The diamonds of your dreams are waiting to shine in your life!</string>
+    <string name="my_cart">My Cart</string>
+    <string name="logout_message">Are you sure, you want to logout!</string>
+    <string name="call_for_enquiry">Call for Enquiry</string>
+
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="phone_number">Mobile Number*</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="signup_now">Don\'t have an account? <u><b>Sign up Now</b></u></string>
+    <string name="email_required">Email is required</string>
+    <string name="email_verify_required">Email verify is required</string>
+    <string name="password_required">Password is required</string>
+    <string name="phone_number_required">Phone number is required</string>
+    <string name="phone_number_valid_msg">Mobile number must be at least 7 digits long.</string>
+
+    <string name="forgot_password1">Forgot Password</string>
+    <string name="enter_your_email">Enter your registered email</string>
+    <string name="email_valid_msg">Please enter valid email.</string>
+    <string name="continue1">Continue</string>
+    <string name="email_associated_account">Don\'t worry, is happens to the best of us.\nEnter your email address associated with your account.</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="resent_otp"><u>Resent OTP</u></string>
+    <string name="otp_required">OTP is required</string>
+
+    <string name="set_new_password">Set New Password</string>
+    <string name="login_in_to_account">Set your new password to \nlogin into your account!</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+
+    <string name="new_password_require">New password is required</string>
+    <string name="confirm_new_password_require">Confirm new password is required</string>
+    <string name="password_confirm_password_not_match">Password and Confirm password must be same.</string>
+
+    <string name="country_list">Select Country</string>
+    <string name="state_list">Select State</string>
+    <string name="city_list">Select City</string>
+    <string name="search">Search Country</string>
+
+    <string name="signup">Signup</string>
+    <string name="buyer">Buyer</string>
+    <string name="dealer">Dealer</string>
+    <string name="supplier">Supplier</string>
+
+    <string name="buyer_register_msg">Registering as a buyer, you can search\n and make your purchase.</string>
+    <string name="dealer_register_msg">Registering as a dealer enables you to receive\n additional benefits on prices within the same trade.</string>
+    <string name="supplier_register_msg">Upload your stock and sell on the platform</string>
+
+    <string name="first_name">First Name*</string>
+    <string name="last_name">Last Name*</string>
+    <string name="enter_your_email_id">Enter your Email*</string>
+    <string name="enter_password">Enter Password*</string>
+    <string name="confirm_password">Confirm Password*</string>
+    <string name="select_country">Select country*</string>
+    <string name="select_state">Select state*</string>
+    <string name="select_city">Select city*</string>
+    <string name="enter_pincode">Enter Pincode*</string>
+    <string name="enter_pincode1">Enter Pincode</string>
+    <string name="address_line_1">Address Line 1*</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="have_a_referral_code">Have a referral code?</string>
+    <string name="enter_referral_code">Enter referral code</string>
+    <string name="invalid_code">Invalid Code</string>
+    <string name="terms_condition">I agree to the diamondxe <u><b>terms &amp; conditions</b></u></string>
+
+    <string name="password_length_msg">Password must be at least minimum 8 digits long</string>
+    <string name="password_validation_msg">Use at least one upper case one numeric, alphabetic character and one symbol</string>
+
+    <string name="create_account">Create Account</string>
+    <string name="already_account_login">Already have an account? <u><b>Login</b></u></string>
+
+    <string name="first_name_require">First Name is required</string>
+    <string name="last_name_require">Last Name is required</string>
+    <string name="password_require">Password is required</string>
+    <string name="confirm_password_require">Confirm Password is required</string>
+    <string name="country_require">Select Country</string>
+    <string name="pincode_required">PinCode is required</string>
+    <string name="state_require">Select State</string>
+    <string name="city_require">Select City</string>
+    <string name="address_require">Address is required</string>
+    <string name="terms_condition_checked_required">Terms &amp; conditions checked required</string>
+
+    <string name="select_inventory_type">Select Inventory Type</string>
+
+    <string name="company_details">Company Details</string>
+    <string name="company_name">Company Name*</string>
+    <string name="company_type">Company Type*</string>
+    <string name="business_nature">Business Nature*</string>
+
+    <string name="company_type_require">Company Type is required</string>
+    <string name="business_nature_require">Business Nature is required</string>
+
+    <string name="company_kyc">Company KYC</string>
+
+    <string name="enter_gst_number">Enter GST Number</string>
+    <string name="enter_business_licence_number">Enter Business License Number*</string>
+    <string name="upload_business_licence_document">Upload Business License Document*</string>
+    <string name="upload_business_licence_document_required">Upload business license document required</string>
+    <string name="upload_gst_document">Upload GST Document</string>
+    <string name="browse">Browse</string>
+    <string name="enter_company_pan_card_number">Enter Company Pan Card Number*</string>
+    <string name="upload_company_pan_card">Upload Company Pan Card*</string>
+    <string name="enter_IEC">Enter IEC (If Any)</string>
+    <string name="upload_IEC_documents">Upload IEC Documents</string>
+
+    <string name="gst_number_required">GST number verify required</string>
+    <string name="business_lic_no_required">Business Licence number verify required</string>
+    <string name="pan_number_required">Pan number verify required</string>
+    <string name="upload_company_pan_card_reqire">Upload company pan card</string>
+
+    <string name="mobile_number_for_login">Mobile Number for Login*</string>
+    <string name="login_email_address">Login Email Address*</string>
+    <string name="login_password">Login Password*</string>
+    <string name="confirm_login_password">Confirm Login Password*</string>
+
+    <string name="authorised_person">Authorised Person</string>
+
+    <string name="enter_aadhar_number">Enter 12-Digit Aadhar Card Number</string>
+    <string name="aadhar_front">Upload Aadhar (Front)</string>
+    <string name="aadhar_back">Upload Aadhar (Back)</string>
+    <string name="enter_pan_card">Enter 10-Digit PAN Number</string>
+    <string name="upload_pan_card">Upload PAN Card</string>
+
+    <string name="aadhar_verify_require">Aadhar number verify required</string>
+    <string name="pan_verify_require">PAN number verify required</string>
+
+    <string name="passport_driving_license">Passport &amp; Driving License</string>
+    <string name="enter_passport_number">Enter Passport Number</string>
+    <string name="upload_passport_front">Upload Passport (Front)</string>
+    <string name="upload_passport_back">Upload Passport (Back)</string>
+    <string name="date_of_birth">Date of Birth DD/MM/YYYY</string>
+    <string name="enter_driving_license_number">Enter Driving License Number</string>
+    <string name="upload_driving_license">Upload Driving License</string>
+
+    <string name="verify">Verify</string>
+    <string name="ct">Ct</string>
+
+    <string name="supplier_company_name">Company Name*</string>
+    <string name="supplier_company_email">Enter Company Email*</string>
+    <string name="inventory_type">Inventory type</string>
+
+    <string name="bank_info">Bank Information (Optional)</string>
+    <string name="enter_bank_name">Enter Bank Name</string>
+    <string name="enter_bank_branch">Enter Bank Branch</string>
+    <string name="enter_bank_account_no">Enter Bank Account No.</string>
+    <string name="enter_account_type">Enter Account Type</string>
+    <string name="enter_ifsc_code">Enter IFSC Code</string>
+    <string name="enter_swift_code">Enter Swift Code</string>
+
+    <string name="superviosr_person_info">Supervisor/Authorised Person Information</string>
+    <string name="enter_superviosr_name">Enter Supervisor Name*</string>
+    <string name="enter_superviosr_email">Enter Supervisor Email*</string>
+    <string name="enter_superviosr_number">Enter Supervisor Mobile Number*</string>
+
+    <string name="mobile_otp">Mobile OTP</string>
+    <string name="email_otp">Email OTP</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="opt_send_mobile_msg">We have sent you the verification OTP.\n on your registered mobile number.</string>
+    <string name="opt_send_email_msg">We have sent you the verification OTP.\n on your registered email address.</string>
+
+    <string name="are_you_a_supplier">Are you a supplier?</string>
+    <string name="login_now">Login Now</string>
+
+    <string name="driving_verify_require">Driving license number verify required</string>
+
+    <string name="proprietorship">Proprietorship</string>
+    <string name="llp">LLP</string>
+    <string name="partnership">Partnership</string>
+    <string name="private_limited">Private Limited</string>
+    <string name="public_limited">Public Limited</string>
+    <string name="others">Others</string>
+
+    <string name="rerailer">Rerailer</string>
+    <string name="wholesaler">Wholesaler</string>
+    <string name="trader">Trader</string>
+    <string name="jeweller">Jeweller</string>
+
+    <string name="natu_diamond">Natural Diamonds</string>
+    <string name="lab_diamond">Lab-Grown Diamonds</string>
+    <string name="gematones">Gemstones</string>
+
+    <string name="company_name_require">Company Name is required</string>
+
+    <string name="coming_soon">Coming Soon</string>
+
+    <string name="pan_no_associated_gst_no">Kindly enter the PAN card number associated with Gst Number</string>
+
+    <string name="name_require">Name is required</string>
+    <string name="change_password">Change Password</string>
+
+    <string name="enter_current_password">Enter Current Password*</string>
+    <string name="enter_new_password1">Enter New Password*</string>
+    <string name="enter_confirm_password">Confirm Password*</string>
+
+    <string name="current_password_require">Current password is required</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+
+    <string name="dealer_account">Dealer Account</string>
+    <string name="buyer_account">Buyer Account</string>
+    <string name="account">Account</string>
+    <string name="my_account">My Account</string>
+    <string name="profile">Personal Profile</string>
+    <string name="address">Address</string>
+    <string name="kyc_verification">KYC Verification</string>
+    <string name="change_password1">Change Password</string>
+    <string name="my_order">My Order</string>
+    <string name="wallet">Wallet</string>
+    <string name="auction">Auction</string>
+    <string name="dealer_mark_up">Dealer Markup</string>
+    <string name="refer_a_friend">Refer a Friend</string>
+    <string name="loyalty_program">Loyalty Program</string>
+    <string name="custom_payment">Custom Payment</string>
+    <string name="api_solutions">API Solutions</string>
+    <string name="delete_account">Delete Account</string>
+
+    <string name="personal_profile">Personal Profile</string>
+    <string name="select_company_type">Select Company Type*</string>
+    <string name="select_business_nature">Select Business of Nature*</string>
+    <string name="company_email_address">Company Email Address*</string>
+    <string name="company_contact_no">Company Contact Number*</string>
+    <string name="save">Save</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="no_shipping_address">No Shipping Address</string>
+    <string name="add_new_address">Add a New Address</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="same_as_shipping_address">Same as shipping address</string>
+    <string name="same_as_shipping_address_msg">Invoice &amp; order update will be shared at this address &amp; mobile number.</string>
+    <string name="choose_diifferent_billing_address">Choose a different billing Address</string>
+    <string name="no_billing_address">No Billing Address</string>
+    <string name="add_billing_address">Add Billing Address</string>
+
+    <string name="set_as_default_address">Set as default address</string>
+    <string name="use_gst_invoice">Use GST Invoice</string>
+    <string name="enter_your_gst_number">Enter your GST number</string>
+    <string name="your_business_name">Business name</string>
+    <string name="address_list">Address List</string>
+
+    <string name="add_shipping_address">Add Shipping Address</string>
+    <string name="select_delivery_type">Select address type for delivery</string>
+    <string name="home_time">Home (7am-9pm)</string>
+    <string name="office_time">Office (10am-7pm)</string>
+    <string name="prefernce_address_msg">Preference will help us plan your delivery. However, shipments can sometimes arrive earlier than planned.</string>
+    <string name="address_delete_msg">Are you sure, you want to delete this address.</string>
+
+    <string name="dealer_kyc_verification">Dealer KYC Verification</string>
+    <string name="document_verified">Document Verified</string>
+    <string name="document_type">Document Type</string>
+    <string name="document_status">Status</string>
+    <string name="submitted_date">Submitted Date</string>
+    <string name="support">Support</string>
+    <string name="resumbit">Re-submit</string>
+
+    <string name="kyc_doc_submit">KYC Documents Submitted</string>
+    <string name="technical_reviewing_soon">Your documents are submitted successfully, please wait our technical team will reviewing soon.</string>
+
+    <string name="kyc_doc_verified">KYC Documents Verified</string>
+    <string name="doc_verified_thanks">Your documents has been verified, thanks for choosing us.</string>
+
+    <string name="kyc_doc_unverified">KYC Documents Unverified</string>
+    <string name="doc_resubmit_again">Your submitted documents are not matching, please resubmit again.</string>
+
+    <string name="company_gst">Company GST</string>
+    <string name="gst_number">GST number</string>
+    <string name="gst_certificate"><u>Upload GST Certificate</u></string>
+
+    <string name="iec">IEC</string>
+    <string name="iec_number">IEC Number</string>
+    <string name="iec_certificate"><u>Upload IEC Certificate</u></string>
+
+    <string name="aadhaar_details">Aadhaar Card Details</string>
+    <string name="digits_aadhaar_no">12 Digits Aadhaar card Number</string>
+    <string name="aadhaar_certificate_front"><u>Upload Aadhaar Front</u></string>
+    <string name="aadhaar_certificate_back"><u>Upload Aadhaar Back</u></string>
+
+    <string name="doc_upload_successfully"><u>Upload Successfully</u></string>
+
+    <string name="company_pan_card_details">Company Pan Card Details</string>
+    <string name="pan_card_details">Pan Card Details</string>
+    <string name="digits_pan_no">10 Digits Pan Card Number</string>
+    <string name="pan_card_certificate"><u>Upload Pan Card</u></string>
+
+    <string name="passport_details">Passport Details</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="passport_certificate_front"><u>Upload Passport Front</u></string>
+    <string name="passport_certificate_back"><u>Upload Passport Back</u></string>
+
+    <string name="driving_licence_details">Driving Licence Details</string>
+    <string name="driving_licence_number">Driving Licence Number</string>
+    <string name="driving_licence_certificate"><u>Upload Driving Licence</u></string>
+    <string name="gst_number_required1">GST number required</string>
+    <string name="iec_number_required">IEC number required</string>
+    <string name="aadhaar_number_required">Aadhaar number required</string>
+    <string name="pan_card_number_required">Company pan card number required</string>
+    <string name="auth_card_number_required">Pan card number required</string>
+    <string name="passport_number_required">Passport number required</string>
+    <string name="driving_licence_number_required">Driving licence number required</string>
+
+    <string name="buyer_kyc_verification">Buyer KYC Verification</string>
+    <string name="thanks_you">Thank you for showing interest!</string>
+    <string name="thanks_you_msg">Our customer care executive will be in touch with you shortly.</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="certificate_not_found">Certificate Not Found</string>
+    <string name="image_not_found">Image Not Found</string>
+    <string name="video_not_found">Video Not Found</string>
+    <string name="back">Back</string>
+    <string name="delete_account_msg">Are you sure you want to delete your account? All your data will be lost and cannot be recovered.</string>
+    <string name="delete_account_msg1">I confirm that my account and all my data should be deleted.</string>
+    <string name="notification_list">Notifications List</string>
+    <string name="naturalDiamond">Natural Diamond</string>
+    <string name="labGrownDiamond">Lab-Grown Diamond</string>
+    <string name="enterSearchValue">Please enter search diamond.</string>
+    <string name="search_lbl">Search</string>
+    <string name="supplier_login">Supplier Login-In</string>
+
+    <string name="debit_carat">Debit (Carat)</string>
+    <string name="natural_perc">Natural (%)</string>
+    <string name="lab_grown_perc">Lab-Grown (%)</string>
+    <string name="enter_value">Enter Value</string>
+    <string name="all">All</string>
+    <string name="debit">Debit</string>
+    <string name="credit">Credit</string>
+    <string name="order_id_lbl">Order ID</string>
+    <string name="status_lbl">Status</string>
+    <string name="points_lbl">Points</string>
+    <string name="remark1">Remark</string>
+    <string name="available_wallet_points">Available Wallet Points : </string>
+    <string name="redemption_value">1 Point = 1 R Redemption</string>
+    <string name="press_back_again">Press back again to exit</string>
+    <string name="please_wait_loading_more_data">Please wait, loading more data…</string>
+    <string name="clear_all_filter"><u>Clear All</u></string>
+
+    <string name="custom_payment_lbl">Custom Payment</string>
+    <string name="history_lbl">History</string>
+
+    <string name="your_name">Your Name</string>
+    <string name="company_name_lbl">Company Name</string>
+    <string name="amount">Amount</string>
+    <string name="enter_your_remark">Enter your remarks</string>
+    <string name="proceed_to_payment">Proceed to payment</string>
+    <string name="payment_option">Payment Options</string>
+
+    <string name="rtgs_neft">RTGS/NEFT</string>
+    <string name="card_type">Debit/Credit Card</string>
+    <string name="net_banking">Net Banking</string>
+    <string name="upi">UPI</string>
+    <string name="upi_options">UPI Options</string>
+    <string name="your_name_required">Name is required</string>
+    <string name="company_name_required">Company is required</string>
+    <string name="amount_required">Amount is required</string>
+    <string name="remark_required">Remark is required</string>
+    <string name="select_bank">Select Bank</string>
+
+    <string name="branch_name_lbl">Branch Name</string>
+    <string name="ifsc_lbl">IFSC</string>
+    <string name="swift_lbl">SWIFT</string>
+    <string name="bank_name_lbl">Bank Name</string>
+    <string name="account_number_lbl">Account Number</string>
+    <string name="mode_of_payment">Mode of Payment</string>
+    <string name="select_payment_mode">Select payment mode</string>
+    <string name="enter_utr_cheque_no">Enter UTR/Cheque No.</string>
+    <string name="select_date_month_year">DD/MM/YYYY</string>
+
+    <string name="cheque">Cheque</string>
+    <string name="neft">NEFT</string>
+    <string name="rtgs">RTGS</string>
+    <string name="wire_transfer">Wire Transfer</string>
+    <string name="payment_option_required">Payment option is required</string>
+    <string name="payment_mode_required">Payment mode is required</string>
+    <string name="cheque_number_required">Cheque number is required</string>
+    <string name="date_required">Date is required</string>
+
+    <string name="payment_processing">Payment processing!</string>
+    <string name="payment_under_review">Your Payment is under review,\ndetails of the transaction are\nmentioned below</string>
+    <string name="order_id">Order ID</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="utr_cheque_no">UTR/Cheque No.</string>
+    <string name="order_placed_successfully">*Order has been placed successfully</string>
+    <string name="availability_of_diamond">Availability of diamond(s) is subject to confirmation.</string>
+    <string name="back_to_home">Back to Home</string>
+
+    <string name="payment_successful">Payment successful!</string>
+    <string name="payment_processed">Your Payment has been processed!,\nDetails of the transaction are\nmentioned below</string>
+
+    <string name="payment_failed">Payment failed</string>
+    <string name="payment_failed_msg">Transaction has been cancelled\ndue to security risk or inability\nto process payment</string>
+
+    <string name="retry_payment">Retry Payment</string>
+    <string name="need_assistance"><u>Need Assistance?</u></string>
+    <string name="mode">Mode</string>
+    <string name="narration">Narration</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="bank_selection_required">Bank selection is required</string>
+
+    <string name="shipping">Shipping</string>
+    <string name="payment">Payment</string>
+    <string name="reset">Reset</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="please_add_shipping_address">Please add shipping address.</string>
+    <string name="please_add_billing_address">Please add billing address.</string>
+    <string name="please_select_shipping_address">Please select shipping address.</string>
+    <string name="please_select_billing_address">Please select billing address.</string>
+
+    <string name="order_summary">Order Summary</string>
+    <string name="shipping_and_handling">Shipping &amp; Handling</string>
+    <string name="platform_fees">Platform Fees</string>
+    <string name="total_charges">Total Charges</string>
+    <string name="other_taxes">Other Taxes</string>
+    <string name="diamonds_taxes">Diamond(s) Tax</string>
+    <string name="total_taxes">Total Taxes</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="bank_charges">Bank Charge</string>
+    <string name="wallet_point">Wallet Point</string>
+    <string name="final_amount">Final Amount</string>
+    <string name="show_order_summary">Show Order Summary</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="points">Points</string>
+    <string name="enter_wallet_points">Enter Wallet Points</string>
+    <string name="enter_loyalty_points">Enter Loyalty Points</string>
+    <string name="applied">Applied</string>
+
+    <string name="enter_coupon_code">Enter Coupon Code</string>
+    <string name="know_more">Know more</string>
+    <string name="re_submit"><u>Re-submit</u></string>
+    <string name="please_upload_doc_first">Please upload document first.</string>
+    <string name="save_shipping_cost">To save the shipping costs, you can collect from our Mumbai Hub.</string>
+    <string name="pickup_address">DiamondXE Private Limited, 904-A, B Wing, 9th floor,The Capital, BKC, Bandra East, Mumbai-400051, Maharashtra, INDIA.</string>
+    <string name="free_shipping">"(Free Shipping)</string>
+    <string name="coupon_code">Coupon Code</string>
+    <string name="invalid_coupon">Invalid Coupon</string>
+    <string name="please_upload_doc">Please upload document.</string>
+    <string name="my_orders">My Orders</string>
+    <string name="recent">Recent</string>
+    <string name="return_lbl">Return</string>
+    <string name="reserved">Reserved</string>
+    <string name="past">Past</string>
+    <string name="cancelled">Cancelled</string>
+
+    <string name="diamond_order">Diamond Order</string>
+    <string name="jewellery_order">Jewellery Order</string>
+
+    <string name="details">Details</string>
+    <string name="summary">Summary</string>
+    <string name="track_order">Track</string>
+    <string name="cancel_order">Cancel</string>
+    <string name="type">Type</string>
+    <string name="sym">Sym</string>
+    <string name="flr">Flr</string>
+    <string name="lab">Lab</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="shape1">Shape</string>
+    <string name="order_details">Order Details</string>
+    <string name="order_status">Order Status</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="delivery_date">Delivery Date</string>
+    <string name="diamond_price">Diamond Price</string>
+    <string name="order_tracking">Order Tracking</string>
+    <string name="we_have_received_order">We have received your order</string>
+    <string name="in_progress">In Progress</string>
+    <string name="your_order_in_progress">Your order has been in-progress</string>
+    <string name="out_for_delivery">Out for Delivery</string>
+    <string name="your_item_is_out_for_delivery">Your item is Out for Delivery</string>
+    <string name="delivered">Delivered</string>
+    <string name="your_item_delivered">Your item has been delivered</string>
+    <string name="return_request">Return Request</string>
+    <string name="cancel_order_lbl">Cancel Order</string>
+    <string name="full_cancellation">Full Cancellation</string>
+    <string name="partial_cancellation">Partial Cancellation</string>
+    <string name="processed">Processed</string>
+    <string name="cancel_order_summary">Cancel Order Summary</string>
+    <string name="cancellation_confirmation">Cancellation Confirmation</string>
+    <string name="select_refund_mode">Select refund mode</string>
+    <string name="select_reason">Select Reason</string>
+    <string name="too_expensive">It\'s too expensive</string>
+    <string name="wrong_diamond">Wrong diamond selected</string>
+    <string name="other">Other</string>
+    <string name="write_your_message">Write your message…</string>
+    <string name="message_required">Message is required</string>
+    <string name="select_reason_required">Select reason required</string>
+    <string name="cancellation_successful">Cancellation Successful</string>
+    <string name="cancellation_request_msg">Your cancellation request has been successful\nyour refund will be credited to your account\nwithin 7–10 working days!</string>
+    <string name="done">Done</string>
+    <string name="return_order_summary">Return Order Summary</string>
+    <string name="default_address_can_not_delete">Default address cannot be deleted.</string>
+
+    <string name="kyc_doc_submit1">KYC Documents</string>
+
+    <string-array name="tab_titles">
+        <item>@string/recent</item>
+        <item>@string/return_lbl</item>
+        <item>@string/reserved</item>
+        <item>@string/past</item>
+        <item>@string/cancelled</item>
+    </string-array>
+
+
+</resources>

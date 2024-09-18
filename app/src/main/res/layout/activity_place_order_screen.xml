@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Tool Bar Layout-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tool_bar_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/purple"
+        android:outlineSpotShadowColor="@color/purple"
+        app:cardElevation="@dimen/dimen_5">
+
+        <RelativeLayout
+            android:id="@+id/tool_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_5">
+
+            <ImageView
+                android:id="@+id/back_img"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:src="@mipmap/ic_back" />
+
+            <TextView
+                android:id="@+id/title_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_toRightOf="@+id/back_img"
+                android:text="@string/shipping"
+                android:textColor="@color/purple_light"
+                android:textSize="@dimen/dimen_18" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!--Top 3 Icon Layout-->
+    <LinearLayout
+        android:id="@+id/main_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar_card_layout"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:orientation="vertical">
+
+        <!--Top 3 Icon Layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:orientation="horizontal">
+
+            <!--Shipping Icon-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/shipping_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/dimen_5"
+                android:outlineAmbientShadowColor="@color/purple"
+                android:outlineSpotShadowColor="@color/purple"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_1">
+
+                <RelativeLayout
+                    android:id="@+id/shipping_rel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_image_purple">
+
+                    <ImageView
+                        android:id="@+id/shipping_img"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/white"
+                        android:paddingLeft="@dimen/dimen_8"
+                        android:paddingTop="@dimen/dimen_12"
+                        android:paddingRight="@dimen/dimen_8"
+                        android:paddingBottom="@dimen/dimen_12"
+                        android:src="@drawable/shipping"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/shipping_card_view"
+                android:layout_weight="1"
+                android:background="@color/purple_light" />
+
+            <!--KYC Verification Icon-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/kyc_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:elevation="@dimen/dimen_28"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:outlineAmbientShadowColor="@color/black_10"
+                android:outlineSpotShadowColor="@color/black_10"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_1">
+
+                <RelativeLayout
+                    android:id="@+id/kyc_rel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_image_white">
+
+                    <ImageView
+                        android:id="@+id/kyc_img"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/white"
+                        android:paddingLeft="@dimen/dimen_8"
+                        android:paddingTop="@dimen/dimen_12"
+                        android:paddingRight="@dimen/dimen_8"
+                        android:paddingBottom="@dimen/dimen_12"
+                        android:src="@drawable/kyc" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/purple_light" />
+
+            <!--Payment Icon-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/payment_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:elevation="@dimen/dimen_28"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:outlineAmbientShadowColor="@color/black_10"
+                android:outlineSpotShadowColor="@color/black_10"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/dimen_12"
+                app:cardElevation="@dimen/dimen_1">
+
+                <RelativeLayout
+                    android:id="@+id/payment_rel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_image_white">
+
+                    <ImageView
+                        android:id="@+id/payment_img"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/white"
+                        android:paddingLeft="@dimen/dimen_8"
+                        android:paddingTop="@dimen/dimen_12"
+                        android:paddingRight="@dimen/dimen_8"
+                        android:paddingBottom="@dimen/dimen_12"
+                        android:src="@drawable/payment" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!--Top 3 Icon Text Layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:orientation="horizontal">
+
+            <!--Shipping Icon-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shipping"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white" />
+
+            <!--KYC Verification Icon-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/kyc_verification"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white" />
+
+            <!--Payment Icon-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payment"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar_rel"
+        android:layout_below="@+id/main_lin"
+        android:background="@color/bg_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--Address List Layout-->
+            <LinearLayout
+                android:id="@+id/address_main_lin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_toLeftOf="@+id/select_lbl"
+                    android:layout_toRightOf="@+id/location_img"
+                    android:gravity="center|left"
+                    android:hint="@string/shipping_address"
+                    android:paddingLeft="@dimen/dimen_2"
+                    android:paddingRight="@dimen/dimen_2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/dimen_15" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_15">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/shipping_address_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/no_shipping_address_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginRight="@dimen/dimen_15"
+                        android:elevation="@dimen/dimen_5"
+                        android:outlineAmbientShadowColor="@color/purple"
+                        android:outlineSpotShadowColor="@color/purple"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/dimen_8"
+                        app:cardElevation="@dimen/dimen_5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dimen_30"
+                            android:paddingBottom="@dimen/dimen_30">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/no_shipping_address" />
+
+                            <TextView
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:text="@string/no_shipping_address"
+                                android:textColor="@color/hint_text"
+                                android:textSize="@dimen/dimen_14" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/add_shipping_address_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:background="@drawable/border_purple"
+                    android:drawableLeft="@drawable/address"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:text="@string/add_new_address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_toLeftOf="@+id/select_lbl"
+                    android:layout_toRightOf="@+id/location_img"
+                    android:gravity="center|left"
+                    android:hint="@string/billing_address"
+                    android:paddingLeft="@dimen/dimen_2"
+                    android:paddingRight="@dimen/dimen_2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/dimen_15"
+                    android:visibility="gone" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/same_as_shipping_address_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:elevation="@dimen/dimen_5"
+                    android:outlineAmbientShadowColor="@color/purple"
+                    android:outlineSpotShadowColor="@color/purple"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/dimen_8"
+                    app:cardElevation="@dimen/dimen_5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginRight="@dimen/dimen_5"
+                        android:layout_marginBottom="@dimen/dimen_5"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_10">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_5">
+
+                            <TextView
+                                style="@style/BoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/same_as_shipping_address"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_15" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@+id/radio_adress"
+                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingTop="@dimen/dimen_3"
+                                    android:paddingRight="@dimen/dimen_5"
+                                    android:paddingBottom="@dimen/dimen_3"
+                                    android:src="@drawable/edit" />
+
+                                <RadioButton
+                                    android:id="@+id/radio_adress"
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/dimen_15"
+                                    android:backgroundTint="@color/purple_light"
+                                    android:button="@drawable/radio_btn"
+                                    android:buttonTint="@color/purple_light"
+                                    android:checked="true"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingTop="@dimen/dimen_3"
+                                    android:paddingRight="@dimen/dimen_5"
+                                    android:paddingBottom="@dimen/dimen_3"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_14" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginTop="@dimen/dimen_3"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:text="@string/same_as_shipping_address_msg"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_toLeftOf="@+id/select_lbl"
+                    android:layout_toRightOf="@+id/location_img"
+                    android:gravity="center|left"
+                    android:hint="@string/choose_diifferent_billing_address"
+                    android:paddingLeft="@dimen/dimen_2"
+                    android:paddingRight="@dimen/dimen_2"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/dimen_15" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_15">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/billing_address_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/no_billing_address_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginRight="@dimen/dimen_15"
+                        android:elevation="@dimen/dimen_5"
+                        android:outlineAmbientShadowColor="@color/purple"
+                        android:outlineSpotShadowColor="@color/purple"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/dimen_8"
+                        app:cardElevation="@dimen/dimen_5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dimen_30"
+                            android:paddingBottom="@dimen/dimen_30">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/no_shipping_address" />
+
+                            <TextView
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:text="@string/no_billing_address"
+                                android:textColor="@color/hint_text"
+                                android:textSize="@dimen/dimen_14" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/add_billing_address_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:background="@drawable/border_purple"
+                    android:drawableLeft="@drawable/address"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:text="@string/add_new_address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/save_shipping_cost_checkbox"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:buttonTint="@color/black"
+                        android:gravity="top|left"
+                        android:paddingLeft="@dimen/dimen_3"
+                        android:text="@string/save_shipping_cost"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <TextView
+                        android:id="@+id/pickup_address_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginRight="@dimen/dimen_5"
+                        android:background="@drawable/border_purple"
+                        android:lineSpacingExtra="@dimen/dimen_1"
+                        android:paddingLeft="@dimen/dimen_10"
+                        android:paddingTop="@dimen/dimen_8"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_8"
+                        android:text="@string/pickup_address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--Order Summery Details Layout-->
+            <include layout="@layout/order_summary" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_top_shadow"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_15"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/total_amount_tv"
+                style="@style/BoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14" />
+
+            <TextView
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/including_and_taxes_shipping"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_11" />
+        </LinearLayout>
+
+        <!--Place Order Layout-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:background="@drawable/background_button_shadow"
+            android:elevation="@dimen/dimen_5"
+            app:cardCornerRadius="@dimen/dimen_7"
+            app:cardElevation="@dimen/dimen_5">
+
+            <TextView
+                android:id="@+id/continue_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="@string/continue1"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingTop="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_8"
+                android:text="@string/continue1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_14" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

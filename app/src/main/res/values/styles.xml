@@ -1,0 +1,348 @@
+<resources>
+
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
+
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/black_like</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="actionBarTabTextStyle">@color/white</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
+        <!-- <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+         <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
+
+    <style name="WhiteDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/light_purple</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!-- <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+         <item name="spinBars">true</item>
+         <item name="color">@color/Black</item>
+         <item name="actionBarTabTextStyle">@color/Black</item>
+         <item name="android:textColor">@color/Black</item>
+         <item name="android:homeAsUpIndicator">@color/Black</item>
+
+     </style>-->
+
+    <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <!--For Show Text and Image Both in center in Button in Schedule Details Screen At Driver Side -->
+    <style name="captionOnly">
+        <item name="android:background">@null</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+    </style>
+
+    <style name="textview_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+   <!-- <style name="Regularfonttype1">
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="SemiBoldfonttype">
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="Mediumfonttype1">
+        <item name="android:typeface">sans</item>
+    </style>-->
+
+
+
+    <style name="BoldItalicFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_bolditalic</item>
+    </style>
+
+    <style name="BlackFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_black</item>
+    </style>
+
+    <style name="BlackItalicFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_blackitalic</item>
+    </style>
+
+    <style name="BoldFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+
+
+    <style name="ItalicFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_italic</item>
+    </style>
+
+    <style name="LightFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_light</item>
+    </style>
+
+    <style name="LightItalicFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_lightitalic</item>
+    </style>
+
+
+    <style name="MediumFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_medium</item>
+    </style>
+
+    <style name="RegularFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="SemiBoldFontType" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/lato_semibold</item>
+    </style>
+
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/bg</item>
+    </style>
+
+
+
+    <style name="RadioBtn" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/bg</item>
+    </style>
+
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="Theme.AppCompat.Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/tranprent_20</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <style name="CustomTabWidgetText" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="progressBar" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/bg</item>
+    </style>
+
+
+    <!--Date picker Theam-->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_light</item>
+    </style>
+
+
+    <style name="AppThemeBar" parent="Theme.AppCompat.Light">
+        <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@color/bg</item>
+
+    </style>
+
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/bg</item>
+    </style>
+
+
+    <style name="Theme.Transparent1" parent="Theme.AppCompat.Light.NoActionBar"
+        >
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/bg</item>
+        <item name="colorAccent">@color/bg</item>
+        <item name="colorControlNormal">@color/bg</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="colorControlActivated">@color/bg</item>
+
+
+    </style>
+
+
+
+    <!--Custom RatingBar-->
+    <style name="customRatingBar"  parent="@android:style/Widget.RatingBar">
+
+    </style>
+
+
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Dialog">
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:textColor">@color/bg</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="colorAccent">@color/bg</item>
+
+    </style>
+
+
+    <style name="TabLayoutStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/bg</item>
+        <item name="colorPrimaryDark">@color/bg</item>
+        <item name="colorAccent">@color/bg</item>
+    </style>
+
+
+    <style name="MyCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+
+        <!--<item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>-->
+    </style>
+
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_white_bottom_dialog</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+
+    <style name="DialogThemeDate" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/bg</item>
+    </style>
+
+    <style name="MyMaterialTheme2" parent="Theme.MaterialComponents.Light.Bridge">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/bg</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="actionBarTabTextStyle">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowDisablePreview">true</item>-->
+
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+
+        <!--<item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
+        <!--<item name="android:editTextStyle">@style/App_EditTextStyle_older</item>-->
+        <!--<item name="editTextStyle">@style/App_EditTextStyle</item>-->
+    </style>
+
+    <style name="TabStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/purple</item>
+    </style>
+
+    <style name="BackGroundImageView">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/card_rounded_top_side</item>
+    </style>
+
+    <!--<style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    </style>-->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="android:ambientShadowAlpha">0.5</item>
+        <item name="android:spotShadowAlpha">1</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/black_like</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="actionBarTabTextStyle">@color/white</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
+        <!-- <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+         <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+
+    <style name="AppThemeShadow" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here -->
+        <item name="android:ambientShadowAlpha">1</item>
+        <item name="android:spotShadowAlpha">1</item>
+    </style>
+
+
+    <style name="menu_text_style" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu">
+        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- res/values/styles.xml -->
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="android:dividerPadding">3dp</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_40"
+        android:paddingTop="@dimen/dimen_20"
+        android:paddingRight="40dp"
+        android:paddingBottom="@dimen/dimen_20"
+        tools:background="#33ff0000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dialog_white_bg"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_5">
+
+                    <TextView
+                        android:id="@+id/title_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/diamond_image"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/dimen_14" />
+
+                    <ImageView
+                        android:id="@+id/cross_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="right"
+                        android:paddingLeft="@dimen/dimen_10"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:src="@drawable/cross"
+                        android:tint="@color/black"
+                        tools:ignore="UseAppTint" />
+                </RelativeLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/hand_img_card1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_250"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:background="@color/transparent"
+                    android:elevation="0dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="@dimen/dimen_10"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/hand_img1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/hand_img_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_250"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    app:cardCornerRadius="@dimen/dimen_10">
+
+                    <ImageView
+                        android:id="@+id/hand_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_250"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:text="@string/carat"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_carat_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_2"
+                    android:visibility="visible" />
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:text="@string/shape"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_shape_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:visibility="visible" />
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:text="@string/reference_purpose_only"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

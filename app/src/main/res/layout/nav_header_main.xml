@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_light_purple"
+        android:clickable="true"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15"
+        >
+
+
+        <ImageView
+            android:id="@+id/user_img"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_below="@+id/dummy_tv"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            app:civ_border_width="1dp"
+            app:srcCompat="@drawable/login" />
+
+
+        <TextView
+            android:id="@+id/dummy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/user_layout"
+            android:padding="10dp"
+            android:text="" />
+
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_toRightOf="@+id/user_img"
+            android:layout_toLeftOf="@+id/chat_icon_img"
+            >
+
+            <TextView
+                android:id="@+id/username_tv"
+                style="@style/BoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/hello_guest"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/dimen_15" />
+
+            <TextView
+                android:id="@+id/login_type_role_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:drawablePadding="@dimen/dimen_5"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:onClick="editClick"
+                android:text="--"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/dimen_13"
+
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/chat_icon_img"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>
