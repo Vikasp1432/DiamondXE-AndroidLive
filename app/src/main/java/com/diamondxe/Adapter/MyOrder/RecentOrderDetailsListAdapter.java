@@ -65,10 +65,10 @@ public class RecentOrderDetailsListAdapter extends RecyclerView.Adapter<Recycler
             holder.view_line.setVisibility(View.GONE);
         }
 
-        if(!list.get(position).getImage().equalsIgnoreCase(""))
+        if(!list.get(position).getDiamondImage().equalsIgnoreCase(""))
         {
             Picasso.with(context)
-                    .load(list.get(position).getImage())
+                    .load(list.get(position).getDiamondImage())
                     .placeholder(R.mipmap.phl_diamond)
                     .error(R.mipmap.phl_diamond)
                     .into(holder.image_view);
@@ -83,13 +83,13 @@ public class RecentOrderDetailsListAdapter extends RecyclerView.Adapter<Recycler
                     .into(holder.image_view);
         }
 
-        holder.stock_no_tv.setText("#"+list.get(position).getStockNumber());
-        holder.name_tv.setText(list.get(position).getName());
+        holder.name_tv.setText(list.get(position).getShape());
+        holder.stock_no_tv.setText("#"+list.get(position).getCertificateNo());
         holder.shape_tv.setText(list.get(position).getShape());
         holder.carat_tv.setText(list.get(position).getCarat());
         holder.color_tv.setText(list.get(position).getColor());
         holder.clarity_tv.setText(list.get(position).getClarity());
-        holder.type_tv.setText(list.get(position).getType());
+        holder.type_tv.setText(list.get(position).getGrowthType());
 
         if(list.get(position).getCut().equalsIgnoreCase(""))
         {
@@ -122,18 +122,18 @@ public class RecentOrderDetailsListAdapter extends RecyclerView.Adapter<Recycler
             holder.flr_tv.setText(list.get(position).getFir());
         }
 
-        if(list.get(position).getLab().equalsIgnoreCase(""))
+        if(list.get(position).getCertificateName().equalsIgnoreCase(""))
         {
             holder.lab_tv.setText("-");
         }else{
-            holder.lab_tv.setText(list.get(position).getLab());
+            holder.lab_tv.setText(list.get(position).getCertificateName());
         }
 
         if(list.get(position).getTable().equalsIgnoreCase(""))
         {
             holder.table_perc_tv.setText("-");
         }else{
-            holder.table_perc_tv.setText(list.get(position).getTable());
+            holder.table_perc_tv.setText(list.get(position).getTable() + "%");
         }
 
         if(list.get(position).getDepth().equalsIgnoreCase(""))
@@ -141,7 +141,7 @@ public class RecentOrderDetailsListAdapter extends RecyclerView.Adapter<Recycler
             holder.depth_perc_tv.setText("-");
         }
         else{
-            holder.depth_perc_tv.setText(list.get(position).getDepth());
+            holder.depth_perc_tv.setText(list.get(position).getDepth() + "%");
         }
 
         DecimalFormat formatter = new DecimalFormat("#,###,###");

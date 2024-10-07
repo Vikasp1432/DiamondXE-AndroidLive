@@ -52,7 +52,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color"
         android:layout_below="@+id/tool_bar_card_layout">
 
         <LinearLayout
@@ -65,16 +66,70 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@color/transparent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:visibility="visible" />
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:elevation="@dimen/dimen_5"
+                    android:outlineAmbientShadowColor="@color/purple"
+                    android:outlineSpotShadowColor="@color/purple"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/dimen_8"
+                    app:cardElevation="@dimen/dimen_2">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/purple_20">
+                            <TextView
+                                android:id="@+id/order_number_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/dimen_5"
+                                android:paddingTop="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_5"
+                                android:layout_marginRight="@dimen/dimen_5"
+                                android:text=""
+                                android:layout_toLeftOf="@+id/date_time_tv"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14" />
+
+                            <TextView
+                                android:id="@+id/date_time_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:paddingTop="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_5"
+                                android:paddingRight="@dimen/dimen_5"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14" />
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/error_tv"
@@ -90,9 +145,11 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_16"
                     android:visibility="gone" />
+
+
             </RelativeLayout>
 
-            <!--Cancel Order Summery Details Layout-->
+            <!--Return Order Summery Details Layout-->
             <include layout="@layout/return_order_summary" />
 
             <!--My Order Summery Details Layout-->
@@ -104,9 +161,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/order_details"
+                android:layout_marginTop="@dimen/dimen_5"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
                 android:textColor="@color/black"
+                android:visibility="visible"
                 android:textSize="@dimen/dimen_16" />
 
             <!--Cheque No, Order Status, Amount Layout-->
@@ -116,6 +175,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
+                android:visibility="visible"
                 android:weightSum="3">
 
                 <!--UTR Cheque No Layout-->
@@ -139,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="T45123589564789"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -168,7 +228,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="Confirmed"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -196,7 +256,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="875495623"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -211,6 +271,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
+                android:visibility="visible"
                 android:weightSum="3">
 
                 <!--Order Place Date Time Layout-->
@@ -234,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="06/03/24, 05:14:24 PM"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -263,7 +324,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="06/03/24"
+                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -281,7 +342,7 @@
                         style="@style/SemiBoldFontType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/payment_mode"
+                        android:text="@string/refund_payment_mode"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
@@ -291,13 +352,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="Internet Banking"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
 
                 </LinearLayout>
 
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/refund_status_tv"
+                style="@style/BoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:text=""
+                android:textColor="@color/green"
+                android:textSize="@dimen/dimen_14" />
 
             <View
                 android:layout_width="match_parent"
@@ -314,6 +388,7 @@
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
+                android:visibility="visible"
                 android:orientation="vertical">
                 <TextView
                     style="@style/BoldFontType"
@@ -343,6 +418,7 @@
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_15"
+                android:visibility="visible"
                 android:orientation="vertical">
                 <TextView
                     style="@style/BoldFontType"

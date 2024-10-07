@@ -478,7 +478,8 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/aadhaar_doc_upload_front_tv"
@@ -509,12 +510,25 @@
                                         android:textSize="@dimen/dimen_12"
                                         android:visibility="gone" />
 
+                                    <TextView
+                                        android:id="@+id/aadhaar_doc_front_verify_error_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_1"
+                                        android:text="@string/please_upload_document"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/dimen_10"
+                                        android:visibility="gone" />
+
+
                                 </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/aadhaar_doc_upload_back_tv"
@@ -543,6 +557,19 @@
                                         android:textColor="@color/green"
                                         android:textSize="@dimen/dimen_12"
                                         android:visibility="gone" />
+
+                                    <TextView
+                                        android:id="@+id/aadhaar_doc_back_verify_error_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_1"
+                                        android:layout_marginLeft="@dimen/dimen_5"
+                                        android:text="@string/please_upload_document"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/dimen_10"
+                                        android:visibility="gone" />
+
                                 </LinearLayout>
 
 
@@ -819,6 +846,17 @@
                                 android:textSize="@dimen/dimen_12"
                                 android:visibility="gone" />
 
+                            <TextView
+                                android:id="@+id/auth_pan_doc_verify_error_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_1"
+                                android:text="@string/please_upload_document"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/dimen_10"
+                                android:visibility="gone" />
+
                         </LinearLayout>
 
                         <!--Passport Layout-->
@@ -939,7 +977,8 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/passport_doc_upload_front_tv"
@@ -970,12 +1009,24 @@
                                         android:textSize="@dimen/dimen_12"
                                         android:visibility="gone" />
 
+                                    <TextView
+                                        android:id="@+id/passport_doc_front_verify_error_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_1"
+                                        android:text="@string/please_upload_document"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/dimen_10"
+                                        android:visibility="gone" />
+
                                 </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/passport_doc_upload_back_tv"
@@ -1002,6 +1053,18 @@
                                         android:text="@string/doc_upload_successfully"
                                         android:textColor="@color/green"
                                         android:textSize="@dimen/dimen_12"
+                                        android:visibility="gone" />
+
+                                    <TextView
+                                        android:id="@+id/passport_doc_back_verify_error_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_1"
+                                        android:layout_marginLeft="@dimen/dimen_5"
+                                        android:text="@string/please_upload_document"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/dimen_10"
                                         android:visibility="gone" />
 
                                 </LinearLayout>
@@ -1217,6 +1280,18 @@
                                 android:text="@string/doc_upload_successfully"
                                 android:textColor="@color/green"
                                 android:textSize="@dimen/dimen_12"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/driving_licence_doc_verify_error_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_1"
+                                android:layout_marginLeft="@dimen/dimen_5"
+                                android:text="@string/please_upload_document"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/dimen_10"
                                 android:visibility="gone" />
 
                         </LinearLayout>

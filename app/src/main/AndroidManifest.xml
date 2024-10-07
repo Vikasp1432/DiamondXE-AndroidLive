@@ -22,6 +22,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
@@ -417,7 +423,57 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:node="replace" />
         <activity
+            android:name=".Activity.MyOrder.OrderSummaryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.CancelledOrderSummaryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
             android:name=".Activity.MyOrder.ReturnOrderSummaryScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.ReturnOrderScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.ReturnOrderPickupAddressWalletScreenActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
+            android:name=".Activity.MyOrder.ReturnOrderItemsImageVideoActivity"
             android:exported="false"
             android:hardwareAccelerated="true"
             android:label="@string/app_name"
@@ -455,21 +511,16 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- Keep it true in UAT environment for both the flags -->
+        </provider> <!-- Keep it true in UAT environment for both the flags -->
         <meta-data
             android:name="com.phonepe.android.sdk.isUAT"
             android:value="false" />
         <meta-data
             android:name="com.phonepe.android.sdk.isSimulator"
-            android:value="false" />
-
-        <!-- The value will be the MID -->
+            android:value="false" /> <!-- The value will be the MID -->
         <meta-data
             android:name="com.phonepe.android.sdk.MerchantId"
             android:value="DIAMONDXEONLINE" />
-
         <!--
         For UAT, App Id is not required.
         Make sure to add the following and you get the APP Id for Production after UAT Sign-off

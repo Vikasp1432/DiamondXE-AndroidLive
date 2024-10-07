@@ -126,10 +126,11 @@
         android:id="@+id/total_amount_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/root_layout"
+        android:layout_marginBottom="@dimen/dimen_80"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -207,7 +208,8 @@
 
         <include layout="@layout/bottom_bar" />
 
-
     </RelativeLayout>
+
+
 
 </RelativeLayout>

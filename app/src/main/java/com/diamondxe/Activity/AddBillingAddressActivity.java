@@ -58,16 +58,15 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
     private ImageView back_img,country_img;
     private LinearLayout country_lin,state_lin ,city_lin,mobile_number_lin,country_code_lin,gst_business_number_lin ;
     private TextView country_tv, country_error_tv,state_tv, state_error_tv,city_tv, city_error_tv, pincode_error_tv,country_code,
-            mobile_number_error_tv,email_error_tv, cancel_tv,update_tv,address_line1_error_tv;
+            mobile_number_error_tv,email_error_tv, cancel_tv,update_tv,address_line1_error_tv, title_tv;
     private EditText address_line1_et,address_line2_et, pincode_et,mobile_number_et, email_et,gts_number, business_number, search_et;
     CheckBox set_as_default_address_check, same_as_shipping_address_check,use_gst_invoice_check;
     private Activity activity;
     private Context context;
-
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
+    private boolean isApiCalling = false; // Flag to track API call
     private BottomSheetDialog dialog;
     RecyclerView recycler_view;
     ArrayList<CountryListModel> countryArrayList;
@@ -96,6 +95,8 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
 
+        title_tv = findViewById(R.id.title_tv);
+
         address_line1_et = findViewById(R.id.address_line1_et);
         address_line2_et = findViewById(R.id.address_line2_et);
         pincode_et = findViewById(R.id.pincode_et);
@@ -105,10 +106,18 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
         business_number = findViewById(R.id.business_number);
 
         country_tv = findViewById(R.id.country_tv);
+        country_tv.setOnClickListener(this);
+
         country_error_tv = findViewById(R.id.country_error_tv);
+
         state_tv = findViewById(R.id.state_tv);
+        state_tv.setOnClickListener(this);
+
         state_error_tv = findViewById(R.id.state_error_tv);
+
         city_tv = findViewById(R.id.city_tv);
+        city_tv.setOnClickListener(this);
+
         city_error_tv = findViewById(R.id.city_error_tv);
         pincode_error_tv = findViewById(R.id.pincode_error_tv);
         country_code = findViewById(R.id.country_code);
@@ -154,10 +163,12 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
         // If Address is EDit Then same_as_shipping_address_check Layout gone
         if(Constant.editBillingAddress.equalsIgnoreCase("yes"))
         {
+            title_tv.setText(getResources().getString(R.string.edit_billing_address));
             same_as_shipping_address_check.setVisibility(View.GONE);
             setData();
         }else{
             same_as_shipping_address_check.setVisibility(View.VISIBLE);
+            title_tv.setText(getResources().getString(R.string.add_billing_address));
         }
 
     }
@@ -342,18 +353,26 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
             countryCodeForNumber = "yes";
             getCountryListAPI(false);
         }
-        else if(id == R.id.country_lin)
+        else if(id == R.id.country_lin || id == R.id.country_tv)
         {
-            Utils.hideKeyboard(activity);
-            countryCodeForNumber = "";
-            getCountryListAPI(false);
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                countryCodeForNumber = "";
+                getCountryListAPI(false);
+            } else{}
         }
-        else if(id == R.id.state_lin)
+        else if(id == R.id.state_lin || id == R.id.state_tv)
         {
             if(!country_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                Utils.hideKeyboard(activity);
-                getStateListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    Utils.hideKeyboard(activity);
+                    getStateListAPI(false);
+                } else{}
             }
             else
             {
@@ -362,12 +381,16 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
             }
 
         }
-        else if(id == R.id.city_lin)
+        else if(id == R.id.city_lin || id == R.id.city_tv)
         {
             Utils.hideKeyboard(activity);
             if(!state_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                getCityListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    getCityListAPI(false);
+                } else{}
             }
             else
             {
@@ -559,6 +582,8 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
             switch (service_ID) {
                 case ApiConstants.GET_COUNTRY_LIST_ID:
 
+                    isApiCalling = false;
+
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -599,6 +624,8 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
                 case ApiConstants.GET_STATE_LIST_ID:
 
+                    isApiCalling = false;
+
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -634,6 +661,8 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
                     break;
 
                 case ApiConstants.GET_CITY_LIST_ID:
+
+                    isApiCalling = false;
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {

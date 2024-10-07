@@ -277,6 +277,8 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
             if(user_login.equalsIgnoreCase("yes"))
             {
                 Constant.comeFrom = "";
+                Constant.afterCancelOrderManageScreenCall="";
+                Constant.afterReturnOrderManageScreenCall = "";
                 intent = new Intent(activity, MyOrderListScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);

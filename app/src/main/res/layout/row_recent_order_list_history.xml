@@ -30,7 +30,7 @@
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:background="@color/light_purple">
+               android:background="@color/purple_20">
                <TextView
                    android:id="@+id/order_number_tv"
                    style="@style/SemiBoldFontType"

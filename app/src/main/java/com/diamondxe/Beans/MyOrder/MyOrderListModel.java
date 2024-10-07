@@ -12,7 +12,9 @@ public class MyOrderListModel implements Serializable {
             orderNumber = "", orderDateTime = "", image = "", name = "", status = "", itemDetails = "", stockNumber = "", category = "",
             subTotal = "", currencySymbol="", carat="", color="", clarity="", showingSubTotal="",isReturnable="", shape="", type="",
     cut="", polish="", symmetry="", fir="", lab="", table="", depth="",compareDateTime="", stockId="", certificateNo="",stockNo="", dxePrefered="",
-    diamondImage="",growthType="";
+    diamondImage="",growthType="",certificateName="", trackingStatusCode="", trackingStatus="", trackingNote="", trackingDateTime="",cancelReturnOrderId="",
+            returnOrderId="",returnEligibleDate="", selectedReason="", writeMessage="", returnOrderImage="", returnOrderVideo="", returnOrderVideoUrl="",
+            returnPolicyUrl="";
 
 
     private ArrayList<InnerOrderListModel> allItemsInSection;
@@ -379,11 +381,123 @@ public class MyOrderListModel implements Serializable {
         this.growthType = growthType;
     }
 
+    public String getCertificateName() {
+        return certificateName;
+    }
+
+    public void setCertificateName(String certificateName) {
+        this.certificateName = certificateName;
+    }
+
+    public String getTrackingStatusCode() {
+        return trackingStatusCode;
+    }
+
+    public void setTrackingStatusCode(String trackingStatusCode) {
+        this.trackingStatusCode = trackingStatusCode;
+    }
+
+    public String getTrackingStatus() {
+        return trackingStatus;
+    }
+
+    public void setTrackingStatus(String trackingStatus) {
+        this.trackingStatus = trackingStatus;
+    }
+
+    public String getTrackingNote() {
+        return trackingNote;
+    }
+
+    public void setTrackingNote(String trackingNote) {
+        this.trackingNote = trackingNote;
+    }
+
+    public String getTrackingDateTime() {
+        return trackingDateTime;
+    }
+
+    public void setTrackingDateTime(String trackingDateTime) {
+        this.trackingDateTime = trackingDateTime;
+    }
+
+    public String getCancelReturnOrderId() {
+        return cancelReturnOrderId;
+    }
+
+    public void setCancelReturnOrderId(String cancelReturnOrderId) {
+        this.cancelReturnOrderId = cancelReturnOrderId;
+    }
+
+    public String getReturnOrderId() {
+        return returnOrderId;
+    }
+
+    public void setReturnOrderId(String returnOrderId) {
+        this.returnOrderId = returnOrderId;
+    }
+
     public boolean isChecked() {
         return isChecked;
     }
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public String getReturnEligibleDate() {
+        return returnEligibleDate;
+    }
+
+    public void setReturnEligibleDate(String returnEligibleDate) {
+        this.returnEligibleDate = returnEligibleDate;
+    }
+
+    public String getSelectedReason() {
+        return selectedReason;
+    }
+
+    public void setSelectedReason(String selectedReason) {
+        this.selectedReason = selectedReason;
+    }
+
+    public String getWriteMessage() {
+        return writeMessage;
+    }
+
+    public void setWriteMessage(String writeMessage) {
+        this.writeMessage = writeMessage;
+    }
+
+    public String getReturnOrderImage() {
+        return returnOrderImage;
+    }
+
+    public void setReturnOrderImage(String returnOrderImage) {
+        this.returnOrderImage = returnOrderImage;
+    }
+
+    public String getReturnOrderVideo() {
+        return returnOrderVideo;
+    }
+
+    public void setReturnOrderVideo(String returnOrderVideo) {
+        this.returnOrderVideo = returnOrderVideo;
+    }
+
+    public String getReturnOrderVideoUrl() {
+        return returnOrderVideoUrl;
+    }
+
+    public void setReturnOrderVideoUrl(String returnOrderVideoUrl) {
+        this.returnOrderVideoUrl = returnOrderVideoUrl;
+    }
+
+    public String getReturnPolicyUrl() {
+        return returnPolicyUrl;
+    }
+
+    public void setReturnPolicyUrl(String returnPolicyUrl) {
+        this.returnPolicyUrl = returnPolicyUrl;
     }
 }

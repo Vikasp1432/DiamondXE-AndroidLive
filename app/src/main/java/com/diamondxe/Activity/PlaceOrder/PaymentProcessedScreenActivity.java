@@ -93,7 +93,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     private CardView order_summary_view_card;
 
     //-----------------------------------------For Payment-----------------------------------------------------------------
-    private LinearLayout  show_bank_name_lin, bank_account_details_lin, show_all_bank_lin, upi_option_lin;
+    private LinearLayout  show_bank_name_lin, bank_account_details_lin, show_all_bank_lin, upi_option_lin, credit_card_main_lin, net_banking_main_lin;
     private TextView rtgs_tv, card_type_tv, net_banking_tv,name_error_tv, company_name_error_tv,
             amount_error_tv, remark_error_tv,branch_name_tv,ifsc_code_tv,swift_code_tv,bank_name_tv,account_number_tv,mode_payment_tv,select_date_tv,
             payment_mode_error_tv, cheque_no_error_tv, date_error_tv, cheque_mode_tv, neft_mode_tv, rgts_mode_tv, wire_transfer_mode_tv,others_mode_tv,
@@ -136,6 +136,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     String PAYMENT_BY_NET_BANKING = "NET_BANKING";
     //String PAYMENT_BY_CARD = "CARD";
     String PAYMENT_BY_CARD = "PAY_PAGE";
+    String shippingCountryName = "United Arab Emirates";
 
     //-------------------------------------------------Payment End-------------------------------------------------------------
     ViewPager viewPager;
@@ -151,12 +152,11 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     int newWith;
     int width;
     Handler handler1 = new Handler(Looper.getMainLooper());
-    String userRole = "";
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
     String isCoupanApplied = "", orderCouponCode = "", orderCouponValue = "", orderCouponDiscount = "", orderSubTotal = "", orderCgst = "", orderCgstPerc = "",
             orderSgst = "", orderSgstPerc = "", orderIgst = "", orderIgstPerc = "", orderDiscountPerc = "", orderTax = "", orderSubTotalWithTax = "", orderShippingCharge = "", orderPlatformFee = "",
             orderTotalCharge = "", orderTotalChargeTax = "", orderTotalChargeWithTax = "", orderTotalTaxes = "", orderTotalAmount = "", orderTaxPerOnCharges = "", orderFinalAmount = "", orderBankCharge = "", orderBankChargePerc = "",orderFinalAmountWithOutFormat="",
-            orderCouponStatus="", orderCouponMessage="",orderWalletPonits="",availableWalletPoints="";
+            orderCouponStatus="", orderCouponMessage="",orderWalletPonits="",availableWalletPoints="",userRole="";
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -346,6 +346,29 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         upi_rel.setOnClickListener(this);
 
         upi_option_lin = findViewById(R.id.upi_option_lin);
+        credit_card_main_lin = findViewById(R.id.credit_card_main_lin);
+        net_banking_main_lin = findViewById(R.id.net_banking_main_lin);
+
+
+        if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
+        {
+            upi_option_lin.setVisibility(View.GONE);
+            credit_card_main_lin.setVisibility(View.GONE);
+            net_banking_main_lin.setVisibility(View.GONE);
+
+            cheque_et.setHint(getResources().getString(R.string.enter_utr));
+
+            rtgs_tv.setText(getResources().getString(R.string.bank_transfer));
+        }
+        else{
+            upi_option_lin.setVisibility(View.VISIBLE);
+            credit_card_main_lin.setVisibility(View.VISIBLE);
+            net_banking_main_lin.setVisibility(View.VISIBLE);
+
+            cheque_et.setHint(getResources().getString(R.string.enter_utr_cheque_no));
+
+            rtgs_tv.setText(getResources().getString(R.string.rtgs_neft));
+        }
 
         // Initialize PhonePe
         PaymentUtils.initializePhonePe(this);
@@ -541,6 +564,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             // Logging the amount for verification
             Log.d("AmountConversion", "Amount in Paisa: " + amountInPaisa);
+            //Log.d("AmountConversion", "Amount in Paisa1: " + orderFinalAmountWithOutFormat);
 
             JSONObject paymentInstrument = new JSONObject();
 
@@ -659,7 +683,14 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         mode_payment_tv.setHint(getResources().getString(R.string.select_payment_mode));
 
         cheque_et.setText("");
-        cheque_et.setHint(getResources().getString(R.string.enter_utr_cheque_no));
+
+        if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
+        {
+            cheque_et.setHint(getResources().getString(R.string.enter_utr));
+        }
+        else{
+            cheque_et.setHint(getResources().getString(R.string.enter_utr_cheque_no));
+        }
 
         select_date_tv.setText("");
         select_date_tv.setHint(getResources().getString(R.string.select_date_month_year));
@@ -1072,9 +1103,11 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
+            urlParameter.put("countryName", "" + Constant.shippingAddressNameForShowHidePaymentOption);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,showLoader,
+                    "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1125,7 +1158,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             urlParameter.put("couponCode", "" + couponCode);
             urlParameter.put("walletPoints", "" + walletPoints);
-            urlParameter.put("paymentMode", "" + paymentMode);
+            urlParameter.put("paymentMode", "" + paymentModeType);
+            //urlParameter.put("paymentMode", "" + paymentMode);
             urlParameter.put("deliveryPincode", "" + Constant.deliveryPincode);
             urlParameter.put("collectFromHub", "" + Constant.collectFromHub);
 
@@ -1171,6 +1205,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             urlParameter.put("collectFromHub", Constant.collectFromHub);
             urlParameter.put("orderType", Constant.orderType);
             urlParameter.put("certificateNo", Constant.certificateNumber);
+            urlParameter.put("deviceType", "Android");
+            urlParameter.put("deviceId", ""+ uuid);
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.CREATE_ORDER, ApiConstants.CREATE_ORDER_ID,
@@ -1239,7 +1275,6 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             }else{}
 
             // Set Final Calculation Value.
-
             getCheckOutDetailsAPI(false, coupon_point_et.getText().toString().trim(), wallet_point_et.getText().toString().toString(),
                     paymentModeType);
 
@@ -1371,7 +1406,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
-                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
 
                         Constant.paymentOrderID = CommonUtility.checkString(jObjDetails.optString("order_id"));
 
@@ -1396,6 +1431,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
                     {
@@ -1739,7 +1775,14 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             }
             else
             {
-                upi_option_lin.setVisibility(View.VISIBLE); // UPI Option Visible
+                if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
+                {
+                    upi_option_lin.setVisibility(View.GONE); // UPI Option Gone
+                }
+                else{
+                    upi_option_lin.setVisibility(View.VISIBLE); // UPI Option Visible
+                }
+
             }
         }
     }
@@ -2086,6 +2129,18 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                 Log.e("PopupWindow", "pop is null");
             }
 
+            if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
+            {
+                cheque_mode_tv.setVisibility(View.GONE);
+                neft_mode_tv.setVisibility(View.GONE);
+                rgts_mode_tv.setVisibility(View.GONE);
+            }
+            else{
+                cheque_mode_tv.setVisibility(View.VISIBLE);
+                neft_mode_tv.setVisibility(View.VISIBLE);
+                rgts_mode_tv.setVisibility(View.VISIBLE);
+            }
+
             select_mode_lbl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -2221,6 +2276,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
         if (upiApps.isEmpty()) {
             Toast.makeText(this, "No UPI apps installed", Toast.LENGTH_SHORT).show();
+            upi_option_lin.setVisibility(View.GONE);
             return;
         }
         upiOptionListAdapter = new UPIOptionListAdapter(upiApps, context , this);

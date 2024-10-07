@@ -216,10 +216,10 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             public void onClick(View v) {
                 if (save_shipping_cost_checkbox.isChecked())
                 {
-                    Constant.collectFromHub = "1";
+                    Constant.collectFromHub = "Mumbai";
                     getCheckOutDetailsAPI(false);
                 } else {
-                    Constant.collectFromHub = "0";
+                    Constant.collectFromHub = "";
                     getCheckOutDetailsAPI(false);
                 }
             }
@@ -312,14 +312,15 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 }else{}
 
                 if (isShippingAddressValid && isBillingAddressValid) {
-                    shipping_rel.setBackgroundResource(R.drawable.background_image_white);
+
+                    /*shipping_rel.setBackgroundResource(R.drawable.background_image_white);
                     shipping_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
 
                     kyc_rel.setBackgroundResource(R.drawable.background_image_purple);
                     kyc_img.setColorFilter(ContextCompat.getColor(context, R.color.white));
 
                     payment_rel.setBackgroundResource(R.drawable.background_image_white);
-                    payment_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
+                    payment_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));*/
 
                     address_main_lin.setVisibility(View.GONE);
 
@@ -359,7 +360,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             finish();
         }
         else{
-            Log.e("------document_status-------- :" , document_status.toString());
+           // Log.e("------document_status-------- :" , document_status.toString());
             if(document_status.equalsIgnoreCase("0"))
             {
                 Constant.documentStatus = document_status; // For Check Validation Upload At least one document.
@@ -419,14 +420,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         {
             if(!billingAddressArrayList.isEmpty())
             {
-                shipping_rel.setBackgroundResource(R.drawable.background_image_white);
+                /*shipping_rel.setBackgroundResource(R.drawable.background_image_white);
                 shipping_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
 
                 kyc_rel.setBackgroundResource(R.drawable.background_image_white);
                 kyc_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
 
                 payment_rel.setBackgroundResource(R.drawable.background_image_purple);
-                payment_img.setColorFilter(ContextCompat.getColor(context, R.color.white));
+                payment_img.setColorFilter(ContextCompat.getColor(context, R.color.white));*/
 
                 Intent intent = new Intent(activity, PaymentProcessedScreenActivity.class);
                 startActivity(intent);
@@ -450,6 +451,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         getShippingAddressListAPI(false);
         getBillingAddressListAPI(true);
+
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
         if(userRole.equalsIgnoreCase("BUYER"))
@@ -594,6 +596,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                                 isSelectShippingAddress = true;
                                 Constant.deliveryPincode = CommonUtility.checkString(objectCodes.optString("PinCode"));
                                 Constant.shippingAddressID = CommonUtility.checkString(objectCodes.optString("AddressId"));
+                                Constant.shippingAddressNameForShowHidePaymentOption = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
                             }
                             else{
                                 model.setSelected(false);
@@ -1036,6 +1039,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
             Constant.deliveryPincode = shippingAddressArrayList.get(position).getPinCode();
             Constant.shippingAddressID = shippingAddressArrayList.get(position).getAddressId();
+            Constant.shippingAddressNameForShowHidePaymentOption = shippingAddressArrayList.get(position).getCountryNameS();
             addressListAdapter.notifyDataSetChanged();
         }
         else  if(action.equalsIgnoreCase("editAddress"))

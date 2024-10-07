@@ -75,6 +75,7 @@
     <color name="black_10">#03000000</color>
     <color name="grey_light">#6D6C6D</color>
     <color name="purple_50">#267E3080</color>
+    <color name="purple_20">#337E3080</color>
 
 
 </resources>

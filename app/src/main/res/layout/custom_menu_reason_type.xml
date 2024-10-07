@@ -11,9 +11,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginLeft="@dimen/dimen_25"
         android:layout_marginTop="@dimen/dimen_17"
-        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_25"
         android:layout_marginBottom="@dimen/dimen_10"
         android:background="@color/white"
         android:elevation="@dimen/dimen_8"
@@ -52,65 +52,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_10"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/too_expensive_tv"
-                        style="@style/MediumFontType"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_reason"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dimen_8"
-                        android:layout_marginTop="@dimen/dimen_4"
-                        android:layout_marginRight="@dimen/dimen_8"
-                        android:hint="customMenuBusin"
-                        android:paddingLeft="@dimen/dimen_4"
-                        android:paddingTop="@dimen/dimen_4"
-                        android:paddingRight="@dimen/dimen_4"
-                        android:paddingBottom="@dimen/dimen_4"
-                        android:text="@string/too_expensive"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/wrong_diamond_tv"
-                        style="@style/MediumFontType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_8"
-                        android:layout_marginTop="@dimen/dimen_8"
-                        android:layout_marginRight="@dimen/dimen_8"
-                        android:hint="customMenuBusin"
-                        android:paddingLeft="@dimen/dimen_4"
-                        android:paddingTop="@dimen/dimen_4"
-                        android:paddingRight="@dimen/dimen_4"
-                        android:paddingBottom="@dimen/dimen_4"
-                        android:text="@string/wrong_diamond"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/other_tv"
-                        style="@style/MediumFontType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_8"
-                        android:layout_marginTop="@dimen/dimen_8"
-                        android:layout_marginRight="@dimen/dimen_8"
-                        android:hint="customMenuBusin"
-                        android:paddingLeft="@dimen/dimen_4"
-                        android:paddingTop="@dimen/dimen_4"
-                        android:paddingRight="@dimen/dimen_4"
-                        android:paddingBottom="@dimen/dimen_4"
-                        android:text="@string/other"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14"
-                        tools:ignore="HardcodedText" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
             </ScrollView>

@@ -16,15 +16,20 @@ import static com.diamondxe.ApiCalling.ApiConstants.GET_KYC_DETAILS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_PROFILE;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_RECOMMENDED_DIAMONDS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_WISHLIST_DETAILS;
+import static com.diamondxe.ApiCalling.ApiConstants.ORDER_CANCEL_REASON;
 import static com.diamondxe.ApiCalling.ApiConstants.PHONE_PE_PAYMENT_OPTION;
 
 import static java.security.AccessController.getContext;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.TimeZone;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -42,6 +47,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.diamondxe.Activity.TransparentActivity;
 import com.diamondxe.Interface.JsonResponce;
+import com.diamondxe.MyApplication;
 import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
@@ -57,6 +63,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -157,8 +164,32 @@ public class VollyApiActivity {
             } else {
                 Log.v("Diamond", "isLoaderHide4 : " + isLoaderHide);
                 if(!TransparentActivity.active){
+
                     Log.e("Diamond", "isLoaderHide5 : " + isLoaderHide);
-                    context.startActivity(new Intent(context, TransparentActivity.class));
+                    Log.e("Diamond", "isLoaderHide6 : " + MyApplication.isTransparentActivityRunning());
+
+                    if (!MyApplication.isTransparentActivityRunning()) {
+                        context.startActivity(new Intent(context, TransparentActivity.class));
+                    }
+                    else{
+                        //Toast.makeText(context, "TransparentActivity is already running", Toast.LENGTH_SHORT).show();
+                    }
+
+                    /*ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                    List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
+                    if (!tasks.isEmpty()) {
+                        ComponentName topActivity = tasks.get(0).topActivity;
+                        if (topActivity.getClassName().equals("com.diamondxe.Activity.TransparentActivity")) {
+                            // TransparentActivity is already running
+                            //Toast.makeText(context, "TransparentActivity is already running", Toast.LENGTH_SHORT).show();
+                        } else {
+                            context.startActivity(new Intent(context, TransparentActivity.class));
+                        }
+                    } else {
+                        context.startActivity(new Intent(context, TransparentActivity.class));
+                    }*/
+
+                    //context.startActivity(new Intent(context, TransparentActivity.class));
                 }
             }
         } else {
@@ -178,8 +209,8 @@ public class VollyApiActivity {
             _requestType.equalsIgnoreCase(GET_CURRENCY_RATES) || _requestType.equalsIgnoreCase(GET_PROFILE) ||
             _requestType.equalsIgnoreCase(GET_ADDRESS_SHIPPING) || _requestType.equalsIgnoreCase(GET_ADDRESS_BILLING) ||
             _requestType.equalsIgnoreCase(GET_KYC_DETAILS) || _requestType.equalsIgnoreCase(DEALER_SETTING) ||
-            _requestType.equalsIgnoreCase(GET_DXE_BANK_DETAILS) || _requestType.equalsIgnoreCase(PHONE_PE_PAYMENT_OPTION) ||
-            _requestType.equalsIgnoreCase(GET_BANK_CHARGES))
+            _requestType.equalsIgnoreCase(PHONE_PE_PAYMENT_OPTION) ||
+            _requestType.equalsIgnoreCase(GET_BANK_CHARGES) || _requestType.equalsIgnoreCase(ORDER_CANCEL_REASON))
             {
                 Uri.Builder builder = Uri.parse(ApiConstants.DOMAIN_NAME + _requestType).buildUpon();
                 for (Map.Entry<String, String> entry : _dataToPost.entrySet()) {
@@ -325,10 +356,9 @@ public class VollyApiActivity {
                      timeZoneCountryCode = TimeZoneCountryCodeMapper.getCountryCodeFromTimeZone(timeZoneId);
 
                     // Use the country code as needed
-                     Log.e("Country_Code_Using_TimeZone: " , timeZoneId);
-                     Log.e("Country_Code_Using_TimeZone1: " , timeZoneCountryCode);
-                     //Log.e("Country_Code_Using_TimeZone2: " , uuid);
-
+                    // Log.e("Country_Code_Using_TimeZone: " , timeZoneId);
+                    // Log.e("Country_Code_Using_TimeZone1: " , timeZoneCountryCode);
+                    //Log.e("Country_Code_Using_TimeZone2: " , uuid);
 
                      authToken= CommonUtility.getGlobalString(context, "mobile_auth_token");
                     _dataToPost.put("apikey", "b8795c60-1400-4d70-b254-837a2a1da9e7");
@@ -374,7 +404,6 @@ public class VollyApiActivity {
             jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(25000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsObjRequest);
             //jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 10, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
 
         } catch (Exception e) {
             e.printStackTrace();

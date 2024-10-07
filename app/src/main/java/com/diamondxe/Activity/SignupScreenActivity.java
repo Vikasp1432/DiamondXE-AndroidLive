@@ -125,6 +125,8 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
     boolean isSupplierBusinessDocUpload = false;
     String supplierGSTNoVerified = "", supplierPanNoVerified = "", whoSelectCompanyType = "", whoSelectBusinessNatureType="";
 
+    private boolean isApiCalling = false; // Flag to track API call
+
     String superviosrPersonPhCountryCode="+91", supplierCompanyPhCountryCode="+91";
     String dealerBasicPhCountryCode="+91", dealerCompanyPhCountryCode="+91";
     String buyerPhCountryCode="+91";
@@ -167,7 +169,6 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
     private boolean isArrowDownCompanyBasic = false;
     private boolean isArrowDownCompanyAuth = false;
     private boolean isArrowDownCompanyPassport = false;
-
     private ImageView drop_arrow_company_details_img, drop_arrow_company_kyc_img, drop_arrow_basic_details_img, drop_arrow_auth_img, drop_passport_img,
             pan_verify_img, company_gst_no_verify_img, company_gst_doc_verify_img, company_pan_doc_verify_img, company_iec_doc_verify_img,
             basic_country_img, auth_aadhar_no_verify_img, auth_pan_no_verify_img, auth_pan_doc_verify_img, auth_aadhar_front_doc_verify_img,
@@ -315,8 +316,11 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
         password_et = findViewById(R.id.password_et);
         confirm_password_et = findViewById(R.id.confirm_password_et);
         country_tv = findViewById(R.id.country_tv);
+        country_tv.setOnClickListener(this);
         state_tv = findViewById(R.id.state_tv);
+        state_tv.setOnClickListener(this);
         city_tv = findViewById(R.id.city_tv);
+        city_tv.setOnClickListener(this);
         pincode_et = findViewById(R.id.pincode_et);
         address_line1_et = findViewById(R.id.address_line1_et);
         address_line2_et = findViewById(R.id.address_line2_et);
@@ -461,16 +465,31 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
         company_email_error_tv = findViewById(R.id.company_email_error_tv);
         company_country_code = findViewById(R.id.company_country_code);
         company_mobile_number_error_tv = findViewById(R.id.company_mobile_number_error_tv);
+
         company_country_tv = findViewById(R.id.company_country_tv);
+        company_country_tv.setOnClickListener(this);
+
         company_country_error_tv = findViewById(R.id.company_country_error_tv);
+
         company_state_tv = findViewById(R.id.company_state_tv);
+        company_state_tv.setOnClickListener(this);
+
         company_state_error_tv = findViewById(R.id.company_state_error_tv);
+
         company_city_tv = findViewById(R.id.company_city_tv);
+        company_city_tv.setOnClickListener(this);
+
         company_city_error_tv = findViewById(R.id.company_city_error_tv);
         company_address_line1_error_tv = findViewById(R.id.company_address_line1_error_tv);
+
         company_type_tv = findViewById(R.id.company_type_tv);
+        company_type_tv.setOnClickListener(this);
+
         company_type_error_tv = findViewById(R.id.company_type_error_tv);
+
         business_nature_tv = findViewById(R.id.business_nature_tv);
+        business_nature_tv.setOnClickListener(this);
+
         business_nature_error_tv = findViewById(R.id.business_nature_error_tv);
         company_pincode_error_tv = findViewById(R.id.company_pincode_error_tv);
 
@@ -1902,35 +1921,47 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
 
             }else{}
         }
-        else if(id == R.id.country_lin)
+        else if(id == R.id.country_lin || id == R.id.country_tv)
         {
-            Utils.hideKeyboard(activity);
-            countryCodeFor = "";
-            showCountryCode = "";
-            getCountryListAPI(false);
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                countryCodeFor = "";
+                showCountryCode = "";
+                getCountryListAPI(false);
+            } else{}
         }
-        else if(id == R.id.state_lin)
+        else if(id == R.id.state_lin || id == R.id.state_tv)
         {
             if(!country_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                Utils.hideKeyboard(activity);
-                stateCodeFor = "";
-                getStateListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    Utils.hideKeyboard(activity);
+                    stateCodeFor = "";
+                    getStateListAPI(false);
+                } else{}
             }
             else
             {
                 country_error_tv.setVisibility(View.VISIBLE);
                 country_lin.setBackgroundResource(R.drawable.border_red_line_view);
             }
-
         }
-        else if(id == R.id.city_lin)
+        else if(id == R.id.city_lin  || id == R.id.city_tv)
         {
             Utils.hideKeyboard(activity);
             if(!state_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                cityCodeFor="";
-                getCityListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    Utils.hideKeyboard(activity);
+                    cityCodeFor="";
+                    getCityListAPI(false);
+                } else{}
             }
             else
             {
@@ -1938,20 +1969,29 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 state_lin.setBackgroundResource(R.drawable.border_red_line_view);
             }
         }
-        else if(id == R.id.company_country_lin)
+        else if(id == R.id.company_country_lin || id == R.id.company_country_tv)
         {
-            Utils.hideKeyboard(activity);
-            countryCodeFor = "companyDetails";
-            showCountryCode = "";
-            getCountryListAPI(false);
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                countryCodeFor = "companyDetails";
+                showCountryCode = "";
+                getCountryListAPI(false);
+            } else{}
         }
-        else if(id == R.id.company_state_lin)
+        else if(id == R.id.company_state_lin || id == R.id.company_state_tv)
         {
             if(!company_country_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                Utils.hideKeyboard(activity);
-                stateCodeFor = "companyDetails";
-                getStateListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    Utils.hideKeyboard(activity);
+                    stateCodeFor = "companyDetails";
+                    getStateListAPI(false);
+                } else{}
+
             }
             else
             {
@@ -1960,13 +2000,17 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
             }
 
         }
-        else if(id == R.id.company_city_lin)
+        else if(id == R.id.company_city_lin || id == R.id.company_city_tv)
         {
             Utils.hideKeyboard(activity);
             if(!company_state_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                cityCodeFor = "companyDetails";
-                getCityListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    cityCodeFor = "companyDetails";
+                    getCityListAPI(false);
+                } else{}
             }
             else
             {
@@ -2011,19 +2055,25 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 supplier_state_lin.setBackgroundResource(R.drawable.border_red_line_view);
             }
         }
-
-
-        else if(id == R.id.company_type_lin)
+        else if(id == R.id.company_type_lin || id == R.id.company_type_tv)
         {
-            Utils.hideKeyboard(activity);
-            whoSelectCompanyType = "";
-            initiateCompanyTypePopupWindow();
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                whoSelectCompanyType = "";
+                initiateCompanyTypePopupWindow();
+            } else{}
         }
-        else if(id == R.id.business_nature_lin)
+        else if(id == R.id.business_nature_lin || id == R.id.business_nature_tv)
         {
-            Utils.hideKeyboard(activity);
-            whoSelectBusinessNatureType = "";
-            initiateBusinessTypePopupWindow();
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                whoSelectBusinessNatureType = "";
+                initiateBusinessTypePopupWindow();
+            } else{}
         }
         else if(id == R.id.dob_lin)
         {
@@ -2553,7 +2603,9 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 mDropdown.dismiss();
             }
             mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = mInflater.inflate(R.layout.custom_menu_company_type, null);
+            View layout = mInflater.inflate(R.layout.custom_menu_sign_company_type, null);
+
+            isApiCalling = false;
 
             final TextView proprietorship_tv = layout.findViewById(R.id.proprietorship_tv);
             final TextView llp_tv = layout.findViewById(R.id.llp_tv);
@@ -2723,7 +2775,9 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 mDropdown.dismiss();
             }
             mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = mInflater.inflate(R.layout.custom_menu_business_type, null);
+            View layout = mInflater.inflate(R.layout.custom_menu_sign_business_type, null);
+
+            isApiCalling = false;
 
             final TextView rerailer_tv = layout.findViewById(R.id.rerailer_tv);
             final TextView wholesaler_tv = layout.findViewById(R.id.wholesaler_tv);
@@ -4511,7 +4565,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
 
             switch (service_ID) {
                 case ApiConstants.GET_COUNTRY_LIST_ID:
-
+                    isApiCalling = false;
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -4551,7 +4605,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                     break;
 
                 case ApiConstants.GET_STATE_LIST_ID:
-
+                    isApiCalling = false;
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -4587,7 +4641,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                     break;
 
                 case ApiConstants.GET_CITY_LIST_ID:
-
+                    isApiCalling = false;
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -4972,6 +5026,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
             }
 
         } catch (Exception e) {
+            isApiCalling = false;
             e.printStackTrace();
         }
 
@@ -4979,7 +5034,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
 
     @Override
     public void getErrorResponce(String error, int service_ID) {
-
+        isApiCalling = false;
     }
 
     private void showCountryCodeList()
@@ -5262,8 +5317,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                     Picasso.with(context)
                             .load(model.getImage())
                             .into(basic_country_img);
-                }
-                else {}
+                } else {}
             }
             else if(countryCodeFor.equalsIgnoreCase("companyDetails"))
             {

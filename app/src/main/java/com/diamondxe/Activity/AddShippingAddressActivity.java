@@ -54,7 +54,8 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
     private ImageView back_img,country_img;
     private LinearLayout country_lin,state_lin ,city_lin,mobile_number_lin,country_code_lin,gst_business_number_lin ;
     private TextView country_tv, country_error_tv,state_tv, state_error_tv,city_tv, city_error_tv, pincode_error_tv,country_code,
-            mobile_number_error_tv,email_error_tv, cancel_tv,update_tv,address_line1_error_tv, first_name_error_tv, last_name_error_tv;
+            mobile_number_error_tv,email_error_tv, cancel_tv,update_tv,address_line1_error_tv, first_name_error_tv, last_name_error_tv,
+            title_tv;
     private EditText first_name_et, last_name_et, address_line1_et,address_line2_et, pincode_et,mobile_number_et, email_et,gts_number, business_number, search_et;
     CheckBox set_as_default_address_check;
     private Activity activity;
@@ -63,7 +64,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
+    private boolean isApiCalling = false; // Flag to track API call
     private BottomSheetDialog dialog;
     RecyclerView recycler_view;
     ArrayList<CountryListModel> countryArrayList;
@@ -102,11 +103,22 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
         first_name_error_tv = findViewById(R.id.first_name_error_tv);
         last_name_error_tv = findViewById(R.id.last_name_error_tv);
+
+        title_tv = findViewById(R.id.title_tv);
+
         country_tv = findViewById(R.id.country_tv);
+        country_tv.setOnClickListener(this);
+
         country_error_tv = findViewById(R.id.country_error_tv);
+
         state_tv = findViewById(R.id.state_tv);
+        state_tv.setOnClickListener(this);
+
         state_error_tv = findViewById(R.id.state_error_tv);
+
         city_tv = findViewById(R.id.city_tv);
+        city_tv.setOnClickListener(this);
+
         city_error_tv = findViewById(R.id.city_error_tv);
         pincode_error_tv = findViewById(R.id.pincode_error_tv);
         country_code = findViewById(R.id.country_code);
@@ -148,8 +160,10 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
         // If Address is Edit
         if(Constant.editShippingAddress.equalsIgnoreCase("yes"))
         {
+            title_tv.setText(getResources().getString(R.string.edit_shipping_address));
             setData();
         }else{
+            title_tv.setText(getResources().getString(R.string.add_shipping_address));
         }
     }
 
@@ -186,6 +200,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
         else{
             set_as_default_address_check.setChecked(false);
         }
+
     }
 
     // Get CheckBox Checked or Unchecked Value.
@@ -348,18 +363,33 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
             countryCodeForNumber = "yes";
             getCountryListAPI(false);
         }
-        else if(id == R.id.country_lin)
+        else if(id == R.id.country_lin || id == R.id.country_tv)
+        {
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                countryCodeForNumber = "";
+                getCountryListAPI(false);
+            } else{}
+        }
+        /*else if(id == R.id.country_tv)
         {
             Utils.hideKeyboard(activity);
             countryCodeForNumber = "";
             getCountryListAPI(false);
-        }
-        else if(id == R.id.state_lin)
+        }*/
+        else if(id == R.id.state_lin || id == R.id.state_tv)
         {
             if(!country_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                Utils.hideKeyboard(activity);
-                getStateListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    Utils.hideKeyboard(activity);
+                    getStateListAPI(false);
+                }
+                else{}
             }
             else
             {
@@ -368,12 +398,17 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
             }
 
         }
-        else if(id == R.id.city_lin)
+        else if(id == R.id.city_lin || id == R.id.city_tv)
         {
             Utils.hideKeyboard(activity);
             if(!state_tv.getText().toString().trim().equalsIgnoreCase(""))
             {
-                getCityListAPI(false);
+                if(!isApiCalling) // Check if API is not already calling
+                {
+                    isApiCalling = true; // Set flag to true
+                    getCityListAPI(false);
+                }
+                else{}
             }
             else
             {
@@ -537,7 +572,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
             pincode_et.setBackgroundResource(R.drawable.border_red_line_view);
             pincode_et.requestFocus();
             return false;
-        } else if (mobileNumber.length() == 0 || mobileNumber == null || mobileNumber.equalsIgnoreCase("")) {
+        } /*else if (mobileNumber.length() == 0 || mobileNumber == null || mobileNumber.equalsIgnoreCase("")) {
             mobile_number_error_tv.setVisibility(View.VISIBLE);
             mobile_number_lin.setBackgroundResource(R.drawable.border_red_line_view);
             mobile_number_error_tv.setText(getResources().getString(R.string.phone_number_required));
@@ -549,7 +584,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
             mobile_number_error_tv.setText(getResources().getString(R.string.phone_number_valid_msg));
             mobile_number_lin.requestFocus();
             return false;
-        }
+        }*/
         else if (email.length() == 0 || email == null|| email.equalsIgnoreCase("")) {
             email_error_tv.setVisibility(View.VISIBLE);
             email_et.setBackgroundResource(R.drawable.border_red_line_view);
@@ -580,6 +615,8 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
             switch (service_ID) {
                 case ApiConstants.GET_COUNTRY_LIST_ID:
+
+                    isApiCalling = false;
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
@@ -621,6 +658,8 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
                 case ApiConstants.GET_STATE_LIST_ID:
 
+                    isApiCalling = false;
+
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -656,6 +695,8 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
                     break;
 
                 case ApiConstants.GET_CITY_LIST_ID:
+
+                    isApiCalling = false;
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {

@@ -478,16 +478,16 @@ public class ShippingBillingAddressListActivity extends SuperActivity implements
         else if(action.equalsIgnoreCase("deleteBillingAddress"))
         {
             AddressListModel model = billingAddressArrayList.get(position);
-
-            lastPosition = position;
             wheretoRemove = "billingAddress";
+            lastPosition = position;
 
             if(billingAddressArrayList.get(position).getIsDefault().equalsIgnoreCase("1"))
             {
                 Toast.makeText(activity, getResources().getString(R.string.default_address_can_not_delete), Toast.LENGTH_SHORT).show();
             }
             else{
-                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg), model.getAddressId(),lastPosition);
+                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg),
+                        model.getAddressId(),lastPosition);
             }
         }
     }

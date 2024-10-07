@@ -48,7 +48,6 @@ public class DealerMarkupScreenActivity extends SuperActivity implements Recycle
     private TextView update_tv, reset_tv;
     private RecyclerView recycler_view;
     ArrayList<DealerMarkupListModel> modelArrayList;
-
     DealerMarkupAdapter dealerMarkupAdapter;
     private Activity activity;
     private Context context;
@@ -132,7 +131,6 @@ public class DealerMarkupScreenActivity extends SuperActivity implements Recycle
         if (Utils.isNetworkAvailable(context))
         {
             urlParameter = new HashMap<String, String>();
-
 
             urlParameter.put("sessionId", "" + uuid);
 

@@ -65,7 +65,6 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchResultActivity extends SuperActivity implements RecyclerInterface {
-
     private ImageView back_img, bottom_search_icon, card_view_img, list_view_img, sort_img, arrow_img, bottom_search_icon_cross_country,
             country_drop_img;
     private RecyclerView recycler_view, recycler_view_apply_filter, recycler_view_country_list;
@@ -74,71 +73,49 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     private ProgressBar progressBar;
     private CardView search_circle_card, search_circle_card1_cross_country,curve_rel_country;
     private RelativeLayout show_popup_rel_country, card_popup1_country, country_layout_rel;
-
     private View translucent_background;
     private Animation rotateAnimation;
-
     private CountryListModel lastSelectedCountry; // Track the last selected country
-
     private CircleImageView selected_country_img;
     private TextView selected_country_name,selected_country_desc;
-
     private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
-
     NestedScrollView nestedView;
     private boolean isArrowDown = false;
     private LinearLayout filter_type_lin;
     private CardView card_view_natural, card_view_grown,image_card_view_shimmer;
     private TextView natural_tv, grown_tv, error_tv;
-
     String manageAPICall = "",user_login="";
     ColorTypeAppliedFilterDataAdapter colorTypeAppliedFilterDataAdapter;
-
     int lastPosition = 0;
     int lastIndex;
-
     private Spinner spinner_sorting_price;
-
     SearchResultListAdapter searchResultListAdapter;
     SearchResultListWiseAdapter searchResultListWiseAdapter;
     ArrayList<SearchResultTypeModel> modelArrayList;
     ArrayList<CountryListModel> countryArrayList;
     ArrayList<CountryListModel> selectedItems;
-
     CurrencyListAdapter countryListAdapter;
-
     ArrayList<CountryListModel> localCurrencyArrayList = new ArrayList<>();
-
     int pageNo = 1;
     private EndlessRecyclerViewScrollListener scrollListener;
-
     private Activity activity;
     private Context context;
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
     private ShimmerFrameLayout shimmer_view_container;
-
     String cardViewAndListViewParttenShow = "CardView";
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
     String userRole = "";
-
     LinearLayoutManager layoutManager;
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_result);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         context = activity = this;
 
@@ -225,7 +202,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         country_layout_rel = findViewById(R.id.country_layout_rel);
         country_layout_rel.setOnClickListener(this);
 
-
         home_rel = findViewById(R.id.home_rel);
         home_rel.setOnClickListener(this);
 
@@ -304,32 +280,14 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         //layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_view_country_list.setLayoutManager(layoutManagerCountryList);
 
-
         recycler_view_apply_filter = findViewById(R.id.recycler_view_apply_filter);
         LinearLayoutManager layoutManagerAppliedFilter = new LinearLayoutManager(activity);
         layoutManagerAppliedFilter.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_view_apply_filter.setLayoutManager(layoutManagerAppliedFilter);
         recycler_view_apply_filter.setNestedScrollingEnabled(false);
 
-       /* for (int i = 0; i <Constant.cutTypeArrayList.size() ; i++)
-        {
-            if(Constant.cutTypeArrayList.get(i).isSelected())
-            {
-                AttributeDetailsModel model = new AttributeDetailsModel();
-
-                model.setDisplayAttr(Constant.cutTypeArrayList.get(i).getDisplayAttr());
-                model.setAttribCode(Constant.cutTypeArrayList.get(i).getAttribCode());
-                model.setSelected(true);
-
-                Constant.cutTypeArrayList1.add(model);
-            }
-        }*/
-
         colorTypeAppliedFilterDataAdapter = new ColorTypeAppliedFilterDataAdapter(Constant.colorTypeFilterApploedArrayList,context,this);
         recycler_view_apply_filter.setAdapter(colorTypeAppliedFilterDataAdapter);
-
-        /*clarityTypeAppliedFilterDataAdapter = new ClarityTypeAppliedFilterDataAdapter(Constant.clarityTypeFilterApploedArrayList,context,this);
-        recycler_view_clarity_apply_filter.setAdapter(clarityTypeAppliedFilterDataAdapter);*/
 
         // CardView Type Format List.
         searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole);
@@ -364,11 +322,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         {
             labGrownCardTabColorSet();
         }
-
-        /*pageNo = 1;
-        onBindDetails(true);*/
-
-        //Log.e("currencyArrayList : ", "" + Constant.currencyArrayList.size());
 
         updateLocalCurrencyList();
 
@@ -440,9 +393,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole);
         recycler_view.setAdapter(searchResultListAdapter);
     }
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onClick(View view)
@@ -692,8 +642,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     protected void onResume() {
         super.onResume();
         // If User Click Add to Cart and WishList Full List not Reload.
-        //Toast.makeText(activity, "manageAPICall : " + manageAPICall, Toast.LENGTH_SHORT).show();
-
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
         if(manageAPICall.equalsIgnoreCase(""))
@@ -1228,7 +1176,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                             modelArrayList.add(model);
                         }
 
-
                         for (int i = 0; i <modelArrayList.size() ; i++)
                         {
 
@@ -1266,7 +1213,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {
-                        //getCountryListAPI(true);
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
@@ -1452,44 +1398,8 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     {
         for (int i = 0; i <modelArrayList.size() ; i++)
         {
-            /*double subTotal = Double.parseDouble(modelArrayList.get(i).getSubtotal());
-            double currencyValue = Double.parseDouble(value);
-            double valueType;
-
-            // currencyCode Not Equal INR Then Using INR Currency Value INT Value "1"
-            if(currencyCode.equalsIgnoreCase("INR"))
-            {
-                valueType  = Double.parseDouble(value);
-            }else{
-                valueType = 1;
-            }
-
-           // Log.e("----Diamond--- : ", "----finalAmount11--- : " + currencyValue);
-            double currencyValueType = currencyValue/valueType;
-           // Log.e("----Diamond--- : ", "----finalAmount111--- : " + currencyValueType);
-            double finalAmount = subTotal*currencyValueType;
-           // Log.e("----Diamond--- : ", "----finalAmount1111--- : " + finalAmount);
-            String finalSubTotal = String.valueOf(finalAmount);
-
-           // Log.e("----Diamond--- : ", "----finalAmount11111--- : " + finalSubTotal);
-            String subTotalFormat = String.format("%.2f", finalAmount);*/
-
-            //double subTotal = Double.parseDouble(modelArrayList.get(i).getSubtotal());
-           // Log.e("----Diamond--- : ", "----finalAmount11111--- : " + subTotalFormat);
-
             String subTotalFormat =  CommonUtility.currencyConverter(value, currencyCode, modelArrayList.get(i).getSubtotal());
-
-           /* if(cardViewAndListViewParttenShow.equalsIgnoreCase("CardView"))
-            {
-                String getCurrencySymbol = CommonUtility.getCurrencySymbol(currencyCode);
-
-                modelArrayList.get(i).setShowingSubTotal(subTotalFormat);
-                modelArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
-            }
-            else{}*/
-
             String getCurrencySymbol = CommonUtility.getCurrencySymbol(currencyCode);
-
             modelArrayList.get(i).setShowingSubTotal(subTotalFormat);
             modelArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
 
@@ -1542,16 +1452,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
     void setFirstPositionCountry()
     {
-        /*if(!Constant.currencyArrayList.get(0).getImage().equalsIgnoreCase(""))
-        {
-            Picasso.with(context)
-                    .load(Constant.currencyArrayList.get(0).getImage())
-                    .into(selected_country_img);
-        } else{}
-
-        selected_country_name.setText(Constant.currencyArrayList.get(0).getCurrency());
-        selected_country_desc.setText(Constant.currencyArrayList.get(0).getDesc());*/
-
         if(!selectedCurrencyImage.equalsIgnoreCase(""))
         {
             Picasso.with(context)
@@ -1601,11 +1501,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             //CountryListModel model = Constant.currencyArrayList.get(position);
             CountryListModel model = localCurrencyArrayList.get(position);
             SearchResultTypeModel resultModel = modelArrayList.get(position);
-
-            // If lastSelectedCountry is not null, add it back to Constant.currencyArrayList
-            /*if (lastSelectedCountry != null) {
-                Constant.currencyArrayList.add(lastSelectedCountry);
-            }*/
 
             if(!model.getImage().equalsIgnoreCase(""))
             {
@@ -1816,12 +1711,10 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
                         if(Constant.colorTypeFilterApploedArrayList.get(i).getFilterType().equalsIgnoreCase("SearchFrm"))
                         {
-                           // Toast.makeText(activity, "ClickPosition : " + Constant.colorTypeFilterApploedArrayList.get(i).getFilterType(), Toast.LENGTH_SHORT).show();
                             Constant.searchKeyword = "";
                         }
                         else if(Constant.colorTypeFilterApploedArrayList.get(i).getFilterType().equalsIgnoreCase("PriceFrm"))
                         {
-                           // Toast.makeText(activity, "ClickPosition : " + Constant.colorTypeFilterApploedArrayList.get(i).getFilterType(), Toast.LENGTH_SHORT).show();
                             Constant.priceFrm = "";
                         }
                         else if(Constant.colorTypeFilterApploedArrayList.get(i).getFilterTypeTo().equalsIgnoreCase("PriceTo"))

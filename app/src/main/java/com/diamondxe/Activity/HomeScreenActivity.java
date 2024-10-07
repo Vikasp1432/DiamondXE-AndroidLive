@@ -4,7 +4,6 @@ import static com.diamondxe.ApiCalling.ApiConstants.CART_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CATEGORY_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.FACEBOOK_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.HOME_FRAGMENT;
-import static com.diamondxe.ApiCalling.ApiConstants.INDIA_COUNTRY_CODE;
 import static com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_CODE;
 import static com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_DESC;
 import static com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_VALUE;
@@ -13,15 +12,12 @@ import static com.diamondxe.ApiCalling.ApiConstants.INSTAGRAM_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.LINKDIN_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.WISHLIST_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.YOUTUBE_URL;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -47,11 +43,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -62,17 +56,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.diamondxe.Activity.MyOrder.MyOrderListScreenActivity;
 import com.diamondxe.Adapter.CurrencyListAdapter;
 import com.diamondxe.Adapter.DrawerItemCustomAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.CountryListModel;
 import com.diamondxe.Beans.DrawerMenuModel;
-import com.diamondxe.Beans.SearchResultTypeModel;
 import com.diamondxe.Fragment.AddToCartListFragment;
 import com.diamondxe.Fragment.CategoryFragmentList;
 import com.diamondxe.Fragment.HomeFragment;
@@ -90,19 +82,15 @@ import com.diamondxe.Utils.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -137,7 +125,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     NetworkConsumer networkConsumer;
     public String image="";
     private ExpandableListView recyclerview;
-    private ImageView notification_img,pincode_img, instagram_img, facebook_img, linkdin_img, youtube_img, chat_icon_img;
+    private ImageView notification_img,pincode_img, instagram_img, facebook_img, linkdin_img, youtube_img;
     private CircleImageView flag_img;
     private DrawerItemCustomAdapter adapter;
     private ArrayList<DrawerMenuModel> menuList = new ArrayList<>();
@@ -158,9 +146,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         flag_img = findViewById(R.id.flag_img);
         layout = findViewById(R.id.toolbar_layout);
 
-
         toolbar = findViewById(R.id.toolbar);
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.light_purple));
         setSupportActionBar(toolbar);
         title_tv = findViewById(R.id.title_tv);
         contentView = findViewById(R.id.content);
@@ -180,7 +166,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         drawer_layout = findViewById(R.id.drawer_layout);
 
         login_type_role_tv = findViewById(R.id.login_type_role_tv);
-        chat_icon_img = findViewById(R.id.chat_icon_img);
         user_img = findViewById(R.id.user_img);
         username_tv = findViewById(R.id.username_tv);
 
@@ -195,7 +180,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         {
             version_code_tv.setText(getResources().getString(R.string.version_name) + " - " + versionName);
         }else{}
-
 
         setDataToAdepter();
         setUserData();
@@ -231,27 +215,33 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         drawer_layout.setDrawerElevation(0); // Ensure there's no elevation
         drawer_layout.setDrawerShadow(new ColorDrawable(Color.TRANSPARENT), GravityCompat.END);
 
+        // Drawer Half Animation.
         drawer_layout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                                           @RequiresApi(api = Build.VERSION_CODES.P)
+                                           @RequiresApi(api = Build.VERSION_CODES.P) // Requires API level P or higher
                                            @Override
                                            public void onDrawerSlide(View drawerView, float slideOffset) {
                                               // labelView.setVisibility(slideOffset > 0 ? View.VISIBLE : View.GONE);
 
-                                               // Scale the View based on current slide offset
+                                               // Calculate the scaled offset for the content view based on the drawer's slide offset
                                                final float diffScaledOffset = slideOffset * (1 - END_SCALE);
                                                final float offsetScale = 1 - diffScaledOffset;
+
+                                               // Apply scaling transformation to the content view
                                                contentView.setScaleX(offsetScale);
                                                contentView.setScaleY(offsetScale);
 
-                                               // Translate the View, accounting for the scaled width
+                                               // Calculate translation for the content view based on the drawer's position
                                                final float xOffset = drawerView.getWidth() * slideOffset;
                                                final float xOffsetDiff = contentView.getWidth() * diffScaledOffset / 3;
                                                final float xTranslation = xOffset - xOffsetDiff;
-                                               contentView.setTranslationX(xTranslation);
+
+                                               // Apply translation to the content view
+                                               contentView.setTranslationX(xTranslation); // Move content view based on drawer position
 
                                                // Apply shadow effect
-
+                                               // Shadow effect for the drawer
                                                if (slideOffset > 0) {
+                                                   // Optional: Add shadow effect when the drawer is open (code not shown)
                                                } else {
                                                    // Reset shadow for closing drawer or negative slide
                                                    drawer_layout.setDrawerElevation(0);
@@ -260,8 +250,8 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                // Reset shadow effect
-                drawer_layout.setDrawerElevation(0);
+                // Reset shadow effect when the drawer is fully closed
+                drawer_layout.setDrawerElevation(0); // Ensure no shadow elevation when closed
             }
                                        }
         );
@@ -279,7 +269,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             public void onClick(View v)
             {
                 showEnterPinCodeDialog(context, context);
-               // fragmentActionInterface.actionInterface("","FilterDialog");
             }
         });
 
@@ -292,11 +281,10 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         });
 
-        //for open particuler fregment inside Activity
+        //for open particular Fragment inside Activity
         if (intnetOnPerticularFragment!=null && intnetOnPerticularFragment.equalsIgnoreCase("Notification111"))
         {
             changeFragment(intnetOnPerticularFragment);
-
             //notification_img.setVisibility(View.VISIBLE);
         }
         else
@@ -417,13 +405,16 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     public void getCurrencyListAPI(boolean showLoader)
     {
         String uuid = CommonUtility.getAndroidId(context);
+
         if (Utils.isNetworkAvailable(context))
         {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
+
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CURRENCY_RATES, ApiConstants.GET_CURRENCY_RATES_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CURRENCY_RATES,
+                    ApiConstants.GET_CURRENCY_RATES_ID,showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -437,7 +428,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             versionName = pInfo.versionName;
-            //int versionCode = pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -479,8 +469,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     @Override
     protected void onResume() {
         super.onResume();
-        //Toast.makeText(context,  "manageFragmentCalling_Resume : " + Constant.manageFragmentCalling, Toast.LENGTH_SHORT).show();
-
         // This is Use When User Come For Any Other Activity to Wish List Fragment and Call Fragment.
         if(Constant.manageFragmentCalling.equalsIgnoreCase(WISHLIST_FRAGMENT))
         {
@@ -547,14 +535,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             login_type_role_tv.setText("--");
         }
 
-
-        chat_icon_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
     private void setDataToAdepter()
@@ -570,6 +550,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         model.setImageSelected(R.drawable.home_nav);
         model.setSelected(true);
         menuList.add(model);
+
+        // My Order Text
+        DrawerMenuModel modelMyOrder = new DrawerMenuModel();
+        modelMyOrder.setName(getResources().getString(R.string.my_orders));
+        modelMyOrder.setImage(R.drawable.my_order);
+        modelMyOrder.setImageSelected(R.drawable.my_order);
+        modelMyOrder.setSelected(true);
+        menuList.add(modelMyOrder);
 
         //-----------------------------Start Search Diamond------------------------------------------------------
         DrawerMenuModel model1 = new DrawerMenuModel();
@@ -909,14 +897,11 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
             recyclerview.setAdapter(adapter);
         }
-        else{
-
-        }
-
+        else{}
 
         if (fragment != null)
         {
-           // title_tv.setText(title);
+            // title_tv.setText(title);
             // fragment.setArguments(bundle);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -931,16 +916,9 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     //For Edit Profile Fragments :
     public void changeFragment(String type)
     {
-      //  title_tv.setText(title);
         if (type.equalsIgnoreCase("account"))
         {
             title = "Edit Profile";
-           // title_tv.setText(title);
-            /*Fragment fragment = new PropertyListFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();*/
         }
     }
 
@@ -1000,7 +978,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
                 if (enter_pincode_et.getText().toString().trim().equalsIgnoreCase(""))
                 {
-                    Toast.makeText(activity, "Please Enter PinCode", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, getResources().getString(R.string.please_enter_pincode), Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if(!enter_pincode_et.getText().toString().equalsIgnoreCase(""))
@@ -1108,32 +1086,15 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 userPincode = addresses.get(0).getPostalCode();
                 userCity = addresses.get(0).getLocality();
 
-                /*pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + userCity + ", " + userPincode);
-
-                if(pincode_tv.getText().toString().equalsIgnoreCase(""))
-                {
-                    select_lbl.setText(getResources().getString(R.string.select));
-                }
-                else
-                {
-                    select_lbl.setText(getResources().getString(R.string.change));
-                }*/
-
                 CommonUtility.setGlobalString(context, "user_select_pincode", userPincode);
                 CommonUtility.setGlobalString(context, "user_select_pincode_city", userCity);
 
                 alertDialog.dismiss();
-
-                // Display the pincode
-                /*Log.e("------pincode------- : ", pincode.toString());
-                Log.e("------pincode11------- : ", city.toString());
-                Log.e("------pincode1------- : ", addresses.toString());*/
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onClick(View view)
@@ -1268,8 +1229,8 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             CountryListModel model = new CountryListModel();
-                            model.setTitle(CommonUtility.checkString(objectCodes.optString("title")));
 
+                            model.setTitle(CommonUtility.checkString(objectCodes.optString("title")));
                             model.setDesc(CommonUtility.checkString(objectCodes.optString("desc")));
                             model.setCurrency(CommonUtility.checkString(objectCodes.optString("currency")));
                             model.setCurrencySymbol(CommonUtility.checkString(objectCodes.optString("currency_symbol")));
@@ -1285,24 +1246,33 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
                        // Log.e("getCountryCode : ", Constant.currencyArrayList.get(0).getCountryCode().toString());
 
+                        // Loop through the list of currencies
                         for (int i = 0; i <Constant.currencyArrayList.size() ; i++)
                         {
                             String timeZoneId = "", timeZoneCountryCode="";
+
                             // Get the default TimeZone ID
                             timeZoneId = TimeZone.getDefault().getID();
+
+                            // Retrieve the country code corresponding to the current timezone
                             timeZoneCountryCode = TimeZoneCountryCodeMapper.getCountryCodeFromTimeZone(timeZoneId);
 
+                            // Check if the country code from the timezone matches the country code in the currency list
                             if(Constant.currencyArrayList.get(i).getCountryCode().equalsIgnoreCase(timeZoneCountryCode))
                             {
+                                // If a match is found, retrieve the currency details
                                 selectedCurrencyCode = Constant.currencyArrayList.get(i).getCurrency();
                                 selectedCurrencyValue = Constant.currencyArrayList.get(i).getValue();
                                 selectedCurrencyDesc = Constant.currencyArrayList.get(i).getDesc();
                                 selectedCurrencyImage = Constant.currencyArrayList.get(i).getImage();
 
+                                // Store the selected currency details in global preferences
                                 CommonUtility.setGlobalString(context, "selected_currency_value",Constant.currencyArrayList.get(i).getValue());
                                 CommonUtility.setGlobalString(context, "selected_currency_code", Constant.currencyArrayList.get(i).getCurrency());
                                 CommonUtility.setGlobalString(context, "selected_currency_desc", Constant.currencyArrayList.get(i).getDesc());
                                 CommonUtility.setGlobalString(context, "selected_currency_image", Constant.currencyArrayList.get(i).getImage());
+
+                                // Exit the loop once the currency has been found and stored
                                 break;
                             }else{}
                         }
@@ -1342,6 +1312,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                         Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                     }
                     break;
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1372,15 +1343,36 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         {
             title = menuList.get(parantPosition).getName();
             //fragment = new HomeFragment();
+
+            Constant.manageFragmentCalling = "";  // Blank After Call Fragment
+            title = "DiamondXE";
+            Fragment fragment = new HomeFragment();
+            changefrag(fragment);
+        }
+        // My Order
+        else if (parantPosition==1)
+        {
+            title = menuList.get(parantPosition).getName();
+            Constant.comeFrom = "";
+            Constant.afterCancelOrderManageScreenCall="";
+            Constant.afterReturnOrderManageScreenCall="";
+            user_login = CommonUtility.getGlobalString(context, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                Intent intent = new Intent(context, MyOrderListScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+            else{
+                Intent intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+
         }
         // Search Diamonds
-       else if (parantPosition==1)
+       else if (parantPosition==2)
         {
-
-            /*title = menuList.get(parantPosition).getName();
-            Toast.makeText(context, "title : " + title, Toast.LENGTH_SHORT).show();
-            //fragment = new ApplicationListFragment();*/
-
             if(chiledPosition==0)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
@@ -1408,7 +1400,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Diamonds Education
-        else if (parantPosition==2)
+        else if (parantPosition==3)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1417,7 +1409,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //fragment = new LandLoardDashboardFragment();
         }
         // Explore Now
-        else if (parantPosition==3)
+        else if (parantPosition==4)
         {
          /*   title = menuList.get(parantPosition).getName();
             // fragment = new MaintenanceRequestFragment();*/
@@ -1447,7 +1439,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }*/
         // More
-        else if (parantPosition==4)
+        else if (parantPosition==5)
         {
             if(chiledPosition==0)
             {
@@ -1507,7 +1499,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Contact US
-        else if (parantPosition==5)
+        else if (parantPosition==6)
         {
             if(chiledPosition==0)
             {
@@ -1521,7 +1513,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Rate Us
-        else if (parantPosition==6)
+        else if (parantPosition==7)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1530,7 +1522,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }
         // Logout
-        else if (parantPosition==7)
+        else if (parantPosition==8)
         {
             if(user_login.equalsIgnoreCase("yes"))
             {
@@ -1542,57 +1534,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 overridePendingTransition(0,0);
             }
 
-            //title = menuList.get(parantPosition).getName();
-            //  fragment = new SettingLandLoardFragment();
         }
-
-       /* // Create Diamonds
-        else if (parantPosition==2)
-        {
-            title = menuList.get(parantPosition).getName();
-            //fragment = new PropertyListFragment();
-        }
-        // Jewellery
-        else if (parantPosition==3)
-        {
-            if(chiledPosition==0)
-            {
-                title = menuList.get(parantPosition).getSubMenu().get(0).getName();
-                //   fragment = new ContactsTenantFragment();
-            }
-            if(chiledPosition==1)
-            {
-                title = menuList.get(parantPosition).getSubMenu().get(1).getName();
-                //  fragment = new ContactsRealtorFragment();
-            }
-            if(chiledPosition==2)
-            {
-                title = menuList.get(parantPosition).getSubMenu().get(2).getName();
-                //  fragment = new ContactsServiceProviderFragment();
-            }
-            if(chiledPosition==3)
-            {
-                title = menuList.get(parantPosition).getSubMenu().get(3).getName();
-                //  fragment = new ContactsServiceProviderFragment();
-            }
-            if(chiledPosition==4)
-            {
-                title = menuList.get(parantPosition).getSubMenu().get(4).getName();
-                //  fragment = new ContactsServiceProviderFragment();
-            }
-        }
-        // DXE LUXE
-        else if (parantPosition==4)
-        {
-            title = menuList.get(parantPosition).getName();
-            //fragment = new AccountingListFragment();
-        }*/
-
-
-        /*if (parantPosition!=6)
-        {
-            changefrag(fragment);
-        }else{}*/
 
         changefrag(fragment);
 
@@ -1725,7 +1667,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
            // selected_country_name.setText(model.getCurrency());
            // selected_country_desc.setText(model.getDesc());
-
 
             // Store the currently selected country as lastSelectedCountry
             //lastSelectedCountry = model;

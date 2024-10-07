@@ -102,6 +102,42 @@
                             android:textSize="@dimen/dimen_14"
                             tools:text="@string/cancellation_request_msg" />
 
+                        <LinearLayout
+                            android:id="@+id/support_email_mob_lin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_8"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:layout_marginRight="@dimen/dimen_8"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/support_emali_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:inputType="textMultiLine"
+                                android:lineSpacingExtra="1dp"
+                                android:textColor="@color/purple_light"
+                                android:textSize="@dimen/dimen_14"
+                                tools:text="@string/navigation_support_email" />
+
+                            <TextView
+                                android:id="@+id/support_mobile_number_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:inputType="textMultiLine"
+                                android:lineSpacingExtra="1dp"
+                                android:textColor="@color/purple_light"
+                                android:textSize="@dimen/dimen_14"
+                                tools:text="@string/navigation_support_number" />
+
+                        </LinearLayout>
+
                         <!--Done Button Layout-->
                         <LinearLayout
                             android:id="@+id/main_lin"

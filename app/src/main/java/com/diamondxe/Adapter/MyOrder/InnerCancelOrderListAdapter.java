@@ -43,7 +43,7 @@ public class InnerCancelOrderListAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
 
-            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_recent_inner_order_list_history, parent, false);
+            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_inner_order_list_history, parent, false);
             return new RecycleViewHolder(v);
     }
 

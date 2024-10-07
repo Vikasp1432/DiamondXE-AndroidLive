@@ -115,6 +115,7 @@
 
                             <!--Credit/Debit Card-->
                             <LinearLayout
+                                android:id="@+id/credit_card_main_lin"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_8"
@@ -154,6 +155,7 @@
 
                             <!--Net-Banking-->
                             <LinearLayout
+                                android:id="@+id/net_banking_main_lin"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_8"

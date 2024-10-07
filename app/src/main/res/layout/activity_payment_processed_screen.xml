@@ -75,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/dimen_5"
-                android:outlineAmbientShadowColor="@color/purple"
-                android:outlineSpotShadowColor="@color/purple"
+                android:outlineAmbientShadowColor="@color/black_10"
+                android:outlineSpotShadowColor="@color/black_10"
                 app:cardBackgroundColor="@color/transparent"
                 app:cardCornerRadius="@dimen/dimen_12"
                 app:cardElevation="@dimen/dimen_1">
@@ -85,7 +85,7 @@
                     android:id="@+id/shipping_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_image_white">
+                    android:background="@drawable/background_image_purple">
 
                     <ImageView
                         android:id="@+id/shipping_img"
@@ -97,7 +97,7 @@
                         android:paddingRight="@dimen/dimen_8"
                         android:paddingBottom="@dimen/dimen_12"
                         android:src="@drawable/shipping"
-                        android:tint="@color/purple_light"
+                        android:tint="@color/white"
                         tools:ignore="UseAppTint" />
 
 
@@ -134,7 +134,7 @@
                     android:id="@+id/kyc_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_image_white">
+                    android:background="@drawable/background_image_purple">
 
                     <ImageView
                         android:id="@+id/kyc_img"
@@ -145,7 +145,9 @@
                         android:paddingTop="@dimen/dimen_12"
                         android:paddingRight="@dimen/dimen_8"
                         android:paddingBottom="@dimen/dimen_12"
-                        android:src="@drawable/kyc" />
+                        android:src="@drawable/kyc"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint" />
 
 
                 </RelativeLayout>
@@ -234,7 +236,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--KYC Verification Icon-->
             <LinearLayout
@@ -261,7 +263,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--Payment Icon-->
             <LinearLayout
@@ -959,7 +961,7 @@
                 android:paddingTop="@dimen/dimen_8"
                 android:paddingRight="@dimen/dimen_15"
                 android:paddingBottom="@dimen/dimen_8"
-                android:text="@string/proceed_to_payment"
+                android:text="@string/click_to_pay"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dimen_14" />
         </RelativeLayout>

@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -23,10 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import com.diamondxe.Activity.PlaceOrder.PaymentProcessedScreenActivity;
-import com.diamondxe.Activity.PlaceOrder.PlaceOrderBuyerKYCVerificationDocUploadActivity;
-import com.diamondxe.Activity.PlaceOrder.PlaceOrderScreenActivity;
 import com.diamondxe.Adapter.Dealer.KYCVerificationAdapter;
 import com.diamondxe.Adapter.OrderPlaceItemListAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
@@ -41,10 +36,8 @@ import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,13 +45,13 @@ import java.util.Timer;
 
 public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implements RecyclerInterface {
 
-    private ImageView back_img, drop_arrow_img;
+    private ImageView back_img, drop_arrow_img, document_drop_down_img;
     private TextView  kyc_document_resubmit, continue_tv, total_amount_tv, final_amount_tv1,shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
-            sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
+            sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv, kyc_verified_lbl1;
     private CardView shipping_card_view, kyc_card_view, payment_card_view;
     private RelativeLayout  viewpager_layout, rel_other_tax, rel_diamond_tax;
     private RecyclerView doc_recycler_view;
-    private LinearLayout view_order_summary_details_lin;
+    private LinearLayout view_order_summary_details_lin, kyc_document_layout_lin, open_document_lin;
     private CardView order_summary_view_card;
     ArrayList<KYCVerificationModel> modelArrayList;
     KYCVerificationAdapter kycVerificationAdapter;
@@ -82,6 +75,7 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
     String drivingLicenseAttachmentId = "", drivingLicenseAttachmentType = "", drivingLicenseAttachmentDesc = "", drivingLicenseVerifiedInd = "", drivingLicenseNo  = "";
     Handler handler1 = new Handler(Looper.getMainLooper());
     private boolean isArrowDown = false;
+    private boolean isArrowDownDocument = false;
 
     String isCoupanApplied = "", orderCouponCode = "", orderCouponValue = "", orderCouponDiscount = "", orderSubTotal = "", orderCgst = "", orderCgstPerc = "",
             orderSgst = "", orderSgstPerc = "", orderIgst = "", orderIgstPerc = "", orderDiscountPerc = "", orderTax = "", orderSubTotalWithTax = "", orderShippingCharge = "", orderPlatformFee = "",
@@ -116,6 +110,13 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
         continue_tv = findViewById(R.id.continue_tv);
         continue_tv.setOnClickListener(this);
 
+        document_drop_down_img = findViewById(R.id.document_drop_down_img);
+
+        open_document_lin = findViewById(R.id.open_document_lin);
+        open_document_lin.setOnClickListener(this);
+
+        kyc_document_layout_lin = findViewById(R.id.kyc_document_layout_lin);
+
         doc_recycler_view = findViewById(R.id.doc_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         doc_recycler_view.setLayoutManager(layoutManager);
@@ -133,6 +134,8 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
 
         total_amount_tv = findViewById(R.id.total_amount_tv);
         final_amount_tv1 = findViewById(R.id.final_amount_tv1);
+
+        kyc_verified_lbl1 = findViewById(R.id.kyc_verified_lbl1);
 
         shipping_and_handling_tv = findViewById(R.id.shipping_and_handling_tv);
         platform_fees_tv = findViewById(R.id.platform_fees_tv);
@@ -243,6 +246,18 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
         {
             goToPaymentProcessedScreenRedirection();
         }
+        else if(id == R.id.open_document_lin)
+        {
+            Utils.hideKeyboard(activity);
+            if (isArrowDownDocument) {
+                document_drop_down_img.setImageResource(R.drawable.down);
+                kyc_document_layout_lin.setVisibility(View.GONE);
+            } else {
+                document_drop_down_img.setImageResource(R.drawable.up);
+                kyc_document_layout_lin.setVisibility(View.VISIBLE);
+            }
+            isArrowDownDocument = !isArrowDownDocument;
+        }
     }
 
     void goToPaymentProcessedScreenRedirection()
@@ -332,28 +347,32 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
                         }
                         else if(document_status.equalsIgnoreCase("1"))
                         {
-                            //bottom_bar_rel.setVisibility(View.VISIBLE);
                             kyc_document_resubmit.setVisibility(View.VISIBLE);
-                            //kyc_verified_lbl.setText(getResources().getString(R.string.kyc_doc_submit));
+                            kyc_verified_lbl1.setVisibility(View.VISIBLE);
+                            kyc_verified_lbl1.setText(getResources().getString(R.string.kyc_doc_submit));
+                            //bottom_bar_rel.setVisibility(View.VISIBLE);
                             //kyc_verified_lbl1.setText(getResources().getString(R.string.technical_reviewing_soon));
-
                         }
                         else if(document_status.equalsIgnoreCase("2"))
                         {
                             kyc_document_resubmit.setVisibility(View.GONE);
-                            //kyc_verified_lbl.setText(getResources().getString(R.string.kyc_doc_verified));
+                            kyc_verified_lbl1.setVisibility(View.VISIBLE);
+                            kyc_verified_lbl1.setText(getResources().getString(R.string.kyc_doc_verified));
                             //kyc_verified_lbl1.setText(getResources().getString(R.string.doc_verified_thanks));
 
                         }
                         else if(document_status.equalsIgnoreCase("3"))
                         {
-                            //bottom_bar_rel.setVisibility(View.VISIBLE);
                             kyc_document_resubmit.setVisibility(View.VISIBLE);
-                           // kyc_verified_lbl.setText(getResources().getString(R.string.kyc_doc_unverified));
+                            kyc_verified_lbl1.setVisibility(View.VISIBLE);
+                            kyc_verified_lbl1.setText(getResources().getString(R.string.kyc_doc_unverified));
+                            //bottom_bar_rel.setVisibility(View.VISIBLE);
                            // kyc_verified_lbl1.setText(getResources().getString(R.string.doc_resubmit_again));
 
                         }
-                        else{}
+                        else{
+                            kyc_verified_lbl1.setVisibility(View.GONE);
+                        }
 
                         JSONArray details = jObjDetails.getJSONArray("all_document");
 

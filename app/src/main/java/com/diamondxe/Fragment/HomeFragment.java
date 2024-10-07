@@ -103,20 +103,14 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
     public ArrayList<MediaSpotLightModel> mediaSpotLightModelArrayList;
     public ArrayList<CustomerStoriesModel> customerStoriesArrayList;
     public ArrayList<TopImageOptionModel> topOptionArrayList;
-
     private long lastBackPressedTime = 0;
     private static final long BACK_PRESS_INTERVAL = 2000; // 2 seconds
-
-
     int NUM_PAGES = 0, currentPage = 0;
     private HomeScreenActivity drawerActivity;
     private Activity activity;
     private Context context;
-
     String selectedTopDeals = "naturalDiamond";
-
     private SwipeRefreshLayout swipeContainer;
-
     private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
@@ -1140,10 +1134,8 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
 
                         for (int i = 0; i <labGrownDiamondArrayList.size() ; i++)
                         {
-
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, labGrownDiamondArrayList.get(i).getPrice());
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-
                             labGrownDiamondArrayList.get(i).setShowingSubTotal(subTotalFormat);
                             labGrownDiamondArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
                         }

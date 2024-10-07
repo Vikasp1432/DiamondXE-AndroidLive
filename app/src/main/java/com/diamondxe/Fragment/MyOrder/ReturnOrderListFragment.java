@@ -7,55 +7,67 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.diamondxe.Activity.MyOrder.ReturnOrderSummaryScreenActivity;
-import com.diamondxe.Adapter.MyOrder.InnerOrderListAdapter;
 import com.diamondxe.Adapter.MyOrder.RecentOrderDetailsListAdapter;
-import com.diamondxe.Adapter.MyOrder.RecentOrderListAdapter;
-import com.diamondxe.Adapter.MyOrder.ReturnOrderDetailsListAdapter;
 import com.diamondxe.Adapter.MyOrder.ReturnOrderListAdapter;
+import com.diamondxe.ApiCalling.ApiConstants;
+import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.MyOrder.InnerOrderListModel;
 import com.diamondxe.Beans.MyOrder.MyOrderListModel;
 import com.diamondxe.Interface.TwoRecyclerInterface;
+import com.diamondxe.Network.EndlessRecyclerViewScrollListener;
 import com.diamondxe.Network.SuperFragment;
 import com.diamondxe.R;
+import com.diamondxe.Utils.CommonUtility;
+import com.diamondxe.Utils.Constant;
+import com.diamondxe.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ReturnOrderListFragment extends SuperFragment implements TwoRecyclerInterface {
 
     private RecyclerView recycler_view;
     private TextView error_tv;
+    private ProgressBar progressBar;
     private Context context;
     private Activity activity;
+    private VollyApiActivity vollyApiActivity;
+    private HashMap<String, String> urlParameter;
     private ArrayList<MyOrderListModel> modelArrayList;
+    private ArrayList<InnerOrderListModel> innerOrderArrayList;
     private ReturnOrderListAdapter adapter;
     private BottomSheetDialog dialog;
     RecyclerView recycler_view_order_details;
-    ReturnOrderDetailsListAdapter returnOrderDetailsListAdapter;
-    ArrayList<MyOrderListModel> returnOrderArrayList;
+    RecentOrderDetailsListAdapter recentOrderDetailsListAdapter;
+    ArrayList<MyOrderListModel> recentOrderArrayList;
+    int pageNo = 1;
+    private EndlessRecyclerViewScrollListener scrollListener;
     Handler handler1 = new Handler(Looper.getMainLooper());
-
-    public ReturnOrderListFragment() {
-        // Required empty public constructor
-    }
+    String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
+    String detailsOrderId = "", detailsCreatedAt="";
+    public ReturnOrderListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,9 +90,10 @@ public class ReturnOrderListFragment extends SuperFragment implements TwoRecycle
     private void init(View view)
     {
         modelArrayList = new ArrayList<>();
-        returnOrderArrayList = new ArrayList<>();
+        recentOrderArrayList = new ArrayList<>();
 
         error_tv = view.findViewById(R.id.error_tv);
+        progressBar = view.findViewById(R.id.progressBar);
 
         recycler_view = view.findViewById(R.id.recycler_view);
         recycler_view.setHasFixedSize(true);
@@ -88,68 +101,325 @@ public class ReturnOrderListFragment extends SuperFragment implements TwoRecycle
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler_view.setLayoutManager(layoutManager);
 
-        setDummyData();
+        Constant.afterReturnOrderManageScreenCall = "";
+
+        getCurrencyData();
+
+    // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+
+                if (modelArrayList.size()>= Constant.lazyLoadingLimit)
+                {
+                    progressBar.setVisibility(View.VISIBLE);
+                    pageNo = pageNo+1;
+                    getOrderListAPI(true);
+                } else {
+                }
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        recycler_view.addOnScrollListener(scrollListener);
+
+        pageNo = 1;
+        getOrderListAPI(false);
     }
 
-    void setDummyData()
+    void getCurrencyData()
     {
-        MyOrderListModel model = new MyOrderListModel();
-
-        model.setOrderNumber("170245895326589");
-        model.setOrderDateTime("06/03/24, 05:14:24 PM");
-        model.setName("Eleganted Cushion");
-        model.setStatus("Confirmed");
-        model.setCarat("0.19");
-        model.setColor("E");
-        model.setClarity("SI2");
-        model.setStockNumber("6481931311");
-        model.setCategory("LAB");
-        model.setSubTotal("1877100000");
-        model.setShowingSubTotal("1877100000");
-        model.setCurrencySymbol(rupeesIcon);
-        model.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-      /*  innerOrderArrayList = new ArrayList<InnerOrderListModel>();
-
-        InnerOrderListModel innerOrderListModel = new InnerOrderListModel();
-
-        innerOrderListModel.setOrderNumber("170245895326589");
-        innerOrderListModel.setOrderDateTime("06/03/24, 05:14:24 PM");
-        innerOrderListModel.setName("Eleganted Cushion");
-        innerOrderListModel.setStatus("Confirmed");
-        innerOrderListModel.setCarat("0.19");
-        innerOrderListModel.setColor("E");
-        innerOrderListModel.setClarity("SI2");
-        innerOrderListModel.setStockNumber("6481931311");
-        innerOrderListModel.setCategory("LAB");
-        innerOrderListModel.setSubTotal("1877100000");
-        innerOrderListModel.setShowingSubTotal("1877100000");
-        innerOrderListModel.setCurrencySymbol(rupeesIcon);
-        innerOrderListModel.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-        innerOrderArrayList.add(innerOrderListModel);
-
-        model.setAllItemsInSection(innerOrderArrayList);*/
-
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-
-        adapter = new ReturnOrderListAdapter(modelArrayList,context,this);
-        recycler_view.setAdapter(adapter);
+        selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
+        selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
+        selectedCurrencyDesc = CommonUtility.getGlobalString(context, "selected_currency_desc");
+        selectedCurrencyImage = CommonUtility.getGlobalString(context, "selected_currency_image");
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) {}
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCurrencyData();
+    }
+
+    public void getOrderListAPI(boolean showLoader)
+    {
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("page", ""+pageNo);
+            urlParameter.put("limit", ""+Constant.lazyLoadingLimit);
+            urlParameter.put("orderType", "Return");
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ORDER_LIST, ApiConstants.ORDER_LIST_ID,showLoader,
+                    "POST");
+
+            if(pageNo == 1)
+            {
+                error_tv.setVisibility(View.GONE);
+            }else{}
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+        }
+    }
+
+    public void getOrderDetailsAPI(boolean showLoader, String orderID)
+    {
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("returnOrderId", orderID);
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.RETURN_ORDER_DETAILS, ApiConstants.RETURN_ORDER_DETAILS_ID,showLoader,
+                    "POST");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+        }
     }
 
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
+        if(pageNo == 1)
+        {}else{
+            progressBar.setVisibility(View.GONE);
+        }
+        try {
+            Log.v("------Diamond----- : ", "--------JSONObjectReturn-------- : " + jsonObject);
 
+            JSONObject jsonObjectData = jsonObject;
+            String message = jsonObjectData.optString("msg");
+
+            switch (service_ID) {
+
+                case ApiConstants.ORDER_LIST_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        JSONArray details = jsonObjectData.getJSONArray("details");
+
+                        if(pageNo == 1)
+                        {
+                            if(modelArrayList.size() > 0)
+                            {
+                                modelArrayList.clear();
+                            }
+                        } else{}
+
+                        //For Lazzy Loading : Disable or Enable
+                        if (details == null && details.length()< Constant.lazyLoadingLimit)
+                        {
+                            scrollListener.loading=false;
+                        }
+                        else {
+                            scrollListener.loading=true;
+                        }
+
+                        for (int i = 0; i < details.length(); i++)
+                        {
+                            MyOrderListModel model = new MyOrderListModel();
+
+                            JSONObject objectCodes = details.getJSONObject(i);
+
+                            model.setOrderId(CommonUtility.checkString(objectCodes.optString("order_id")));
+                            model.setReturnOrderId(CommonUtility.checkString(objectCodes.optString("return_order_id")));
+                            model.setOrderDate(CommonUtility.checkString(objectCodes.optString("order_date")));
+                            model.setCurrencyCode(CommonUtility.checkString(objectCodes.optString("currency_code")));
+                            model.setTotalAmount(CommonUtility.checkString(objectCodes.optString("total_amount")));
+                            model.setOrderStatus(CommonUtility.checkString(objectCodes.optString("order_status")));
+                            model.setPaymentStatus(CommonUtility.checkString(objectCodes.optString("payment_status")));
+                            //model.setCreatedAt(CommonUtility.checkString(objectCodes.optString("created_at")));
+                            //model.setCreatedAt(CommonUtility.checkString(objectCodes.optString("returned_at")));
+                            model.setIsCancelable(CommonUtility.checkString(objectCodes.optString("is_cancelable")));
+                            model.setIsReturnable(CommonUtility.checkString(objectCodes.optString("is_returnable")));
+                            model.setIsReserveOrder(CommonUtility.checkString(objectCodes.optString("is_reserve_order")));
+                            model.setPaymentReceivedDate(CommonUtility.checkString(objectCodes.optString("payment_received_date")));
+                            model.setTimeLeftForCancel(CommonUtility.checkString(objectCodes.optString("time_left_for_cancel")));
+
+                            if(!objectCodes.optString("order_created_at").equalsIgnoreCase(""))
+                            {
+                                String convertData = CommonUtility.convertDateTimeIntoLocal(objectCodes.optString("order_created_at"), ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
+                                model.setCreatedAt(convertData);
+                                String convertData1 = CommonUtility.convertDateTimeIntoLocal(objectCodes.optString("order_created_at"), ApiConstants.DATE_FORMAT, "yyyy-MM-dd HH:mm:ss");
+                                model.setCompareDateTime(convertData1);
+                            }
+                            else{}
+
+                            innerOrderArrayList = new ArrayList<InnerOrderListModel>();
+
+                            JSONArray jArray = objectCodes.optJSONArray("diamonds");
+
+                            for (int j = 0; j < jArray.length(); j++)
+                            {
+                                JSONObject jOBJNEW = jArray.getJSONObject(j);
+
+                                InnerOrderListModel innerOrderListModel = new InnerOrderListModel();
+
+                                innerOrderListModel.setStockId(CommonUtility.checkString(jOBJNEW.optString("stock_id")));
+                                innerOrderListModel.setCertificateNo(CommonUtility.checkString(jOBJNEW.optString("certificate_no")));
+                                innerOrderListModel.setStockNo(CommonUtility.checkString(jOBJNEW.optString("stock_no")));
+                                innerOrderListModel.setIsReturnable(CommonUtility.checkString(jOBJNEW.optString("is_returnable")));
+                                innerOrderListModel.setDxePrefered(CommonUtility.checkString(jOBJNEW.optString("dxe_prefered")));
+                                innerOrderListModel.setCategory(CommonUtility.checkString(jOBJNEW.optString("category")));
+                                innerOrderListModel.setItemName(CommonUtility.checkString(jOBJNEW.optString("item_name")));
+                                innerOrderListModel.setDiscount(CommonUtility.checkString(jOBJNEW.optString("discount")));
+                                innerOrderListModel.setTotalAmount(CommonUtility.checkString(jOBJNEW.optString("total_amount")));
+                                innerOrderListModel.setTotalPrice(CommonUtility.checkString(jOBJNEW.optString("total_price")));
+                                innerOrderListModel.setSubTotal(CommonUtility.checkString(jOBJNEW.optString("sub_total")));
+                                innerOrderListModel.setShowingSubTotal(CommonUtility.checkString(jOBJNEW.optString("sub_total")));
+                                innerOrderListModel.setDiamondImage(CommonUtility.checkString(jOBJNEW.optString("diamond_image")));
+                                innerOrderListModel.setStatus(CommonUtility.checkString(jOBJNEW.optString("status")));
+                                innerOrderListModel.setCarat(CommonUtility.checkString(jOBJNEW.optString("carat")));
+                                innerOrderListModel.setColor(CommonUtility.checkString(jOBJNEW.optString("color")));
+                                innerOrderListModel.setClarity(CommonUtility.checkString(jOBJNEW.optString("clarity")));
+                                innerOrderListModel.setShape(CommonUtility.checkString(jOBJNEW.optString("shape")));
+                                innerOrderListModel.setCurrencySymbol(ApiConstants.rupeesIcon);
+
+                                innerOrderArrayList.add(innerOrderListModel);
+                            }
+
+                            for (int k = 0; k <innerOrderArrayList.size() ; k++)
+                            {
+
+                                String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, innerOrderArrayList.get(k).getSubTotal());
+                                String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+                                innerOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
+                                innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+
+                            }
+
+                            model.setAllItemsInSection(innerOrderArrayList);
+
+                            modelArrayList.add(model);
+                        }
+                        // If Page No 1 Then set Data Otherwise only Refresh NotifyDataSet Changed Adapter
+                        if(pageNo == 1)
+                        {
+                            adapter = new ReturnOrderListAdapter(modelArrayList,context,this);
+                            recycler_view.setAdapter(adapter);
+                        }
+                        else{
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        //getCountryListAPI(true);
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case ApiConstants.RETURN_ORDER_DETAILS_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        Log.v("------Diamond----- : ", "--------JSONObjectReturnDetails-------- : " + jsonObjectData);
+
+                        JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+
+                        detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
+                        detailsCreatedAt = CommonUtility.checkString(jObjDetails.optString("order_created_at"));
+
+                        if(!detailsCreatedAt.equalsIgnoreCase(""))
+                        {
+                            detailsCreatedAt = CommonUtility.convertDateTimeIntoLocal(detailsCreatedAt, ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
+
+                        } else{}
+
+                        // Check If recentOrderArrayList Size Is GraterThen 0 Clear First.
+                        if(recentOrderArrayList!=null && recentOrderArrayList.size()>0)
+                        {
+                            recentOrderArrayList.clear();
+                        }else{}
+
+                        JSONArray details = jObjDetails.getJSONArray("diamonds");
+
+                        for (int i = 0; i < details.length(); i++)
+                        {
+                            JSONObject jOBJNEW = details.getJSONObject(i);
+
+                            MyOrderListModel model = new MyOrderListModel();
+
+                            model.setStockId(CommonUtility.checkString(jOBJNEW.optString("stock_id")));
+                            model.setCertificateNo(CommonUtility.checkString(jOBJNEW.optString("certificate_no")));
+                            model.setStockNo(CommonUtility.checkString(jOBJNEW.optString("stock_no")));
+                            model.setIsReturnable(CommonUtility.checkString(jOBJNEW.optString("is_returnable")));
+                            model.setDxePrefered(CommonUtility.checkString(jOBJNEW.optString("dxe_prefered")));
+                            model.setCategory(CommonUtility.checkString(jOBJNEW.optString("category")));
+                            model.setSubTotal(CommonUtility.checkString(jOBJNEW.optString("sub_total")));
+                            model.setShowingSubTotal(CommonUtility.checkString(jOBJNEW.optString("sub_total")));
+                            model.setDiamondImage(CommonUtility.checkString(jOBJNEW.optString("diamond_image")));
+                            model.setCarat(CommonUtility.checkString(jOBJNEW.optString("carat")));
+                            model.setColor(CommonUtility.checkString(jOBJNEW.optString("color")));
+                            model.setClarity(CommonUtility.checkString(jOBJNEW.optString("clarity")));
+                            model.setShape(CommonUtility.checkString(jOBJNEW.optString("shape")));
+                            model.setGrowthType(CommonUtility.checkString(jOBJNEW.optString("growth_type")));
+                            model.setCut(CommonUtility.checkString(jOBJNEW.optString("cut_grade")));
+                            model.setPolish(CommonUtility.checkString(jOBJNEW.optString("polish")));
+                            model.setSymmetry(CommonUtility.checkString(jOBJNEW.optString("symmetry")));
+                            model.setFir(CommonUtility.checkString(jOBJNEW.optString("fluorescence_intensity")));
+                            model.setDepth(CommonUtility.checkString(jOBJNEW.optString("depth_perc")));
+                            model.setTable(CommonUtility.checkString(jOBJNEW.optString("table_perc")));
+                            model.setCertificateName(CommonUtility.checkString(jOBJNEW.optString("certificate_name")));
+                            model.setCurrencySymbol(ApiConstants.rupeesIcon);
+
+                            recentOrderArrayList.add(model);
+                        }
+
+                        for (int k = 0; k <recentOrderArrayList.size() ; k++)
+                        {
+                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, recentOrderArrayList.get(k).getSubTotal());
+                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                            recentOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
+                            recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                        }
+
+                        showOrderDetailsBottomDialog();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (modelArrayList !=null && modelArrayList.size()<=0)
+            {
+                error_tv.setVisibility(View.VISIBLE);
+                error_tv.setText(""+ ApiConstants.NO_RESULT_FOUND);
+                recycler_view.setVisibility(View.GONE);
+            } else {
+                error_tv.setVisibility(View.GONE);
+                recycler_view.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -163,10 +433,11 @@ public class ReturnOrderListFragment extends SuperFragment implements TwoRecycle
 
         if(action.equalsIgnoreCase("orderDetails"))
         {
-            showOrderDetailsBottomDialog();
+            getOrderDetailsAPI(false, modelArrayList.get(parantPosition).getReturnOrderId());
         }
         else if(action.equalsIgnoreCase("orderSummary"))
         {
+            Constant.orderID = modelArrayList.get(parantPosition).getReturnOrderId();
             Intent intent = new Intent(activity, ReturnOrderSummaryScreenActivity.class);
             startActivity(intent);
             getActivity().overridePendingTransition(0,0);
@@ -182,50 +453,22 @@ public class ReturnOrderListFragment extends SuperFragment implements TwoRecycle
         recycler_view_order_details = dialog.findViewById(R.id.recycler_view);
 
         TextView textView2 = dialog.findViewById(R.id.textView2);
+        TextView order_number_tv = dialog.findViewById(R.id.order_number_tv);
+        TextView date_time_tv = dialog.findViewById(R.id.date_time_tv);
 
         textView2.setText(getResources().getString(R.string.diamond_details));
 
+        order_number_tv.setText("#" + detailsOrderId);
+        date_time_tv.setText(detailsCreatedAt);
+
         recycler_view_order_details.setHasFixedSize(true);
-        //recycler_view.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_view_order_details.setLayoutManager(layoutManager);
+        recycler_view_order_details.setNestedScrollingEnabled(false);
 
-        MyOrderListModel model = new MyOrderListModel();
-
-        model.setOrderNumber("170245895326589");
-        model.setOrderDateTime("06/03/24, 05:14:24 PM");
-        model.setName("Eleganted Cushion");
-        model.setStatus("Confirmed");
-        model.setShape("Round");
-        model.setCarat("0.19");
-        model.setColor("E");
-        model.setClarity("SI2");
-        model.setType("HPHT");
-        model.setCut("VG");
-        model.setPolish("EX");
-        model.setSymmetry("EX");
-        model.setFir("NIL");
-        model.setLab("IGI");
-        model.setTable("56.00%");
-        model.setDepth("64.50%");
-        model.setStockNumber("6481931311");
-        model.setCategory("LAB");
-        model.setSubTotal("854621453");
-        model.setShowingSubTotal("854621453");
-        model.setCurrencySymbol(rupeesIcon);
-        model.setIsReturnable("1");
-        model.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-        returnOrderArrayList.add(model);
-        returnOrderArrayList.add(model);
-        returnOrderArrayList.add(model);
-        returnOrderArrayList.add(model);
-        returnOrderArrayList.add(model);
-
-
-        returnOrderDetailsListAdapter = new ReturnOrderDetailsListAdapter(returnOrderArrayList, context, this);
-        recycler_view_order_details.setAdapter(returnOrderDetailsListAdapter);
-        returnOrderDetailsListAdapter.notifyDataSetChanged();
+        recentOrderDetailsListAdapter = new RecentOrderDetailsListAdapter(recentOrderArrayList, context, this);
+        recycler_view_order_details.setAdapter(recentOrderDetailsListAdapter);
+        recentOrderDetailsListAdapter.notifyDataSetChanged();
 
         ImageView ib_cross = dialog.findViewById(R.id.ib_cross);
 

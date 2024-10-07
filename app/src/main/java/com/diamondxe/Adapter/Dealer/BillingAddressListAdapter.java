@@ -87,7 +87,7 @@ public class BillingAddressListAdapter extends RecyclerView.Adapter<RecyclerView
         if(list.get(position).getIsDefault().equalsIgnoreCase("1"))
         {
             holder.is_default_address_lbl.setVisibility(View.VISIBLE);
-            holder.delete_img.setVisibility(View.GONE);
+            holder.delete_img.setVisibility(View.VISIBLE);
         }
         else{
             holder.is_default_address_lbl.setVisibility(View.INVISIBLE);

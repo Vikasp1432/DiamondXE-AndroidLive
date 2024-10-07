@@ -203,10 +203,7 @@ public class DrawerItemCustomAdapter extends BaseExpandableListAdapter {
                 if (mParent.get(i).getSubMenu().size() > 0)
                 {
                     recyclerInterface.itemClick(i,i1,"child");
-                }else{
-
-                }
-
+                }else{}
             }
         });
 

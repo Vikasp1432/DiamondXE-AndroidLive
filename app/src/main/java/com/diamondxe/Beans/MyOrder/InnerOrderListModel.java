@@ -8,7 +8,7 @@ public class InnerOrderListModel implements Serializable {
 
     String stockId = "", certificateNo = "", stockNo = "", isReturnable = "", dxePrefered = "", itemName = "", discount = "",
             totalAmount = "", totalPrice = "", diamondImage = "", cancelBy="", id = "", orderNumber = "", orderDateTime = "", image = "", name = "", status = "", itemDetails = "", stockNumber = "", category = "",
-            subTotal = "", currencySymbol="", carat="", color="", clarity="", showingSubTotal="",shape="";
+            subTotal = "", currencySymbol="", carat="", color="", clarity="", showingSubTotal="",shape="",refundPaymentMode="", refundStatus="";
 
     boolean isChecked = false;
 
@@ -226,6 +226,22 @@ public class InnerOrderListModel implements Serializable {
 
     public void setShape(String shape) {
         this.shape = shape;
+    }
+
+    public String getRefundPaymentMode() {
+        return refundPaymentMode;
+    }
+
+    public void setRefundPaymentMode(String refundPaymentMode) {
+        this.refundPaymentMode = refundPaymentMode;
+    }
+
+    public String getRefundStatus() {
+        return refundStatus;
+    }
+
+    public void setRefundStatus(String refundStatus) {
+        this.refundStatus = refundStatus;
     }
 
     public boolean isChecked() {

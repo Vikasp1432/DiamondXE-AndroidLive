@@ -46,7 +46,7 @@
         android:layout_marginTop="@dimen/dimen_5"
         android:layout_marginLeft="@dimen/dimen_10"
         android:layout_marginRight="@dimen/dimen_10"
-        android:background="@color/purple_50">
+        android:background="@color/purple_20">
 
         <TextView
             android:id="@+id/order_number_tv"
@@ -58,7 +58,7 @@
             android:paddingLeft="@dimen/dimen_5"
             android:paddingTop="@dimen/dimen_5"
             android:paddingBottom="@dimen/dimen_5"
-            android:text="#1475823589632"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14" />
 
@@ -71,7 +71,7 @@
             android:paddingTop="@dimen/dimen_5"
             android:paddingRight="@dimen/dimen_5"
             android:paddingBottom="@dimen/dimen_5"
-            android:text="06/08/2024, 5:14:24 PM"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14" />
     </RelativeLayout>

@@ -1747,6 +1747,14 @@
     </ScrollView>
 
 
+    <!-- This is your translucent background view -->
+    <View
+        android:id="@+id/translucent_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_black"
+        android:visibility="gone" />
+
     <!--Bottom Bar Layout-->
     <RelativeLayout
         android:id="@+id/bottom_bar_rel"

@@ -69,6 +69,15 @@ public interface ApiConstants {
     String ORDER_PAYMENT_STATUS = "order-payment-status";
     String ORDER_LIST = "orders-list";
     String ORDER_DETAILS = "order-details";
+    String ORDER_TRACKING_DETAILS = "order-tracking-details";
+    String ORDER_SUMMARY = "order-summary";
+    String ORDER_CANCEL_REASON = "order-cancel-reasons";
+    String CANCEL_ORDER_DETAILS = "cancel-order-details";
+    String RETURN_ORDER_DETAILS = "return-order-details";
+    String CANCEL_ORDER_CHECKOUT = "cancel-order-checkout";
+    String CANCEL_ORDER = "cancel-order";
+    String RETURN_ORDER_CHECKOUT = "return-order-checkout";
+    String RETURN_ORDER = "return-order";
 
     int HOME_ID = 2;
     int LOGOUT_ID = 3;
@@ -126,6 +135,15 @@ public interface ApiConstants {
     int ORDER_LIST_ID = 55;
     int ORDER_DETAILS_ID = 56;
     int ORDER_SUMMARY_ID = 57;
+    int ORDER_TRACKING_DETAILS_ID = 58;
+    int ORDER_CANCEL_REASON_ID = 59;
+    int CANCEL_ORDER_DETAILS_ID = 60;
+    int RETURN_ORDER_DETAILS_ID = 61;
+    int CANCEL_ORDER_CHECKOUT_ID = 62;
+    int CANCEL_ORDER_PARTIAL_CHECKOUT_ID = 63;
+    int CANCEL_ORDER_ID = 64;
+    int RETURN_ORDER_CHECKOUT_ID = 65;
+    int RETURN_ORDER_PARTIAL_CHECKOUT_ID = 66;
 
 
     String MSG_INTERNETERROR = "Internet connection is not available.";

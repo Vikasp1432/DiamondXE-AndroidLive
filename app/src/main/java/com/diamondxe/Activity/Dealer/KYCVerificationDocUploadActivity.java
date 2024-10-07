@@ -45,6 +45,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.diamondxe.Activity.LoginScreenActivity;
+import com.diamondxe.Activity.PlaceOrder.PlcaeOrderKYCVerificationDocUploadActivity;
 import com.diamondxe.Activity.SignupScreenActivity;
 import com.diamondxe.Activity.TransparentActivity;
 import com.diamondxe.ApiCalling.ApiConstants;
@@ -88,6 +89,9 @@ public class KYCVerificationDocUploadActivity extends SuperActivity implements R
 
     private TextView company_gst_doc_verify_img, iec_doc_verify_img,aadhaar_doc_front_verify_img,aadhaar_doc_back_verify_img,pan_doc_verify_img,
             auth_pan_doc_verify_img,passport_doc_front_verify_img, passport_doc_back_verify_img,driving_licence_doc_verify_img;
+
+    private TextView company_gst_doc_verify_error_tv, iec_doc_verify_error_tv, aadhaar_doc_front_verify_error_tv, aadhaar_doc_back_verify_error_tv,
+            pan_doc_verify_error_tv, auth_pan_doc_verify_error_tv, passport_doc_front_verify_error_tv, passport_doc_back_verify_error_tv, driving_licence_doc_verify_error_tv;
 
     private Activity activity;
     private Context context;
@@ -239,6 +243,16 @@ public class KYCVerificationDocUploadActivity extends SuperActivity implements R
 
         submit_tv = findViewById(R.id.submit_tv);
         submit_tv.setOnClickListener(this);
+
+        company_gst_doc_verify_error_tv = findViewById(R.id.company_gst_doc_verify_error_tv);
+        iec_doc_verify_error_tv = findViewById(R.id.iec_doc_verify_error_tv);
+        aadhaar_doc_front_verify_error_tv = findViewById(R.id.aadhaar_doc_front_verify_error_tv);
+        aadhaar_doc_back_verify_error_tv = findViewById(R.id.aadhaar_doc_back_verify_error_tv);
+        pan_doc_verify_error_tv = findViewById(R.id.pan_doc_verify_error_tv);
+        auth_pan_doc_verify_error_tv = findViewById(R.id.auth_pan_doc_verify_error_tv);
+        passport_doc_front_verify_error_tv = findViewById(R.id.passport_doc_front_verify_error_tv);
+        passport_doc_back_verify_error_tv = findViewById(R.id.passport_doc_back_verify_error_tv);
+        driving_licence_doc_verify_error_tv = findViewById(R.id.driving_licence_doc_verify_error_tv);
 
         //-------------------------------Start Updated Gallery and Camera Code---------------------------------------------
         galleryLauncher = registerForActivityResult(
@@ -816,13 +830,133 @@ public class KYCVerificationDocUploadActivity extends SuperActivity implements R
         {
             Utils.hideKeyboard(activity);
             if (Utils.isNetworkAvailable(context)) {
-                SendDataAsyncTask asyncTask1 = new SendDataAsyncTask(context);
-                asyncTask1.executeNetworkCall();
+                /*SendDataAsyncTask asyncTask1 = new SendDataAsyncTask(context);
+                asyncTask1.executeNetworkCall();*/
+                validateAndSendData();
             } else {
                 showToast(ApiConstants.MSG_INTERNETERROR);
             }
 
         }
+    }
+
+    private void validateAndSendData() {
+        boolean isValid = true;
+
+        // Validate GST Document
+        if (isGSTNoVerified) {
+            isValid &= validateDocument(companyGSTDocBase64Url, company_gst_no_et, company_gst_doc_verify_error_tv);
+        }
+
+        // Validate IEC Document
+        if (!iec_no_et.getText().toString().trim().equalsIgnoreCase("") && iecDocBase64Url.isEmpty()) {
+            isValid &= validateDocumentIEC(iec_no_et, iec_doc_verify_error_tv);
+        }
+
+        // Validate Company Aadhaar Document
+        if (isAadhaarNoVerified) {
+            isValid &= validateDocumentAadhaar(aadhaarDocFrontBase64Url, aadhaarDocBackBase64Url, aadhaar_no_et, aadhaar_doc_front_verify_error_tv, aadhaar_doc_back_verify_error_tv);
+        }
+
+        // Validate Company Pan-Card Document
+        if (isPanNoVerified) {
+            isValid &= validateDocument(panCardDocBase64Url, pan_card_no_et, pan_doc_verify_error_tv);
+        }
+
+        // Validate PAN Card Document
+        if (isAuthPanNoVerified) {
+            isValid &= validateDocument(authPanCardDocBase64Url, auth_pan_card_no_et, auth_pan_doc_verify_error_tv);
+        }
+
+        // Validate Passport Document
+        if (!passport_no_et.getText().toString().trim().equalsIgnoreCase("") && (passportFrontDocBase64Url.isEmpty() ||
+                passportBackDocBase64Url.isEmpty())) {
+            isValid &= validateDocumentPassport(passport_no_et, passport_doc_front_verify_error_tv, passport_doc_back_verify_error_tv);
+        }
+
+        // Validate Driving Licence Document
+        if (isDrivingLicenceVerified) {
+            isValid &= validateDocument(drivingLicenceDocBase64Url, driving_licence_no_et, driving_licence_doc_verify_error_tv);
+        }
+
+        // If both validations are successful, proceed with the API call
+        if (isValid) {
+            // Uncomment and use your async task
+            SendDataAsyncTask asyncTask1 = new SendDataAsyncTask(context);
+            asyncTask1.executeNetworkCall();
+            //Toast.makeText(activity, "Call API", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean validateDocument(String documentUrl, EditText editText, TextView errorTextView) {
+        if (documentUrl.isEmpty()) {
+            editText.requestFocus();
+            errorTextView.setVisibility(View.VISIBLE);
+            errorTextView.setText(getResources().getString(R.string.please_upload_document));
+            errorTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            return false; // Validation failed
+        }
+        return true; // Validation successful
+    }
+
+    private boolean validateDocumentIEC(EditText editText, TextView errorTextView) {
+        if (!editText.getText().toString().trim().equalsIgnoreCase("")) {
+            editText.requestFocus();
+            errorTextView.setVisibility(View.VISIBLE);
+            errorTextView.setText(getResources().getString(R.string.please_upload_document));
+            errorTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+
+            return false; // Validation failed
+        }
+        return true; // Validation successful
+    }
+
+    private boolean validateDocumentAadhaar(String documentUrl, String documentBackUrl, EditText editText, TextView errorTextView, TextView errorBackTextView)
+    {
+        if (documentUrl.isEmpty() || documentBackUrl.isEmpty()) {
+            editText.requestFocus();
+
+            if(documentUrl.isEmpty())
+            {
+                errorTextView.setVisibility(View.VISIBLE);
+                errorTextView.setText(getResources().getString(R.string.please_upload_document));
+                errorTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            }else{}
+
+            if(documentBackUrl.isEmpty())
+            {
+                errorBackTextView.setVisibility(View.VISIBLE);
+                errorBackTextView.setText(getResources().getString(R.string.please_upload_document));
+                errorBackTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            }else{}
+
+
+            return false; // Validation failed
+        }
+        return true; // Validation successful
+    }
+
+    private boolean validateDocumentPassport(EditText editText, TextView errorTextView, TextView errorBackTextView) {
+        if (!editText.getText().toString().trim().equalsIgnoreCase("")) {
+            editText.requestFocus();
+
+            if(passportFrontDocBase64Url.isEmpty())
+            {
+                errorTextView.setVisibility(View.VISIBLE);
+                errorTextView.setText(getResources().getString(R.string.please_upload_document));
+                errorTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            } else{}
+
+            if(passportBackDocBase64Url.isEmpty())
+            {
+                errorBackTextView.setVisibility(View.VISIBLE);
+                errorBackTextView.setText(getResources().getString(R.string.please_upload_document));
+                errorBackTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            }else{}
+
+            return false; // Validation failed
+        }
+        return true; // Validation successful
     }
 
     void imageTakeOption()
@@ -1048,46 +1182,55 @@ public class KYCVerificationDocUploadActivity extends SuperActivity implements R
         {
             gst_dov_upload_tv.setVisibility(View.GONE);
             company_gst_doc_verify_img.setVisibility(View.VISIBLE);
+            company_gst_doc_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("iecDoc"))
         {
             iec_doc_upload_tv.setVisibility(View.GONE);
             iec_doc_verify_img.setVisibility(View.VISIBLE);
+            iec_doc_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("aadhaarFrontDoc"))
         {
             aadhaar_doc_upload_front_tv.setVisibility(View.GONE);
             aadhaar_doc_front_verify_img.setVisibility(View.VISIBLE);
+            aadhaar_doc_front_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("aadhaarBackDoc"))
         {
             aadhaar_doc_upload_back_tv.setVisibility(View.GONE);
             aadhaar_doc_back_verify_img.setVisibility(View.VISIBLE);
+            aadhaar_doc_back_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("panCardDoc"))
         {
             pan_card_doc_upload_tv.setVisibility(View.GONE);
             pan_doc_verify_img.setVisibility(View.VISIBLE);
+            pan_doc_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("authPanCardDoc"))
         {
             auth_pan_card_doc_upload_tv.setVisibility(View.GONE);
             auth_pan_doc_verify_img.setVisibility(View.VISIBLE);
+            auth_pan_doc_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("passportFrontDoc"))
         {
             passport_doc_upload_front_tv.setVisibility(View.GONE);
             passport_doc_front_verify_img.setVisibility(View.VISIBLE);
+            passport_doc_front_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("passportBackDoc"))
         {
             passport_doc_upload_back_tv.setVisibility(View.GONE);
             passport_doc_back_verify_img.setVisibility(View.VISIBLE);
+            passport_doc_back_verify_error_tv.setVisibility(View.GONE);
         }
         else if(userChoosenTask.equalsIgnoreCase("drivingLicenceDoc"))
         {
             driving_licence_doc_upload_tv.setVisibility(View.GONE);
             driving_licence_doc_verify_img.setVisibility(View.VISIBLE);
+            driving_licence_doc_verify_error_tv.setVisibility(View.GONE);
         }
         else{}
     }

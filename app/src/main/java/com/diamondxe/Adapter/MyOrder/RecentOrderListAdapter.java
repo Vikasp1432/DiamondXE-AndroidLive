@@ -71,15 +71,23 @@ public class RecentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         holder.order_number_tv.setText("#"+list.get(position).getOrderId());
         holder.date_time_tv.setText(list.get(position).getCreatedAt());
 
-        if(list.get(position).getCreatedAt()!=null && !list.get(position).getCreatedAt().equalsIgnoreCase(""))
+
+        if(list.get(position).getIsCancelable().equalsIgnoreCase("1"))
         {
-            // This Condition For 65 Min
-            //CommonUtility.startChecking(list.get(position).getCompareDateTime(), holder.cancel_order_card_view);
+            if(list.get(position).getCreatedAt()!=null && !list.get(position).getCreatedAt().equalsIgnoreCase(""))
+            {
+                // This Condition For 65 Min
+                //CommonUtility.startChecking(list.get(position).getCompareDateTime(), holder.cancel_order_card_view);
+                holder.timer_tv.setVisibility(View.VISIBLE);
+                String dateTimeString = list.get(position).getCompareDateTime();
+                CommonUtility.startTimerCheck(dateTimeString, holder.timer_tv, holder.cancel_order_card_view);
 
-            String dateTimeString = list.get(position).getCompareDateTime();
-            CommonUtility.startTimerCheck(dateTimeString, holder.timer_tv, holder.cancel_order_card_view);
+            }else{}
+        }else{
+            holder.cancel_order_card_view.setVisibility(View.GONE);
+            holder.timer_tv.setVisibility(View.GONE);
+        }
 
-        }else{}
 
         holder.details_card_view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -232,7 +232,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--KYC Verification Icon-->
             <LinearLayout
@@ -259,7 +259,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--Payment Icon-->
             <LinearLayout
@@ -321,7 +321,6 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="@dimen/dimen_15" />
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"

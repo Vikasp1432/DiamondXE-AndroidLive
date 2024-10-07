@@ -1,11 +1,14 @@
 package com.diamondxe.Utils;
 import android.content.Context;
 import android.icu.util.TimeZone;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -13,6 +16,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+
+import okhttp3.RequestBody;
 
 public class MultipartUtility {
 	
@@ -137,7 +142,7 @@ public class MultipartUtility {
 	 * status OK, otherwise an exception is thrown.
 	 * @throws IOException
 	 */
-	
+
 	public String finish() throws IOException {
 		String response = null;
 		Log.e("finish()","finish()");
@@ -161,5 +166,16 @@ public class MultipartUtility {
 			throw new IOException("Server returned non-OK status: " + status);
 		}
 		return response;
+	}
+
+	// Add the missing methods
+	public MultipartUtility addFormDataPart(String name, String value) {
+		addFormField(name, value);
+		return this;
+	}
+
+	public MultipartUtility addFormDataPartBody(String name, String filename, RequestBody requestBody) throws IOException {
+		addFilePart(name, filename);
+		return this;
 	}
 }

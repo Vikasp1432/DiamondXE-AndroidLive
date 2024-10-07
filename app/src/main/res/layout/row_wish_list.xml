@@ -104,15 +104,42 @@
                         </RelativeLayout>
 
                         <!--Name Text-->
-                        <TextView
-                            android:id="@+id/name_tv"
-                            style="@style/BoldFontType"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_4"
-                            android:text="Name"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_18" />
+                            android:layout_marginTop="@dimen/dimen_4">
+
+                            <TextView
+                                android:id="@+id/name_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Name"
+                                android:textColor="@color/black"
+                                android:layout_marginRight="@dimen/dimen_2"
+                                android:layout_toLeftOf="@+id/diamond_type"
+                                android:textSize="@dimen/dimen_16" />
+
+                            <TextView
+                                android:id="@+id/diamond_type"
+                                style="@style/BoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginRight="@dimen/dimen_6"
+                                android:background="@drawable/background_yellow"
+                                android:gravity="center"
+                                android:hint="Natur"
+                                android:paddingLeft="@dimen/dimen_2"
+                                android:paddingTop="@dimen/dimen_1"
+                                android:paddingRight="@dimen/dimen_2"
+                                android:paddingBottom="@dimen/dimen_1"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textSize="@dimen/dimen_10" />
+
+                        </RelativeLayout>
 
                         <!--Item Type Text-->
                         <TextView

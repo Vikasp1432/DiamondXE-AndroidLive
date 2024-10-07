@@ -280,11 +280,19 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
         }else{}
 
-        // Check Company Name Not Blank
+        // Check Company Name Not Blank and Check Clickable or Not.
         if(!companyName.equalsIgnoreCase(""))
         {
             company_name_et.setText(companyName);
-        } else{}
+            company_name_et.setClickable(false);
+            company_name_et.setEnabled(false);
+            company_name_et.setBackgroundResource(R.drawable.bg_gray_out);
+
+        } else{
+            company_name_et.setClickable(true);
+            company_name_et.setEnabled(true);
+            company_name_et.setBackgroundResource(R.drawable.border_line_view);
+        }
 
         // If User Type BYUER Company Name Layout Not Show
         if(userRole.equalsIgnoreCase("BUYER"))
@@ -495,6 +503,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             {
                 // For Net Banking
                 paymentInstrument.put("type", PAYMENT_BY_NET_BANKING);
+                Log.e("SEnd_bankID : ", bankID.toString());
                 paymentInstrument.put("bankId", bankID);
             }
             else if(paymentModeType.equalsIgnoreCase(CREDIT_CARD))
@@ -823,9 +832,11 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
+            urlParameter.put("countryName", "India");
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,
+                    showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -900,6 +911,8 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
            // Log.e("------- remark : ", " remark : " +  remark.toString());
             urlParameter.put("remark", remark);
             urlParameter.put("submit", submit);
+            urlParameter.put("deviceId", ""+ uuid);
+            urlParameter.put("deviceType", "Android");
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.CUSTOM_PAYMENT_INIT,
@@ -1019,6 +1032,8 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        //Log.v("------Diamond----- : ", "--------BankJSONObject-------- : " + jsonObject);
+
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
                         JSONObject jObjNetBankingDetails = jObjDetails.optJSONObject("netBanking");
 
@@ -1086,7 +1101,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                         // Check Final Submit Value or Calculate Amount.
                         if(finalSubmitValue.equalsIgnoreCase("yes"))
                         {
-                            Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
 
                             Constant.paymentOrderID = CommonUtility.checkString(jObjDetails.optString("order_id"));
                             Constant.paymentUserID = CommonUtility.checkString(jObjDetails.optString("user_id"));
@@ -1778,6 +1793,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
         if (upiApps.isEmpty()) {
             Toast.makeText(this, "No UPI apps installed", Toast.LENGTH_SHORT).show();
+            upi_option_lin.setVisibility(View.GONE);
             return;
         }
         upiOptionListAdapter = new UPIOptionListAdapter(upiApps, context , this);

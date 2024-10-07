@@ -56,7 +56,13 @@ public class KYCVerificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final RecycleViewHolder holder = (RecycleViewHolder) viewHolder;
 
         holder.document_name_tv.setText(list.get(position).getAttachmentType());
-        holder.document_submitted_date_tv.setText(list.get(position).getAttachmentDate());
+        if(!list.get(position).getAttachmentDate().equalsIgnoreCase(""))
+        {
+            holder.document_submitted_date_tv.setText(list.get(position).getAttachmentDate());
+        }
+        else{
+            holder.document_submitted_date_tv.setText("--");
+        }
 
         if(list.get(position).getVerifiedInd().equalsIgnoreCase("0"))
         {

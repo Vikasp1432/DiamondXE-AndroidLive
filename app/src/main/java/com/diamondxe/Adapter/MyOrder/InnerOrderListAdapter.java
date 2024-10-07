@@ -7,21 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.diamondxe.Beans.MyOrder.InnerOrderListModel;
-import com.diamondxe.Beans.MyOrder.MyOrderListModel;
 import com.diamondxe.Interface.TwoRecyclerInterface;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -45,7 +43,7 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
 
-            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_recent_inner_order_list_history, parent, false);
+            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_inner_order_list_history, parent, false);
             return new RecycleViewHolder(v);
     }
 
@@ -101,6 +99,26 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.diamond_type_tv.setText("LAB");
         }
 
+        // Check Status and Show Hide Cancelled and Refund Layout.
+        if(list.get(position).getStatus().equalsIgnoreCase("Cancelled"))
+        {
+            holder.rel_cancelled_refund_rel.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.rel_cancelled_refund_rel.setVisibility(View.GONE);
+        }
+
+        if(!list.get(position).getCancelBy().equalsIgnoreCase(""))
+        {
+            holder.cancelled_by_tv.setText(context.getResources().getString(R.string.cancelled_by) + " "+ list.get(position).getCancelBy());
+        }
+        else{}
+
+        if(!list.get(position).getRefundStatus().equalsIgnoreCase(""))
+        {
+            holder.refund_tv.setText(context.getResources().getString(R.string.refund) + " "+ list.get(position).getRefundStatus());
+        }
+        else{}
     }
 
     @Override
@@ -114,8 +132,10 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {
-        TextView date_time_tv, name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv, order_number_tv;
+        TextView date_time_tv, name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv, order_number_tv,
+                cancelled_by_tv, refund_tv;
         ImageView image_view;
+        RelativeLayout rel_cancelled_refund_rel;
         CardView details_card_view, summary_card_view, track_order_card_view, cancel_order_card_view;
 
         public RecycleViewHolder (View itemView) {
@@ -130,6 +150,10 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
             diamond_type_tv = itemView.findViewById(R.id.diamond_type_tv);
             order_number_tv = itemView.findViewById(R.id.order_number_tv);
+            cancelled_by_tv = itemView.findViewById(R.id.cancelled_by_tv);
+            refund_tv = itemView.findViewById(R.id.refund_tv);
+
+            rel_cancelled_refund_rel = itemView.findViewById(R.id.rel_cancelled_refund_rel);
 
             image_view = itemView.findViewById(R.id.image_view);
             details_card_view = itemView.findViewById(R.id.details_card_view);

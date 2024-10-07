@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -27,19 +26,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.diamondxe.Activity.MyOrder.CancelOrderScreenActivity;
-import com.diamondxe.Adapter.CurrencyListAdapter;
-import com.diamondxe.Adapter.Dealer.CustomPaymentHistoryAdapter;
+import com.diamondxe.Activity.MyOrder.OrderSummaryScreenActivity;
 import com.diamondxe.Adapter.MyOrder.InnerOrderListAdapter;
 import com.diamondxe.Adapter.MyOrder.RecentOrderDetailsListAdapter;
 import com.diamondxe.Adapter.MyOrder.RecentOrderListAdapter;
-import com.diamondxe.Adapter.SearchResultListAdapter;
-import com.diamondxe.Adapter.SearchResultListWiseAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
-import com.diamondxe.Beans.CountryListModel;
 import com.diamondxe.Beans.MyOrder.InnerOrderListModel;
 import com.diamondxe.Beans.MyOrder.MyOrderListModel;
-import com.diamondxe.Beans.SearchResultTypeModel;
 import com.diamondxe.Interface.TwoRecyclerInterface;
 import com.diamondxe.Network.EndlessRecyclerViewScrollListener;
 import com.diamondxe.Network.SuperFragment;
@@ -54,11 +48,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class RecentOrderListFragment extends SuperFragment implements TwoRecyclerInterface {
     private RecyclerView recycler_view;
@@ -76,11 +65,12 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
     RecyclerView recycler_view_order_details;
     RecentOrderDetailsListAdapter recentOrderDetailsListAdapter;
     ArrayList<MyOrderListModel> recentOrderArrayList;
+    ArrayList<MyOrderListModel> recentOrderTrackingArrayList;
     Handler handler1 = new Handler(Looper.getMainLooper());
     int pageNo = 1;
     private EndlessRecyclerViewScrollListener scrollListener;
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
-    String detailsOrderId = "", detailsCreatedAt="";
+    String detailsOrderId = "", detailsCreatedAt="", trackingNo = "", currentStatusCode = "", latestStatus = "", remark = "", date = "",trackingDateTeime="";
 
     public RecentOrderListFragment() {
         // Required empty public constructor
@@ -108,6 +98,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
     {
         modelArrayList = new ArrayList<>();
         recentOrderArrayList = new ArrayList<>();
+        recentOrderTrackingArrayList = new ArrayList<>();
 
         error_tv = view.findViewById(R.id.error_tv);
         progressBar = view.findViewById(R.id.progressBar);
@@ -142,56 +133,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         pageNo = 1;
         getOrderListAPI(false);
     }
-    void setDummyData()
-    {
-        MyOrderListModel model = new MyOrderListModel();
 
-        model.setOrderNumber("170245895326589");
-        model.setOrderDateTime("06/03/24, 05:14:24 PM");
-        model.setName("Eleganted Cushion");
-        model.setStatus("Confirmed");
-        model.setCarat("0.19");
-        model.setColor("E");
-        model.setClarity("SI2");
-        model.setStockNumber("6481931311");
-        model.setCategory("LAB");
-        model.setSubTotal("1877100000");
-        model.setShowingSubTotal("1877100000");
-        model.setCurrencySymbol(rupeesIcon);
-        model.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-      /*  innerOrderArrayList = new ArrayList<InnerOrderListModel>();
-
-        InnerOrderListModel innerOrderListModel = new InnerOrderListModel();
-
-        innerOrderListModel.setOrderNumber("170245895326589");
-        innerOrderListModel.setOrderDateTime("06/03/24, 05:14:24 PM");
-        innerOrderListModel.setName("Eleganted Cushion");
-        innerOrderListModel.setStatus("Confirmed");
-        innerOrderListModel.setCarat("0.19");
-        innerOrderListModel.setColor("E");
-        innerOrderListModel.setClarity("SI2");
-        innerOrderListModel.setStockNumber("6481931311");
-        innerOrderListModel.setCategory("LAB");
-        innerOrderListModel.setSubTotal("1877100000");
-        innerOrderListModel.setShowingSubTotal("1877100000");
-        innerOrderListModel.setCurrencySymbol(rupeesIcon);
-        innerOrderListModel.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-        innerOrderArrayList.add(innerOrderListModel);
-
-        model.setAllItemsInSection(innerOrderArrayList);*/
-
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-        modelArrayList.add(model);
-
-        adapter = new RecentOrderListAdapter(modelArrayList,context,this);
-        recycler_view.setAdapter(adapter);
-    }
     void getCurrencyData()
     {
         selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
@@ -202,6 +144,12 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
 
     @Override
     public void onClick(View view) {}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCurrencyData();
+    }
 
     public void getOrderListAPI(boolean showLoader)
     {
@@ -244,7 +192,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         }
     }
 
-    public void getOrderSummaryAPI(boolean showLoader, String orderID)
+    public void getOrderTrackingDetailsAPI(boolean showLoader, String orderID)
     {
         if (Utils.isNetworkAvailable(context))
         {
@@ -253,13 +201,14 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
             urlParameter.put("orderId", orderID);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ORDER_DETAILS, ApiConstants.ORDER_SUMMARY_ID,showLoader,
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ORDER_TRACKING_DETAILS, ApiConstants.ORDER_TRACKING_DETAILS_ID,showLoader,
                     "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
+
 
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
@@ -414,6 +363,12 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
 
                         } else{}
 
+                        // Check If recentOrderArrayList Size Is GraterThen 0 Clear First.
+                        if(recentOrderArrayList!=null && recentOrderArrayList.size()>0)
+                        {
+                            recentOrderArrayList.clear();
+                        }else{}
+
                         JSONArray details = jObjDetails.getJSONArray("diamonds");
 
                         for (int i = 0; i < details.length(); i++)
@@ -436,12 +391,13 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                             model.setClarity(CommonUtility.checkString(jOBJNEW.optString("clarity")));
                             model.setShape(CommonUtility.checkString(jOBJNEW.optString("shape")));
                             model.setGrowthType(CommonUtility.checkString(jOBJNEW.optString("growth_type")));
-                            model.setShape(CommonUtility.checkString(jOBJNEW.optString("cut_grade")));
+                            model.setCut(CommonUtility.checkString(jOBJNEW.optString("cut_grade")));
                             model.setPolish(CommonUtility.checkString(jOBJNEW.optString("polish")));
                             model.setSymmetry(CommonUtility.checkString(jOBJNEW.optString("symmetry")));
                             model.setFir(CommonUtility.checkString(jOBJNEW.optString("fluorescence_intensity")));
                             model.setDepth(CommonUtility.checkString(jOBJNEW.optString("depth_perc")));
                             model.setTable(CommonUtility.checkString(jOBJNEW.optString("table_perc")));
+                            model.setCertificateName(CommonUtility.checkString(jOBJNEW.optString("certificate_name")));
                             model.setCurrencySymbol(ApiConstants.rupeesIcon);
 
                             recentOrderArrayList.add(model);
@@ -471,51 +427,68 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                     }
                     break;
 
-                case ApiConstants.ORDER_SUMMARY_ID:
+                case ApiConstants.ORDER_TRACKING_DETAILS_ID:
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Log.v("------Diamond----- : ", "--------JSONObjectTracking-------- : " + jsonObjectData);
+
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
                         detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
-                        detailsCreatedAt = CommonUtility.checkString(jObjDetails.optString("created_at"));
 
-                        if(!detailsCreatedAt.equalsIgnoreCase(""))
+
+                        JSONObject jObjDetailsTracking = jObjDetails.optJSONObject("tracking_details");
+
+                         trackingNo = CommonUtility.checkString(jObjDetailsTracking.optString("tarcking_no"));
+                         currentStatusCode = CommonUtility.checkString(jObjDetailsTracking.optString("current_status_code"));
+                         latestStatus = CommonUtility.checkString(jObjDetailsTracking.optString("latest_status"));
+                         remark = CommonUtility.checkString(jObjDetailsTracking.optString("remark"));
+                         date = CommonUtility.checkString(jObjDetailsTracking.optString("date"));
+
+                        if(!date.equalsIgnoreCase(""))
                         {
-                            detailsCreatedAt = CommonUtility.convertDateTimeIntoLocal(detailsCreatedAt, ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
+                            date = CommonUtility.convertDateTimeIntoLocal(date, ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
 
                         } else{}
 
-                        JSONObject jObjUserDetails = jObjDetails.optJSONObject("user_details");
+                        // Check If recentOrderTrackingArrayList Size Is GraterThen 0 Clear First.
+                        if(recentOrderTrackingArrayList!=null && recentOrderTrackingArrayList.size()>0)
+                        {
+                            recentOrderTrackingArrayList.clear();
+                        }else{}
 
-                        String payment_mode = CommonUtility.checkString(jObjDetails.optString("payment_mode"));
-                        String payment_status = CommonUtility.checkString(jObjDetails.optString("payment_status"));
-                        String sub_total = CommonUtility.checkString(jObjDetails.optString("sub_total"));
-                        String delivery_date = CommonUtility.checkString(jObjDetails.optString("delivery_date"));
-                        String shipping_charge = CommonUtility.checkString(jObjDetails.optString("shipping_charge"));
-                        String platform_fee = CommonUtility.checkString(jObjDetails.optString("platform_fee"));
-                        String bank_charge = CommonUtility.checkString(jObjDetails.optString("bank_charge"));
-                        String wallet_points = CommonUtility.checkString(jObjDetails.optString("wallet_points"));
-                        String coupon_value = CommonUtility.checkString(jObjDetails.optString("coupon_value"));
-                        String is_coupon_applied = CommonUtility.checkString(jObjDetails.optString("is_coupon_applied"));
-                        String coupon_code = CommonUtility.checkString(jObjDetails.optString("coupon_code"));
-                        String coupon_discount = CommonUtility.checkString(jObjDetails.optString("coupon_discount"));
-                        String other_tax = CommonUtility.checkString(jObjDetails.optString("total_charge_tax"));
-                        String diamond_tax = CommonUtility.checkString(jObjDetails.optString("tax"));
-                        String total_charge = CommonUtility.checkString(jObjDetails.optString("total_charge"));
-                        String sub_total1 = CommonUtility.checkString(jObjDetails.optString("total_amount"));
-                        String final_amount = CommonUtility.checkString(jObjDetails.optString("sub_total"));
-                        String diamond_price = CommonUtility.checkString(jObjDetails.optString("sub_total"));
+                        JSONArray details = jObjDetailsTracking.getJSONArray("history");
 
-                        String billing_address = CommonUtility.checkString(jObjUserDetails.optString("billing_address"));
-                        String shipping_address = CommonUtility.checkString(jObjUserDetails.optString("shipping_address"));
-                        String user_email = CommonUtility.checkString(jObjUserDetails.optString("user_email"));
-                        String user_mobile = CommonUtility.checkString(jObjUserDetails.optString("user_mobile"));
+                        for (int i = 0; i < details.length(); i++)
+                        {
+                            JSONObject jOBJNEW = details.getJSONObject(i);
 
-                        showOrderSummaryBottomDialog();
+                            MyOrderListModel model = new MyOrderListModel();
+
+                            model.setOrderNumber(CommonUtility.checkString(detailsOrderId));
+                            model.setOrderDateTime(CommonUtility.checkString(detailsCreatedAt));
+                            model.setTrackingStatusCode(CommonUtility.checkString(jOBJNEW.optString("status_code")));
+                            model.setTrackingStatus(CommonUtility.checkString(jOBJNEW.optString("status")));
+                            model.setTrackingNote(CommonUtility.checkString(jOBJNEW.optString("note")));
+
+                            //model.setTrackingDateTime(CommonUtility.checkString(jOBJNEW.optString("datetime")));
+
+                            if(!jOBJNEW.optString("datetime").equalsIgnoreCase(""))
+                            {
+                                String convertData = CommonUtility.convertDateTimeIntoLocal(jOBJNEW.optString("datetime"), ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
+                                model.setTrackingDateTime(convertData);
+                            }
+                            else{}
+
+                            recentOrderTrackingArrayList.add(model);
+                        }
+
+                        showOrderTrackBottomDialog();
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {
+                        //getCountryListAPI(true);
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
@@ -526,7 +499,6 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                         Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
                     }
                     break;
-
             }
 
         } catch (Exception e) {
@@ -556,20 +528,25 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
     {
         if(action.equalsIgnoreCase("orderDetails"))
         {
-            //getOrderDetailsAPI(false, modelArrayList.get(parantPosition).getOrderId());
-            showOrderDetailsBottomDialog();
+            getOrderDetailsAPI(false, modelArrayList.get(parantPosition).getOrderId());
         }
         else if(action.equalsIgnoreCase("orderSummary"))
         {
-            //getOrderSummaryAPI(false, modelArrayList.get(parantPosition).getOrderId());
-            showOrderSummaryBottomDialog();
+            Constant.orderID = modelArrayList.get(parantPosition).getOrderId();
+            Constant.comeFromWhichFragment = "Recent";
+
+            Intent intent = new Intent(activity, OrderSummaryScreenActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(0,0);
         }
         else if(action.equalsIgnoreCase("orderTrack"))
         {
-            showOrderTrackBottomDialog();
+            //showOrderTrackBottomDialog();
+            getOrderTrackingDetailsAPI(false, modelArrayList.get(parantPosition).getOrderId());
         }
         else if(action.equalsIgnoreCase("orderCancel"))
         {
+            Constant.orderID = modelArrayList.get(parantPosition).getOrderId();
             Intent intent = new Intent(activity, CancelOrderScreenActivity.class);
             startActivity(intent);
             getActivity().overridePendingTransition(0,0);
@@ -591,46 +568,13 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
 
         textView2.setText(getResources().getString(R.string.diamond_details));
 
-       // order_number_tv.setText(detailsOrderId);
-       // date_time_tv.setText(detailsCreatedAt);
+        order_number_tv.setText("#"+detailsOrderId);
+        date_time_tv.setText(detailsCreatedAt);
 
         recycler_view_order_details.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_view_order_details.setLayoutManager(layoutManager);
         recycler_view_order_details.setNestedScrollingEnabled(false);
-
-        MyOrderListModel model = new MyOrderListModel();
-
-        model.setOrderNumber("170245895326589");
-        model.setOrderDateTime("06/03/24, 05:14:24 PM");
-        model.setName("Eleganted Cushion");
-        model.setStatus("Confirmed");
-        model.setShape("Princess");
-        model.setCarat("0.19");
-        model.setColor("E");
-        model.setClarity("SI2");
-        model.setType("HPHT");
-        model.setCut("VG");
-        model.setPolish("EX");
-        model.setSymmetry("EX");
-        model.setFir("NIL");
-        model.setLab("IGI");
-        model.setTable("56.00%");
-        model.setDepth("64.50%");
-        model.setStockNumber("6481931311");
-        model.setCategory("LAB");
-        model.setSubTotal("854621453");
-        model.setShowingSubTotal("854621453");
-        model.setCurrencySymbol(rupeesIcon);
-        model.setIsReturnable("1");
-        model.setImage("https://v360.in/V360Images.aspx?cid=vd&d=KG230-184A");
-
-        recentOrderArrayList.add(model);
-        recentOrderArrayList.add(model);
-        recentOrderArrayList.add(model);
-        recentOrderArrayList.add(model);
-        recentOrderArrayList.add(model);
-        recentOrderArrayList.add(model);
 
         recentOrderDetailsListAdapter = new RecentOrderDetailsListAdapter(recentOrderArrayList, context, this);
         recycler_view_order_details.setAdapter(recentOrderDetailsListAdapter);
@@ -659,73 +603,170 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         dialog.show();
     }
 
-    private TextView order_number_tv, date_time_tv, utr_cheque_no_tv, order_status_tv, amount_tv, order_place_date_tv, delivery_date_tv,
-            payment_mode_tv,shipping_address_tv, billing_address_tv,contact_no_tv, email_tv,diamond_price_tv, shipping_and_handling_tv,
-            platform_fees_tv, total_charges_tv, other_taxes_tv,diamond_taxes_tv,total_taxes_tv, sub_total_tv, bank_charges_tv,final_amount_tv,
-            others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
-    private RelativeLayout rel_other_tax, rel_diamond_tax;
-    // Order Summary Popup and Show Order Summary.
-    private void showOrderSummaryBottomDialog()
+    private TextView order_number_tv, date_time_tv;
+
+    // Order Track Popup and Show Order Summary.
+    private void showOrderTrackBottomDialog()
     {
         dialog = new BottomSheetDialog(context, R.style.BottomSheetDialog);
-        dialog.setContentView(R.layout.dialog_show_order_summary_details);
+        dialog.setContentView(R.layout.dialog_show_order_track_details);
 
         TextView textView2 = dialog.findViewById(R.id.textView2);
 
-        textView2.setText(getResources().getString(R.string.order_summary));
+        TextView order_number_tv = dialog.findViewById(R.id.order_number_tv);
+        TextView date_time_tv = dialog.findViewById(R.id.date_time_tv);
 
-        order_number_tv = dialog.findViewById(R.id.order_number_tv);
-        date_time_tv = dialog.findViewById(R.id.date_time_tv);
-        utr_cheque_no_tv = dialog.findViewById(R.id.utr_cheque_no_tv);
-        order_status_tv = dialog.findViewById(R.id.order_status_tv);
-        amount_tv = dialog.findViewById(R.id.amount_tv);
-        order_place_date_tv = dialog.findViewById(R.id.order_place_date_tv);
-        delivery_date_tv = dialog.findViewById(R.id.delivery_date_tv);
-        payment_mode_tv = dialog.findViewById(R.id.payment_mode_tv);
-        shipping_address_tv = dialog.findViewById(R.id.shipping_address_tv);
-        billing_address_tv = dialog.findViewById(R.id.billing_address_tv);
-        contact_no_tv = dialog.findViewById(R.id.contact_no_tv);
-        email_tv = dialog.findViewById(R.id.email_tv);
-        diamond_price_tv = dialog.findViewById(R.id.diamond_price_tv);
-        shipping_and_handling_tv = dialog.findViewById(R.id.shipping_and_handling_tv);
-        platform_fees_tv = dialog.findViewById(R.id.platform_fees_tv);
-        total_charges_tv = dialog.findViewById(R.id.total_charges_tv);
-        other_taxes_tv = dialog.findViewById(R.id.other_taxes_tv);
-        diamond_taxes_tv = dialog.findViewById(R.id.diamond_taxes_tv);
-        total_taxes_tv = dialog.findViewById(R.id.total_taxes_tv);
-        sub_total_tv = dialog.findViewById(R.id.sub_total_tv);
-        bank_charges_tv = dialog.findViewById(R.id.bank_charges_tv);
-        final_amount_tv = dialog.findViewById(R.id.final_amount_tv);
-        others_txt_gst_perc_tv = dialog.findViewById(R.id.others_txt_gst_perc_tv);
-        diamond_txt_gst_perc_tv = dialog.findViewById(R.id.diamond_txt_gst_perc_tv);
+        TextView order_place_lbl = dialog.findViewById(R.id.order_place_lbl);
+        TextView order_in_progress_lbl = dialog.findViewById(R.id.order_in_progress_lbl);
+        TextView order_out_for_delivery_lbl = dialog.findViewById(R.id.order_out_for_delivery_lbl);
+        TextView order_delivered_lbl = dialog.findViewById(R.id.order_delivered_lbl);
+        TextView order_return_request_lbl = dialog.findViewById(R.id.order_return_request_lbl);
 
-        rel_other_tax = dialog.findViewById(R.id.rel_other_tax);
-        rel_other_tax.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                others_txt_gst_perc_tv.setVisibility(View.VISIBLE);
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        others_txt_gst_perc_tv.setVisibility(View.GONE);
-                    }
-                }, 2000);
+
+        TextView order_received_place_tv = dialog.findViewById(R.id.order_received_place_tv);
+        TextView order_received_place_date_time_tv = dialog.findViewById(R.id.order_received_place_date_time_tv);
+
+        TextView order_in_progress_tv = dialog.findViewById(R.id.order_in_progress_tv);
+        TextView order_in_progress_date_time_tv = dialog.findViewById(R.id.order_in_progress_date_time_tv);
+
+        TextView order_out_for_delivery_tv = dialog.findViewById(R.id.order_out_for_delivery_tv);
+        TextView order_out_for_delivery_date_time_tv = dialog.findViewById(R.id.order_out_for_delivery_date_time_tv);
+
+        TextView order_delivered_tv = dialog.findViewById(R.id.order_delivered_tv);
+        TextView order_delivered_date_time_tv = dialog.findViewById(R.id.order_delivered_date_time_tv);
+
+        TextView order_return_request_tv = dialog.findViewById(R.id.order_return_request_tv);
+        TextView order_return_request_date_time_tv = dialog.findViewById(R.id.order_return_request_date_time_tv);
+
+        RelativeLayout order_place_rel = dialog.findViewById(R.id.order_place_rel);
+        RelativeLayout order_in_progress_rel = dialog.findViewById(R.id.order_in_progress_rel);
+        RelativeLayout order_out_for_delivery_rel = dialog.findViewById(R.id.order_out_for_delivery_rel);
+        RelativeLayout order_delivered_rel = dialog.findViewById(R.id.order_delivered_rel);
+        RelativeLayout order_return_request_rel = dialog.findViewById(R.id.order_return_request_rel);
+
+        textView2.setText(getResources().getString(R.string.order_tracking));
+
+        order_number_tv.setText("#"+detailsOrderId);
+        date_time_tv.setText(date);
+
+        /*for (int i = 0; i < recentOrderTrackingArrayList.size(); i++)
+        {
+            if(currentStatusCode.equalsIgnoreCase("1"))
+            {
+                order_received_place_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_received_place_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_place_rel.setBackgroundResource(R.drawable.circle_bg);
             }
-        });
 
-        rel_diamond_tax = dialog.findViewById(R.id.rel_diamond_tax);
-        rel_diamond_tax.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        diamond_txt_gst_perc_tv.setVisibility(View.GONE);
-                    }
-                }, 2000);
+            if(currentStatusCode.equalsIgnoreCase("2"))
+            {
+                order_received_place_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_received_place_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_place_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_in_progress_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_in_progress_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_in_progress_rel.setBackgroundResource(R.drawable.circle_bg);
             }
-        });
+
+            if(currentStatusCode.equalsIgnoreCase("3"))
+            {
+                order_received_place_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_received_place_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_place_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_in_progress_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_in_progress_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_in_progress_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_out_for_delivery_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_out_for_delivery_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_out_for_delivery_rel.setBackgroundResource(R.drawable.circle_bg);
+            }
+
+            if(currentStatusCode.equalsIgnoreCase("4"))
+            {
+                order_received_place_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_received_place_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_place_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_in_progress_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_in_progress_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_in_progress_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_out_for_delivery_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_out_for_delivery_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_out_for_delivery_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_delivered_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_delivered_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_delivered_rel.setBackgroundResource(R.drawable.circle_bg);
+            }
+
+            if(currentStatusCode.equalsIgnoreCase("5"))
+            {
+                order_received_place_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_received_place_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_place_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_in_progress_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_in_progress_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_in_progress_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_out_for_delivery_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_out_for_delivery_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_out_for_delivery_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_delivered_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_delivered_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_delivered_rel.setBackgroundResource(R.drawable.circle_bg);
+
+                order_return_request_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingStatusCode());
+                order_return_request_date_time_tv.setText(recentOrderTrackingArrayList.get(i).getTrackingDateTime());
+                order_return_request_rel.setBackgroundResource(R.drawable.circle_bg);
+            }
+        }*/
+
+        for (int i = 0; i < recentOrderTrackingArrayList.size(); i++) {
+            String trackingStatusCode = recentOrderTrackingArrayList.get(i).getTrackingStatusCode();
+            String trackingDateTime = recentOrderTrackingArrayList.get(i).getTrackingDateTime();
+            String trackingNote = recentOrderTrackingArrayList.get(i).getTrackingNote();
+
+            // Check if the current status code matches the tracking status code
+            if (currentStatusCode.equalsIgnoreCase(trackingStatusCode)) {
+                // Set the current status
+                setView(order_place_lbl, order_received_place_tv, order_received_place_date_time_tv, order_place_rel, trackingNote, trackingDateTime,trackingStatusCode);
+
+                // Set values for statuses 1 and 2 if current status code is 3 or higher
+                if (Integer.parseInt(currentStatusCode) >= 2) {
+                    // Set for status 2
+                    setView(order_in_progress_lbl, order_in_progress_tv, order_in_progress_date_time_tv, order_in_progress_rel, trackingNote, trackingDateTime, trackingStatusCode);
+                }
+
+                if (Integer.parseInt(currentStatusCode) >= 1) {
+                    // Set for status 1
+                    setView(order_place_lbl, order_received_place_tv, order_received_place_date_time_tv, order_place_rel, trackingNote, trackingDateTime, trackingStatusCode);
+                }
+
+                // Set values for status 3
+                if (Integer.parseInt(currentStatusCode) >= 3) {
+                    setView(order_out_for_delivery_lbl, order_out_for_delivery_tv, order_out_for_delivery_date_time_tv, order_out_for_delivery_rel, trackingNote, trackingDateTime, trackingStatusCode);
+                }
+
+                // Set values for status 4
+                if (Integer.parseInt(currentStatusCode) >= 4) {
+                    setView(order_delivered_lbl, order_delivered_tv, order_delivered_date_time_tv, order_delivered_rel, trackingNote, trackingDateTime, trackingStatusCode);
+                }
+
+                // Set values for status 5
+                if (Integer.parseInt(currentStatusCode) >= 5) {
+                    setView(order_return_request_lbl, order_return_request_tv, order_return_request_date_time_tv, order_return_request_rel, trackingNote, trackingDateTime, trackingStatusCode);
+                }
+
+                break; // Exit the loop once we've processed the matching status
+            }
+        }
+
 
         ImageView ib_cross = dialog.findViewById(R.id.ib_cross);
         ib_cross.setOnClickListener(new View.OnClickListener() {
@@ -749,35 +790,23 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         dialog.show();
     }
 
-    // Order Track Popup and Show Order Summary.
-    private void showOrderTrackBottomDialog()
-    {
-        dialog = new BottomSheetDialog(context, R.style.BottomSheetDialog);
-        dialog.setContentView(R.layout.dialog_show_order_track_details);
-
-        TextView textView2 = dialog.findViewById(R.id.textView2);
-
-        textView2.setText(getResources().getString(R.string.order_tracking));
-
-        ImageView ib_cross = dialog.findViewById(R.id.ib_cross);
-        ib_cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.setCancelable(false);
-        Window window = dialog.getWindow();
-        if (window != null) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(window.getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = 1000; // Set your desired fixed height here, in pixels
-
-            window.setAttributes(lp);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+    // Method to set text and background
+    private void setView(TextView statusTextViewLbl, TextView statusTextView, TextView dateTimeTextView, View backgroundView, String status, String dateTime, String trackingStatusCode) {
+        statusTextView.setText(status);
+        dateTimeTextView.setText(dateTime);
+        int currentStatus = Integer.parseInt(currentStatusCode);
+        int trackingStatus = Integer.parseInt(trackingStatusCode);
+        // Change text color based on the status comparison
+        if (trackingStatus <= currentStatus) {
+            statusTextViewLbl.setTextColor(ContextCompat.getColor(context, R.color.black)); // Change to green if tracking status is less than or equal to current status
+            statusTextView.setTextColor(ContextCompat.getColor(context, R.color.black)); // Change to green if tracking status is less than or equal to current status
+            dateTimeTextView.setTextColor(ContextCompat.getColor(context, R.color.black)); // Change to green if tracking status is less than or equal to current status
+        } else {
+            statusTextViewLbl.setTextColor(ContextCompat.getColor(context, R.color.grey_light)); // Change to red if tracking status is greater than current status
+            statusTextView.setTextColor(ContextCompat.getColor(context, R.color.grey_light)); // Change to red if tracking status is greater than current status
+            dateTimeTextView.setTextColor(ContextCompat.getColor(context, R.color.grey_light)); // Change to red if tracking status is greater than current status
         }
-        dialog.show();
+
+        backgroundView.setBackgroundResource(R.drawable.circle_bg);
     }
 }

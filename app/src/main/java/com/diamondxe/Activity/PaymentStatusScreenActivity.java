@@ -308,6 +308,8 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                 finish();
             }
             else{
+                Constant.afterCancelOrderManageScreenCall="";
+                Constant.afterReturnOrderManageScreenCall="";
                 intent = new Intent(activity, MyOrderListScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);

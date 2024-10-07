@@ -11,8 +11,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dimen_5"
-        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_25"
+        android:layout_marginRight="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_10"
         android:background="@color/white"
         android:elevation="@dimen/dimen_8"
@@ -23,107 +24,138 @@
         app:cardElevation="@dimen/dimen_8">
 
         <LinearLayout
+            android:id="@+id/mode_payment_rel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/rerailer_tv"
-                style="@style/MediumFontType"
+                android:id="@+id/select_mode_lbl"
+                style="@style/SemiBoldFontType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_4"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:hint="customMenuBusin"
-                android:paddingLeft="@dimen/dimen_4"
-                android:paddingTop="@dimen/dimen_4"
-                android:paddingRight="@dimen/dimen_4"
-                android:paddingBottom="@dimen/dimen_4"
-                android:text="@string/rerailer"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14"
-                tools:ignore="HardcodedText" />
+                android:background="@drawable/spinner_drop_down_color"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="@string/select_business_nature_lbl"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_16" />
 
-            <TextView
-                android:id="@+id/wholesaler_tv"
-                style="@style/MediumFontType"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:hint="customMenuBusin"
-                android:paddingLeft="@dimen/dimen_4"
-                android:paddingTop="@dimen/dimen_4"
-                android:paddingRight="@dimen/dimen_4"
-                android:paddingBottom="@dimen/dimen_4"
-                android:text="@string/wholesaler"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14"
-                tools:ignore="HardcodedText" />
+                android:fadeScrollbars="false"
+                android:scrollbarThumbVertical="@drawable/scrollbar_background"
+                android:scrollbars="vertical">
 
-            <TextView
-                android:id="@+id/trader_tv"
-                style="@style/MediumFontType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:hint="customMenuBusin"
-                android:paddingLeft="@dimen/dimen_4"
-                android:paddingTop="@dimen/dimen_4"
-                android:paddingRight="@dimen/dimen_4"
-                android:paddingBottom="@dimen/dimen_4"
-                android:text="@string/trader"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14"
-                tools:ignore="HardcodedText" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/jeweller_tv"
-                style="@style/MediumFontType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:hint="customMenuBusin"
-                android:paddingLeft="@dimen/dimen_4"
-                android:paddingTop="@dimen/dimen_4"
-                android:paddingRight="@dimen/dimen_4"
-                android:paddingBottom="@dimen/dimen_4"
-                android:text="@string/jeweller"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14"
-                tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/rerailer_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/rerailer"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/others_tv"
-                style="@style/MediumFontType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:hint="customMenuBusin"
-                android:paddingLeft="@dimen/dimen_4"
-                android:paddingTop="@dimen/dimen_4"
-                android:paddingRight="@dimen/dimen_4"
-                android:paddingBottom="@dimen/dimen_4"
-                android:text="@string/others"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14"
-                tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/wholesaler_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/wholesaler"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/trader_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/trader"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/jeweller_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/jeweller"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/others_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/others"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

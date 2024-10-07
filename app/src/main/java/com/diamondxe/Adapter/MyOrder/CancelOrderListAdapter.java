@@ -68,10 +68,10 @@ public class CancelOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.order_item_click.setVisibility(View.VISIBLE);
         }
 
-        if(!list.get(position).getImage().equalsIgnoreCase(""))
+        if(!list.get(position).getDiamondImage().equalsIgnoreCase(""))
         {
             Picasso.with(context)
-                    .load(list.get(position).getImage())
+                    .load(list.get(position).getDiamondImage())
                     .placeholder(R.mipmap.phl_diamond)
                     .error(R.mipmap.phl_diamond)
                     .into(holder.image_view);
@@ -86,12 +86,10 @@ public class CancelOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     .into(holder.image_view);
         }
 
-        holder.order_number_tv.setText("#"+list.get(position).getOrderNumber());
-        holder.stock_no_tv.setText("#"+list.get(position).getStockNumber());
-        holder.name_tv.setText(list.get(position).getName());
+        holder.stock_no_tv.setText("#"+list.get(position).getCertificateNo());
+        holder.name_tv.setText(list.get(position).getShape());
+        holder.status.setText(list.get(position).getStatus());
         holder.item_type_tv.setText(list.get(position).getCarat() + context.getResources().getString(R.string.ct) + " | " + list.get(position).getColor() + " | " + list.get(position).getClarity());
-
-        DecimalFormat formatter = new DecimalFormat("#,###,###");
 
         if(!list.get(position).getSubTotal().equalsIgnoreCase(""))
         {
@@ -113,23 +111,22 @@ public class CancelOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             public void onClick(View view) {
 
                 // Toggle the checkbox state in the model
-                list.get(position).setChecked(!list.get(position).isChecked());
+               // list.get(position).setChecked(!list.get(position).isChecked());
                 // Notify the adapter about the change
-                notifyItemChanged(position);
+               // notifyItemChanged(position);
                 // Pass the event to the interface
                 recyclerInterface.itemClick(position , 0,"orderCancelPartialCheck");
 
             }
         });
 
-        /*ArrayList<InnerOrderListModel> singleSectionItems = list.get(position).getAllItemsInSection();
-
-        InnerCancelOrderListAdapter itemListDataAdapter = new InnerCancelOrderListAdapter(singleSectionItems, context, recyclerInterface, position);
-
-        holder.inner_recycler_view.setHasFixedSize(true);
-        holder.inner_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        holder.inner_recycler_view.setAdapter(itemListDataAdapter);
-        holder.inner_recycler_view.setNestedScrollingEnabled(false);*/
+        if(list.get(position).isChecked())
+        {
+            holder.order_item_click.setChecked(true);
+        }
+        else{
+            holder.order_item_click.setChecked(false);
+        }
     }
 
     @Override
@@ -143,14 +140,12 @@ public class CancelOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {
-        TextView date_time_tv, name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv, order_number_tv;
+        TextView  name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv;
         ImageView image_view;
-        RecyclerView inner_recycler_view;
         CheckBox order_item_click;
         public RecycleViewHolder (View itemView) {
             super (itemView);
 
-            date_time_tv = itemView.findViewById(R.id.date_time_tv);
             name_tv = itemView.findViewById(R.id.name_tv);
             status = itemView.findViewById(R.id.status);
             item_type_tv = itemView.findViewById(R.id.item_type_tv);
@@ -158,10 +153,8 @@ public class CancelOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return_policy_tv = itemView.findViewById(R.id.return_policy_tv);
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
             diamond_type_tv = itemView.findViewById(R.id.diamond_type_tv);
-            order_number_tv = itemView.findViewById(R.id.order_number_tv);
             image_view = itemView.findViewById(R.id.image_view);
 
-            inner_recycler_view = itemView.findViewById(R.id.inner_recycler_view);
             order_item_click = itemView.findViewById(R.id.order_item_click);
 
         }

@@ -163,7 +163,7 @@
                                 style="@style/SemiBoldFontType"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/border_line_view"
+                                android:background="@drawable/bg_gray_out"
                                 android:cursorVisible="true"
                                 android:clickable="false"
                                 android:editable="false"

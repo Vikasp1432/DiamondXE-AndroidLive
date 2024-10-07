@@ -59,7 +59,7 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
+    private boolean isApiCalling = false; // Flag to track API call
     private BottomSheetDialog dialog;
     RecyclerView recycler_view;
     CountryListAdapter countryListAdapter;
@@ -67,13 +67,7 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_personla_profile);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         context = activity = this;
 
@@ -89,8 +83,13 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
 
         country_code = findViewById(R.id.country_code);
         company_country_code = findViewById(R.id.company_country_code);
+
         company_type_tv = findViewById(R.id.company_type_tv);
+        company_type_tv.setOnClickListener(this);
+
         business_nature_tv = findViewById(R.id.business_nature_tv);
+        business_nature_tv.setOnClickListener(this);
+
         first_name_error_tv = findViewById(R.id.first_name_error_tv);
         last_name_error_tv = findViewById(R.id.last_name_error_tv);
         company_name_error_tv = findViewById(R.id.company_name_error_tv);
@@ -241,16 +240,23 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
             Utils.hideKeyboard(activity);
             finish();
         }
-        else if(id == R.id.company_type_lin)
+        else if(id == R.id.company_type_lin || id == R.id.company_type_tv)
         {
-            Utils.hideKeyboard(activity);
-            Utils.hideKeyboard(activity);
-            initiateCompanyTypePopupWindow();
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                initiateCompanyTypePopupWindow();
+            } else{}
         }
-        else if(id == R.id.business_nature_lin)
+        else if(id == R.id.business_nature_lin || id == R.id.business_nature_tv)
         {
-            Utils.hideKeyboard(activity);
-            initiateBusinessTypePopupWindow();
+            if(!isApiCalling) // Check if API is not already calling
+            {
+                isApiCalling = true; // Set flag to true
+                Utils.hideKeyboard(activity);
+                initiateBusinessTypePopupWindow();
+            } else{}
         }
         else if(id == R.id.company_country_code_lin)
         {
@@ -674,6 +680,7 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
             mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = mInflater.inflate(R.layout.custom_menu_company_type, null);
 
+            isApiCalling = false;
             final TextView proprietorship_tv = layout.findViewById(R.id.proprietorship_tv);
             final TextView llp_tv = layout.findViewById(R.id.llp_tv);
             final TextView partnership_tv = layout.findViewById(R.id.partnership_tv);
@@ -770,6 +777,8 @@ public class PersonalProfileActivity extends SuperActivity implements RecyclerIn
             }
             mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = mInflater.inflate(R.layout.custom_menu_business_type, null);
+
+            isApiCalling = false;
 
             final TextView rerailer_tv = layout.findViewById(R.id.rerailer_tv);
             final TextView wholesaler_tv = layout.findViewById(R.id.wholesaler_tv);

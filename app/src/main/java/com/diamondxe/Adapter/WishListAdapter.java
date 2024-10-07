@@ -116,6 +116,16 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.status_img.setVisibility(View.GONE);
         }
 
+        if(list.get(position).getCategory().equalsIgnoreCase("Natural"))
+        {
+            holder.diamond_type.setBackgroundResource(R.drawable.background_yellow);
+            holder.diamond_type.setText("NATURAL");
+        }
+        else{
+            holder.diamond_type.setBackgroundResource(R.drawable.background_green_light_small_round_cornor);
+            holder.diamond_type.setText("LAB");
+        }
+
         holder.root_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +186,7 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         CardView root_layout, add_to_card_view;
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
-                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,return_policy_tv, discount_tv;
+                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,return_policy_tv, discount_tv, diamond_type;
         ImageView image_view, returnable_img, status_img, add_to_cart_img, delete_img;
 
         public RecycleViewHolder (View itemView) {
@@ -205,6 +215,7 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             discount_tv = itemView.findViewById(R.id.discount_tv);*/
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
             return_policy_tv = itemView.findViewById(R.id.return_policy_tv);
+            diamond_type = itemView.findViewById(R.id.diamond_type);
 
         }
     }

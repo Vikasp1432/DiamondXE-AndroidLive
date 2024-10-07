@@ -222,6 +222,7 @@
     <string name="email">Email</string>
     <string name="mobile">Mobile</string>
     <string name="phone_number">Mobile Number*</string>
+    <string name="phone_number_without_astrick">Mobile Number</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="signup_now">Don\'t have an account? <u><b>Sign up Now</b></u></string>
@@ -433,7 +434,9 @@
 
     <string name="personal_profile">Personal Profile</string>
     <string name="select_company_type">Select Company Type*</string>
+    <string name="select_company_type_lbl">Select Company Type</string>
     <string name="select_business_nature">Select Business of Nature*</string>
+    <string name="select_business_nature_lbl">Select Business of Nature</string>
     <string name="company_email_address">Company Email Address*</string>
     <string name="company_contact_no">Company Contact Number*</string>
     <string name="save">Save</string>
@@ -446,6 +449,7 @@
     <string name="choose_diifferent_billing_address">Choose a different billing Address</string>
     <string name="no_billing_address">No Billing Address</string>
     <string name="add_billing_address">Add Billing Address</string>
+    <string name="edit_billing_address">Edit Billing Address</string>
 
     <string name="set_as_default_address">Set as default address</string>
     <string name="use_gst_invoice">Use GST Invoice</string>
@@ -454,6 +458,7 @@
     <string name="address_list">Address List</string>
 
     <string name="add_shipping_address">Add Shipping Address</string>
+    <string name="edit_shipping_address">Edit Shipping Address</string>
     <string name="select_delivery_type">Select address type for delivery</string>
     <string name="home_time">Home (7am-9pm)</string>
     <string name="office_time">Office (10am-7pm)</string>
@@ -558,6 +563,7 @@
     <string name="payment_option">Payment Options</string>
 
     <string name="rtgs_neft">RTGS/NEFT</string>
+    <string name="bank_transfer">Bank Transfer</string>
     <string name="card_type">Debit/Credit Card</string>
     <string name="net_banking">Net Banking</string>
     <string name="upi">UPI</string>
@@ -576,6 +582,7 @@
     <string name="mode_of_payment">Mode of Payment</string>
     <string name="select_payment_mode">Select payment mode</string>
     <string name="enter_utr_cheque_no">Enter UTR/Cheque No.</string>
+    <string name="enter_utr">Enter UTR</string>
     <string name="select_date_month_year">DD/MM/YYYY</string>
 
     <string name="cheque">Cheque</string>
@@ -591,6 +598,7 @@
     <string name="payment_under_review">Your Payment is under review,\ndetails of the transaction are\nmentioned below</string>
     <string name="order_id">Order ID</string>
     <string name="payment_mode">Payment Mode</string>
+    <string name="refund_payment_mode">Refund Payment Mode</string>
     <string name="utr_cheque_no">UTR/Cheque No.</string>
     <string name="order_placed_successfully">*Order has been placed successfully</string>
     <string name="availability_of_diamond">Availability of diamond(s) is subject to confirmation.</string>
@@ -619,6 +627,7 @@
     <string name="please_select_billing_address">Please select billing address.</string>
 
     <string name="order_summary">Order Summary</string>
+    <string name="updated_order_summary">Updated Order Summary</string>
     <string name="shipping_and_handling">Shipping &amp; Handling</string>
     <string name="platform_fees">Platform Fees</string>
     <string name="total_charges">Total Charges</string>
@@ -640,7 +649,7 @@
     <string name="know_more">Know more</string>
     <string name="re_submit"><u>Re-submit</u></string>
     <string name="please_upload_doc_first">Please upload document first.</string>
-    <string name="save_shipping_cost">To save the shipping costs, you can collect from our Mumbai Hub.</string>
+    <string name="save_shipping_cost">To save the shipping costs, you can collect from Our Hub.</string>
     <string name="pickup_address">DiamondXE Private Limited, 904-A, B Wing, 9th floor,The Capital, BKC, Bandra East, Mumbai-400051, Maharashtra, INDIA.</string>
     <string name="free_shipping">"(Free Shipping)</string>
     <string name="coupon_code">Coupon Code</string>
@@ -670,6 +679,8 @@
     <string name="order_status">Order Status</string>
     <string name="order_placed">Order Placed</string>
     <string name="delivery_date">Delivery Date</string>
+    <string name="cancel_date">Cancel Date</string>
+    <string name="return_date">Return Date</string>
     <string name="diamond_price">Diamond Price</string>
     <string name="order_tracking">Order Tracking</string>
     <string name="we_have_received_order">We have received your order</string>
@@ -701,11 +712,74 @@
     <string name="default_address_can_not_delete">Default address cannot be deleted.</string>
 
     <string name="kyc_doc_submit1">KYC Documents</string>
+    <string name="cancelled_by">Cancelled by:</string>
+    <string name="refund">Refund:</string>
+    <string name="contact_no">Contact No:</string>
+    <string name="email_lbl">Email:</string>
+    <string name="delivery_date_lbl">Delivery Date:</string>
+    <string name="cancelled_order_summary">Cancelled Order Summary</string>
+    <string name="please_enter_pincode">Please Enter PinCode</string>
+    <string name="reason">Reason:</string>
+    <string name="comment">Comment:</string>
+    <string name="refund_status">Refund Status:</string>
+    <string name="return_order">Return Order</string>
+    <string name="select_at_least_one_diamond">Please select at least one diamond.</string>
+    <string name="eligible_for_return_till">Eligible for Return till:</string>
+    <string name="view_policy"><u>View Policy</u></string>
+    <string name="full_return">Full Return</string>
+    <string name="partial_return">Partial Return</string>
+    <string name="next">Next</string>
+
+    <string name="return_product">Return Product</string>
+    <string name="return_reason">Return Reason</string>
+    <string name="order_review">Order Review</string>
+
+    <string name="add_pickup_address">Add Pickup Address</string>
+    <string name="pickup_address_lbl">Pickup Address</string>
+    <string name="no_pickup_address">No Pickup Address</string>
+    <string name="please_select_pickup_address">Please select pickup address.</string>
+    <string name="refund_mode">Refund Mode</string>
+
+    <string name="wallet_msg">After the quality check is passed</string>
+    <string name="wallet_msg1">will be instantly This refunded to your wallet points.</string>
+
+    <string name="payment_mode_msg">After the quality check is passed, refund of</string>
+    <string name="payment_mode_msg1">will be initiated</string>
+    <string name="payment_mode_msg2">will be credited to your source of payment. Will take 7–10 days for money to be credited once refund is initiated</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="previous">Previous</string>
+
+    <string name="return_request_successful">Return Request Successful</string>
+    <string name="return_request_successful_msg">Your return request has been successfully submitted.\nOur delivery partner will collect the product soon.</string>
+
+    <string name="return_request_failed">Return Request Failed</string>
+    <string name="return_request_failed_msg">Your return request has been failed. Don\'t worry!.\nOur customer service team is here to help you.</string>
+    <string name="retry">Retry</string>
+    <string name="please_upload_document">Please upload document.</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="upload_video">Upload Video</string>
+    <string name="video_link_url">Video Link URL</string>
+    <string name="click_to_pay">Click To Pay</string>
+    <string name="original_payment">Original Payment</string>
+    <string name="all_reason_items">Please select a reason for all items.</string>
+    <string name="no_policy_url_find">No Policy Url Find.</string>
+    <string name="complete_return_reason_order_step">Please complete Return Reason order step.</string>
+    <string name="confirm_document_sealed">I confirm that the product(s) is/are sealed with the original packaging and documents intact.</string>
+    <string name="please_check_term_condition">Please check terms &amp; condition</string>
+
+
+    <!--<string-array name="tab_titles">
+        <item>@string/recent</item>
+        <item>@string/return_lbl</item>
+        <item>@string/reserved</item>
+        <item>@string/past</item>
+        <item>@string/cancelled</item>
+    </string-array>-->
 
     <string-array name="tab_titles">
         <item>@string/recent</item>
         <item>@string/return_lbl</item>
-        <item>@string/reserved</item>
         <item>@string/past</item>
         <item>@string/cancelled</item>
     </string-array>

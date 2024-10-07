@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
-                android:background="@color/purple_50">
+                android:background="@color/purple_20">
 
                 <TextView
                     android:id="@+id/order_number_tv"
@@ -68,7 +68,7 @@
                     android:paddingLeft="@dimen/dimen_5"
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingBottom="@dimen/dimen_5"
-                    android:text="#1475823589632"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14" />
 
@@ -81,7 +81,7 @@
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingRight="@dimen/dimen_5"
                     android:paddingBottom="@dimen/dimen_5"
-                    android:text="06/08/2024, 5:14:24 PM"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14" />
             </RelativeLayout>
@@ -98,7 +98,7 @@
                     android:id="@+id/order_place_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_white_bg">
 
                     <ImageView
                         android:id="@+id/order_place_img"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address" />
+                        android:src="@drawable/order_placed" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/order_placed"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/dimen_14" />
 
                     <TextView
@@ -133,9 +133,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/we_have_received_order"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
+                    <TextView
+                        android:id="@+id/order_received_place_date_time_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
                 </LinearLayout>
 
                 <View
@@ -160,7 +171,7 @@
                     android:id="@+id/order_in_progress_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_white_bg">
 
                     <ImageView
                         android:id="@+id/order_in_progress_img"
@@ -168,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address" />
+                        android:src="@drawable/in_progress" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -185,7 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/in_progress"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/dimen_14" />
 
                     <TextView
@@ -194,9 +205,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/your_order_in_progress"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
+                    <TextView
+                        android:id="@+id/order_in_progress_date_time_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
                 </LinearLayout>
 
 
@@ -229,7 +250,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address" />
+                        android:src="@drawable/out_for_delivery" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -246,7 +267,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/out_for_delivery"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/dimen_14" />
 
                     <TextView
@@ -255,9 +276,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/your_item_is_out_for_delivery"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
+                    <TextView
+                        android:id="@+id/order_out_for_delivery_date_time_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
                 </LinearLayout>
 
                 <View
@@ -290,7 +322,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address" />
+                        android:src="@drawable/delivered" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -307,7 +339,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/delivered"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/dimen_14" />
 
                     <TextView
@@ -316,9 +348,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/your_item_delivered"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
+                    <TextView
+                        android:id="@+id/order_delivered_date_time_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
                 </LinearLayout>
 
 
@@ -352,7 +395,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/address" />
+                        android:src="@drawable/return_request" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -369,7 +412,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/return_request"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/dimen_14" />
 
                     <TextView
@@ -378,9 +421,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/return_request"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
+
+                    <TextView
+                        android:id="@+id/order_return_request_date_time_tv"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_2"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/dimen_11" />
                 </LinearLayout>
 
 

@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/order_summary_view_card"
+                android:id="@+id/return_order_summary_view_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_10"
@@ -39,42 +39,62 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:id="@+id/details_rel"
+                        android:id="@+id/return_details_rel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dimen_10"
                         android:paddingLeft="@dimen/dimen_8"
-                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_10"
                         android:paddingRight="@dimen/dimen_8"
-                        android:paddingBottom="@dimen/dimen_5">
+                        android:paddingBottom="@dimen/dimen_10">
 
                         <RelativeLayout
-                            android:id="@+id/show_order_summary_rel"
+                            android:id="@+id/return_show_order_summary_rel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/dimen_2">
+                            android:layout_marginRight="@dimen/dimen_2"
+                            android:layout_toLeftOf="@+id/return_final_amount_tv1">
 
                             <TextView
-                                android:id="@+id/show_order_summary_lbl"
-                                style="@style/BoldFontType"
+                                android:id="@+id/return_show_order_summary_lbl"
+                                style="@style/SemiBoldFontType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/return_order_summary"
-                                android:textColor="@color/black"
+                                android:textColor="@color/purple_light"
                                 android:textSize="@dimen/dimen_16" />
 
+                            <ImageView
+                                android:id="@+id/return_drop_arrow_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_5"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:layout_toRightOf="@+id/return_show_order_summary_lbl"
+                                android:src="@drawable/down"
+                                android:tint="@color/purple_light"
+                                tools:ignore="UseAppTint" />
                         </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/return_final_amount_tv1"
+                            style="@style/BoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="0"
+                            android:textColor="@color/purple_light"
+                            android:textSize="@dimen/dimen_16" />
 
                     </RelativeLayout>
 
                     <LinearLayout
-                        android:id="@+id/view_order_summary_details_lin"
+                        android:id="@+id/return_view_order_summary_details_lin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/details_rel"
+                        android:layout_below="@+id/return_details_rel"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -84,38 +104,6 @@
                             android:orientation="vertical"
                             android:paddingTop="@dimen/dimen_8"
                             android:paddingBottom="@dimen/dimen_8">
-
-                            <!--Coupon Code Layout-->
-                            <RelativeLayout
-                                android:id="@+id/cancel_coupon_code_value_rel"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_marginRight="@dimen/dimen_10"
-                                android:layout_marginBottom="@dimen/dimen_8"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:id="@+id/coupan_lbl"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/dimen_3"
-                                    android:layout_toLeftOf="@+id/cancel_coupon_code_value_tv"
-                                    android:text="@string/coupon_code"
-                                    android:textColor="@color/grey"
-                                    android:textSize="@dimen/dimen_14" />
-
-                                <TextView
-                                    android:id="@+id/cancel_coupon_code_value_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:text="₹0"
-                                    android:textColor="@color/green"
-                                    android:textSize="@dimen/dimen_16" />
-                            </RelativeLayout>
 
                             <!--Diamond Price Layout-->
                             <RelativeLayout
@@ -151,10 +139,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_10"
-                                android:paddingRight="@dimen/dimen_10"
-                                android:paddingLeft="@dimen/dimen_10"
-                                android:paddingTop="@dimen/dimen_5"
-                                android:paddingBottom="@dimen/dimen_5">
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_10">
 
                                 <TextView
                                     android:id="@+id/sub_total_tv_lbl"
@@ -173,9 +159,40 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
-
                                     android:text="₹0"
                                     android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_16" />
+                            </RelativeLayout>
+
+                            <!--Wallet Charges Layout-->
+                            <RelativeLayout
+                                android:id="@+id/return_wallet_apply_point_rel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/wallet_charges_tv_lbl"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:layout_toLeftOf="@+id/return_wallet_apply_charges_tv"
+                                    android:text="@string/wallet_point"
+                                    android:textColor="@color/grey"
+                                    android:textSize="@dimen/dimen_14" />
+
+                                <TextView
+                                    android:id="@+id/return_wallet_apply_charges_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="₹0"
+                                    android:textColor="@color/green"
                                     android:textSize="@dimen/dimen_16" />
                             </RelativeLayout>
 

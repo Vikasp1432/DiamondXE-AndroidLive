@@ -75,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/dimen_5"
-                android:outlineAmbientShadowColor="@color/purple"
-                android:outlineSpotShadowColor="@color/purple"
+                android:outlineAmbientShadowColor="@color/black_10"
+                android:outlineSpotShadowColor="@color/black_10"
                 app:cardBackgroundColor="@color/transparent"
                 app:cardCornerRadius="@dimen/dimen_12"
                 app:cardElevation="@dimen/dimen_1">
@@ -85,7 +85,7 @@
                     android:id="@+id/shipping_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_image_white">
+                    android:background="@drawable/background_image_purple">
 
                     <ImageView
                         android:id="@+id/shipping_img"
@@ -96,7 +96,9 @@
                         android:paddingTop="@dimen/dimen_12"
                         android:paddingRight="@dimen/dimen_8"
                         android:paddingBottom="@dimen/dimen_12"
-                        android:src="@drawable/shipping" />
+                        android:src="@drawable/shipping"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint"/>
 
 
                 </RelativeLayout>
@@ -232,7 +234,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--KYC Verification Icon-->
             <LinearLayout
@@ -259,7 +261,7 @@
                 android:layout_height="@dimen/dimen_2"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white" />
+                android:background="@color/transparent" />
 
             <!--Payment Icon-->
             <LinearLayout
@@ -327,17 +329,31 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/open_document_lin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_8"
                                 android:layout_marginTop="@dimen/dimen_10"
                                 android:layout_marginRight="@dimen/dimen_8"
-                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_10"
                                 android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/kyc_verified_lbl1"
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text=""
+                                    android:textColor="@color/purple"
+                                    android:textSize="@dimen/dimen_16"
+                                    android:visibility="visible" />
+
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_10">
 
                                     <TextView
                                         android:id="@+id/kyc_verified_lbl"
@@ -356,79 +372,85 @@
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_toLeftOf="@+id/document_drop_down_img"
                                         android:layout_gravity="center"
-                                        android:layout_marginRight="@dimen/dimen_2"
+                                        android:layout_marginRight="@dimen/dimen_5"
                                         android:paddingLeft="@dimen/dimen_5"
-                                        android:paddingRight="@dimen/dimen_5"
                                         android:text="@string/re_submit"
                                         android:textColor="@color/purple_light"
                                         android:textSize="@dimen/dimen_16" />
+
+                                    <ImageView
+                                        android:id="@+id/document_drop_down_img"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:layout_marginRight="@dimen/dimen_5"
+                                        android:src="@drawable/drop_down"/>
+
                                 </RelativeLayout>
 
-                                <TextView
-                                    android:id="@+id/kyc_verified_lbl1"
-                                    style="@style/SemiBoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_5"
-                                    android:text="@string/technical_reviewing_soon"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_14"
-                                    android:visibility="gone" />
-
 
                             </LinearLayout>
+
 
                             <LinearLayout
+                                android:id="@+id/kyc_document_layout_lin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_5"
-                                android:layout_marginBottom="@dimen/dimen_5"
-                                android:background="@color/gray1"
-                                android:paddingTop="@dimen/dimen_8"
-                                android:paddingBottom="@dimen/dimen_8"
-                                android:weightSum="3">
-
-                                <TextView
-                                    style="@style/BoldFontType"
-                                    android:layout_width="0dp"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_8"
-                                    android:layout_weight="1.2"
-                                    android:text="@string/document_type"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_14" />
+                                    android:layout_marginTop="@dimen/dimen_5"
+                                    android:layout_marginBottom="@dimen/dimen_5"
+                                    android:background="@color/gray1"
+                                    android:paddingTop="@dimen/dimen_8"
+                                    android:paddingBottom="@dimen/dimen_8"
+                                    android:weightSum="3">
 
-                                <TextView
-                                    style="@style/BoldFontType"
-                                    android:layout_width="0dp"
+                                    <TextView
+                                        style="@style/BoldFontType"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dimen_8"
+                                        android:layout_weight="1.2"
+                                        android:text="@string/document_type"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_14" />
+
+                                    <TextView
+                                        style="@style/BoldFontType"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.8"
+                                        android:gravity="center"
+                                        android:text="@string/document_status"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_14" />
+
+                                    <TextView
+                                        style="@style/BoldFontType"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dimen_5"
+                                        android:layout_marginRight="@dimen/dimen_8"
+                                        android:layout_weight="1"
+                                        android:text="@string/submitted_date"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_14" />
+
+                                </LinearLayout>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/doc_recycler_view"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.8"
-                                    android:gravity="center"
-                                    android:text="@string/document_status"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_14" />
-
-                                <TextView
-                                    style="@style/BoldFontType"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_5"
-                                    android:layout_marginRight="@dimen/dimen_8"
-                                    android:layout_weight="1"
-                                    android:text="@string/submitted_date"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_14" />
-
+                                    android:layout_marginBottom="@dimen/dimen_10" />
                             </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/doc_recycler_view"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/dimen_10" />
 
                         </LinearLayout>
 

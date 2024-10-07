@@ -70,39 +70,51 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.recent)));
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.return_lbl)));
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.reserved)));
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.past)));
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.cancelled)));
-
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-       /* final MyAdapter adapter = new MyAdapter(this,  tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab)
-            {
-            }
-        });*/
-
         String[] tabTitles = getResources().getStringArray(R.array.tab_titles);
+
+        /*String recentOrderCount = "2";
+        String returnOrderCount = "3";
+        String reservedOrderCount = "0";
+        String pastOrderCount = "10";
+        String cancelledOrderCount = "12";
+
+        String[] tabCounts = {
+                recentOrderCount,
+                returnOrderCount,
+                reservedOrderCount,
+                pastOrderCount,
+                cancelledOrderCount
+        };
+*/
+
         MyAdapter adapter = new MyAdapter(this, tabTitles.length);
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(tabTitles[position])
         ).attach();
+
+        /*new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    String count = tabCounts[position];
+                    tab.setText(tabTitles[position] + (Integer.parseInt(count) > 0 ? " (" + count + ")" : ""));
+                }).attach();*/
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //viewPager.setCurrentItem(tab.getPosition());
+                Log.d("TabSelection", "Selected tab position: " + tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Handle tab unselected if necessary
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Handle tab reselected if necessary
+            }
+        });
 
         // Handle Device Back Button code.
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -129,10 +141,26 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check User Come From Cancel Activity For Cancel Order
+        /*Log.e("afterCancelOrderManageScreenCall : ", Constant.afterCancelOrderManageScreenCall.toString());
+        Log.e("afterCancelOrderManageScreenCall1 : ", Constant.afterReturnOrderManageScreenCall.toString());*/
+        if (Constant.afterCancelOrderManageScreenCall.equalsIgnoreCase("yes")) {
+            viewPager.setCurrentItem(3); // Set to CancelledListOrderFragment
+        }
+        else if (Constant.afterReturnOrderManageScreenCall.equalsIgnoreCase("yes")) {
+            viewPager.setCurrentItem(1); // Set to ReturnOrderFragment
+        } else {
+            //viewPager.setCurrentItem(0); // Default to RecentOrderListFragment
+        }
+    }
+
     // If Use Come Frm After Complete Payment Screen.
     void gotoHomeScreen()
     {
-        Log.e("Constant.comeFrom : ", "Constant.comeFrom : " + Constant.comeFrom.toString());
+        //Log.e("Constant.comeFrom : ", "Constant.comeFrom : " + Constant.comeFrom.toString());
         if(Constant.comeFrom.equalsIgnoreCase("diamondOrder"))
         {
             Constant.comeFrom = "";
@@ -176,16 +204,17 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
         @NonNull
         @Override
         public Fragment createFragment(int position) {
+            Log.d("FragmentCreation", "Creating fragment for position: " + position);
             switch (position) {
                 case 0:
                     return new RecentOrderListFragment();
                 case 1:
                     return new ReturnOrderListFragment();
+              /*  case 2:
+                    return new ReservedOrderListFragment();*/
                 case 2:
-                    return new ReservedOrderListFragment();
-                case 3:
                     return new PastOrderListFragment();
-                case 4:
+                case 3:
                     return new CancelledListOrderFragment();
                 default:
                     return new RecentOrderListFragment(); // Default fragment

@@ -10,8 +10,8 @@ android {
         applicationId "com.diamondxe"
         minSdk 24
         targetSdk 34
-        versionCode 5
-        versionName "v1.01.104"
+        versionCode 6
+        versionName "v1.01.105"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

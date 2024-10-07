@@ -92,7 +92,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DiamondDetailsActivity extends SuperActivity implements RecyclerInterface {
-
     private TextView supplier_id_tv, name_tv, item_type_tv,discount_tv,cut_grade_tv,polish_tv,symmetry_tv,fluorescence_intensity_tv,certificate_name_tv,sub_total_tv,
             pincode_tv, select_image_tv, select_360_tv, select_certificate_tv, select_size_tv, type_tv,current_return_policy_tv, details_measurements_tv,
             details_depth_tv, details_table_tv, details_crown_height_tv, details_crown_angle_tv, details_pavilion_depth_tv, details_pavilion_angle_tv, details_shade_tv,
@@ -103,11 +102,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     private CardView select_pin_code_card, add_to_cart_card_view,buy_now_card_view, top_img_card, search_circle_card, search_circle_card1_cross,
             curve_rel;
     private ScrollView scrollView;
-
     private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
-
     private RelativeLayout diamond_details_rel, viewpager_layout, show_popup_rel, viewpager_buyer_layout;
     private LinearLayout show_diamond_details_lin, select_img_lin, select_360_view_lin, select_certificate_lin, select_size_lin;
     public ArrayList<SearchResultTypeModel> recommandDiamondArrayList;
@@ -137,14 +134,10 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final int REQUEST_CALL_PHONE = 2;
     private FusedLocationProviderClient fusedLocationClient;
-
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
     int lastPosition = 0;
-
     Handler handler1 = new Handler(Looper.getMainLooper());
-
     String certificate_number="", addToCartWhereToCall="",user_login="",userRole="";
-
     String ROUND = "Round";
     String PRINCESS = "Princess";
     String EMERALD = "Emerald";
@@ -155,29 +148,20 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     String RADIANT = "Radiant";
     String ASSCHER = "Asscher";
     String CUSHION = "Cushion";
-
     String shapeTypeSelected="Round";
-
     String stock_id = "", item_name = "", supplier_id = "", certificate_no = "", category = "", certificate_name = "", cut_grade = "", shape = "",
      clarity = "", carat = "", color = "", growth_type = "", fluorescence_intensity = "", polish = "", symmetry = "", depth_perc = "", table_perc = "",
      discount_amout = "", length = "", width = "", depth = "", measurement = "", shade = "", luster = "",eye_clean = "", crown_angle = "", pavillion_angle = "", diamond_image = "", diamond_video = "", is_returnable = "",
             certificate_file = "", girdle_condition = "", culet = "", location = "", crown_height = "", pavillion_depth = "", inscription = "", key_to_symbols = "", report_comments = "", subtotal = "", is_cart = "", is_wishlist = "",
             avaliable_status = "", r_discount="",supplier_comment="",userPincode="", userCity="",stock_no="";
-
     android.app.AlertDialog alertDialog;
-
     private RelativeLayout card_popup1;
+    View translucent_background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // EdgeToEdge.enable(this);
         setContentView(R.layout.activity_diamond_details);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         context = activity = this;
 
@@ -196,7 +180,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         shapeImageArrayList = new ArrayList<>();
 
         card_popup1 = findViewById(R.id.card_popup1);
-
 
         getData();
 
@@ -255,6 +238,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         select_size_lin = findViewById(R.id.select_size_lin);
         select_size_lin.setOnClickListener(this);
+
+        translucent_background = findViewById(R.id.translucent_background);
+        translucent_background.setOnClickListener(this);
 
         home_rel = findViewById(R.id.home_rel);
         home_rel.setOnClickListener(this);
@@ -407,38 +393,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         curve_rel = findViewById(R.id.curve_rel);
         show_popup_rel = findViewById(R.id.show_popup_rel);
-
-       /* SearchResultTypeModel model = new SearchResultTypeModel();
-        model.setSupplier_id("2425");
-        model.setCertificate_no("6435145171");
-        model.setShape("Round");
-        model.setCarat("0.5");
-        model.setColor("J");
-        model.setClarity("SI1");
-        model.setCut_grade("EX");
-        model.setPolish("EX");
-        model.setSymmetry("EX");
-        model.setFluorescence_intensity("Faint");
-        model.setCertificate_name("GIA");
-        model.setR_discount("-");
-        model.setTable_perc("58.00");
-        model.setDepth_perc("61.30");
-        model.setMeasurement("5.110 - 5.070 X 3.120");
-        model.setSubtotal("30544");
-        model.setStatus("");
-        model.setIs_returnable("1");
-        model.setDiamond_image("https://thnk18.azureedge.net/img/images/imaged/J484-234651/still.jpg");
-
-        recommandDiamondArrayList.add(model);
-        recommandDiamondArrayList.add(model);
-        recommandDiamondArrayList.add(model);*/
-
-        /*ShapeImageModel shapeImageModel = new ShapeImageModel();
-        shapeImageModel.setDrawable(R.mipmap.all);
-        shapeImageModel.setAttribCode("All");
-        shapeImageModel.setSelected(false);
-        shapeImageModel.setFirstPosition(true);
-        shapeImageArrayList.add(shapeImageModel);*/
 
         // Diamond Type Shape Image Data Set Method Call.
         shapeImageModelData();
@@ -603,24 +557,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-   /* @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
-                getLocation();
-            } else
-            {
-                Log.e("---------Diamond--------- : ", "grantResults : " + grantResults.toString());
-                // Permission denied
-               // Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
-                showSettingsDialog();
-            }
-        }
-    }*/
-
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -633,7 +569,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     getLocation();
                 } else
                 {
-                    Log.e("---------Diamond--------- : ", "grantResults : " + grantResults.toString());
+                    //Log.e("---------Diamond--------- : ", "grantResults : " + grantResults.toString());
                     // Permission denied
                     // Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
                     showSettingsDialog("This app needs location permission to function. You can grant them in app settings.");
@@ -719,12 +655,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 CommonUtility.setGlobalString(context, "user_select_pincode", userPincode);
                 CommonUtility.setGlobalString(context, "user_select_pincode_city", userCity);
 
-                 alertDialog.dismiss();
+                alertDialog.dismiss();
 
-                // Display the pincode
-                /*Log.e("------pincode------- : ", pincode.toString());
-                Log.e("------pincode11------- : ", city.toString());
-                Log.e("------pincode1------- : ", addresses.toString());*/
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -784,7 +716,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 startActivity(intent);
                 overridePendingTransition(0,0);
 
-                //onPlaceOrder(false);
             }
             else{
                 Constant.manageClickEventForRedirection = "placeOrder";
@@ -913,6 +844,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
         else if(id == R.id.search_circle_card)
         {
+            translucent_background.setVisibility(View.VISIBLE); // Activity Transparency Visible
+            bottomBarClickableFalse();// When Transparency Show Click False
+
             bottom_search_icon.setImageResource(R.drawable.cross);
             bottom_search_icon.setColorFilter(ContextCompat.getColor(context, R.color.white));
             bottom_search_icon.animate().rotation(45).setDuration(300).start();
@@ -929,6 +863,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         else if(id == R.id.search_circle_card1_cross)
         {
             bottom_search_icon.setImageResource(R.drawable.plus);
+            translucent_background.setVisibility(View.GONE); // Activity Transparency Gone
+            bottomBarClickableTrue();// When Transparency Hide Click True
+
             bottom_search_icon.animate().rotation(0).setDuration(300).start();
 
             // Hide popups
@@ -982,6 +919,53 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 overridePendingTransition(0,0);
             }
         }
+        else if(id == R.id.translucent_background)
+        {
+            translucent_background.setVisibility(View.GONE); // Activity Transparency Gone
+            bottomBarClickableTrue();// When Transparency Hide Click True
+
+            bottom_search_icon.setImageResource(R.drawable.plus);
+            bottom_search_icon.animate().rotation(0).setDuration(300).start();
+
+            // Hide popups
+            card_popup1.setVisibility(View.GONE); // Option Popup Hide
+            curve_rel.setVisibility(View.GONE); // Bottom Cut Center Position Layout Hide
+            search_circle_card1_cross.setVisibility(View.GONE); // Bottom Cross Icon Hide
+            search_circle_card.setVisibility(View.VISIBLE); // Bottom Plus Icon Show
+            show_popup_rel.setVisibility(View.GONE); // Bottom Plus Icon Show
+        }
+    }
+
+    // This function ensures that all bottom bar elements (home, category, wishlist, cart, account) are both
+    // disabled and non-clickable, preventing users from interacting with these elements.
+    void bottomBarClickableFalse()
+    {
+        home_rel.setEnabled(false);
+        category_rel.setEnabled(false);
+        wishlist_rel.setEnabled(false);
+        cart_rel.setEnabled(false);
+        account_rel.setEnabled(false);
+        home_rel.setClickable(false);
+        category_rel.setClickable(false);
+        wishlist_rel.setClickable(false);
+        cart_rel.setClickable(false);
+        account_rel.setClickable(false);
+    }
+
+    // This function ensures that all bottom bar elements (home, category, wishlist, cart, account) are both
+    // enabled and clickable, allowing users to interact with these elements.
+    void bottomBarClickableTrue()
+    {
+        home_rel.setEnabled(true);
+        category_rel.setEnabled(true);
+        wishlist_rel.setEnabled(true);
+        cart_rel.setEnabled(true);
+        account_rel.setEnabled(true);
+        home_rel.setClickable(true);
+        category_rel.setClickable(true);
+        wishlist_rel.setClickable(true);
+        cart_rel.setClickable(true);
+        account_rel.setClickable(true);
     }
 
     void manageDeviceBackButton()
@@ -1354,19 +1338,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
             {
-            /*try {
-                // Parse the string to a number
-                long number = Long.parseLong(list.get(position).getSubtotal());
-
-                // Format the number
-                String subTotal = formatter.format(number);
-                holder.sub_total_tv.setText(ApiConstants.rupeesIcon + "" + subTotal);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                // Handle the exception, maybe set a default value or show an error message
-            }*/
-
-                Log.e("--------selectedCurrencyValue1111 : ", "" + list.get(position).getShowingSubTotal());
                 sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
             }else {}
 
@@ -1514,27 +1485,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DIAMONDS_DETAILS, ApiConstants.GET_DIAMONDS_DETAILS_ID,showLoader, "GET");
-
-        } else {
-            showToast(ApiConstants.MSG_INTERNETERROR);
-            //recyclerNaturalGrownView.setVisibility(View.GONE);
-        }
-    }
-
-    public void onPlaceOrder(boolean showLoader)
-    {
-        String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
-            //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
-            urlParameter = new HashMap<String, String>();
-
-            urlParameter.put("certificateNo", certificate_number);
-            urlParameter.put("orderType", "Buy Now");
-            urlParameter.put("sessionId", "" + uuid);
-
-            vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.PLACE_ORDER, ApiConstants.PLACE_ORDER_ID,showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -2242,25 +2192,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     }
                     break;
 
-                case ApiConstants.PLACE_ORDER_ID:
-
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
-                        orderSuccessfullyPopup(activity, context);
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
-                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
-                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-
             }
 
         } catch (Exception e) {
@@ -2317,35 +2248,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    /*private List<DiamondShapeImageModel> parseJson(String jsonString) throws JSONException {
-        List<DiamondShapeImageModel> diamondShapes = new ArrayList<>();
-
-        JSONArray shapesArray = new JSONArray(jsonString);
-        for (int i = 0; i < shapesArray.length(); i++) {
-            JSONObject shapeObject = shapesArray.getJSONObject(i);
-            DiamondShapeImageModel diamondShape = new DiamondShapeImageModel();
-
-            diamondShape.setShape(shapeObject.getString("shape"));
-
-            JSONArray detailsArray = shapeObject.getJSONArray("details");
-            List<DiamondShapeImageNameModel> details = new ArrayList<>();
-            for (int j = 0; j < detailsArray.length(); j++) {
-                JSONObject detailObject = detailsArray.getJSONObject(j);
-                DiamondShapeImageNameModel diamondDetail = new DiamondShapeImageNameModel();
-
-                diamondDetail.setCarat(detailObject.getString("carat"));
-                diamondDetail.setImage(detailObject.getString("image"));
-
-                details.add(diamondDetail);
-            }
-
-            diamondShape.setDetails(details);
-            diamondShapes.add(diamondShape);
-        }
-
-        return diamondShapes;
-    }*/
-
     private Bitmap bitmap; // Bitmap to hold screenshot
     WebView webViewImage, webViewVideo;
 
@@ -2363,10 +2265,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         final ImageView share_img = dialogView.findViewById(R.id.share_img);
         final TextView not_found_tv = dialogView.findViewById(R.id.not_found_tv);
         webViewImage = dialogView.findViewById(R.id.webView);
-
-        //Log.e("-------diamondUrl--------- : ", diamondUrl.toString());
-
-        //diamondUrl = "https://v360.in/V360Images.aspx?cid=vd&d=DMV240-152C";
 
         if(diamondUrl.equalsIgnoreCase(""))
         {
@@ -2431,25 +2329,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         share_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Storage Permission Required")
-                        .setMessage("Gmail needs storage permission to complete this action. Please enable it in settings.")
-                        .setPositiveButton("Open Settings", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                intent.setData(uri);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();*/
-
                 //shareImage(diamondUrl);
                 captureScreenshotAndShare("Image");
             }
@@ -2467,7 +2346,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     private void captureScreenshotAndShare(String shareType) {
         // Capture the content of the WebView as Bitmap
         Bitmap webViewBitmap = captureWebViewContent(shareType);
-
         // Share the captured screenshot
         shareScreenshot(webViewBitmap);
     }
@@ -2488,7 +2366,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             Canvas canvas = new Canvas(bitmap);
             webViewVideo.draw(canvas);
         }
-
         return bitmap;
     }
 
@@ -2517,14 +2394,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     //---------------------------------------------------Take Dialog Screen Shot and Share----------------------------------------------------
 
-    // Capture the content of AlertDialog as Bitmap and share it
-    private void captureScreenshotAndShare1() {
-        // Capture the content of the dialog view as Bitmap
-        Bitmap dialogBitmap = captureDialogView();
-
-        // Share the captured screenshot
-        shareScreenshot(dialogBitmap);
-    }
 
     // Capture content of AlertDialog's view as Bitmap
     private Bitmap captureDialogView() {
@@ -2535,64 +2404,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         return bitmap;
     }
 
-    // Share the captured screenshot
-    private void shareScreenshot1(Bitmap bitmap) {
-        if (bitmap != null) {
-            try {
-                // Save bitmap to a temporary file (optional)
-                String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Screenshot", null);
-                Uri imageUri = Uri.parse(path);
-
-                // Share via Intent
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("image/*");
-                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                startActivity(Intent.createChooser(shareIntent, "Share Screenshot"));
-            } catch (Exception e) {
-                Toast.makeText(this, "Failed to share screenshot", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(this, "Failed to capture screenshot", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Capture content of a View as Bitmap
-    private Bitmap getBitmapFromView(View view) {
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-        return bitmap;
-    }
 
     //----------------------------------------------------End-------------------------------------------------------
-
-    private void shareImage(String imageFile) {
-        /*Uri imageUri = FileProvider.getUriForFile(
-                context,
-                BuildConfig.APPLICATION_ID + ".provider",
-                imageFile
-        );*//*
-        Uri imageUri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".fileprovider", imageFile);*/
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("image/jpeg");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Diamond Image URL : \n\n" + imageFile);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        shareIntent.setType("text/plain");
-        startActivity(Intent.createChooser(shareIntent, "Diamond Image Url"));
-    }
-
-    private void shareImage1(String imagePath) {
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/*");
-        File imageFileToShare = new File(imagePath);
-        Uri uri = Uri.fromFile(imageFileToShare);
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(share, "Share Image!"));
-    }
-
 
     void showDiamondVideoWebViewPopup(final Activity activity,final Context context, String diamondUrl)
     {
@@ -2623,19 +2436,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             not_found_tv.setVisibility(View.GONE);
             webViewVideo.setVisibility(View.VISIBLE);
 
-              /*webView.setWebChromeClient(new WebChromeClient());
-        webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webView.requestFocus(View.FOCUS_DOWN);*/
-
             title_tv.setText(getResources().getString(R.string.diamond_video));
             webViewVideo.getSettings().setJavaScriptEnabled(true);
             webViewVideo.getSettings().setAllowFileAccess(true);
@@ -2662,22 +2462,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             //webView.loadUrl("https://thnk18.azureedge.net/img/images/Vision360.html?d=J429-230135");
             webViewVideo.loadUrl(diamondUrl);
-
-        /*webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setAllowContentAccess(true);
-        webView.getSettings().setLoadsImagesAutomatically(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        }
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
-        webView.setWebChromeClient(new WebChromeClient());
-*/
-            //webView.setInitialScale(120);
-
 
             // Set WebView background color to transparent
             webViewVideo.setBackgroundColor(Color.TRANSPARENT);
@@ -2711,6 +2495,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     }
 
+    // Not Use
     void showDiamondCertificateWebViewPopup(final Activity activity,final Context context, String diamondUrl)
     {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
@@ -2801,12 +2586,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                /*if (checkOnPageStartedCalled) {
-                    pdfView.loadUrl(removePdfTopIcon);
-                    hideProgress();
-                } else {
-                    showPdfFile(imageString);
-                }*/
                 }
             });
         }
@@ -3352,7 +3131,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         final EditText enter_pincode_et = dialogView.findViewById(R.id.enter_pincode_et);
         final LinearLayout locate_me_lin = dialogView.findViewById(R.id.locate_me_lin);
 
-
         if(userPincode.equalsIgnoreCase(""))
         {
             enter_pincode_et.setHint(getResources().getString(R.string.enter_pin_code));
@@ -3360,7 +3138,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         else
         {
             enter_pincode_et.setText("");
-            // if City is blank sow only pincode
+            // if City is blank sow only pin-code
             if(userCity.equalsIgnoreCase(""))
             {
                 enter_pincode_et.setText(userPincode);
@@ -3420,7 +3198,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
         alertDialog.setCancelable(true);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
@@ -3428,6 +3205,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     }
 
 
+    // Not Use
     void orderSuccessfullyPopup(final Activity activity,final Context context)
     {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);

@@ -429,44 +429,6 @@ public class CommonUtility {
 		return "";
 	}
 
-	/*public static void showDialog(String title_text, final Activity activity,final Context context,String message)
-	{
-		android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
-		LayoutInflater inflater = activity.getLayoutInflater();
-
-		View dialogView = inflater.inflate(R.layout.dialog_layout_common_message, null);
-		dialogBuilder.setView(dialogView);
-		final android.app.AlertDialog alertDialog = dialogBuilder.create();
-
-		final TextView title = (TextView) dialogView.findViewById(R.id.title);
-		final TextView message1 = (TextView) dialogView.findViewById(R.id.message);
-		final TextView ok_btn = (TextView) dialogView.findViewById(R.id.ok_btn);
-
-		if (title_text!=null && !title_text.equalsIgnoreCase(""))
-		{
-			title.setText(""+title_text);
-		} else {
-			title.setText(""+context.getResources().getString(R.string.app_name));
-		}
-
-		message1.setText(""+message);
-
-		ok_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				alertDialog.dismiss();
-			}
-		});
-
-		alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-		alertDialog.setCancelable(true);
-		alertDialog.show();
-
-	}*/
-
-
 	public static String checkString(String value)
 	{
 		String updatedValue = "";
@@ -655,34 +617,6 @@ public class CommonUtility {
 	}
 
 
-	//For store thumbnail in phone
-	private static String storeImage(Activity activity,Bitmap image)
-	{
-		String save_thumbnail_path = "";
-		File pictureFile = getOutputMediaFile(activity);
-		if (pictureFile == null) {
-
-			return save_thumbnail_path;
-		} else {
-			save_thumbnail_path = pictureFile.getPath();
-			//  Log.v("Diamond","save_thumbnail_path: "+save_thumbnail_path+" \n : Video Path : "+selectedVideoPath);
-		}
-		try {
-
-			FileOutputStream fos = new FileOutputStream(pictureFile);
-			image.compress(Bitmap.CompressFormat.PNG, 90, fos);
-			fos.close();
-		} catch (FileNotFoundException e) {
-			//  Log.v("Diamond", "File not found: " + e.getMessage());
-		} catch (IOException e) {
-			//  Log.v("Diamond", "Error accessing file: " + e.getMessage());
-		}
-
-		//For Sending Video and Thumbnail to server
-		return save_thumbnail_path;
-
-	}
-
 	//Create a File for saving an image or video
 	private static File getOutputMediaFile(Activity activity) {
 		// To be safe, you should check that the SDCard is mounted
@@ -737,10 +671,6 @@ public class CommonUtility {
 		DatePickerDialog datePickerDialog = new DatePickerDialog(context, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				// et_userDOB.setText("" + year + "-" + (monthOfYear + 01) + "-" + dayOfMonth);
-				//Log.v("Diamond","Date-Year : "+year+" Month : "+(monthOfYear + 01)+" day : "+dayOfMonth);
-
-				//String input  =""+dayOfMonth+"-"+(monthOfYear + 01)+"-"+year;
 				String input  =""+(monthOfYear + 01)+"-"+dayOfMonth+"-"+year;
 				Date date = new Date();
 				SimpleDateFormat inFormat = new SimpleDateFormat("MM-dd-yy");
@@ -754,34 +684,13 @@ public class CommonUtility {
 				String year1 = (String) android.text.format.DateFormat.format("yyyy", date); //2013
 				String day = (String) android.text.format.DateFormat.format("dd", date); //20
 
-
-				//DATE = dayOfTheWeek+". "+stringMonth+" "+day;
-				//date_et.setText(stringMonth+" "+day+", "+year1);
-
-
 				dialogItemClickInterface.dialogItemClick(day+"/"+intMonth+"/"+year1,valueFor);
-				//dialogItemClickInterface.dialogItemClick(intMonth+"/"+day+"/"+year1,valueFor);
-
-				/*if (valueFor.equalsIgnoreCase("start_date"))
-				{
-					date_available_et.setText(intMonth+"/"+day+"/"+year1);
-					//startDateCalendar.set(year,monthOfYear,dayOfMonth);
-					// o_start_date_et.setText(stringMonth+" "+day+","+year1);
-				}
-				else{
-					deposit_date_et.setText(intMonth+"/"+day+"/"+year1);
-				}*/
-
 
 				Calendar cc = Calendar.getInstance();
 				cu_year=cc.get(Calendar.YEAR);
 				cu_month=cc.get(Calendar.MONTH);
 				cu_mDay = cc.get(Calendar.DAY_OF_MONTH);
 
-               /* For Validate to Event Date
-                cu_mDay = Integer.parseInt(CommonUtility.convertDateFormat(StartDate,"MM/dd/yyyy","dd"));
-                cu_month = Integer.parseInt(CommonUtility.convertDateFormat(StartDate,"MM/dd/yyyy","MM"));
-                cu_year = Integer.parseInt(CommonUtility.convertDateFormat(StartDate,"MM/dd/yyyy","yyyy"));*/
 				cu_month = cu_month-1;
 
 			}
@@ -796,11 +705,6 @@ public class CommonUtility {
 			datePickerDialog.getDatePicker().setMaxDate(maxDate);
 		} else {}
 
-		//datePickerDialog.getDatePicker().setMinDate(min_startDate.getTime());
-		//datePickerDialog.getDatePicker().setMaxDate(max_date.getTime());
-        /* For Validate to Event Date
-        datePickerDialog.getDatePicker().setMinDate(startDateObj.getTime());
-        datePickerDialog.getDatePicker().setMaxDate(endDateObj.getTime());*/
 		datePickerDialog.show();
 	}
 

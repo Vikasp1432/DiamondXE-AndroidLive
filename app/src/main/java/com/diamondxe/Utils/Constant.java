@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.diamondxe.Beans.AttributeDetailsModel;
 import com.diamondxe.Beans.CountryListModel;
+import com.diamondxe.Beans.MyOrder.MyOrderListModel;
 
 import java.util.ArrayList;
 
@@ -139,11 +140,21 @@ import java.util.ArrayList;
     public static String wishListCount="";
     public static String documentStatus="";
     public static String deliveryPincode="";
-    public static String collectFromHub="0";
+    public static String collectFromHub="";
     public static String shippingAddressID=""; // This is Use When Create Place Order
     public static String billingAddressID=""; // This is Use When Create Place Order
     public static String comeFrom=""; // This is Use After Payment Complete and Goto Payment Status Screen And Check User Come Frm Which Type Payment
     public static String orderType=""; // This is Use Which Type Order Order Type "Cart" or "buy now"
     public static String certificateNumber=""; // This is Use When User Pay Payment Through BUY Now
+    public static String orderID="";
+    public static String comeFromWhichFragment=""; // Not Use
+    public static String shippingAddressNameForShowHidePaymentOption=""; // This Key Use For Manage Payment Option For UAE Country.
+    public static String afterCancelOrderManageScreenCall=""; // This Key USe For When User Cancel Item After that popup Open and User Click "Done" Button Then manage Redirection go For Cancelled Fragment
+    public static String afterReturnOrderManageScreenCall=""; // This Key USe For When User Return Item After that popup Open and User Click "Done" Button Then manage Redirection go For Cancelled Fragment
+    public static String orderReturnType=""; // This Key USe For When User Return Item Then Manage Type Full, Partial
+    public static String returnOrderCertificateIDs=""; // This Key USe Manage CertificateNumber "," Spreated Value.
+    public static String pickupAddressId="";
+    public static String refundPaymentMode="";
 
+    public static ArrayList<MyOrderListModel> finalReturnOrderItemArrayList;
 }

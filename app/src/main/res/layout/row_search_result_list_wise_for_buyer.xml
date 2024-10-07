@@ -372,8 +372,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_toLeftOf="@+id/sub_total_tv">
+                    android:layout_marginLeft="@dimen/dimen_5">
 
                     <TextView
                         android:id="@+id/table_perc_tv"

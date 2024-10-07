@@ -106,13 +106,7 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_advance_filters);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         context = activity = this;
 
@@ -120,8 +114,7 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
         back_img.setOnClickListener(this);
 
         // This Key Check Any Diamond Quality Previous Screen (Search Screen) Selected or Not.
-        
-                
+
         recycler_cut_view = findViewById(R.id.recycler_cut_view);
         recycler_polish_view = findViewById(R.id.recycler_polish_view);
         recycler_symmetry_view = findViewById(R.id.recycler_symmetry_view);
@@ -197,19 +190,6 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
         spinner_fancy_intensity_view = findViewById(R.id.spinner_fancy_intensity_view);
         spinner_fancy_over_tone_view = findViewById(R.id.spinner_fancy_over_tone_view);
 
-        /*try {
-            Field popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
-
-            // Get private mPopup member variable and try cast to ListPopupWindow
-            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner_fancy_over_tone_view);
-
-            // Set popupWindow height to 500px
-            popupWindow.setHeight(100);
-        }
-        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
-            // silently fail...
-        }*/
 
         table_from_spinner = findViewById(R.id.table_from_spinner);
         table_to_spinner = findViewById(R.id.table_to_spinner);
@@ -1056,10 +1036,6 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
             Utils.hideKeyboard(activity);
             clearAllFilter();
         }
-        /*else if(id == R.id.cardView1)
-        {
-            showFancyColorIntensity();
-        }*/
     }
 
     void clearAllFilter()

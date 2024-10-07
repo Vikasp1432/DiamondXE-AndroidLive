@@ -67,6 +67,7 @@
             android:layout_marginRight="@dimen/dimen_10"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="2">
 
             <androidx.cardview.widget.CardView
@@ -161,7 +162,7 @@
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tabMode="scrollable"
+                app:tabMode="fixed"
                 app:layout_constraintEnd_toEndOf="parent">
             </com.google.android.material.tabs.TabLayout>
 
