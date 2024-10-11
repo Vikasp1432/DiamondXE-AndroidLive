@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left" />
+
+        </RelativeLayout>
+
+        <!--<ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/left" />-->
+
+        <TextView
+            android:id="@+id/lbl_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toRightOf="@+id/back"
+            android:font="@font/lato_regular"
+            android:gravity="center"
+            android:text="@string/title_currency"
+            android:textColor="@color/color_title"
+            android:textFontWeight="500"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+    <!--<RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="5dp"
+        android:background="?selectableItemBackground">
+
+        <TextView
+            android:id="@+id/lbl_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/title_currency"
+            android:textColor="@color/color_title"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp">
+
+        <!--Bottom button container-->
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/bottom_btn_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/unselect_button"
+                android:paddingTop="12dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="@string/txt_btn_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/btn_done"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rignbutton"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/txt_btn_save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <!--Bottom button container ends-->
+
+        <!--Search container-->
+        <androidx.appcompat.widget.SearchView
+            android:theme="@style/SearchViewStyle"
+            app:searchIcon="@drawable/search_new"
+            android:id="@+id/country_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow_round"
+            android:textCursorDrawable="@null"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+            app:queryHint="@string/searchby"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+        <!--<RelativeLayout
+            android:id="@+id/currency_search_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/bg_search">
+
+            <ImageView
+                android:id="@+id/lbl_symbol2"
+                style="@style/InfoLabelTextView"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/search" />
+
+            <TextView
+                android:id="@+id/lbl_ttl"
+                style="@style/InfoLabelTextView"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:drawableStart="@drawable/clear"
+                android:padding="10dp"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/tv_total_price"
+                style="@style/ValueText"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toLeftOf="@+id/lbl_ttl"
+                android:layout_toRightOf="@+id/lbl_symbol2"
+                android:hint="@string/hint_search_currency"
+                android:inputType="text"
+                android:paddingTop="12dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="12dp"
+                android:text=""
+                android:textSize="16sp" />
+        </RelativeLayout>-->
+        <!--Search container ends-->
+
+        <!--Selected currency container-->
+        <LinearLayout
+            android:background="@drawable/currency_bg"
+            android:id="@+id/selected_currency_container"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_below="@+id/country_search"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_selected_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:text="INR"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_selected_currency">
+
+                    <ImageView
+                        android:id="@+id/iv_currency_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/refresh" />
+
+                    <EditText
+                        android:id="@+id/edt_selected_currency_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/color_37083B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toLeftOf="@+id/iv_currency_refresh"
+                        android:background="@drawable/bg_login_edittext_white_solid"
+                        android:gravity="left|center_vertical"
+                        android:hint="00.00"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
+                        android:minEms="4"
+                        android:paddingStart="7dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="8dp" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!--Selected currency container ends-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            tools:itemCount="10"
+            tools:listitem="@layout/itm_currency_rate"
+            android:layout_below="@+id/selected_currency_container"
+            android:layout_above="@+id/bottom_btn_container"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

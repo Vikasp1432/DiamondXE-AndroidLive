@@ -123,7 +123,7 @@ public class ReturnOrderListFragment extends SuperFragment implements TwoRecycle
         recycler_view.addOnScrollListener(scrollListener);
 
         pageNo = 1;
-        getOrderListAPI(false);
+        getOrderListAPI(true);
     }
 
     void getCurrencyData()

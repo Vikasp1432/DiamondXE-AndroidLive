@@ -48,11 +48,9 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
     private ImageView back_img;
     private Activity activity;
     private Context context;
-
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
     TabLayout tabLayout;
     ViewPager2 viewPager;
 
@@ -73,6 +71,7 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
         String[] tabTitles = getResources().getStringArray(R.array.tab_titles);
 
         /*String recentOrderCount = "2";
+       
         String returnOrderCount = "3";
         String reservedOrderCount = "0";
         String pastOrderCount = "10";
@@ -138,7 +137,6 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
             Utils.hideKeyboard(activity);
             gotoHomeScreen();
         }
-
     }
 
     @Override
@@ -150,10 +148,11 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
         if (Constant.afterCancelOrderManageScreenCall.equalsIgnoreCase("yes")) {
             viewPager.setCurrentItem(3); // Set to CancelledListOrderFragment
         }
-        else if (Constant.afterReturnOrderManageScreenCall.equalsIgnoreCase("yes")) {
+        /*else if (Constant.afterReturnOrderManageScreenCall.equalsIgnoreCase("yes")) {
             viewPager.setCurrentItem(1); // Set to ReturnOrderFragment
-        } else {
-            //viewPager.setCurrentItem(0); // Default to RecentOrderListFragment
+        }*/
+        else {
+           // viewPager.setCurrentItem(0); // Default to RecentOrderListFragment
         }
     }
 
@@ -200,7 +199,6 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
             super(fragmentActivity);
             this.totalTabs = totalTabs;
         }
-
         @NonNull
         @Override
         public Fragment createFragment(int position) {
@@ -220,7 +218,6 @@ public class MyOrderListScreenActivity extends SuperActivity implements TwoRecyc
                     return new RecentOrderListFragment(); // Default fragment
             }
         }
-
         @Override
         public int getItemCount() {
             return totalTabs;

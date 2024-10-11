@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow background for the seekbar track -->
+    <item
+        android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <size android:height="1dp" /> <!-- Control the height of the shadow background -->
+            <corners android:radius="8dp" /> <!-- Rounded corners for the track -->
+            <solid android:color="@color/color_E4E4E4" /> <!-- Background color -->
+        </shape>
+    </item>
+</layer-list>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <item>
+            <shape>
+                <corners
+                    android:radius="50dp" />
+                <gradient
+                    android:angle="270"
+                    android:startColor="#E4E4E4"
+                    android:centerColor="#E4E4E4"
+                    android:endColor="#E4E4E4"
+                    android:centerY="0.2"
+                    android:type="linear"
+                    />
+            </shape>
+        </item>
+    </layer-list>-->

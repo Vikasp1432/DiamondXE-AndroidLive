@@ -1,0 +1,20 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Grid background -->
+    <item>
+        <bitmap
+            android:src="@drawable/grid_pattern"
+            android:tileMode="repeat"
+            android:gravity="fill"/>
+    </item>
+
+    <!-- Circle overlay -->
+    <item>
+        <shape>
+            <solid android:color="#00000000"/> <!-- Transparent background -->
+
+            <!-- Circle in the center -->
+            <size android:width="100dp" android:height="100dp"/> <!-- Adjust size -->
+            <stroke android:width="2dp" android:color="#C28B42" /> <!-- Circle border color -->
+        </shape>
+    </item>
+</layer-list>

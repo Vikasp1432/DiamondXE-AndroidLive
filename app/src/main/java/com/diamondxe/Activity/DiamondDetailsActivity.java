@@ -712,6 +712,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 Constant.showRadioButtonForSelectAddress = "yes";// Under Address List Radio Button Visible
                 Constant.orderType = BUY_NOW; // Order Type
                 Constant.certificateNumber = certificate_number; // certificate Number
+                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageBillingByAddressAddUpdate = "";
+                Constant.manageShippingByAddressAddUpdate = "";
                 intent = new Intent(activity, PlaceOrderScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);

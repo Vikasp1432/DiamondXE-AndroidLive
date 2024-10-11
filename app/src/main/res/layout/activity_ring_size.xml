@@ -1,0 +1,422 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/mainui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="10dp"
+            android:paddingRight="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:id="@+id/back"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/left" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lbl_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_toRightOf="@+id/back"
+                    android:font="@font/lato_regular"
+                    android:gravity="center"
+                    android:text="@string/ring_sizer"
+                    android:textColor="@color/color_title"
+                    android:textFontWeight="700"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="23dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ringSelectmainlayout"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:layout_marginTop="4dp"
+                        android:id="@+id/ringDeselect"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/unselectring"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/InfoLabelTextView"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="@string/ring"
+                            android:textColor="@color/colorAccent" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ringselect"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/rignbutton"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textFontWeight="500"
+                            android:fontFamily="@font/lato_regular"
+                            android:textSize="14dp"
+                            android:text="@string/ring"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="4dp"
+                        android:id="@+id/fingerselect"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/unselectring"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/InfoLabelTextView"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="@string/finger"
+                            android:textColor="@color/colorAccent" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:layout_marginStart="17dp"
+                        android:id="@+id/fingerDeselect"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/rignbutton"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textFontWeight="500"
+                            android:fontFamily="@font/lato_regular"
+                            android:textSize="14dp"
+                            android:text="@string/finger"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                style="@style/InfoLabelTextViewRing"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/ringtext"
+                android:textColor="@color/black" />
+
+
+            <RelativeLayout
+                android:layout_marginTop="25dp"
+                android:id="@+id/mylayout"
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
+
+
+                <FrameLayout
+                    android:visibility="gone"
+                    android:id="@+id/squareLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true">
+                    <!--android:background="@drawable/square_background"-->
+
+                    <com.dxe.calc.utils.SquareView
+                        android:layout_margin="1dp"
+                        android:id="@+id/squreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/fingerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/place_finger"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/lato_regular"
+                    android:textFontWeight="500"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+
+              </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ringframe"
+                    android:visibility="visible"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.dxe.calc.utils.CircleView
+                        android:id="@+id/circleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"/>
+                    <!--<View
+                        android:id="@+id/circleView"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circle_shape"
+                        android:layout_gravity="center" />-->
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/diameterText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13.4 mm"
+                        android:textSize="18sp"
+                        android:textColor="@color/color_7E3080"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/leftarrow"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/left_arrow"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginEnd="8dp" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/rightarrow"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/right_arrow"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginStart="8dp" />
+
+                </FrameLayout>
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/seekBar_mainui"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/mainui"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/listbg"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:id="@+id/minus_btn"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:src="@drawable/minus" />
+            </RelativeLayout>
+
+
+            <SeekBar
+                android:layout_centerInParent="true"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@drawable/thumb_shadow"
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toLeftOf="@+id/plus_btn"
+                android:layout_toRightOf="@+id/minus_btn"
+                />
+
+            <ImageView
+                android:id="@+id/plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/plus_cal" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_above="@+id/showring_button"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/seekBar_mainui"
+        android:id="@+id/listview"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/listbg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:background="@drawable/rounded_top_corners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <TextView
+                    style="@style/ringTvStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/txt_mm"
+                    tools:targetApi="p" />
+
+                <TextView
+                    style="@style/ringTvStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/txt_us"
+                    tools:targetApi="p" />
+
+                <TextView
+                    style="@style/ringTvStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/txt_eur"
+                    tools:targetApi="p" />
+
+                <TextView
+                    style="@style/ringTvStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/txt_uk"
+                    tools:targetApi="p" />
+
+                <TextView
+                    style="@style/ringTvStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/txt_ind"
+                    tools:targetApi="p" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@color/color_C3C4C7" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ringsize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="10"
+                tools:listitem="@layout/ringsize_adapter" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/showring_button"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/rignbutton"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/InfoLabelTextView"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/show_ring_size"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</RelativeLayout>

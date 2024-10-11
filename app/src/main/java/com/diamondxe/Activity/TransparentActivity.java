@@ -35,11 +35,6 @@ public class TransparentActivity extends Activity {
 
         String path = "android.resource://com.diamondxe/"+R.raw.diamond_logo;
 
-        /*Glide.with(ctx)
-                .load(path)
-                .into(loader_image_View);*/
-
-
         // Set static dimensions for debugging
         loader_image_View.getLayoutParams().width = 500; // Set a static width
         loader_image_View.getLayoutParams().height = 500; // Set a static height
@@ -65,9 +60,6 @@ public class TransparentActivity extends Activity {
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) // or .diskCacheStrategy(DiskCacheStrategy.NONE) if needed
                 .skipMemoryCache(true) // optional, depending on your caching strategy
                 .into(loader_image_View);
-
-
-
     }
 
     public static boolean active = false;

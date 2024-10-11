@@ -736,6 +736,11 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Constant.manageShippingBillingAddressSelection = "";
+                        if(setAsDefaultAddress.equalsIgnoreCase("1"))
+                        {
+                            Constant.manageShippingByAddressAddUpdate = "yes";
+                        }else{}
                         finish();
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
@@ -756,6 +761,11 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Constant.manageShippingBillingAddressSelection = "";
+                        if(setAsDefaultAddress.equalsIgnoreCase("1"))
+                        {
+                            Constant.manageShippingByAddressAddUpdate = "yes";
+                        }else{}
                         finish();
                         Log.e("Message", "Message");
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+   android:background="#80000000"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="@drawable/top_corner_radius"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:background="@drawable/button_curve"
+            android:layout_width="40dp"
+            android:layout_height="8dp"/>
+
+        <TextView
+            android:id="@+id/headertext"
+            android:textSize="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_gravity="center"
+            android:textFontWeight="500"
+            style="@style/InfoTextViewGT"
+            android:text="@string/mainsolitaore_note" />
+
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/color_333333"
+            android:textSize="16dp"
+            android:layout_marginTop="20dp"
+            android:textFontWeight="400"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_regular"
+            android:text="@string/additionalinfo" />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/textbg"
+            android:layout_width="match_parent"
+            android:layout_height="130dp">
+
+            <EditText
+                android:id="@+id/bottom_edit"
+                android:textFontWeight="400"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="15dp"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/white"
+                android:hint="@string/enternotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:id="@+id/bottom_btn_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/unselect_button"
+                android:paddingTop="12dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="@string/txt_btn_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/btn_done"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rignbutton"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/txt_btn_add"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+</RelativeLayout>

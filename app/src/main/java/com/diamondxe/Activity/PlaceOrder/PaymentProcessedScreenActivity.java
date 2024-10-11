@@ -1174,6 +1174,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             urlParameter.put("orderType", Constant.orderType);
             urlParameter.put("certificateNo", Constant.certificateNumber);
+            urlParameter.put("billingCountry", Constant.billingCountryName);
+            urlParameter.put("shippingCountry", Constant.shippingCountryName);
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID,showLoader, "POST");

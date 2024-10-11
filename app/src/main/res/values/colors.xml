@@ -76,6 +76,37 @@
     <color name="grey_light">#6D6C6D</color>
     <color name="purple_50">#267E3080</color>
     <color name="purple_20">#337E3080</color>
+    <color name="dark_green">#109662</color>
+
+    <color name="color_bg_splash">#4C0C4B</color>
+    <color name="color_bg_button">#4C0C4B</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_login_edittext_stroke">#5C255E</color>
+    <color name="color_login_edittext_solid">#EEEFF3</color>
+    <color name="color_title">#7E3080</color>
+    <color name="color_37083B">#37083B</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_F3F3F6">#F3F3F6</color>
+    <color name="color_4C4E57">#4C4E57</color>
+    <color name="color_C3C4C7">#C3C4C7</color>
+    <color name="color_4C0C4B">#4C0C4B</color>
+    <color name="color_EBEBEB">#EBEBEB</color>
+
+    <color name="color_background">#F2F0F0</color>
+    <color name="color_7E3080">#7E3080</color>
+    <color name="colorAccent">#4C0C4B</color>
+
+    <color name="color_CBC6C2">#CBC6C2</color>
+    <color name="color_F0F0F0">#F0F0F0</color>
+    <color name="color_black_transparent">#85000000</color>
+    <color name="color_black_transparent_62">#9E000000</color>
+    <color name="color_541355">#541355</color>
+    <color name="color_D4AA60">#D4AA60</color>
+    <color name="color_E4E4E4">#E4E4E4</color>
+    <color name="color_B3FFFFFF">#B3FFFFFF</color>
+    <color name="color_D5D5D5">#D5D5D5</color>
+    <color name="color_C3C4C799">#99C3C4C7</color>
+    <color name="color_717070">#717070</color>
 
 
 </resources>

@@ -26,7 +26,6 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
-
     }
 
     @Override
@@ -49,7 +48,6 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     @Override public void onActivityPaused(Activity activity) {}
     @Override public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
     @Override public void onActivityDestroyed(Activity activity) {}
-
     public static boolean isTransparentActivityRunning() {
         return isTransparentActivityRunning;
     }

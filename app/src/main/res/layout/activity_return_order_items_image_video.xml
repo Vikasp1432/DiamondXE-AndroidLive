@@ -290,6 +290,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar_rel"
         android:background="@color/bg_color"
         android:layout_below="@+id/top_lin">
 
@@ -439,89 +440,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!--Cancel and Processed Button Layout-->
-            <LinearLayout
-                android:id="@+id/main_lin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:layout_marginRight="@dimen/dimen_10"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cancel_order_card_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:layout_marginRight="@dimen/dimen_10"
-                    android:layout_marginBottom="@dimen/dimen_10"
-                    android:layout_weight="1"
-                    android:elevation="@dimen/dimen_30"
-                    android:outlineAmbientShadowColor="@color/purple_gradient_bottom"
-                    android:outlineSpotShadowColor="@color/purple_gradient_bottom"
-                    android:paddingLeft="@dimen/dimen_5"
-                    android:paddingTop="@dimen/dimen_10"
-                    android:paddingRight="@dimen/dimen_5"
-                    android:paddingBottom="@dimen/dimen_10"
-                    app:cardCornerRadius="@dimen/dimen_7"
-                    app:cardElevation="@dimen/dimen_5"
-                    app:cardBackgroundColor="@color/bg_color">
-
-                    <TextView
-                        android:id="@+id/previous_tv"
-                        style="@style/SemiBoldFontType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/border_purple_light"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/dimen_5"
-                        android:paddingTop="@dimen/dimen_10"
-                        android:paddingRight="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_10"
-                        android:text="@string/previous"
-                        android:textColor="@color/purple_light"
-                        android:textSize="@dimen/dimen_14" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/processed_order_card_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:layout_marginBottom="@dimen/dimen_10"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/dimen_5"
-                    android:paddingTop="@dimen/dimen_10"
-                    android:paddingRight="@dimen/dimen_5"
-                    android:paddingBottom="@dimen/dimen_10"
-                    app:cardCornerRadius="@dimen/dimen_7">
-
-                    <TextView
-                        android:id="@+id/confirm_tv"
-                        style="@style/SemiBoldFontType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_gradient"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/dimen_5"
-                        android:paddingTop="@dimen/dimen_10"
-                        android:paddingRight="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_10"
-                        android:text="@string/confirm"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_14" />
-
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
 
             <!--Return Order Summery Details Layout-->
             <include layout="@layout/return_order_summary" />
@@ -828,5 +746,100 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!--Cancel and Processed Button Layout-->
+    <RelativeLayout
+        android:id="@+id/bottom_bar_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_top_shadow"
+        android:visibility="visible">
+
+        <!--Cancel and Processed Button Layout-->
+        <LinearLayout
+            android:id="@+id/main_lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cancel_order_card_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:elevation="@dimen/dimen_30"
+                android:outlineAmbientShadowColor="@color/purple_gradient_bottom"
+                android:outlineSpotShadowColor="@color/purple_gradient_bottom"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_7"
+                app:cardElevation="@dimen/dimen_5"
+                app:cardBackgroundColor="@color/bg_color">
+
+                <TextView
+                    android:id="@+id/previous_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_purple_light"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/previous"
+                    android:textColor="@color/purple_light"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/processed_order_card_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_7">
+
+                <TextView
+                    android:id="@+id/confirm_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_gradient"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/confirm"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

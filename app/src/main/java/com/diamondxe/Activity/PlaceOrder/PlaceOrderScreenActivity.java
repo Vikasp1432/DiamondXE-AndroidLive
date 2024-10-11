@@ -244,6 +244,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         if(id == R.id.back_img)
         {
             Utils.hideKeyboard(activity);
+            Constant.manageShippingBillingAddressSelection="";
+            Constant.manageBillingByAddressAddUpdate = "";
+            Constant.manageShippingByAddressAddUpdate = "";
             finish();
         }
         else if(id == R.id.add_shipping_address_tv)
@@ -333,7 +336,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         {
             Utils.hideKeyboard(activity);
 
-           selectShippingIcon();
+            selectShippingIcon();
         }
         else if(id == R.id.kyc_card_view)
         {
@@ -354,6 +357,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
     {
         if(userRole.equalsIgnoreCase("DEALER"))
         {
+            Constant.manageShippingBillingAddressSelection="";
+            Constant.manageBillingByAddressAddUpdate = "";
+            Constant.manageShippingByAddressAddUpdate = "";
             Intent intent = new Intent(activity, PlaceOrderKYCVerificationActivity.class);
             startActivity(intent);
             overridePendingTransition(0,0);
@@ -363,6 +369,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
            // Log.e("------document_status-------- :" , document_status.toString());
             if(document_status.equalsIgnoreCase("0"))
             {
+                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageBillingByAddressAddUpdate = "";
+                Constant.manageShippingByAddressAddUpdate = "";
                 Constant.documentStatus = document_status; // For Check Validation Upload At least one document.
                 Intent intent = new Intent(activity, PlaceOrderBuyerKYCVerificationDocUploadActivity.class);
                 startActivity(intent);
@@ -370,6 +379,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 finish();
             }
             else{
+                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageBillingByAddressAddUpdate = "";
+                Constant.manageShippingByAddressAddUpdate = "";
                 Intent intent = new Intent(activity, PlaceOrderBuyerKYCVerificationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
@@ -429,6 +441,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 payment_rel.setBackgroundResource(R.drawable.background_image_purple);
                 payment_img.setColorFilter(ContextCompat.getColor(context, R.color.white));*/
 
+                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageBillingByAddressAddUpdate = "";
+                Constant.manageShippingByAddressAddUpdate = "";
                 Intent intent = new Intent(activity, PaymentProcessedScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
@@ -449,17 +464,28 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         getCurrencyData();
 
-        getShippingAddressListAPI(false);
-        getBillingAddressListAPI(true);
+        if(Constant.manageShippingBillingAddressSelection.equalsIgnoreCase(""))
+        {
+            getShippingAddressListAPI(false);
+            getBillingAddressListAPI(true);
+        } else{}
 
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
         if(userRole.equalsIgnoreCase("BUYER"))
         {
             getKYCDetailsAPI(true);
+        }else{}
+
+        // Check Condition manageBillingByAddressAddUpdate and manageShippingByAddressAddUpdate any one hold key getCheckOutDetailsAPI api not Call
+        if(Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes") ||
+                Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes"))
+        {
+        }
+        else{
+            getCheckOutDetailsAPI(true);
         }
 
-        getCheckOutDetailsAPI(true);
     }
 
     public void getKYCDetailsAPI(boolean showLoader)
@@ -489,6 +515,8 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             urlParameter.put("collectFromHub", "" + Constant.collectFromHub);
             urlParameter.put("orderType", Constant.orderType);
             urlParameter.put("certificateNo", Constant.certificateNumber);
+            urlParameter.put("billingCountry", Constant.billingCountryName);
+            urlParameter.put("shippingCountry", Constant.shippingCountryName);
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID,showLoader, "POST");
@@ -556,6 +584,8 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Log.e("Diamonds : ", "--------JSONObject----Shipping---- : " + jsonObject);
+
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
                         if(shippingAddressArrayList.size() > 0)
@@ -597,6 +627,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                                 Constant.deliveryPincode = CommonUtility.checkString(objectCodes.optString("PinCode"));
                                 Constant.shippingAddressID = CommonUtility.checkString(objectCodes.optString("AddressId"));
                                 Constant.shippingAddressNameForShowHidePaymentOption = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
+                                Constant.shippingCountryName = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
                             }
                             else{
                                 model.setSelected(false);
@@ -617,6 +648,11 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                         addressListAdapter = new PlaceOrderShippingAddressListAdapter(shippingAddressArrayList,context,this, newWith);
                         shipping_address_recycler_view.setAdapter(addressListAdapter);
 
+                        if(Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes"))
+                        {
+                            Constant.manageShippingByAddressAddUpdate = "";
+                            getCheckOutDetailsAPI(true);
+                        }else{}
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {
@@ -635,6 +671,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Log.e("Diamonds : ", "--------JSONObject----Billing---- : " + jsonObject);
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
                         if(billingAddressArrayList.size() > 0)
@@ -674,6 +711,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                                 model.setSelected(true);
                                 isSelectBillingAddress = true;
                                 Constant.billingAddressID = CommonUtility.checkString(objectCodes.optString("AddressId"));
+                                Constant.billingCountryName = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
                             }
                             else{
                                 model.setSelected(false);
@@ -695,6 +733,11 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                         billingAddressListAdapter = new PlaceOrderBillingAddressListAdapter(billingAddressArrayList,context,this, newWith);
                         billing_address_recycler_view.setAdapter(billingAddressListAdapter);
 
+                        if(Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes"))
+                        {
+                            Constant.manageBillingByAddressAddUpdate = "";
+                            getCheckOutDetailsAPI(true);
+                        }else{}
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {
@@ -774,7 +817,6 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                     break;
 
                 case ApiConstants.GET_CHECKOUT_DETAILS_ID:
-
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         Log.v("------Diamond----- : ", "--------CheckOut_Details------- : " + jsonObject);
@@ -1001,6 +1043,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         if(action.equalsIgnoreCase("selectBillingAddress"))
         {
             boolean shouldSelect = !billingAddressArrayList.get(position).isSelected();
+
+            Constant.manageShippingBillingAddressSelection = "billingAddressSelect";
+
             if (shouldSelect) {
                 // Deselect all items
                 for (int i = 0; i < billingAddressArrayList.size(); i++) {
@@ -1017,11 +1062,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             }
 
             Constant.billingAddressID = billingAddressArrayList.get(position).getAddressId();
+            Constant.billingCountryName = billingAddressArrayList.get(position).getCountryNameS();
             billingAddressListAdapter.notifyDataSetChanged();
+            getCheckOutDetailsAPI(false);
         }
         else if(action.equalsIgnoreCase("selectShippingAddress"))
         {
             boolean shouldSelect = !shippingAddressArrayList.get(position).isSelected();
+            Constant.manageShippingBillingAddressSelection = "shippingAddressSelect";
             if (shouldSelect) {
                 // Deselect all items
                 for (int i = 0; i < shippingAddressArrayList.size(); i++) {
@@ -1040,7 +1088,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             Constant.deliveryPincode = shippingAddressArrayList.get(position).getPinCode();
             Constant.shippingAddressID = shippingAddressArrayList.get(position).getAddressId();
             Constant.shippingAddressNameForShowHidePaymentOption = shippingAddressArrayList.get(position).getCountryNameS();
+            Constant.shippingCountryName = shippingAddressArrayList.get(position).getCountryNameS();
             addressListAdapter.notifyDataSetChanged();
+            getCheckOutDetailsAPI(false);
         }
         else  if(action.equalsIgnoreCase("editAddress"))
         {

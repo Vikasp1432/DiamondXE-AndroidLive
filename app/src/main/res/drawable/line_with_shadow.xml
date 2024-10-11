@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Left Line -->
+    <item>
+        <shape>
+            <solid android:color="#B2B2B2"/>  <!-- Left line color -->
+            <size
+                android:width="1dp"
+            android:height="100dp"/>  <!-- Set height according to your need -->
+        </shape>
+    </item>
+
+    <!-- Right Line (Shadow) -->
+    <item
+        android:left="1dp">  <!-- Offset for shadow on the right -->
+        <shape>
+            <solid android:color="#FFFFFF"/>  <!-- Right line color -->
+            <size
+                android:width="3dp"
+            android:height="100dp"/>
+        </shape>
+    </item>
+
+</layer-list>

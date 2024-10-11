@@ -123,4 +123,7 @@
     <dimen name="dimen_30_min">-30dp</dimen>
 
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="custom_wheel_picker_item_height">22dp</dimen>
+
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:height="25dp" android:width="25dp" >
+        <shape android:shape="oval">
+            <solid android:color="@color/color_E4E4E4" />
+        </shape>
+    </item>
+    <item android:gravity="center" android:height="22dp"
+        android:width="22dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+</layer-list>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    &lt;!&ndash; Shadow Effect &ndash;&gt;
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent"/>
+            <size android:width="35dp" android:height="35dp"/> &lt;!&ndash; Larger size for shadow &ndash;&gt;
+            <corners android:radius="17.5dp"/>
+            <gradient
+                android:startColor="@android:color/black"
+                android:endColor="@android:color/transparent"
+                android:angle="270"/>
+        </shape>
+    </item>
+
+    &lt;!&ndash; Actual Thumb &ndash;&gt;
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/white"/> &lt;!&ndash; Change to yellow if needed &ndash;&gt;
+            <size android:width="25dp" android:height="25dp"/>
+            <corners android:radius="12.5dp"/>
+        </shape>
+    </item>
+</layer-list>
+-->

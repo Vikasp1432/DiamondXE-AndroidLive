@@ -246,7 +246,8 @@ public class ReturnOrderItemImageVideoListAdapter extends RecyclerView.Adapter<R
     }
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {
-        TextView  name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv,reason_error_tv,reason_type_tv;
+        TextView  name_tv, status, item_type_tv, stock_no_tv, return_policy_tv, sub_total_tv, diamond_type_tv,reason_error_tv,reason_type_tv,
+                valid_url_required_tv;
         ImageView image_view, upload_verify_image, upload_verify_video;
         RelativeLayout reason_rel;
         EditText write_message_et, video_url_et;
@@ -276,6 +277,7 @@ public class ReturnOrderItemImageVideoListAdapter extends RecyclerView.Adapter<R
             url_know_more_lin = itemView.findViewById(R.id.url_know_more_lin);
 
             view_line = itemView.findViewById(R.id.view_line);
+            valid_url_required_tv = itemView.findViewById(R.id.valid_url_required_tv);
 
         }
     }

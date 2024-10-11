@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
+            <corners android:radius="6dp" />
+            <solid android:color="@color/color_D5D5D5" />
+        </shape>
+    </item>
+
+    <!-- Background with Linear Gradient -->
+    <item>
+        <shape>
+            <gradient
+                android:startColor="@color/color_D5D5D5"
+                android:endColor="@color/color_D5D5D5"
+                android:angle="90" /> <!-- Vertical gradient -->
+            <corners android:radius="6dp" />
+        </shape>
+    </item>
+</layer-list>
+
+

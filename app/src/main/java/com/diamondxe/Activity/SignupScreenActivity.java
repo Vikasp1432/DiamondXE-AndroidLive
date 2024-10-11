@@ -5851,7 +5851,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
 
                 mu.addFormField("referralCode", referral_code_et.getText().toString().trim());
 
-                mu.addFormField("referralCode1", "");
+                mu.addFormField("referralCode1", ""); // This Line Cannot Remove Because Using MultiPart Last Item Contain /n/r Avoid This Use Dummy Key to Remove Last Item /n/r
 
                 reply = mu.finish();
 
@@ -5986,7 +5986,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
 
                 mu.addFormField("referralCode", referral_code_et.getText().toString().trim());
 
-                mu.addFormField("referralCode1", "");
+                mu.addFormField("referralCode1", ""); // This Line Cannot Remove Because Using MultiPart Last Item Contain /n/r Avoid This Use Dummy Key to Remove Last Item /n/r
 
                 reply = mu.finish();
 

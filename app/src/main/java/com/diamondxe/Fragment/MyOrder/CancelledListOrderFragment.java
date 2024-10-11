@@ -122,7 +122,7 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
         recycler_view.addOnScrollListener(scrollListener);
 
         pageNo = 1;
-        getOrderListAPI(false);
+        getOrderListAPI(true);
     }
 
     void getCurrencyData()
@@ -300,6 +300,7 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
 
                             modelArrayList.add(model);
                         }
+
                         // If Page No 1 Then set Data Otherwise only Refresh NotifyDataSet Changed Adapter
                         if(pageNo == 1)
                         {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_discount"
+        android:orderInCategory="100"
+        android:icon="@drawable/minus"
+        android:checked="true"
+        android:title="- Discount"
+        android:checkable="true"
+        android:iconTint="@color/colorAccent"
+        android:actionLayout="@layout/menu_item_layout"/>
+
+    <item
+        android:background="@drawable/menu_item_background"
+        android:checkable="true"
+        android:id="@+id/action_premium"
+        android:orderInCategory="100"
+        android:icon="@drawable/plus"
+        android:title="+ Premium"
+        android:iconTint="@color/colorAccent"
+        android:actionLayout="@layout/menu_item_layout" />
+
+
+</menu>

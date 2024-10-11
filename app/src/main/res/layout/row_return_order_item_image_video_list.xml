@@ -518,12 +518,12 @@
                     </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/email_error_tv"
+                        android:id="@+id/valid_url_required_tv"
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
-                        android:text="@string/email_required"
+                        android:text="@string/valid_url_required"
                         android:textColor="@color/dark_red"
                         android:textSize="@dimen/dimen_9"
                         android:visibility="gone" />

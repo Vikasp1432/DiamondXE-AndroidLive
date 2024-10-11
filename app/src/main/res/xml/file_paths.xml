@@ -8,4 +8,7 @@
 
 <paths>
     <external-path name="shared_images" path="images/"/>
+    <external-files-path
+        name="external_files"
+        path="." />  <!-- Access to app-specific external storage -->
 </paths>

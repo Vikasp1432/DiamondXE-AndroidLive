@@ -26,8 +26,6 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
 
-
-
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
@@ -487,6 +485,119 @@
             android:label=""
             android:theme="@style/Theme.Transparent"
             tools:node="replace" />
+
+        <!--Calculator App-->
+        <activity
+            android:name="com.dxe.calc.dashboard.QuotationsListActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.dashboard.MenuActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.dashboard.GetQuotationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.dashboard.JewelleryActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <!--<activity
+            android:name=".dashboard.RignSizeDummy"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>-->
+        <activity
+            android:name="com.dxe.calc.dashboard.RingSizeActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.CurrencyListActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.WebViewActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.dashboard.MenuOLdActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.dashboard.CalculatorActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+        <activity
+            android:name="com.dxe.calc.login.LoginActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DXECalc.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"/>
+
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:exported="true"
@@ -511,7 +622,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider> <!-- Keep it true in UAT environment for both the flags -->
+        </provider>
+
+        <!-- Keep it true in UAT environment for both the flags -->
         <meta-data
             android:name="com.phonepe.android.sdk.isUAT"
             android:value="false" />
@@ -528,6 +641,7 @@
         <meta-data
             android:name="com.phonepe.android.sdk.AppId"
             android:value="b74e2a4c-7d13-43c5-a115-c0372ed85dbd" />
+
     </application>
 
 </manifest>

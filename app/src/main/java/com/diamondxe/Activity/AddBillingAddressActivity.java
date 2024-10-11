@@ -702,6 +702,11 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Constant.manageShippingBillingAddressSelection = "";
+                        if(setAsDefaultAddress.equalsIgnoreCase("1"))
+                        {
+                            Constant.manageBillingByAddressAddUpdate = "yes";
+                        }else{}
                         finish();
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
@@ -722,6 +727,11 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
+                        Constant.manageShippingBillingAddressSelection = "";
+                        if(setAsDefaultAddress.equalsIgnoreCase("1"))
+                        {
+                            Constant.manageBillingByAddressAddUpdate = "yes";
+                        }else{}
                         Log.e("message", message);
                         finish();
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
@@ -764,7 +774,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
         textView2.setText(getResources().getString(R.string.country_list));
 
-        recycler_view.setHasFixedSize(true);
+        recycler_view.setHasFixedSize(false);
         //recycler_view.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_view.setLayoutManager(layoutManager);
@@ -846,7 +856,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
         textView2.setText(getResources().getString(R.string.state_list));
 
-        recycler_view.setHasFixedSize(true);
+        recycler_view.setHasFixedSize(false);
         //recycler_view.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_view.setLayoutManager(layoutManager);
@@ -928,7 +938,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
         textView2.setText(getResources().getString(R.string.city_list));
 
-        recycler_view.setHasFixedSize(true);
+        recycler_view.setHasFixedSize(false);
         //recycler_view.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_view.setLayoutManager(layoutManager);

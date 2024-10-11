@@ -18,9 +18,6 @@ import static com.diamondxe.ApiCalling.ApiConstants.GET_RECOMMENDED_DIAMONDS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_WISHLIST_DETAILS;
 import static com.diamondxe.ApiCalling.ApiConstants.ORDER_CANCEL_REASON;
 import static com.diamondxe.ApiCalling.ApiConstants.PHONE_PE_PAYMENT_OPTION;
-
-import static java.security.AccessController.getContext;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
@@ -166,7 +163,7 @@ public class VollyApiActivity {
                 if(!TransparentActivity.active){
 
                     Log.e("Diamond", "isLoaderHide5 : " + isLoaderHide);
-                    Log.e("Diamond", "isLoaderHide6 : " + MyApplication.isTransparentActivityRunning());
+                   // Log.e("Diamond", "isLoaderHide6 : " + MyApplication.isTransparentActivityRunning());
 
                     if (!MyApplication.isTransparentActivityRunning()) {
                         context.startActivity(new Intent(context, TransparentActivity.class));

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <!-- Sync Now icon -->
+    <ImageView
+        android:id="@+id/sync_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/select_item"
+        android:contentDescription="@string/title_menu" />
+
+    <!-- Checkmark for selected state -->
+    <ImageView
+        android:id="@+id/check_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+    android:src="@drawable/select_item"
+    android:contentDescription="@string/title_menu" />
+</LinearLayout>

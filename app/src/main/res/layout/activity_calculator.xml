@@ -1,0 +1,1178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_background"
+    android:paddingBottom="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="10dp">
+
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_5"
+                android:src="@drawable/left" />
+
+            <TextView
+                android:layout_toEndOf="@+id/back"
+                android:id="@+id/lbl_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:text="@string/title_calculator"
+                android:textColor="@color/color_title"
+                android:textFontWeight="700"
+                android:font="@font/lato_regular"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rl_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="8dp"
+                android:paddingEnd="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/menu" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_toLeftOf="@+id/rl_menu"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_ring"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/rl_menu"
+                    android:background="@drawable/ring" />
+
+                <ImageView
+                    android:layout_marginLeft="14dp"
+                    android:id="@+id/iv_jewellary"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/rl_menu"
+                    android:background="@drawable/jewellery" />
+
+                <ImageView
+                    android:layout_marginLeft="14dp"
+                    android:id="@+id/iv_clear"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/rl_menu"
+                    android:background="@drawable/clear_bt" />
+
+                <ImageView
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/iv_refresh"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/rl_menu"
+                    android:background="@drawable/refresh_home" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="0dp"
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+
+                <!--Caret and currency view start-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_stone_weight" />
+
+                        <RelativeLayout
+                            android:elevation="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textColor="@color/black"
+                                android:id="@+id/edt_caret"
+                                style="@style/ValueText"
+                                android:paddingStart="13dp"
+                                android:hint="00.00"
+                                android:textSize="16sp"
+                                android:textColorHint="@color/color_717070"
+                                android:imeOptions="actionDone"
+                                tools:text="1020.121" />
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_currency" />
+
+                        <RelativeLayout
+                            android:elevation="2dp"
+                            android:id="@+id/rl_selected_currency"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <ImageView
+                                android:layout_marginTop="15dp"
+                                android:id="@+id/iv_dropdown1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="12dp"
+                                android:background="@drawable/rightarrow" />
+
+                            <TextView
+                                android:paddingBottom="11dp"
+                                android:paddingTop="11dp"
+                                android:imeOptions="actionDone"
+                                style="@style/ValueTextCurrency"
+                                android:id="@+id/tv_currency_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:layout_marginStart="10dp"
+                                android:text="INR"/>
+
+
+                            <TextView
+                                android:layout_marginStart="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="11dp"
+                                android:paddingTop="11dp"
+                                android:textColor="@color/black"
+                                android:id="@+id/tv_currency_rate"
+                                style="@style/ValueTextCurrency"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:layout_toRightOf="@+id/tv_currency_name"
+                                android:layout_toLeftOf="@+id/iv_dropdown1"
+                                android:text="00.00" />
+
+
+                        </RelativeLayout>
+
+                        <!--<RelativeLayout
+                            android:id="@+id/rl_selected_currency"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toRightOf="@+id/lbl_usd">
+
+                            <ImageView
+                                android:id="@+id/iv_dropdown1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/forwarder_arrow" />
+
+                            <TextView
+                                android:id="@+id/tv_currency_rate"
+                                style="@style/CurrencyTextView"
+                                android:textSize="17sp"
+                                android:layout_marginStart="5dp"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="5dp"
+                                android:layout_toLeftOf="@+id/iv_dropdown1"
+                                android:text="00.0000" />
+
+                            <TextView
+                                android:id="@+id/tv_currency_name"
+                                style="@style/CurrencyTextView"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:layout_toLeftOf="@+id/tv_currency_rate"
+                                android:text="INR" />
+
+                        </RelativeLayout>-->
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!--Caret and currency view ends-->
+
+
+                <!--<RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_calculator_round_white_solid">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editamount"
+                        style="@style/ValueText"
+                        android:paddingTop="17dp"
+                        android:paddingBottom="17dp"
+                        android:paddingEnd="3dp"
+                        android:hint="00.00"
+                        android:textSize="17sp"
+                        android:imeOptions="actionDone"
+                        tools:text="1020.12122dddddddddd" />
+                </RelativeLayout>-->
+
+                <!--Picker views-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_shape" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:background="@drawable/shadowbg">
+
+                            <com.dxe.calc.custom.CustomWheelPickerView
+                                android:id="@+id/picker_shape"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </FrameLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_color" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:background="@drawable/shadowbg">
+
+                            <com.dxe.calc.custom.CustomWheelPickerView
+                                android:id="@+id/picker_color"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </FrameLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_clarity" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:background="@drawable/shadowbg">
+
+                            <com.dxe.calc.custom.CustomWheelPickerView
+                                android:id="@+id/picker_clearity"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </FrameLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_premium_discount"
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_discount" />
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:background="@drawable/shadowbg">
+
+                            <RelativeLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_discount_dropdown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="15dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingEnd="0dp"
+                                    android:paddingBottom="10dp">
+
+
+                                   <!-- <ImageView
+                                        android:scaleType="centerInside"
+                                        android:adjustViewBounds="true"
+                                        android:id="@+id/tv_discount_symbol"
+                                        android:src="@drawable/minus"
+                                        android:layout_marginEnd="4dp"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />-->
+
+                                    <TextView
+                                        android:textStyle="bold"
+                                        android:textSize="16dp"
+                                        android:textColor="@color/color_7E3080"
+                                        android:id="@+id/tv_discount_symbol"
+                                        style="@style/InfoLabelTextView"
+                                        android:layout_centerVertical="true"
+                                        android:text="-" />
+
+                                    <ImageView
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:id="@+id/iv_dropdown"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:background="@drawable/dropdwon" />
+
+                                </RelativeLayout>
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/edt_percent"
+                                    style="@style/ValueTextDiscount"
+                                    android:gravity="center"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerInParent="true"
+                                    android:hint="00.00"
+                                    android:textFontWeight="500"
+                                    android:textColorHint="@color/black"
+                                    tools:text="" />
+
+                                <TextView
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:id="@+id/lbl_percent"
+                                    style="@style/InfoLabelTextView"
+                                    android:paddingStart="0dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="@string/txt_percent_symbol" />
+
+                            </RelativeLayout>
+
+                        </FrameLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!--Picker views ends-->
+
+                <!--Market price, discount view-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="left"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_market_price_ct" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bgdiffcolor">
+
+                            <TextView
+                                android:textColor="@color/color_black_transparent_62"
+                                android:id="@+id/lbl_symbol"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="0dp"
+                                android:paddingStart="13dp"
+                                android:text="@string/txt_usd_symbol" />
+
+                            <TextView
+                                android:textColor="@color/color_black_transparent_62"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/tv_market_price"
+                                style="@style/ValueText"
+                                android:layout_toRightOf="@+id/lbl_symbol"
+                                android:text="00"
+                                tools:text="1020.12122" />
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_marginStart="15dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_gravity="left"
+                            android:layout_marginBottom="6dp"
+                            android:text="@string/txt_price_ct" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bgdiffcolor">
+
+                            <TextView
+                                android:textColor="@color/color_black_transparent_62"
+                                android:id="@+id/lbl_symbol1"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="0dp"
+                                android:paddingStart="15dp"
+                                android:text="@string/txt_usd_symbol" />
+
+                            <TextView
+                                android:textColor="@color/color_black_transparent_62"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/tv_price"
+                                style="@style/ValueText"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_toRightOf="@+id/lbl_symbol1"
+                                android:paddingEnd="3dp"
+                                android:text="00"
+                                tools:text="1020.12122" />
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <!--<androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_premium_discount"
+                            style="@style/InfoTextView"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/txt_premium" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_calculator_round_white_solid">
+
+                            <TextView
+                                android:id="@+id/lbl_percent"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="0dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingBottom="10dp"
+                                android:text="@string/txt_percent_symbol" />
+
+                            <RelativeLayout
+                                android:id="@+id/rl_discount_dropdown"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="15dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="0dp"
+                                android:paddingBottom="10dp">
+
+                                <TextView
+                                    android:id="@+id/tv_discount_symbol"
+                                    style="@style/InfoLabelTextView"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_centerVertical="true"
+                                    android:text="+" />
+
+                                <ImageView
+                                    android:id="@+id/iv_dropdown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@+id/tv_discount_symbol"
+                                    android:background="@drawable/dropdown" />
+
+                            </RelativeLayout>
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/edt_percent"
+                                style="@style/ValueText"
+                                android:textSize="17sp"
+                                android:layout_marginStart="0dp"
+                                android:layout_toLeftOf="@+id/lbl_percent"
+                                android:layout_toRightOf="@+id/rl_discount_dropdown"
+                                android:hint="00.00"
+                                android:imeOptions="actionDone"
+                                android:paddingEnd="0dp"
+                                tools:text="1020.12122" />
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!--Market price, discount view ends-->
+
+                <!--Price, total price view-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textFontWeight="600"
+                                style="@style/InfoTextView"
+                                android:layout_gravity="left"
+                                android:layout_marginBottom="3dp"
+                                android:text="@string/txt_total" />
+
+                            <TextView
+                                android:textFontWeight="600"
+                                style="@style/InfoTextView"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="0dp"
+                                android:paddingStart="2dp"
+                                android:id="@+id/usd_txt"
+                                android:text="@string/txt_usd_name" />
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textColor="@color/black"
+                                android:id="@+id/tv_total_price"
+                                style="@style/ValueText"
+                                android:paddingStart="13dp"
+                                android:hint="00.00"
+                                android:textSize="16sp"
+                                android:textColorHint="@color/color_717070"
+                                android:imeOptions="actionDone"
+                                tools:text="1020.121" />
+
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:visibility="visible"
+                                android:textFontWeight="600"
+                                style="@style/InfoTextView"                                android:layout_gravity="left"
+                                android:layout_marginBottom="3dp"
+                                android:text="@string/total" />
+
+                            <TextView
+                                android:id="@+id/lbl_symbol2"
+                                android:textFontWeight="600"
+                                style="@style/InfoTextView"                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="0dp"
+                                android:paddingStart="2dp"
+                                android:text="@string/txt_inr" />
+
+
+                           <!-- <TextView
+                                android:visibility="visible"
+                                android:id="@+id/lbl_symbol2"
+                                style="@style/InfoTextView"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="0dp"
+                                android:paddingStart="2dp"
+                                android:hint="00"
+                                android:text="@string/txt_inr" />-->
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textColor="@color/black"
+                                android:id="@+id/editamount"
+                                style="@style/ValueText"
+                                android:paddingStart="13dp"
+                                android:hint="00.00"
+                                android:textSize="16sp"
+                                android:textColorHint="@color/color_717070"
+                                android:imeOptions="actionDone"
+                                tools:text="1020.121" />
+
+
+                            <!--//  android:id="@+id/tv_total_price"-->
+                            <TextView
+                                android:visibility="gone"
+                                style="@style/ValueText"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:paddingStart="2dp"
+                                android:paddingEnd="3dp"
+                                android:text="00"
+                                tools:text="1020.12122" />
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!--Price, total price view ends-->
+
+                <!--Less and tax view starts-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lbl_less"
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:layout_marginBottom="3dp"
+                            android:text="@string/txt_less" />
+
+                        <RelativeLayout
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <TextView
+                                android:id="@+id/lbl_percent1"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="0dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="10dp"
+                                android:textColor="@color/black"
+                                android:paddingBottom="10dp"
+                                android:text="@string/txt_percent_symbol" />
+
+                            <ImageView
+                                android:id="@+id/lbl_less_symbol"
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="7dp"
+                                android:src="@drawable/minus" />
+
+                            <!--<TextView
+                                android:gravity="center"
+                                android:layout_marginStart="7dp"
+                                android:id="@+id/lbl_less_symbol"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="0dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="10dp"
+                                android:textColor="@color/black"
+                                android:paddingBottom="10dp"
+                                android:text="@string/minus" />-->
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_toRightOf="@+id/lbl_less_symbol"
+                                android:textColor="@color/black"
+                                android:id="@+id/edt_less_percent"
+                                style="@style/ValueText"
+                                android:paddingStart="5dp"
+                                android:hint="00.00"
+                                android:textSize="16sp"
+                                android:layout_marginStart="3dp"
+                                android:textColorHint="@color/color_717070"
+                                android:imeOptions="actionDone"
+                                tools:text="1020.121" />
+
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textFontWeight="600"
+                            style="@style/InfoTextView"
+                            android:id="@+id/lbl_tax"
+                            android:layout_marginBottom="3dp"
+                            android:text="@string/txt_tax" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shadow_round">
+
+                            <TextView
+                                android:textColor="@color/black"
+                                android:id="@+id/lbl_percent2"
+                                style="@style/InfoLabelTextView"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="0dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingBottom="10dp"
+                                android:text="@string/txt_percent_symbol" />
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textColor="@color/black"
+                                android:id="@+id/edt_tax_percent"
+                                style="@style/ValueText"
+                                android:paddingStart="13dp"
+                                android:hint="00.00"
+                                android:textSize="16sp"
+                                android:layout_marginStart="3dp"
+                                android:textColorHint="@color/color_717070"
+                                android:imeOptions="actionDone"
+                                tools:text="1020.121" />
+
+                           <!-- <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/edt_tax_percent"
+                                style="@style/ValueText"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="0dp"                                android:layout_toLeftOf="@+id/lbl_percent2"
+                                android:hint="00.00"
+                                android:textColorHint="@color/black"
+                                android:layout_alignParentStart="true"
+                                android:imeOptions="actionDone"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="2dp"
+                                tools:text="1020.12122" />-->
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!--Less and tax view ends-->
+
+                <!--Currency rates view-->
+                <TextView
+                    style="@style/InfoTextView"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/txt_currency_rates"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shadow_round">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp">
+
+                        <!-- <View
+                             android:id="@+id/divider"
+                             android:layout_width="match_parent"
+                             android:layout_height="1dp"
+                             android:layout_centerInParent="true"
+                             android:layout_marginTop="5dp"
+                             android:layout_marginBottom="5dp"
+                             android:background="@color/color_37083B" />-->
+
+                        <RelativeLayout
+                            android:id="@+id/rl_currency"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/lbl_usd"
+                                style="@style/CurrencyTextView"
+                                android:textStyle="bold"
+                                android:textSize="17sp"
+                                android:text="@string/txt_one_usd_equal_to" />
+
+                            <!--<RelativeLayout
+                                android:id="@+id/rl_selected_currency"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_toRightOf="@+id/lbl_usd">
+
+                                <ImageView
+                                    android:id="@+id/iv_dropdown1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/forwarder_arrow" />
+
+                                <TextView
+                                    android:id="@+id/tv_currency_rate"
+                                    style="@style/CurrencyTextView"
+                                    android:textSize="17sp"
+                                    android:layout_marginStart="5dp"
+                                    android:textStyle="bold"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_toLeftOf="@+id/iv_dropdown1"
+                                    android:text="00.0000" />
+
+                                <TextView
+                                    android:id="@+id/tv_currency_name"
+                                    style="@style/CurrencyTextView"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:layout_toLeftOf="@+id/tv_currency_rate"
+                                    android:text="INR" />
+
+                            </RelativeLayout>-->
+
+
+                        </RelativeLayout>
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/rl_currency"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone"
+                            android:background="@color/color_37083B" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/divider">
+
+                            <TextView
+                                android:id="@+id/lbl_usd1"
+                                style="@style/CurrencyTextView"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:text="@string/txt_total" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_toRightOf="@+id/lbl_usd1">
+
+                                <TextView
+                                    android:id="@+id/tv_total_amount1"
+                                    style="@style/CurrencyTextView"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:text="00"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/lbl_currency"
+                                    style="@style/CurrencyTextView"
+                                    android:layout_toLeftOf="@+id/tv_total_amount1"
+                                    android:text="INR"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:textFontWeight="600"
+                    style="@style/InfoTextView"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/txt_grand_total_amount" />
+
+
+                <LinearLayout
+                    android:background="@drawable/grandtotalbg"
+                    android:layout_width="match_parent"
+                    android:layout_height="94dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_marginStart="17dp"
+                        android:gravity="start"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:textColor="@color/color_black_transparent"
+                            android:layout_marginTop="15dp"
+                            android:gravity="start"
+                            style="@style/InfoLabelTextView"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/txt_usd_name" />
+
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:gravity="start"
+                            android:textFontWeight="700"
+                            android:id="@+id/tv_total_amount_usd"
+                            style="@style/InfoTextViewGT"
+                            android:text="00" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        android:id="@+id/verticalLine"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/line_with_shadow" />
+
+                    <!--<ImageView
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>-->
+                    <LinearLayout
+                        android:layout_marginStart="19dp"
+                        android:gravity="start"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/totalcurrency"
+                            android:textColor="@color/color_black_transparent"
+                            android:layout_marginTop="15dp"
+                            android:gravity="start"
+                            style="@style/InfoLabelTextView"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/txt_inr" />
+
+                        <TextView
+                            android:textFontWeight="700"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:gravity="start"
+                            android:id="@+id/tv_total_amount"
+                            style="@style/InfoTextViewGT"
+                            android:text="00" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

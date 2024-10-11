@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Grid lines -->
+    <item>
+        <shape>
+            <size android:width="1dp" android:height="100dp"/>
+            <solid android:color="#D3D3D3"/> <!-- Vertical lines -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <size android:width="100dp" android:height="1dp"/>
+            <solid android:color="#D3D3D3"/> <!-- Horizontal lines -->
+        </shape>
+    </item>
+</layer-list>

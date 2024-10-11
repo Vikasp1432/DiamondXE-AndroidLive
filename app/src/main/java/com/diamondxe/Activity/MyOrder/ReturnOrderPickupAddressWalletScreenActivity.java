@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,6 +69,7 @@ import android.Manifest;
 
 public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity implements TwoRecyclerInterface {
 
+    private NestedScrollView nested_scrollable_view;
     private ImageView back_img,  return_drop_arrow_img, drop_arrow_img;
     private RecyclerView shipping_address_recycler_view;
     ArrayList<AddressListModel> shippingAddressArrayList;
@@ -114,6 +116,8 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
 
+        nested_scrollable_view = findViewById(R.id.nested_scrollable_view);
+
         return_product_card_view = findViewById(R.id.return_product_card_view);
         return_product_card_view.setOnClickListener(this);
 
@@ -156,7 +160,7 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
         final_amount_tv1 = findViewById(R.id.final_amount_tv1);
         view_order_summary_details_main_lin = findViewById(R.id.view_order_summary_details_main_lin);
 
-        //------------------------------Pickup Address-------------------------------------------------------
+        //----------------------------------------Pickup Address-------------------------------------------------------
 
         //For calculate Screen width for manage RecyclerView's card's width
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -175,14 +179,13 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
         add_shipping_address_tv = findViewById(R.id.add_shipping_address_tv);
         add_shipping_address_tv.setOnClickListener(this);
 
-
         wallet_radio = findViewById(R.id.wallet_radio);
         original_mode_radio = findViewById(R.id.original_mode_radio);
 
         wallet_msg_tv = findViewById(R.id.wallet_msg_tv);
         payment_mode_msg_tv = findViewById(R.id.payment_mode_msg_tv);
 
-        newWith = (int) (width/1.2);
+        newWith = (int) (width/1.2); // For Pickup Address Layout.
 
         //------------------------------My Order Summary ID'S Start----------------------------------------------
 
@@ -325,7 +328,8 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
                         asyncTask.executeNetworkCall();
                     }
                     else{
-                        Toast.makeText(activity, getResources().getString(R.string.please_check_term_condition), Toast.LENGTH_SHORT).show();
+                        nested_scrollable_view.fullScroll(View.FOCUS_DOWN);
+                        //Toast.makeText(activity, getResources().getString(R.string.please_check_term_condition), Toast.LENGTH_SHORT).show();
                         check_terms_condition_tv.setVisibility(View.VISIBLE);
                         check_terms_condition_tv.requestFocus();
                     }
@@ -1135,7 +1139,7 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
                 mu.addFormField("type", Constant.orderReturnType);
                 mu.addFormField("pickupAddressId", Constant.pickupAddressId);
                 mu.addFormField("paymentMode", Constant.refundPaymentMode);
-                mu.addFormField("paymentMode1", "");
+                mu.addFormField("paymentMode1", ""); // This Line Cannot Remove Because Using MultiPart Last Item Contain /n/r Avoid This Use Dummy Key to Remove Last Item /n/r
 
                 // Loop through the imageUris list and add data
                 for (int i = 0; i < imageUris.size(); i++) {
@@ -1145,7 +1149,7 @@ public class ReturnOrderPickupAddressWalletScreenActivity extends SuperActivity 
                             .addFormDataPart("diamonds[" + i + "][reason]", imageUri.getSelectedReason())
                             .addFormDataPart("diamonds[" + i + "][remark]", imageUri.getWriteMessage())
                             .addFormDataPart("diamonds[" + i + "][video_url]", imageUri.getReturnOrderVideoUrl())
-                            .addFormDataPart("diamonds[" + i + "][video_url1]", "");
+                            .addFormDataPart("diamonds[" + i + "][video_url1]", ""); // This Line Cannot Remove Because Using MultiPart Last Item Contain /n/r Avoid This Use Dummy Key to Remove Last Item /n/r
 
                     //---------------------------------------------For Image------------------------------------------------------------------
                     //File file1 = new File(imageUri.getReturnOrderImage());

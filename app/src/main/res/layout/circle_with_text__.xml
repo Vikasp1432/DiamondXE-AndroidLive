@@ -1,0 +1,45 @@
+<!-- res/layout/circle_with_text.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/grid_background">
+
+    <!-- Circle View -->
+    <View
+        android:id="@+id/circleView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/circle_background" />
+
+    <!-- Diameter Text -->
+    <TextView
+        android:id="@+id/diameterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="13.4 mm"
+        android:textSize="18sp"
+        android:textColor="#A780BE"
+        android:layout_centerInParent="true"
+        android:gravity="center" />
+
+    <!-- Left Arrow -->
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/left_arrow"
+        android:layout_toLeftOf="@id/diameterText"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Right Arrow -->
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/right_arrow"
+        android:layout_toRightOf="@id/diameterText"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp" />
+
+</RelativeLayout>

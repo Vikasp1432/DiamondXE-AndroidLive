@@ -79,6 +79,7 @@ import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.TimeZoneCountryCodeMapper;
 import com.diamondxe.Utils.Utils;
+import com.dxe.calc.dashboard.CalculatorActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -704,12 +705,12 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         model8.setSelected(false);
         menuList.add(model8);*/
 
-        /*DrawerMenuModel modelPriceCalculator = new DrawerMenuModel();
+        DrawerMenuModel modelPriceCalculator = new DrawerMenuModel();
         modelPriceCalculator.setName(getResources().getString(R.string.navigation_price_calculator));
         modelPriceCalculator.setImage(R.drawable.price_calculator_nav);
         modelPriceCalculator.setImageSelected(R.drawable.price_calculator_nav);
         modelPriceCalculator.setSelected(false);
-        menuList.add(modelPriceCalculator);*/
+        menuList.add(modelPriceCalculator);
 
         //--------------------------------------Start More------------------------------------------------------------
         DrawerMenuModel modelMore = new DrawerMenuModel();
@@ -1433,13 +1434,16 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
         }
         // Price Calculator
-        /*else if (parantPosition==4)
+        else if (parantPosition==5)
         {
             title = menuList.get(parantPosition).getName();
+            Intent intent = new Intent(context, CalculatorActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0,0);
             //  fragment = new SettingLandLoardFragment();
-        }*/
+        }
         // More
-        else if (parantPosition==5)
+        else if (parantPosition==6)
         {
             if(chiledPosition==0)
             {
@@ -1499,7 +1503,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Contact US
-        else if (parantPosition==6)
+        else if (parantPosition==7)
         {
             if(chiledPosition==0)
             {
@@ -1513,7 +1517,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Rate Us
-        else if (parantPosition==7)
+        else if (parantPosition==8)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1522,7 +1526,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }
         // Logout
-        else if (parantPosition==8)
+        else if (parantPosition==9)
         {
             if(user_login.equalsIgnoreCase("yes"))
             {

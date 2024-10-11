@@ -1097,10 +1097,29 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
                 else{
                     // Get the URI of the selected image
                     Uri uri = data.getData();
+
+                    // Get original image size
+                    /*InputStream inputStream = getContentResolver().openInputStream(uri);
+                    int originalSizeInBytes = inputStream.available();
+                    float originalSizeInMB = originalSizeInBytes / (1024f * 1024f); // Convert to MB*/
+
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                    // Resize the bitmap if necessary
+                    bitmap = getResizedBitmap(bitmap, 800, 800); // Resize to a max of 800x800 pixels
 
                     // Get the path of the image from the URI using your utility method
                     String picturePath = saveBitmapToFileGalley(bitmap, "selectedImage.png");
+
+
+                    // Get compressed image size
+                    /*File compressedFile = new File(picturePath);
+                    long compressedSizeInBytes = compressedFile.length();
+                    float compressedSizeInMB = compressedSizeInBytes / (1024f * 1024f); // Convert to MB
+
+                    // Print original and compressed sizes
+                    Log.d("Image Sizes", "Original Size: " + originalSizeInMB + " MB");
+                    Log.d("Image Sizes", "Compressed Size: " + compressedSizeInMB + " MB");*/
 
                     // Log the picture path for debugging
                     //Log.e("------picturePath----- : ", picturePath);
@@ -1123,8 +1142,16 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
             // Create a file in the external storage directory
             File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName);
             fos = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos); // Save as JPEG
+
+            // Compress the bitmap and save it to the file
+            // Adjust quality as needed (0-100)
+            int quality = 60; // Adjust this value as needed for your use case
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, fos); // Save as JPEG
             fos.flush();
+
+            /*bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos); // Save as JPEG
+            fos.flush();*/
+
             path = file.getAbsolutePath(); // Get the file path
         } catch (IOException e) {
             Log.e("ImageSave", "Error saving image", e);
@@ -1140,8 +1167,28 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
 
         return path; // Return the file path
     }
-    // for Video
-    private String saveVideoToFile(Uri videoUri, String fileName) {
+
+    private Bitmap getResizedBitmap(Bitmap originalBitmap, int maxWidth, int maxHeight) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+
+        if (width > maxWidth || height > maxHeight) {
+            float aspectRatio = (float) width / (float) height;
+            if (width > height) {
+                width = maxWidth;
+                height = Math.round(maxWidth / aspectRatio);
+            } else {
+                height = maxHeight;
+                width = Math.round(maxHeight * aspectRatio);
+            }
+        }
+
+        return Bitmap.createScaledBitmap(originalBitmap, width, height, true);
+    }
+
+    // For Video
+    private String saveVideoToFile(Uri videoUri, String fileName)
+    {
         String path = null;
         InputStream inputStream = null;
         FileOutputStream outputStream = null;
@@ -1181,6 +1228,7 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
 
         return path; // Return the file path
     }
+
     // Method to get the actual file path from the URI
     private String getPathFromUri(Uri uri) {
         String path = null;
@@ -1194,10 +1242,15 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
         }
         return path;
     }
-    private void onCaptureImageResult(Intent data) {
+
+    private void onCaptureImageResult(Intent data)
+    {
         // Get the captured image bitmap from the intent
         Bundle extras = data.getExtras();
         Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        // Resize the bitmap if necessary (optional)
+        imageBitmap = getResizedCameraBitmap(imageBitmap, 800, 800); // Resize to a max of 800x800 pixels
 
         // Save the bitmap to a file and get the path
         String imagePath = saveBitmapToFile(imageBitmap, "myImage.jpg");
@@ -1210,7 +1263,8 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
         adapter.notifyDataSetChanged();
 
     }
-    private String saveBitmapToFile(Bitmap bitmap, String fileName) {
+    private String saveBitmapToFile(Bitmap bitmap, String fileName)
+    {
         FileOutputStream fos = null;
         String path = null;
 
@@ -1218,9 +1272,17 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
             // Create a file in the external storage directory
             File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName);
             fos = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos); // Save as PNG
+
+            // Compress the bitmap and save it to the file
+            int compressionQuality = 60; // Adjust this value for desired quality
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compressionQuality, fos); // Save as JPEG
             fos.flush();
             path = file.getAbsolutePath(); // Get the file path
+
+           /* bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos); // Save as PNG
+            fos.flush();
+            path = file.getAbsolutePath(); // Get the file path*/
+
         } catch (IOException e) {
             Log.e("ImageSave", "Error saving image", e);
         } finally {
@@ -1232,8 +1294,25 @@ public class ReturnOrderItemsImageVideoActivity extends SuperActivity implements
                 }
             }
         }
-
         return path; // Return the file path
+    }
+
+    private Bitmap getResizedCameraBitmap(Bitmap originalBitmap, int maxWidth, int maxHeight) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+
+        if (width > maxWidth || height > maxHeight) {
+            float aspectRatio = (float) width / (float) height;
+            if (width > height) {
+                width = maxWidth;
+                height = Math.round(maxWidth / aspectRatio);
+            } else {
+                height = maxHeight;
+                width = Math.round(maxHeight * aspectRatio);
+            }
+        }
+
+        return Bitmap.createScaledBitmap(originalBitmap, width, height, true);
     }
 
     //---------------------------------------End Camera Gallery image Handle and Save------------------------------------------------

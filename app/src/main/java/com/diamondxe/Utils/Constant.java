@@ -155,6 +155,10 @@ import java.util.ArrayList;
     public static String returnOrderCertificateIDs=""; // This Key USe Manage CertificateNumber "," Spreated Value.
     public static String pickupAddressId="";
     public static String refundPaymentMode="";
-
     public static ArrayList<MyOrderListModel> finalReturnOrderItemArrayList;
+    public static String billingCountryName="";
+    public static String shippingCountryName="";
+    public static String manageShippingBillingAddressSelection=""; // This key Manage When User Change Billing, Shipping Address At the Time Of Place Order Manage onResume Condition To Call Address API User Change Address for Place Order that time this key hold value then key is empty and Check Condition in onResume Address API Not Call.
+    public static String manageBillingByAddressAddUpdate=""; // This Key Manage When User Add New Address and Set as Default Then Hold "Yes" Value for Update Order Summary API Under Billing Address List API
+    public static String manageShippingByAddressAddUpdate=""; // This Key Manage When User Add New Address and Set as Default Then Hold "Yes" Value for Update Order Summary API Under Shipping Address List API
 }

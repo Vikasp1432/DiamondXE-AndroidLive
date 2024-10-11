@@ -86,7 +86,7 @@
     <string name="viewAllNews"><u>View All News</u></string>
 
     <string name="hello_guest">Hello Guest!!!</string>
-    <string name="version_name">Beta Version</string>
+    <string name="version_name">Version</string>
 
     <string name="search_diamond_hint">Search diamond</string>
     <string name="natural">Natural</string>
@@ -767,6 +767,7 @@
     <string name="complete_return_reason_order_step">Please complete Return Reason order step.</string>
     <string name="confirm_document_sealed">I confirm that the product(s) is/are sealed with the original packaging and documents intact.</string>
     <string name="please_check_term_condition">Please check terms &amp; condition</string>
+    <string name="valid_url_required">Valid url required</string>
 
 
     <!--<string-array name="tab_titles">
@@ -784,5 +785,157 @@
         <item>@string/cancelled</item>
     </string-array>
 
+
+    <!--Calculator App Key-->
+
+    <!--Login screen-->
+    <string name="txt_username">Username</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_btn_login">Login</string>
+    <string name="txt_help_rapnet">Please enter your rapnet details</string>
+
+    <!--Calculator screen-->
+    <string name="title_calculator">Calculator</string>
+    <string name="txt_stone_weight">Stone Weight/ct</string>
+    <string name="txt_ct">ct.</string>
+    <string name="txt_shape">Shape</string>
+    <string name="txt_color">Color</string>
+    <string name="txt_clarity">Clarity</string>
+    <string name="txt_market_price_ct">Market Price/ct.</string>
+    <string name="txt_discount">Discount</string>
+    <string name="txt_premium">Premium</string>
+    <string name="txt_less">Less</string>
+    <string name="txt_tax">Tax</string>
+    <string name="txt_price_ct">Price/ct.</string>
+    <string name="txt_total_price">Total price</string>
+    <string name="txt_total">Total</string>
+    <string name="txt_currency_rates">Currency Rates</string>
+    <string name="txt_one_usd_equal_to">$ USD =</string>
+    <string name="txt_total_amount">Total Amount</string>
+    <string name="txt_usd_symbol">$</string>
+    <string name="txt_percent_symbol">%</string>
+    <string name="txt_slash_ct">/ct.</string>
+    <string name="txt_slash_total_price">/ttl</string>
+    <string name="txt_grand_total_amount">Grand Total</string>
+    <string name="ring_sizer">Ring Sizer</string>
+    <string name="ring">Ring</string>
+    <string name="finger">Finger</string>
+
+    <string name="searchby">Search by currency name</string>
+
+    <string name="show_ring_size">Show the ring size</string>
+    <string name="ringtext">Put the ring on the circle and adjust \n
+the slider to measure ring size.</string>
+    <string name="place_finger">Place your finger here</string>
+
+
+    <!--Menu screen-->
+    <string name="title_menu">Menu</string>
+    <string name="txt_igi_report">IGI Report</string>
+    <string name="txt_gia_report">GIA Report</string>
+    <string name="txt_logout">Logout</string>
+    <string name="txt_currency">Currency</string>
+    <string name="txt_usd">$ USD</string>
+    <string name="txt_base_currency">Base currency</string>
+    <string name="txt_rapnet_login">Rapnet Login</string>
+    <string name="txt_app_version">App version V%s</string>
+    <string name="txt_usd_name">USD</string>
+    <string name="txt_inr">INR</string>
+
+    <!--Currency screen-->
+    <string name="title_currency">Currency</string>
+    <string name="hint_search_currency">Search by currency name</string>
+    <string name="txt_btn_cancel">Cancel</string>
+    <string name="txt_btn_done">Done</string>
+    <string name="txt_btn_save">Save</string>
+    <string name="txt_btn_add">Add</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_calculator">CalculatorActivity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="title_activity_currency_list">CurrencyListActivity</string>
+
+    <!--Ring Size Text-->
+    <string name="share">Share</string>
+    <string name="ring_size">Your ring size</string>
+    <string name="txt_mm">MM</string>
+    <string name="txt_us">USA</string>
+    <string name="txt_eur">EUR</string>
+    <string name="txt_uk">UK</string>
+    <string name="txt_ind">IND</string>
+
+    <string name="jewellery">Jewellery price calculator</string>
+    <string name="item_name">Item Name</string>
+    <string name="purity">Purity</string>
+    <string name="metal">Metal wt.</string>
+    <string name="rategm">Rate/gm</string>
+    <string name="ratect">Rate/ct</string>
+
+    <string name="labour">Labour</string>
+    <string name="solitaire">Solitaire wt.</string>
+    <string name="sidedIA">Side DIA</string>
+
+    <string name="ColStonewt">Col. Stone wt.</string>
+    <string name="charges">Charges</string>
+    <string name="tax">Tax %</string>
+    <string name="totalPriceINR">Total Price </string>
+    <string name="INR"> (INR)</string>
+    <string name="getquotation">Get Quotation</string>
+    <string name="enternotes">Enter your notes..</string>
+    <string name="additionalinfo">Additional Info</string>
+    <string name="mainsolitaore_note">Main Solitaire Notes</string>
+    <string name="pricequotation">Price Quotation</string>
+    <string name="sidediamondnote"> Side Diamonds Notes</string>
+    <string name="otherchargesnote">Other Charges Notes</string>
+
+    <string name="getsavequotation">Save &amp; Get Quotation</string>
+    <string name="weight">Weight</string>
+    <string name="rate">Rate</string>
+    <string name="total">Total</string>
+    <string name="note">Note:-</string>
+    <string name="other1">Other: </string>
+    <string name="solitaire_">Solitaire:</string>
+    <string name="sideDIA_">Side DIA:</string>
+    <string name="pricewith10ct">Price With 10Ct.</string>
+    <string name="noneedtext"> No need to re-update price list after changing this.</string>
+    <string name="metalrate_gm">Metal rate/gm</string>
+    <string name="setyourvalue">Set your values</string>
+
+    <string name="rategms">Rate/gms</string>
+    <string name="quotations">Quotations</string>
+    <string name="quotationstext">A detailed list offering additional quotations for further reference or comparison, allowing users to explore more options</string>
+
+
+    <string name="goldrate">Gold Rate</string>
+    <string name="sharenow">Share Now</string>
+    <string name="txt_24kt">24kt</string>
+    <string name="txt_22kt">22kt</string>
+    <string name="txt_18kt">18kt</string>
+    <string name="txt_14kt">14kt</string>
+    <string name="txt_9kt">9kt</string>
+    <string name="totalPriceinr">Total Price (INR)</string>
+
+    <string name="minus">(-)</string>
+
+    <string-array name="PurityList">
+        <item>22K</item>
+        <item>18K</item>
+        <item>14K</item>
+        <item>9K</item>
+        <item>Other</item>
+
+    </string-array>
+
+    <string name="noduotationfound">No Quotation Found</string>
+
+    <string name="datasaved">Data Saved</string>
 
 </resources>

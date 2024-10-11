@@ -346,6 +346,9 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
                 Constant.showRadioButtonForSelectAddress = "yes";// Under Address List Radio Button Visible
                 Constant.orderType = CART; // Order Type
                 Constant.certificateNumber = ""; // Blank Certificate Number
+                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageBillingByAddressAddUpdate = "";
+                Constant.manageShippingByAddressAddUpdate = "";
                 intent = new Intent(activity, PlaceOrderScreenActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(0,0);

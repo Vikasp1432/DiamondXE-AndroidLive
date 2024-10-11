@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout"
+    android:background="@drawable/dialog_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <ImageView
+          android:layout_centerInParent="true"
+          android:layout_gravity="center"
+          android:src="@drawable/applogo_"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+      <ImageView
+          android:id="@+id/cross"
+          android:layout_alignParentEnd="true"
+          android:layout_gravity="center"
+          android:src="@drawable/cross"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+   </RelativeLayout>
+
+   <TextView
+       style="@style/ringTvStyle"
+       android:text="@string/ring_size"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       tools:targetApi="p"/>
+
+   <LinearLayout
+       android:background="@drawable/dialog_bg_withborder"
+       android:layout_marginTop="10dp"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:padding="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_marginStart="10dp"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_mm"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="start"
+             tools:targetApi="p"/>
+
+         <TextView
+             android:layout_marginEnd="10dp"
+             android:id="@+id/mm_tv"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="end"
+             tools:targetApi="p"/>
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginBottom="0dp"
+          android:background="@color/color_C3C4C7" />
+
+      <LinearLayout
+          android:padding="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_marginStart="10dp"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_us"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="start"
+             tools:targetApi="p"/>
+
+         <TextView
+             android:layout_marginEnd="10dp"
+             android:id="@+id/usa_tv"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="end"
+             tools:targetApi="p"/>
+
+      </LinearLayout>
+
+      //
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginBottom="0dp"
+          android:background="@color/color_C3C4C7" />
+
+      <LinearLayout
+          android:padding="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_marginStart="10dp"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="start"
+             tools:targetApi="p"/>
+
+         <TextView
+             android:layout_marginEnd="10dp"
+             android:id="@+id/eur_tv"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="end"
+             tools:targetApi="p"/>
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginBottom="0dp"
+          android:background="@color/color_C3C4C7" />
+      //
+      <LinearLayout
+          android:padding="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_marginStart="10dp"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_uk"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="start"
+             tools:targetApi="p"/>
+
+         <TextView
+             android:layout_marginEnd="10dp"
+             android:id="@+id/uk_tv"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="end"
+             tools:targetApi="p"/>
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginBottom="0dp"
+          android:background="@color/color_C3C4C7" />
+      //
+      <LinearLayout
+          android:padding="5dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_marginStart="10dp"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_ind"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="start"
+             tools:targetApi="p"/>
+
+         <TextView
+             android:id="@+id/ind_tv"
+             style="@style/ringTvStyle"
+             android:text="@string/txt_eur"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:gravity="end"
+             android:layout_marginEnd="10dp"
+             tools:targetApi="p"/>
+
+      </LinearLayout>
+   </LinearLayout>
+
+   <RelativeLayout
+       android:layout_marginTop="20dp"
+       android:id="@+id/showring_button"
+       android:layout_marginBottom="5dp"
+       android:layout_centerInParent="true"
+       android:layout_alignParentBottom="true"
+       android:background="@drawable/rignbutton"
+       android:gravity="center"
+       android:layout_gravity="center"
+       android:layout_width="180dp"
+       android:layout_height="45dp"
+       android:orientation="vertical">
+      <TextView
+          android:layout_centerInParent="true"
+          android:textColor="@color/white"
+          android:gravity="center"
+          style="@style/InfoLabelTextView"
+          android:text="@string/share" />
+   </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<!-- res/drawable/grid_pattern.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Horizontal lines -->
+    <item>
+        <bitmap
+            android:src="@drawable/grid_line"
+            android:tileMode="repeat"
+            android:tileModeX="disabled"
+            android:tileModeY="repeat"
+            android:dither="true"
+            android:tint="#00000000"
+            android:gravity="top|fill_horizontal"/>
+    </item>
+    <!-- Vertical lines -->
+    <item>
+        <bitmap
+            android:src="@drawable/grid_line"
+            android:tileMode="repeat"
+            android:tileModeX="repeat"
+            android:tileModeY="disabled"
+            android:dither="true"
+            android:tint="#00000000"
+            android:gravity="left|fill_vertical"/>
+    </item>
+</layer-list>

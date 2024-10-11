@@ -7,10 +7,10 @@ import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
 
 public interface ApiConstants {
 
-    String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
+    //String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
 
     // Live Server URL
-    //String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
+    String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
 
     /*String DOMAIN_IMAGE_NAME = "http://192.168.2.194/diamond/";
     String DOMAIN_IMAGE = "http://192.168.2.194/diamond";*/

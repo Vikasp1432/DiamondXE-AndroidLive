@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/progress">
+        <shape android:shape="rectangle">
+            <!-- Define the height you want for the progress line -->
+            <size android:height="1dp" />
+            <!-- Corner radius for rounded effect -->
+            <corners android:radius="8dp" />
+            <!-- Solid color for the progress -->
+            <solid android:color="@color/color_7E3080" />
+        </shape>
+    </item>
+</layer-list>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/progressshape">
+        <clip>
+            <shape android:shape="rectangle">
+                <size android:height="1dp" />
+                <corners android:radius="50dp" />
+                <solid android:color="@color/color_7E3080"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>
+-->

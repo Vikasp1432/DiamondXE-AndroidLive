@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/color_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/lbl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:font="@font/lato_regular"
+        android:text="@string/getquotation"
+        android:textColor="@color/color_title"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/back_button"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintTop_toTopOf="@id/back_button" />
+
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@+id/share_quo"
+        app:layout_constraintRight_toLeftOf="@+id/share_quo"
+        android:id="@+id/edit_quotation"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/edit_quo"
+        android:layout_marginRight="14dp"
+        />
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@+id/menu"
+        app:layout_constraintRight_toLeftOf="@+id/menu"
+        android:id="@+id/share_quo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/share_popup"
+        android:layout_marginRight="14dp"
+        />
+
+    <ImageView
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu" />
+
+
+    <ScrollView
+        android:layout_marginTop="12dp"
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/mainlayout"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/solitaler_note"
+                android:src="@drawable/applogo_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/diamondname"
+                android:layout_gravity="center"
+                android:textFontWeight="400"
+                android:textColor="@color/color_37083B"
+                style="@style/InfoTextView"
+                android:textSize="18dp"
+                android:layout_marginTop="15dp"
+                android:text="Natural Diamond" />
+
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:textFontWeight="500"
+                style="@style/InfoTextView"
+                android:textSize="13dp"
+                android:fontFamily="@font/lato_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="6dp"
+                android:text="@string/pricequotation" />
+
+            <TextView
+                android:id="@+id/currentdate"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:textFontWeight="500"
+                style="@style/InfoTextView"
+                android:textSize="13dp"
+                android:fontFamily="@font/lato_regular"
+                android:textColor="@color/black"
+                android:layout_marginBottom="6dp"
+                android:text="@string/pricequotation" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/itemname"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:textFontWeight="500"
+                    style="@style/InfoTextView"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/color_37083B"
+                    android:layout_marginBottom="6dp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/itemcaert"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:textFontWeight="500"
+                    style="@style/InfoTextView"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="6dp"
+                    android:text="" />
+
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <LinearLayout
+                android:layout_marginTop="9dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                android:id="@+id/parentLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="1dp"
+                > <!-- Apply border in code, not here -->
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1, 2, 3, 4" />
+
+            </LinearLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="4dp"
+                android:textFontWeight="500"
+                style="@style/InfoTextView"
+                android:textSize="13dp"
+                android:fontFamily="@font/lato_regular"
+                android:textColor="@color/color_37083B"
+                android:layout_marginBottom="8dp"
+                android:text="@string/note" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/solitaire_" />
+                    <TextView
+                        android:layout_marginLeft="3dp"
+                        android:id="@+id/solitairetxt"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/solitaire_" />
+                </LinearLayout>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_CBC6C2" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/sideDIA_" />
+
+                    <TextView
+                        android:layout_marginLeft="3dp"
+                        android:id="@+id/sideDIA"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/sideDIA_" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_CBC6C2" />
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/other" />
+
+                    <TextView
+                        android:layout_marginLeft="3dp"
+                        android:id="@+id/othercharge"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="400"
+                        style="@style/DetailsTextView"
+                        android:layout_marginBottom="8dp"
+                        />
+                </LinearLayout>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

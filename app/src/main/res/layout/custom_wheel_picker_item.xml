@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:orientation="horizontal">
+    <!--
+    <RelativeLayout
+    ...
+    android:layout_height="@dimen/custom_wheel_picker_item_height"
+    ...>
+
+     android:textSize="@dimen/wheel_action_sheet_bg_radius"
+
+    The height of the item needs to be a fixed value. It should not be `match_parent` or `wrap_content`.
+     -->
+
+    <ImageView
+        android:id="@+id/icon_image_ivew"
+        android:layout_width="28dp"
+        android:layout_height="14dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/text_view"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="0dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:gravity="center"
+        android:textColor="@color/text_wheel_text_color"
+        android:textSize="15dp"
+        android:fontFamily="@font/lato_regular"
+        android:textFontWeight="700"
+        android:singleLine="true"
+        tools:ignore="RelativeOverlap"
+        tools:text="Text" />
+</RelativeLayout>

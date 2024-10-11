@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/color_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/lbl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:font="@font/lato_regular"
+        android:text="@string/title_menu"
+        android:textColor="@color/color_title"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/back_button"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintTop_toTopOf="@id/back_button" />
+
+
+    <ScrollView
+        android:layout_marginTop="12dp"
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginRight="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/currency_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/currency_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginStart="13dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textFontWeight="500"
+                        style="@style/InfoMenuTextView"
+                        android:text="@string/title_currency" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/color_bg_splash"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textFontWeight="500"
+                        style="@style/InfoMenuTextView"
+                        android:text="@string/txt_inr" />
+
+                    <TextView
+                        android:textColor="@color/color_bg_splash"
+                        android:textSize="11dp"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textFontWeight="500"
+                        style="@style/InfoMenuTextView"
+                        android:text="@string/txt_base_currency" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--Price-->
+            <RelativeLayout
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:layout_gravity="top"
+                        android:src="@drawable/price_ct_n" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginStart="13dp"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/pricewith10ct" />
+                        <TextView
+                            android:textSize="10sp"
+                            android:layout_marginStart="13dp"
+                            android:gravity="start"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/noneedtext" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/price_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:thumb="@drawable/thumb_selector"
+                        app:track="@drawable/track_selector"/>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/quotationlistrv"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:paddingTop="5dp"
+                        android:layout_gravity="top"
+                        android:src="@drawable/quotation_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginStart="15dp"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/quotations" />
+                        <TextView
+                            android:textSize="10sp"
+                            android:layout_marginStart="15dp"
+                            android:gravity="start"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/quotationstext" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+
+            <!--Metal rate-->
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:id="@+id/img"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:paddingTop="5dp"
+                        android:layout_gravity="top"
+                        android:src="@drawable/metal_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/metalrate_gm" />
+                        <TextView
+                            android:textSize="10sp"
+                            android:layout_marginStart="14dp"
+                            android:gravity="start"
+                            android:layout_gravity="start"
+                            android:textFontWeight="500"
+                            style="@style/InfoMenuTextView"
+                            android:text="@string/setyourvalue" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_toRightOf="@+id/img"
+                    android:layout_toLeftOf="@+id/menu_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow_round">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:textColor="@color/black"
+                        style="@style/ValueTextEdit"
+                        android:paddingStart="13dp"
+                        android:hint="00.00"
+                        android:id="@+id/edit_materialEV"
+                        android:textSize="16sp"
+                        android:textColorHint="@color/black"
+                        android:imeOptions="actionDone"
+                        />
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:id="@+id/menu_share"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/share_popup" />
+            </RelativeLayout>
+
+
+            <!--Text-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="26dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="@string/purity" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="11dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="%" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="11dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:visibility="visible"
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="@string/rategms" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!--Purity-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity22k_pertv"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="22k"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:id="@+id/purity22k_per"
+                            android:paddingStart="13dp"
+                            android:text="91.6"
+                            android:textSize="14sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity22kop"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:hint="00.00"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!--18k-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity18k_pertv"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="18k"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:id="@+id/purity18k_per"
+                            android:text="75"
+                            android:textSize="14sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity18kop"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:hint="00.00"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!--14k-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity14k_pertv"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="14k"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:id="@+id/purity14k_per"
+                            android:text="58.3"
+                            android:textSize="14sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity14kop"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="00.00"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--9K-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity9k_pertv"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="9k"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:text="37.5"
+                            android:textSize="14sp"
+                            android:id="@+id/purity9k_per"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgdiffcolor">
+
+                        <TextView
+                            android:id="@+id/purity9kop"
+                            android:textFontWeight="400"
+                            android:textColor="@color/color_black_transparent_62"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="13dp"
+                            android:hint="00.00"
+                            android:textSize="14sp"
+                            android:textColorHint="@color/color_black_transparent_62"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!--Labor-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="@string/labour" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="11dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="@string/charges" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="11dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:visibility="visible"
+                        android:textFontWeight="500"
+                        style="@style/InfoTextView"
+                        android:text="@string/tax" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/labor_edt"
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:paddingStart="8dp"
+                            android:hint="00.00"
+                            android:textSize="13sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/charges_edt"
+                            android:textColor="@color/black"
+                            android:paddingStart="8dp"
+                            style="@style/ValueTextEdit"
+                            android:hint="00.00"
+                            android:textSize="13sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <RelativeLayout
+                        android:elevation="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_round">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/tax_edt"
+                            android:textColor="@color/black"
+                            style="@style/ValueTextEdit"
+                            android:layout_marginStart="8dp"
+                            android:hint="00.00"
+                            android:textSize="13sp"
+                            android:textFontWeight="500"
+                            android:textColorHint="@color/black"
+                            android:imeOptions="actionDone" />
+                    </RelativeLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!--Save-->
+
+            <RelativeLayout
+                android:id="@+id/savedetailsbutton"
+                android:layout_width="180dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rignbutton"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/InfoLabelTextView"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/save"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:id="@+id/tvAppVersion"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textFontWeight="400"
+                android:textColor="@color/color_black_transparent_62"
+                style="@style/ValueTextEdit"
+                android:paddingStart="13dp"
+                android:hint="00.00"
+                android:textSize="10sp"
+                android:textColorHint="@color/color_black_transparent_62"
+                android:imeOptions="actionDone" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

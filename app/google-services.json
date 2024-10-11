@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514266990335",
+    "project_id": "diamondxe-a30d3",
+    "storage_bucket": "diamondxe-a30d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514266990335:android:11224883cb3c491bc6eeca",
+        "android_client_info": {
+          "package_name": "com.diamondxe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2Q-CInRhH2J9Zm8xC3DdB_Y_LfRP3RwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
