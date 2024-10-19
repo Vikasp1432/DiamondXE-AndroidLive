@@ -68,7 +68,7 @@ public class ClarityTypeListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         else
         {
             holder.type_tv.setBackgroundResource(R.drawable.background_white);
-            holder.type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
+            holder.type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
             holder.cardView.setCardElevation(0f);
             holder.cardView.setCardElevation(0f);

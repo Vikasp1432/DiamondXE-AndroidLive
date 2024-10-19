@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+        android:drawable="@color/color_title" />
+    <item android:state_selected="true"
+        android:drawable="@color/color_title" />
+    <item>
+        <inset android:insetLeft="5dp" android:insetRight="5dp"
+            android:insetBottom="50dp">
+            <shape android:shape="rectangle">
+                <stroke android:width="1dp"
+                    android:color="@color/color_title" />
+                <solid android:color="@color/color_title" />
+            </shape>
+        </inset>
+    </item>
+</selector>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <selector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:exitFadeDuration="@android:integer/config_mediumAnimTime">
+        <item android:state_pressed="true"
+            android:drawable="@color/purple_bottom" />
+        <item android:state_selected="true"
+            android:drawable="@color/purple_bottom" />
+        <item>
+            <inset android:insetLeft="5dp" android:insetRight="5dp"
+                android:insetBottom="50dp">
+                <shape android:shape="rectangle">
+                    <stroke android:width="1dp"
+                        android:color="#001726" />
+                    <solid android:color="@color/purple_bottom" />
+                </shape>
+            </inset>
+        </item>
+    </selector>-->

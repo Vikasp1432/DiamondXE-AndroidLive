@@ -67,7 +67,7 @@ public class FancyColorTypeListAdapter extends RecyclerView.Adapter<RecyclerView
         else
         {
             holder.color_type_tv.setBackgroundResource(R.drawable.background_white);
-            holder.color_type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
+            holder.color_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
             holder.cardView.setElevation(0f);
             holder.cardView.setCardElevation(0f);

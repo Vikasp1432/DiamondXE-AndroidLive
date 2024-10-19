@@ -2,6 +2,8 @@ package com.diamondxe.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,7 @@ public class NaturalDiamondListAdapter extends RecyclerView.Adapter<RecyclerView
             return new RecycleViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
@@ -59,11 +62,28 @@ public class NaturalDiamondListAdapter extends RecyclerView.Adapter<RecyclerView
 
         }else {}
 
-        if(!list.get(position).getShowingSubTotal().equalsIgnoreCase(""))
-        {
-            holder.price_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+        Log.e("getCoupondiscountperc..","...65........."+list.get(position).getCoupondiscountperc());
+        if (list.get(position).getCoupondiscountperc() > 0) {
+
+            String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+            holder.price_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+            holder.original_price_tv.setPaintFlags(holder.original_price_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.original_price_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
         }
-        else{}
+        else
+        {
+            if(!list.get(position).getShowingSubTotal().equalsIgnoreCase(""))
+            {
+                // this work for cut price
+                //holder.price_tv.setPaintFlags(holder.price_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.original_price_tv.setVisibility(View.GONE);
+                holder.price_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            }
+        }
+
+
+
 
         holder.name_tv.setText(list.get(position).getName());
 
@@ -92,11 +112,11 @@ public class NaturalDiamondListAdapter extends RecyclerView.Adapter<RecyclerView
         CardView root_layout;
         ImageView diamond_img;
         TextView top_diamond_tv;
-        TextView price_tv, name_tv;
+        TextView price_tv, name_tv,original_price_tv;
 
         public RecycleViewHolder (View itemView) {
             super (itemView);
-
+            original_price_tv=itemView.findViewById(R.id.original_price_tv);
             root_layout = itemView.findViewById(R.id.root_layout);
             diamond_img = itemView.findViewById(R.id.diamond_img);
             price_tv = itemView.findViewById(R.id.price_tv);

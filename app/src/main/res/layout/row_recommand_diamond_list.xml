@@ -9,8 +9,8 @@
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_10"
-        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_12"
+        android:layout_marginRight="@dimen/dimen_12"
         android:layout_marginBottom="@dimen/dimen_10"
         android:elevation="@dimen/dimen_5"
         android:outlineAmbientShadowColor="@color/shadow_color"
@@ -416,21 +416,39 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/sub_total_tv"
-                    style="@style/BoldFontType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:paddingLeft="@dimen/dimen_5"
-                    android:paddingTop="@dimen/dimen_5"
-                    android:paddingRight="@dimen/dimen_5"
-                    android:paddingBottom="@dimen/dimen_5"
-                    android:text="1373615"
-                    android:textColor="@color/purple_light"
-                    android:textSize="@dimen/dimen_18" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/sub_total_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:text=""
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_16" />
+
+                    <TextView
+                        android:id="@+id/dis_sub_total_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text=""
+                        android:textColor="@color/grey_light"
+                        android:textSize="@dimen/dimen_16" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

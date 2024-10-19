@@ -30,7 +30,7 @@
             android:paddingRight="@dimen/dimen_12"
             android:paddingBottom="@dimen/dimen_6"
             android:text="D"
-            android:textColor="@color/purple"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_14" />
 
     </androidx.cardview.widget.CardView>

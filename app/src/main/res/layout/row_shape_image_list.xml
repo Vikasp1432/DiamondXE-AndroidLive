@@ -4,8 +4,7 @@
     android:id="@+id/root_layout_rel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dimen_3"
-    android:layout_marginRight="@dimen/dimen_3"
+    android:layout_marginEnd="@dimen/dimen_2"
     android:gravity="center">
 
     <ImageView
@@ -13,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="@dimen/dimen_3"
-        android:paddingTop="@dimen/dimen_3"
-        android:paddingRight="@dimen/dimen_3"
-        android:paddingBottom="@dimen/dimen_3"
+        android:paddingLeft="@dimen/dimen_2"
+        android:paddingTop="@dimen/dimen_2"
+        android:paddingRight="@dimen/dimen_2"
+        android:paddingBottom="@dimen/dimen_2"
         android:src="@mipmap/all" />
 
 </RelativeLayout>

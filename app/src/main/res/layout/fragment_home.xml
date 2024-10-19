@@ -562,7 +562,7 @@
                             android:paddingBottom="@dimen/dimen_10"
                             android:text="@string/naturalDiamonds"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dimen_13" />
+                            android:textSize="@dimen/dimen_14" />
 
                         <TextView
                             android:id="@+id/grown_diamond_tv"
@@ -584,7 +584,7 @@
                             android:paddingBottom="@dimen/dimen_10"
                             android:text="@string/labGrownDiamonds"
                             android:textColor="@color/purple_light"
-                            android:textSize="@dimen/dimen_13" />
+                            android:textSize="@dimen/dimen_14" />
 
                     </LinearLayout>
 

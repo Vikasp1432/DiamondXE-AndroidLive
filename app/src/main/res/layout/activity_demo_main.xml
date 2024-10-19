@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/linearLayout"
+    android:gravity="center">
+
+    <!-- Spinner example -->
+    <Spinner
+
+        android:dropDownHeight="20dp"
+        app:ms_dropdown_max_height="10dp"
+        app:ms_dropdown_height="wrap_content"
+        android:dropDownWidth="wrap_content"
+        android:popupElevation="@dimen/dimen_20"
+        android:popupTheme="@color/color_7E3080"
+        android:popupBackground="@drawable/spinner_popup_bg"
+        android:id="@+id/mySpinner"
+        android:layout_width="match_parent"
+        android:spinnerMode="dropdown"
+        android:layout_height="wrap_content" />
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        app:ms_dropdown_max_height="180dp"
+        app:ms_dropdown_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Overtone"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_20">
+       <!-- android:popupBackground="@drawable/spinner_popup_bg"-->
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dropDownHeight="300dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:inputType="none"
+            android:cursorVisible="false"
+            android:drawableEnd="@drawable/down_arrow_new"
+            android:popupTheme="@color/teal_700"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="true"
+            android:overScrollMode="always"
+            android:scrollbarThumbVertical="@color/yellow"
+            android:scrollbarTrackVertical="@color/teal_700"
+            android:shadowColor="@color/white_bottom"
+            android:scrollbarSize="@dimen/dimen_190"
+            android:scrollIndicators="right"
+            android:scrollbarStyle="outsideOverlay"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdown_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinner_fancy_intensity_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:scrollbars="vertical"
+            android:scrollbarSize="10dp"
+            android:scrollbarTrackHorizontal="@android:color/holo_blue_light"
+            android:scrollbarStyle="insideOverlay"
+            android:fadeScrollbars="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarDefaultDelayBeforeFade="@integer/material_motion_duration_long_1"
+            android:scrollIndicators="right"
+            android:scrollbarThumbVertical="@drawable/scrollbar_custom"/> <!-- Custom scrollbar color -->
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--<com.google.android.material.textfield.TextInputLayout
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Intensity">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dropDownHeight="150dp"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@drawable/spinner_popup_bg"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbarSize="4dp"
+            android:requiresFadingEdge="vertical"
+            android:overScrollMode="always"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:drawableEnd="@drawable/down_arrow_new"
+            android:inputType="none"
+            android:fadeScrollbars="false" />
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--<com.google.android.material.textfield.TextInputLayout
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Intensity">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:gravity="center_vertical"
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dropDownHeight="150dp"
+            android:inputType="none"
+            android:focusable="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:drawableEnd="@drawable/down_arrow_new"
+            android:clickable="true"
+            android:scrollbars="vertical"
+            android:verticalScrollbarPosition="right"
+            android:scrollbarSize="4dp"
+            android:cursorVisible="false"
+            android:overScrollMode="always"
+            android:requiresFadingEdge="vertical"
+            android:scrollbarStyle="insideOverlay"
+            android:isScrollContainer="true"
+            android:scrollIndicators="right"
+            android:fadeScrollbars="true"
+            android:scrollbarThumbVertical="@drawable/custom_scrollbar_thumb"
+
+        />
+
+        &lt;!&ndash;android:scrollbarTrackVertical="@dimen/dimen_10"&ndash;&gt;
+
+        &lt;!&ndash;android:scrollbarStyle="insideOverlay" &lt;!&ndash; Scrollbar style &ndash;&gt;
+        android:drawableEnd="@drawable/down_arrow_new" />&ndash;&gt;
+    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--android:theme="@style/CustomAutoCompleteTextView"-->
+</LinearLayout>
+
+
+
+<!--
+<com.google.android.material.textfield.MaterialAutoCompleteTextView
+android:layout_marginLeft="@dimen/dimen_10"
+android:gravity="center_vertical"
+android:id="@+id/autoCompleteTextView"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:dropDownHeight="150dp"
+android:inputType="none"
+android:focusable="false"
+android:scrollbarAlwaysDrawVerticalTrack="true"
+android:drawableEnd="@drawable/down_arrow_new"
+android:clickable="true"
+android:scrollbars="vertical"
+android:verticalScrollbarPosition="right"
+android:scrollbarSize="4dp"
+android:scrollbarThumbVertical="@color/colorAccent"
+android:cursorVisible="false"
+android:overScrollMode="always"
+android:requiresFadingEdge="vertical"
+android:scrollbarStyle="insideOverlay"
+android:isScrollContainer="true"
+android:scrollIndicators="right"
+    />-->

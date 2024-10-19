@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
@@ -483,7 +485,6 @@
 
 
 
-
     <style name="ValueTextMenu" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -526,6 +527,29 @@
         <item name="android:inputType">numberDecimal</item>
         <item name="android:singleLine">true</item>
     </style>
+
+    <style name="SpinnerPopupStyle" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:dropDownHeight">50dp</item>
+    </style>
+
+    <style name="TextLabel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:textSize">@dimen/dimen_20</item>
+        <item name="colorControlNormal">@color/white_bottom</item>
+        <item name="colorControlActivated">@color/color_7E3080</item>
+    </style>
+
+
+    <style name="CustomAutoCompleteTextView" parent="Widget.Material3.AutoCompleteTextView.FilledBox">
+        <item name="android:dropDownSelector">#FF0000</item> <!-- Color of selected item -->
+        <item name="android:scrollbarSize">8dp</item> <!-- Thickness of scrollbar -->
+        <item name="android:scrollbars">vertical</item> <!-- Ensure vertical scrollbar -->
+        <item name="android:scrollbarThumbVertical">@drawable/custom_scrollbar_thumb</item> <!-- Custom scrollbar thumb -->
+        <!--<item name="android:scrollbarTrackVertical">@drawable/custom_scrollbar_track</item> --><!-- Custom scrollbar track -->
+        <item name="android:fadeScrollbars">false</item>
+    </style>
+
+
 
 
 </resources>

@@ -10,6 +10,24 @@ public class SearchResultTypeModel implements Serializable {
             diamond_video= "", total_gst_perc= "", status= "", subtotal= "", total_price= "", is_returnable= "", dxe_prefered= "", is_cart= "", is_wishlist= "", on_hold= "", r_discount= "",
             r_discount_type= "",currencySymbol = "", showingSubTotal="",stock_no="";
 
+    double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+
+    public double getCoupondiscountperc() {
+        return coupondiscountperc;
+    }
+
+    public void setCoupondiscountperc(double coupondiscountperc) {
+        this.coupondiscountperc = coupondiscountperc;
+    }
+
+    public double getSubtotalaftercoupondiscount() {
+        return subtotalaftercoupondiscount;
+    }
+
+    public void setSubtotalaftercoupondiscount(double subtotalaftercoupondiscount) {
+        this.subtotalaftercoupondiscount = subtotalaftercoupondiscount;
+    }
+
     boolean isVisible = false;
 
     public String getStock_id() {

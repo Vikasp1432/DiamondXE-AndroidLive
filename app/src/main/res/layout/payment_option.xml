@@ -54,6 +54,8 @@
 
                     </RelativeLayout>
 
+                    <!--android:weightSum="4"-->
+
                     <LinearLayout
                         android:id="@+id/show_diamond_details_lin"
                         android:layout_width="match_parent"
@@ -74,7 +76,7 @@
                             android:paddingTop="@dimen/dimen_6"
                             android:paddingBottom="@dimen/dimen_6"
                             android:visibility="visible"
-                            android:weightSum="3">
+                            >
 
                             <!--RTGS/NEFT-->
                             <LinearLayout
@@ -109,7 +111,7 @@
                                     android:gravity="center"
                                     android:text="@string/rtgs_neft"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_13" />
+                                    android:textSize="@dimen/dimen_12" />
 
                             </LinearLayout>
 
@@ -149,7 +151,7 @@
                                     android:hint="@string/card_type"
                                     android:text="@string/card_type"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_13" />
+                                    android:textSize="@dimen/dimen_12" />
 
                             </LinearLayout>
 
@@ -188,7 +190,47 @@
                                     android:gravity="center"
                                     android:text="@string/net_banking"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_13" />
+                                    android:textSize="@dimen/dimen_12" />
+
+                            </LinearLayout>
+
+                            <!--UPI Select-->
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:id="@+id/upi_main_lin"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:layout_marginRight="@dimen/dimen_2"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/upi_rela"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="90dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/background_payment_option">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/upi_new" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/upi_tv"
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/dimen_3"
+                                    android:gravity="center"
+                                    android:text="@string/upi"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_12" />
 
                             </LinearLayout>
 
@@ -205,6 +247,30 @@
                             android:textSize="@dimen/dimen_9"
                             android:visibility="gone" />
 
+                    <LinearLayout
+                        android:id="@+id/show_upi_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:id="@+id/noupifound_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_2"
+                            android:text="@string/noupifound"
+                            android:textColor="@color/dark_red"
+                            android:textSize="@dimen/dimen_15"
+                            android:visibility="gone" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_view_upi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible" />
+                    </LinearLayout>
                         <!--Select Bank Name and Details-->
                         <LinearLayout
                             android:id="@+id/show_bank_name_lin"
@@ -621,6 +687,7 @@
 
         <!--UPI Option-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/upi_option_lin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -683,11 +750,11 @@
 
                     </RelativeLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
+                   <!-- <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_upi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:visibility="visible" />-->
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

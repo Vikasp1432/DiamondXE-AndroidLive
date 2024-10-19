@@ -11,6 +11,23 @@ public class AddToCartListModel implements Serializable {
             platformFeeAmt = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", onHold = "", dxeMarkup = "", dealerMarkupCommission = "",
             platformFeeTax = "", shippingChargeTax = "", totalAmount = "", totalTax = "", totalCharges = "",showingSubTotal="",currencySymbol="";
 
+    double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+
+    public double getCoupondiscountperc() {
+        return coupondiscountperc;
+    }
+
+    public void setCoupondiscountperc(double coupondiscountperc) {
+        this.coupondiscountperc = coupondiscountperc;
+    }
+
+    public double getSubtotalaftercoupondiscount() {
+        return subtotalaftercoupondiscount;
+    }
+
+    public void setSubtotalaftercoupondiscount(double subtotalaftercoupondiscount) {
+        this.subtotalaftercoupondiscount = subtotalaftercoupondiscount;
+    }
 
     public String getItemName() {
         return itemName;

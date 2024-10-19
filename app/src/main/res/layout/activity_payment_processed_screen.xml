@@ -817,6 +817,8 @@
 
                                         </RelativeLayout>
 
+
+
                                         <RelativeLayout
                                             android:id="@+id/coupon_error_rel"
                                             android:layout_width="match_parent"
@@ -870,6 +872,16 @@
                                         </RelativeLayout>
 
                                     </RelativeLayout>
+
+                                    <TextView
+                                        android:id="@+id/viewallcoupon"
+                                        android:textSize="@dimen/dimen_15"
+                                        android:textColor="@color/color_4C0C4B"
+                                        android:layout_marginBottom="@dimen/dimen_10"
+                                        android:layout_gravity="center"
+                                        android:text="@string/viewallcouons"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
 
                                 </LinearLayout>
 

@@ -29,7 +29,7 @@
 
             <LinearLayout
                 android:layout_width="@dimen/dimen_120"
-                android:layout_height="@dimen/dimen_160"
+                android:layout_height="@dimen/dimen_170"
                 android:orientation="vertical">
 
                 <ImageView
@@ -67,6 +67,21 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_12" />
+
+
+                <TextView
+                    android:id="@+id/original_price_tv"
+                    style="@style/BoldFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_11" />
 
             </LinearLayout>
 

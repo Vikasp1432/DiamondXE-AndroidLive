@@ -7,7 +7,7 @@ import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
 
 public interface ApiConstants {
 
-    //String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
+   // String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
 
     // Live Server URL
     String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
@@ -78,6 +78,7 @@ public interface ApiConstants {
     String CANCEL_ORDER = "cancel-order";
     String RETURN_ORDER_CHECKOUT = "return-order-checkout";
     String RETURN_ORDER = "return-order";
+    String GET_COUPONS_LIST = "coupon-offers-list";
 
     int HOME_ID = 2;
     int LOGOUT_ID = 3;
@@ -144,6 +145,7 @@ public interface ApiConstants {
     int CANCEL_ORDER_ID = 64;
     int RETURN_ORDER_CHECKOUT_ID = 65;
     int RETURN_ORDER_PARTIAL_CHECKOUT_ID = 66;
+    int GET_COUPONS_LIST_ID=67;
 
 
     String MSG_INTERNETERROR = "Internet connection is not available.";

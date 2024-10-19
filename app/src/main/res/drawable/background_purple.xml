@@ -11,10 +11,10 @@
             android:radius="@dimen/dimen_5"
             />
 
-        <stroke android:width="1dip" android:color="@color/purple_light" />
+        <stroke android:width="1dip" android:color="@color/purple_light_new" />
         <gradient android:angle="180"
-            android:startColor="@color/purple_light"
-            android:endColor="@color/purple_light"
+            android:startColor="@color/purple_light_new"
+            android:endColor="@color/purple_light_new"
             />
     </shape>
 </item>

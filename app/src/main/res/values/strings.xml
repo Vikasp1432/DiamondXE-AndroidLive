@@ -165,7 +165,7 @@
     <string name="no_result_found">No result found</string>
 
     <string name="go_to_cart">Go to Cart</string>
-
+    <string name="allofferforyou">All offers for you</string>
     <string name="diamond_details">Diamond Details</string>
     <string name="product_details">Product Details</string>
     <string name="shipping_taxes_extra">Shipping &amp; Taxes extra</string>
@@ -196,7 +196,7 @@
     <string name="submit">Submit</string>
 
     <string name="image">Image</string>
-    <string name="view_360">360 View</string>
+    <string name="view_360">360° View</string>
     <string name="size">Size</string>
     <string name="diamond_image">Diamond Image</string>
     <string name="diamond_images">Diamond Images</string>
@@ -209,6 +209,8 @@
     <string name="discover_happiness_here">Discover happiness here</string>
     <string name="browser_our_collection">Browse our collection and find the perfect piece to brighten your day!</string>
     <string name="tax_and_fee">Including Taxes &amp; Fee</string>
+    <string name="termscondition">*T&amp;C apply</string>
+
     <string name="excluding_and_taxes_shipping">excluding taxes &amp; shipping</string>
     <string name="including_and_taxes_shipping">Including taxes &amp; shipping</string>
     <string name="place_order">Place Order</string>
@@ -303,7 +305,7 @@
     <string name="company_details">Company Details</string>
     <string name="company_name">Company Name*</string>
     <string name="company_type">Company Type*</string>
-    <string name="business_nature">Business Nature*</string>
+    <string name="business_nature">Business Nature</string>
 
     <string name="company_type_require">Company Type is required</string>
     <string name="business_nature_require">Business Nature is required</string>
@@ -355,7 +357,7 @@
 
     <string name="supplier_company_name">Company Name*</string>
     <string name="supplier_company_email">Enter Company Email*</string>
-    <string name="inventory_type">Inventory type</string>
+    <string name="inventory_type">Inventory type*</string>
 
     <string name="bank_info">Bank Information (Optional)</string>
     <string name="enter_bank_name">Enter Bank Name</string>
@@ -564,7 +566,7 @@
 
     <string name="rtgs_neft">RTGS/NEFT</string>
     <string name="bank_transfer">Bank Transfer</string>
-    <string name="card_type">Debit/Credit Card</string>
+    <string name="card_type">Debit/Credit</string>
     <string name="net_banking">Net Banking</string>
     <string name="upi">UPI</string>
     <string name="upi_options">UPI Options</string>
@@ -909,6 +911,7 @@ the slider to measure ring size.</string>
     <string name="metalrate_gm">Metal rate/gm</string>
     <string name="setyourvalue">Set your values</string>
 
+    <string name="noupifound">No UPI apps installed</string>
     <string name="rategms">Rate/gms</string>
     <string name="quotations">Quotations</string>
     <string name="quotationstext">A detailed list offering additional quotations for further reference or comparison, allowing users to explore more options</string>
@@ -937,5 +940,61 @@ the slider to measure ring size.</string>
     <string name="noduotationfound">No Quotation Found</string>
 
     <string name="datasaved">Data Saved</string>
+    <string name="viewallcouons">View All Coupons</string>
 
+    <string-array name="programming_languages">
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>CPP</item>
+
+    </string-array>
 </resources>

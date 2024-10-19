@@ -11,6 +11,7 @@
 
 <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">https://app.diamondxe.com/</domain>
+    <domain includeSubdomains="true">https://diamondxe.com/</domain>
 </domain-config>
 
 </network-security-config>

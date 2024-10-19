@@ -341,7 +341,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_5">
 
                 <LinearLayout
@@ -407,6 +406,7 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
+
                 <TextView
                     android:id="@+id/sub_total_tv"
                     style="@style/BoldFontType"
@@ -414,14 +414,29 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginTop="@dimen/dimen_5"
                     android:paddingLeft="@dimen/dimen_5"
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingRight="@dimen/dimen_5"
-                    android:paddingBottom="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_2"
                     android:text=""
                     android:textColor="@color/purple_light"
                     android:textSize="@dimen/dimen_18" />
+
+
+                <TextView
+                    android:layout_below="@+id/sub_total_tv"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:id="@+id/discount_sub_total_tv"
+                    style="@style/MediumFontType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=""
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:textColor="@color/grey_light"
+                    android:textSize="@dimen/dimen_15" />
+
 
             </RelativeLayout>
 

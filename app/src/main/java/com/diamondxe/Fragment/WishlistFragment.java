@@ -387,7 +387,7 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         //shimmerStop();
 
         try {
-            Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
+            Log.v("----WISHLIST--Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -410,6 +410,8 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             WishListModel model = new WishListModel();
+                            model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
+                            model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStockId(CommonUtility.checkString(objectCodes.optString("stock_id")));
                             model.setItemName(CommonUtility.checkString(objectCodes.optString("item_name")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));

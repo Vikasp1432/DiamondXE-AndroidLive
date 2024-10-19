@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/couponCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                android:layout_margin="8dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <!-- Add content here -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:id="@+id/couponCode"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/points_lbl_img"
+                                android:gravity="center"
+                                android:text="@string/points"
+                                android:textStyle="bold"
+                                android:textColor="@color/color_bg_splash"
+                                android:textSize="@dimen/dimen_17" />
+
+
+                            <TextView
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_5"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:id="@+id/type_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_yellow"
+                                android:hint=""
+                                android:paddingLeft="@dimen/dimen_5"
+                                android:paddingTop="@dimen/dimen_3"
+                                android:paddingRight="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_3"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textSize="@dimen/dimen_11" />
+                            <TextView
+                                android:layout_marginLeft="@dimen/dimen_3"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:id="@+id/typeboth_tv"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_yellow"
+                                android:hint=""
+                                android:paddingLeft="@dimen/dimen_5"
+                                android:paddingRight="@dimen/dimen_5"
+                                android:paddingTop="@dimen/dimen_3"
+                                android:paddingBottom="@dimen/dimen_3"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textSize="@dimen/dimen_11" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10% OFF COUPON"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_16" />
+
+                        <TextView
+                            android:id="@+id/validdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Valid till Novemvber 5,2024"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_11" />
+
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginEnd="@dimen/dimen_25"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_15"
+                            android:layout_marginBottom="@dimen/dimen_10"
+                            android:elevation="@dimen/dimen_5"
+                            android:outlineAmbientShadowColor="@color/black"
+                            android:outlineSpotShadowColor="@color/black"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="@dimen/dimen_7"
+                            app:cardElevation="@dimen/dimen_5">
+
+                            <TextView
+                                android:id="@+id/apply"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:background="@drawable/background_gradient"
+                                android:gravity="right"
+                                android:paddingLeft="@dimen/dimen_14"
+                                android:paddingTop="@dimen/dimen_6"
+                                android:paddingRight="@dimen/dimen_14"
+                                android:paddingBottom="@dimen/dimen_6"
+                                android:text="@string/apply"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen_14" />
+                        </androidx.cardview.widget.CardView>
+
+
+                        <TextView
+                            android:paddingTop="@dimen/dimen_5"
+                            android:id="@+id/termsandcondition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/termscondition"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_11" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/cut_card_background"
+            android:layout_width="@dimen/dimen_25"
+            android:layout_height="@dimen/dimen_25"/>
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/cut_card_background"
+            android:layout_width="@dimen/dimen_25"
+            android:layout_height="@dimen/dimen_25"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

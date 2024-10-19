@@ -71,6 +71,7 @@ import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
+import com.dxe.calc.WebViewActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -767,6 +768,14 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         }
         else if(id == R.id.register_img)
         {
+            //Toast.makeText(context,"Banner click...",Toast.LENGTH_SHORT).show();
+            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+            intent1.setData(Uri.parse("https://diamondxe.com/limitedoffer"));
+            startActivity(intent1);
+           /* Intent intent1 = new Intent(context, WebViewActivity.class);
+            intent1.putExtra("url", "https://diamondxe.com/limitedoffer");
+            intent1.putExtra("title", "");
+            startActivity(intent1);*/
         }
         else if(id == R.id.dxe_luxe_img)
         {
@@ -920,6 +929,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
 
             //urlParameter.put("user_id", CommonUtility.getGlobalString(getActivity(),"user_id"));
             //urlParameter.put("authToken", CommonUtility.getGlobalString(getActivity(),"mobile_auth_token"));
+            Log.e("uuid",".......923...."+uuid);
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
@@ -1081,7 +1091,8 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
                             JSONObject objectCode = naturalDetails.getJSONObject(i);
 
                             TopDiamondImageModel topDiamondImageModel = new TopDiamondImageModel();
-
+                            topDiamondImageModel.setCoupondiscountperc(CommonUtility.checkDouble(objectCode.optString("coupon_discount_perc")));
+                            topDiamondImageModel.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCode.optString("subtotal_after_coupon_discount")));
                             topDiamondImageModel.setId(CommonUtility.checkString(objectCode.optString("stock_id")));
                             topDiamondImageModel.setName(CommonUtility.checkString(objectCode.optString("item_name")));
                             topDiamondImageModel.setPrice(CommonUtility.checkString(objectCode.optString("subtotal")));
@@ -1119,7 +1130,8 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
                             JSONObject objectCode = labGrownDetails.getJSONObject(i);
 
                             TopDiamondImageModel topDiamondImageModel = new TopDiamondImageModel();
-
+                            topDiamondImageModel.setCoupondiscountperc(CommonUtility.checkDouble(objectCode.optString("coupon_discount_perc")));
+                            topDiamondImageModel.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCode.optString("subtotal_after_coupon_discount")));
                             topDiamondImageModel.setId(CommonUtility.checkString(objectCode.optString("stock_id")));
                             topDiamondImageModel.setName(CommonUtility.checkString(objectCode.optString("item_name")));
                             topDiamondImageModel.setPrice(CommonUtility.checkString(objectCode.optString("subtotal")));
@@ -1800,6 +1812,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             }
             else
             {
+
                 Picasso.with(context)
                         .load(flag.get(position).getBannerImage())
                         .placeholder(R.mipmap.view)

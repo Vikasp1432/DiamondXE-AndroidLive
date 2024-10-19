@@ -160,6 +160,7 @@
                             android:gravity="center">
 
                             <LinearLayout
+                                android:orientation="vertical"
                                 android:id="@+id/lin_category"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -174,10 +175,20 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="left"
                                     android:hint="30,918"
-                                    android:paddingTop="@dimen/dimen_5"
-                                    android:paddingBottom="@dimen/dimen_5"
+                                    android:paddingTop="@dimen/dimen_2"
+                                    android:paddingBottom="@dimen/dimen_1"
                                     android:textColor="@color/purple"
                                     android:textSize="@dimen/dimen_16" />
+
+                                <TextView
+                                    android:id="@+id/dis_sub_total_tv"
+                                    style="@style/MediumFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left"
+                                    android:hint="30,918"
+                                    android:textColor="@color/grey_light"
+                                    android:textSize="@dimen/dimen_13" />
 
 
                             </LinearLayout>

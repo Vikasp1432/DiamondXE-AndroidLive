@@ -2,8 +2,10 @@ package com.diamondxe.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,11 +90,30 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.table_perc_tv.setText("T: " + list.get(position).getTable_perc());
         holder.depth_perc.setText("D: " + list.get(position).getDepth_perc());
         holder.measurement_tv.setText("M: " + list.get(position).getMeasurement());*/
+//dis_sub_total_tv
+        Log.e("getCoupondiscountperc",".94........."+list.get(position).getCoupondiscountperc());
+        if (list.get(position).getCoupondiscountperc() > 0) {
 
-        if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+            String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+            holder.dis_sub_total_tv.setPaintFlags(holder.dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
+        }
+        else
         {
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-        }else {}
+            if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+            {
+                holder.dis_sub_total_tv.setVisibility(View.GONE);
+                holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            }
+
+        }
+
+
+
+
+
 
         if(list.get(position).getIsReturnable().equalsIgnoreCase("1"))
         {
@@ -186,7 +207,7 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         CardView root_layout, add_to_card_view;
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
-                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,return_policy_tv, discount_tv, diamond_type;
+                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv,return_policy_tv, discount_tv, diamond_type;
         ImageView image_view, returnable_img, status_img, add_to_cart_img, delete_img;
 
         public RecycleViewHolder (View itemView) {
@@ -196,7 +217,7 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             image_view = itemView.findViewById(R.id.image_view);
             returnable_img = itemView.findViewById(R.id.returnable_img);
             status_img = itemView.findViewById(R.id.status_img);
-
+            dis_sub_total_tv=itemView.findViewById(R.id.dis_sub_total_tv);
             add_to_cart_img = itemView.findViewById(R.id.add_to_cart_img);
             delete_img = itemView.findViewById(R.id.delete_img);
 

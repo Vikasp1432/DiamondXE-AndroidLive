@@ -262,12 +262,12 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="@dimen/dimen_2"
                                 android:visibility="visible"
-                                android:layout_toLeftOf="@+id/sub_total_tv">
+                               >
 
                                 <androidx.cardview.widget.CardView
                                     android:id="@+id/add_to_favt_card"
@@ -318,8 +318,30 @@
 
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                            </LinearLayout>
                             <TextView
+                                android:layout_toLeftOf="@+id/dis_sub_total_tv"
+                                android:layout_marginEnd="@dimen/dimen_2"
                                 android:id="@+id/sub_total_tv"
+                                style="@style/BoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dimen_2"
+                                android:layout_marginRight="@dimen/dimen_3"
+                                android:paddingLeft="@dimen/dimen_2"
+                                android:paddingRight="@dimen/dimen_2"
+                                android:text="45"
+                                android:textColor="@color/purple_light"
+                                android:textSize="@dimen/dimen_16" />
+
+                            <TextView
+                                android:id="@+id/dis_sub_total_tv"
                                 style="@style/BoldFontType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -329,9 +351,9 @@
                                 android:layout_marginRight="@dimen/dimen_3"
                                 android:paddingLeft="@dimen/dimen_2"
                                 android:paddingRight="@dimen/dimen_2"
-                                android:text=""
-                                android:textColor="@color/purple_light"
-                                android:textSize="@dimen/dimen_18" />
+                                android:text="80"
+                                android:textColor="@color/light_gray2"
+                                android:textSize="@dimen/dimen_16" />
 
                         </RelativeLayout>
 

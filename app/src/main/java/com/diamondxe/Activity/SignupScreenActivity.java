@@ -2435,6 +2435,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
         }
         else if(id == R.id.create_account_tv)
         {
+            Log.e("In","Line...2528..................");
             if(termsConditionCheck.isChecked())
             {
                 Utils.hideKeyboard(activity);
@@ -2464,10 +2465,13 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 }
                 else if(selectedSignupTypeTab.equalsIgnoreCase(DEALER))
                 {
+                    Log.e("In","DEALER...2528..........1........");
                     if(validateDealerAllFieldSignupFields())
                     {
+                        Log.e("In","DEALER...2528..........2........");
                         if(validateDealerSignupFields())
                         {
+                            Log.e("In","DEALER...2528..........3........");
                             if(company_country_tv.getText().toString().trim().equalsIgnoreCase("India"))
                             {
                                 if(!company_gst_no_et.getText().toString().trim().equalsIgnoreCase(""))
@@ -2525,6 +2529,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 }
                 else if(selectedSignupTypeTab.equalsIgnoreCase(SUPPLIER))
                 {
+                    Log.e("In","SUPPLIER...2528..................");
                     if(validateSupplierAllFieldSignupFields())
                     {
                         if(validateSupplierFields())
@@ -3701,7 +3706,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 (companyPinCode.length() == 0 || companyPinCode == null|| companyPinCode.equalsIgnoreCase("")) &&
                 (addressLine1.length() == 0 || addressLine1 == null|| addressLine1.equalsIgnoreCase("")) &&
                 (companyType.length() == 0 || companyType == null|| companyType.equalsIgnoreCase("")) &&
-                (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) &&
+                /*(businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) &&*/
                 (businessLicenceNo.length() == 0 || businessLicenceNo == null|| businessLicenceNo.equalsIgnoreCase("")) &&
                 (companyPanNo.length() == 0 || companyPanNo == null|| companyPanNo.equalsIgnoreCase("")) &&
                 (!isCompanyPanDocUpload) &&
@@ -3713,6 +3718,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 (basicConfirmPassword.length() == 0 || basicConfirmPassword == null|| basicConfirmPassword.equalsIgnoreCase("")) &&
                 (basicFirstName.length() == 0 || basicFirstName == null|| basicFirstName.equalsIgnoreCase("")))
         {
+            Log.e("In","DEALER...3721..........4*........");
 
             company_name_et.requestFocus();
 
@@ -3752,8 +3758,8 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
             company_type_error_tv.setVisibility(View.VISIBLE);
             company_type_lin.setBackgroundResource(R.drawable.border_red_line_view);
 
-            business_nature_error_tv.setVisibility(View.VISIBLE);
-            business_nature_lin.setBackgroundResource(R.drawable.border_red_line_view);
+            /*business_nature_error_tv.setVisibility(View.VISIBLE);
+            business_nature_lin.setBackgroundResource(R.drawable.border_red_line_view);*/
 
             String companyCountryName = company_country_tv.getText().toString().trim();
             // Check Country India or Not If India Check GST and Pan Number Verification Other wise business Licence No Verification.
@@ -3905,12 +3911,12 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
             company_type_tv.requestFocus();
             return false;
         }
-        else if (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) {
+        /*else if (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) {
             business_nature_error_tv.setVisibility(View.VISIBLE);
             business_nature_lin.setBackgroundResource(R.drawable.border_red_line_view);
             business_nature_tv.requestFocus();
             return false;
-        }
+        }*/
         /*else if (companyGSTNo.length() == 0 || companyGSTNo == null|| companyGSTNo.equalsIgnoreCase("")) {
             address_line1_error_tv.setVisibility(View.VISIBLE);
             address_line1_et.setBackgroundResource(R.drawable.border_red_line_view);
@@ -4230,12 +4236,12 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
             supplier_company_type_tv.requestFocus();
             return false;
         }
-        else if (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) {
+        /*else if (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) {
             supplier_business_nature_error_tv.setVisibility(View.VISIBLE);
             supplier_business_nature_lin.setBackgroundResource(R.drawable.border_red_line_view);
             supplier_business_nature_tv.requestFocus();
             return false;
-        }
+        }*/
         else if (superviosrName.length() == 0 || superviosrName == null|| superviosrName.equalsIgnoreCase(""))
         {
             isArrowDownSupervisor = true;
@@ -4314,7 +4320,7 @@ public class SignupScreenActivity extends SuperActivity implements DialogItemCli
                 (!isSupplierPanDocUpload) &&
                 (businessLicenceNo.length() == 0 || businessLicenceNo == null|| businessLicenceNo.equalsIgnoreCase("")) &&
                 (companyType.length() == 0 || companyType == null|| companyType.equalsIgnoreCase("")) &&
-                (businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) &&
+                /*(businessType.length() == 0 || businessType == null|| businessType.equalsIgnoreCase("")) &&*/
                 (superviosrName.length() == 0 || superviosrName == null|| superviosrName.equalsIgnoreCase(""))&&
                 (superviosrEmail.length() == 0 || superviosrEmail == null|| superviosrEmail.equalsIgnoreCase("")) &&
                 (superviosrMobileNumber.length() == 0 || superviosrMobileNumber == null|| superviosrMobileNumber.equalsIgnoreCase("")))

@@ -228,12 +228,22 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
         String hintFromCrown = getResources().getString(R.string.from_string1);
         String hintToCrown = getResources().getString(R.string.to_string1);
 
+
+        spinner_fancy_intensity_view.setDropDownVerticalOffset(80);
         fancyColorIntensityListAdapter = new FancyColorIntensityListAdapter(context, Constant.fancyColorIntensityArrayList, hint);
         spinner_fancy_intensity_view.setAdapter(fancyColorIntensityListAdapter);
 
+        spinner_fancy_over_tone_view.setDropDownVerticalOffset(80);
         fancyColorOverToneListAdapter = new FancyColorOverToneListAdapter(context, Constant.fancyColorOverToneArrayList, hintOvertone);
         spinner_fancy_over_tone_view.setAdapter(fancyColorOverToneListAdapter);
-
+        try {
+            Field popupField = Spinner.class.getDeclaredField("mPopup");
+            popupField.setAccessible(true);
+            ListPopupWindow popupWindow = (ListPopupWindow) popupField.get(spinner_fancy_over_tone_view);
+            popupWindow.setHeight(500); // Set the dropdown height in pixels
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         tableFromDataListAdapter = new TableFromDataListAdapter(context, Constant.tableDataPercantageArrayList, hintFromTable);
         table_from_spinner.setAdapter(tableFromDataListAdapter);
@@ -1085,7 +1095,7 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
 
         clearAllSelectionsArrayList();
 
-        finish();
+      //  finish();
     }
 
     void getEditTextValue()

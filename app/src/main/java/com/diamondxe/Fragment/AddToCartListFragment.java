@@ -83,6 +83,7 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
     String isCoupanApplied = "", couponCode = "", couponValue = "", couponDiscount = "", subTotal = "", cgst = "", cgstPerc = "", sgst = "", sgstPerc = "", igst = "", igstPerc = "", discountPerc = "", tax = "",
             subTotalWithTax = "", shippingCharge = "", platformFee = "", totalCharge = "", totalChargeTax = "", totalChargeWithTax = "", totalTaxes = "", totalAmount = "", taxPerOnCharges = "", finalAmount = "", bankCharge = "", bankChargePerc = "";
 
+    double coupondiscountperc=0,subtotalaftercoupondiscount=0;
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
 
     @Override
@@ -504,7 +505,7 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
         //shimmerStop();
 
         try {
-            Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
+            Log.v("---Add to cart---Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -517,7 +518,8 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
                     {
                          rel_main_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color));
                          total_amount_lin.setVisibility(View.VISIBLE);
-
+                        /*coupondiscountperc=CommonUtility.checkDouble(jsonObjectData.optString("coupon_discount_perc"));
+                        subtotalaftercoupondiscount= CommonUtility.checkDouble(jsonObjectData.optString("subtotal_after_coupon_discount"));*/
                          isCoupanApplied= jsonObjectData.optString("is_coupan_applied");
                          couponCode= jsonObjectData.optString("coupon_code");
                          couponValue= jsonObjectData.optString("coupon_value");
@@ -565,6 +567,8 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             AddToCartListModel model = new AddToCartListModel();
+                            model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
+                            model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStockId(CommonUtility.checkString(objectCodes.optString("stock_id")));
                             model.setItemName(CommonUtility.checkString(objectCodes.optString("item_name")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));

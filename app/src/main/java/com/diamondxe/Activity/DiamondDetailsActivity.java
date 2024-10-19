@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -92,7 +93,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DiamondDetailsActivity extends SuperActivity implements RecyclerInterface {
-    private TextView supplier_id_tv, name_tv, item_type_tv,discount_tv,cut_grade_tv,polish_tv,symmetry_tv,fluorescence_intensity_tv,certificate_name_tv,sub_total_tv,
+    private TextView supplier_id_tv, name_tv, item_type_tv,discount_tv,cut_grade_tv,polish_tv,symmetry_tv,fluorescence_intensity_tv,certificate_name_tv,sub_total_tv,dis_sub_total_tv,
             pincode_tv, select_image_tv, select_360_tv, select_certificate_tv, select_size_tv, type_tv,current_return_policy_tv, details_measurements_tv,
             details_depth_tv, details_table_tv, details_crown_height_tv, details_crown_angle_tv, details_pavilion_depth_tv, details_pavilion_angle_tv, details_shade_tv,
             details_condition_cult_tv, details_growth_type_tv,details_inclusion_tv, details_status_tv, details_location_tv, details_key_tv,
@@ -154,6 +155,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
      discount_amout = "", length = "", width = "", depth = "", measurement = "", shade = "", luster = "",eye_clean = "", crown_angle = "", pavillion_angle = "", diamond_image = "", diamond_video = "", is_returnable = "",
             certificate_file = "", girdle_condition = "", culet = "", location = "", crown_height = "", pavillion_depth = "", inscription = "", key_to_symbols = "", report_comments = "", subtotal = "", is_cart = "", is_wishlist = "",
             avaliable_status = "", r_discount="",supplier_comment="",userPincode="", userCity="",stock_no="";
+    double coupondiscountperc, subtotalaftercoupondiscount;
     android.app.AlertDialog alertDialog;
     private RelativeLayout card_popup1;
     View translucent_background;
@@ -359,7 +361,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         fluorescence_intensity_tv = findViewById(R.id.fluorescence_intensity_tv);
         certificate_name_tv = findViewById(R.id.certificate_name_tv);
         sub_total_tv = findViewById(R.id.sub_total_tv);
-
+        dis_sub_total_tv=findViewById(R.id.dis_sub_total_tv);
         details_measurements_tv = findViewById(R.id.details_measurements_tv);
         details_depth_tv = findViewById(R.id.details_depth_tv);
         details_table_tv = findViewById(R.id.details_table_tv);
@@ -1031,7 +1033,161 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     int currentPage = 0;
     int NUM_PAGES = 0;
 
+
     public void setpager() {
+        // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
+        if(userRole.equalsIgnoreCase("BUYER"))
+        {
+
+            viewPagerBuyer.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
+            tabLayoutBuyer.setupWithViewPager(viewPagerBuyer, true);
+            final float density = getResources().getDisplayMetrics().density;
+            // Check Banner Image View Visible and Gone Condition Using Array List Size.
+            if(recommandDiamondArrayList!=null && recommandDiamondArrayList.size()>=1)
+            {
+                viewpager_buyer_layout.setVisibility(View.VISIBLE);
+
+                if(recommandDiamondArrayList.size()>1){
+                    tabLayoutBuyer.setVisibility(View.VISIBLE);
+                }else {
+                    tabLayoutBuyer.setVisibility(View.VISIBLE);
+                }
+            }
+            else
+            {
+                viewpager_buyer_layout.setVisibility(View.GONE);
+                tabLayoutBuyer.setVisibility(View.VISIBLE);
+            }
+
+            viewpager_layout.setVisibility(View.GONE);
+            NUM_PAGES = recommandDiamondArrayList.size();
+            currentPage = 0;
+
+            // Cancel any previous timer tasks if they exist
+            if (swipeTimer != null) {
+                swipeTimer.cancel();
+                swipeTimer = new Timer();
+            }
+
+            if (Update == null) {
+                // Auto start of viewpager
+                Update = new Runnable() {
+                    public void run() {
+                        if (NUM_PAGES > 0) {
+                            if (currentPage >= NUM_PAGES) {
+                                currentPage = 0;
+                            }
+                            viewPagerBuyer.setCurrentItem(currentPage++, true);
+                        }
+                    }
+                };
+                swipeTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(Update);
+                    }
+                }, 8000, 8000);
+            }
+            viewPagerBuyer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    // Optional implementation
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    // Highlight the selected tab
+                    tabLayoutBuyer.setScrollPosition(position, 0f, true);
+                    // Update currentPage to the new position
+                    currentPage = position;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    // Optional implementation
+                }
+            });
+
+        }
+        else{
+
+            viewPager.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
+            tabLayout.setupWithViewPager(viewPager, true);
+            final float density = getResources().getDisplayMetrics().density;
+            // Check Banner Image View Visible and Gone Condition Using Array List Size.
+            if(recommandDiamondArrayList!=null && recommandDiamondArrayList.size()>=1)
+            {
+                viewpager_layout.setVisibility(View.VISIBLE);
+
+                if(recommandDiamondArrayList.size()>1){
+                    tabLayout.setVisibility(View.VISIBLE);
+                }else {
+                    tabLayout.setVisibility(View.VISIBLE);
+                }
+            }
+            else
+            {
+                viewpager_layout.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.VISIBLE);
+            }
+
+            viewpager_buyer_layout.setVisibility(View.GONE);
+            NUM_PAGES = recommandDiamondArrayList.size();
+            currentPage = 0;
+
+            // Cancel any previous timer tasks if they exist
+            if (swipeTimer != null) {
+                swipeTimer.cancel();
+                swipeTimer = new Timer();
+            }
+
+            if (Update == null) {
+                // Auto start of viewpager
+                Update = new Runnable() {
+                    public void run() {
+                        if (NUM_PAGES > 0) {
+                            if (currentPage >= NUM_PAGES) {
+                                currentPage = 0;
+                            }
+                            viewPager.setCurrentItem(currentPage++, true);
+                        }
+                    }
+                };
+
+                swipeTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(Update);
+                    }
+                }, 8000, 8000);
+            }
+
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    // Optional implementation
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    // Highlight the selected tab
+                    // Highlight the selected tab
+                    tabLayout.setScrollPosition(position, 0f, true);
+                    // Update currentPage to the new position
+                    currentPage = position;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    // Optional implementation
+                }
+            });
+        }
+
+    }
+
+    // Change for new condition
+    /*public void setpager() {
         // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
         if(userRole.equalsIgnoreCase("DEALER"))
         {
@@ -1178,7 +1334,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             });
         }
 
-    }
+    }*/
 
     private class MyPagerAdapter extends PagerAdapter {
 
@@ -1211,19 +1367,24 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             ImageView pagerImg, status_img, returnable_img, add_to_favt_img;
             CardView root_layout;
             TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv, cut_grade_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv, certificate_name_tv, discount_tv, return_policy_tv,
-                    table_perc_tv, depth_perc, measurement_tv, add_to_cart_tv, sub_total_tv,diamond_type;
+                    table_perc_tv, depth_perc, measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv,diamond_type;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View itemView;
 
             // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
+            Log.e("userRole",".....userRole......56......"+userRole);
             if(userRole.equalsIgnoreCase("DEALER"))
             {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list, container, false);
 
             }
-            else{
+            else if(userRole.equalsIgnoreCase("BUYER"))
+            {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list_for_buyer, container, false);
+            }
+            else {
+                itemView = inflater.inflate(R.layout.row_recommand_diamond_list, container, false);
             }
 
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
@@ -1249,6 +1410,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             measurement_tv = itemView.findViewById(R.id.measurement_tv);
             add_to_cart_tv = itemView.findViewById(R.id.add_to_cart_tv);
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
+            dis_sub_total_tv=itemView.findViewById(R.id.dis_sub_total_tv);
             diamond_type = itemView.findViewById(R.id.diamond_type);
 
             if(!list.get(position).getDiamond_image().equalsIgnoreCase(""))
@@ -1339,10 +1501,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             DecimalFormat formatter = new DecimalFormat("#,###,###");
 
-            if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+           // Log.e("getCoupondiscountperc","..1134..."+list.get(position).getCoupondiscountperc());
+            if (list.get(position).getCoupondiscountperc() > 0.0) {
+                Log.e("In IF","..1356*******...");
+                String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
+                //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            }
+            else
             {
-                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-            }else {}
+                Log.e("In else","..1356*******...");
+                if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+                {
+                    dis_sub_total_tv.setVisibility(View.GONE);
+                    sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+                }
+            }
+
 
             if(list.get(position).getIs_returnable().equalsIgnoreCase("1"))
             {
@@ -1648,12 +1826,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                          key_to_symbols = CommonUtility.checkString(jObjDetails.optString("key_to_symbols"));
                          report_comments = CommonUtility.checkString(jObjDetails.optString("report_comments"));
                          subtotal = CommonUtility.checkString(jObjDetails.optString("subtotal"));
+                        coupondiscountperc=CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
+                        subtotalaftercoupondiscount=CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
                          is_cart = CommonUtility.checkString(jObjDetails.optString("is_cart"));
                          is_wishlist = CommonUtility.checkString(jObjDetails.optString("is_wishlist"));
                          avaliable_status = CommonUtility.checkString(jObjDetails.optString("status"));
                          r_discount = CommonUtility.checkString(jObjDetails.optString("r_discount"));
                         supplier_comment = CommonUtility.checkString(jObjDetails.optString("supplier_comment"));
                         stock_no = CommonUtility.checkString(jObjDetails.optString("stock_no"));
+
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));
 
                          if(!diamond_image.equalsIgnoreCase(""))
                          {
@@ -1737,7 +1920,38 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
-                            sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
+                            Log.e("In IF","subTotalDiscountFormat......1356*******..."+subTotalDiscountFormat);
+                            if (coupondiscountperc>0)
+                            {
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(getCurrencySymbol + "" +
+                                        CommonUtility.currencyFormat(subTotalFormat));
+                            }
+                            else
+                            {
+                                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
+                                dis_sub_total_tv.setVisibility(View.GONE);
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            }
+                            /*if (list.get(position).getCoupondiscountperc() > 0.0) {
+                                Log.e("In IF","..1356*******...");
+                                String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+                                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
+                                //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+                            }
+                            else
+                            {
+
+                            }*/
+
+
+
+
                         }
                         else{}
 
@@ -1941,6 +2155,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             SearchResultTypeModel model = new SearchResultTypeModel();
+                            model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
+                            model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStock_id(CommonUtility.checkString(objectCodes.optString("stock_id")));
 
                             model.setItem_name(CommonUtility.checkString(objectCodes.optString("item_name")));

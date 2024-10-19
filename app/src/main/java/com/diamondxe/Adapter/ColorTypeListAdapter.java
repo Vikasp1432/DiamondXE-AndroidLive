@@ -78,7 +78,7 @@ public class ColorTypeListAdapter extends RecyclerView.Adapter<RecyclerView.View
         else
         {
             holder.color_type_tv.setBackgroundResource(R.drawable.background_white);
-            holder.color_type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
+            holder.color_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
             holder.cardView.setCardElevation(0f);
             holder.cardView.setCardElevation(0f);

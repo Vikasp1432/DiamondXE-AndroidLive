@@ -68,7 +68,7 @@ public class CertificateTypeListAdapter extends RecyclerView.Adapter<RecyclerVie
         else
         {
             holder.type_tv.setBackgroundResource(R.drawable.background_white);
-            holder.type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
+            holder.type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
             holder.cardView.setElevation(0f);
             holder.cardView.setCardElevation(0f);

@@ -345,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_toLeftOf="@+id/sub_total_tv">
+                    android:layout_toLeftOf="@+id/allprice">
 
                     <TextView
                         android:id="@+id/table_perc_tv"
@@ -411,21 +411,44 @@
                 </LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/sub_total_tv"
-                    style="@style/BoldFontType"
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/allprice"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/dimen_2"
-                    android:layout_marginRight="@dimen/dimen_3"
-                    android:paddingLeft="@dimen/dimen_2"
-                    android:paddingTop="@dimen/dimen_2"
-                    android:paddingRight="@dimen/dimen_2"
-                    android:paddingBottom="@dimen/dimen_2"
-                    android:text=""
-                    android:textColor="@color/purple_light"
-                    android:textSize="@dimen/dimen_18" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/sub_total_tv"
+                        style="@style/BoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dimen_2"
+                        android:layout_marginRight="@dimen/dimen_2"
+                        android:paddingTop="@dimen/dimen_2"
+                        android:paddingRight="@dimen/dimen_2"
+                        android:paddingBottom="@dimen/dimen_2"
+                        android:text="233"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_16" />
+
+                    <TextView
+                        android:id="@+id/dis_sub_total_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_3"
+                        android:paddingLeft="@dimen/dimen_2"
+                        android:paddingRight="@dimen/dimen_2"
+                        android:text="56"
+                        android:textColor="@color/light_gray2"
+                        android:textSize="@dimen/dimen_14" />
+                </LinearLayout>
+
+
+
 
             </RelativeLayout>
 

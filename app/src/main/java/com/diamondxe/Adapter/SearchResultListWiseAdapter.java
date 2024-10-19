@@ -2,6 +2,7 @@ package com.diamondxe.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -47,13 +48,14 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
     {
         View v;
         // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
-        if(userRole.equalsIgnoreCase("DEALER"))
-        {
-            v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_search_result_list_wise, parent, false);
-        }
-        else
+        if(userRole.equalsIgnoreCase("BUYER"))
         {
             v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_search_result_list_wise_for_buyer, parent, false);
+
+        }
+        else
+        {v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_search_result_list_wise, parent, false);
+
         }
 
         return new RecycleViewHolder(v);
@@ -146,10 +148,28 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
         holder.depth_perc.setText("D: " + list.get(position).getDepth_perc());
         holder.measurement_tv.setText("M: " + list.get(position).getMeasurement());
 
-        if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+
+
+        if (list.get(position).getCoupondiscountperc() > 0) {
+
+            String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" +
+                    CommonUtility.currencyFormat(getsubtotalPrice));
+            holder.dis_sub_total_tv.setPaintFlags(holder.dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" +
+                    CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
+            //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+        }
+        else
         {
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-        }else{}
+            if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
+            {
+                holder.dis_sub_total_tv.setVisibility(View.GONE);
+                holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" +
+                        CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            }
+        }
 
         if(list.get(position).getIs_returnable().equalsIgnoreCase("1"))
         {
@@ -265,7 +285,7 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
 
         CardView root_layout, add_to_favt_card, add_to_card_view;
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
-                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv, return_policy_tv,discount_tv, diamond_type;
+                depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv, return_policy_tv,discount_tv, diamond_type;
         ImageView add_to_favt_img,image_view, returnable_img, status_img, add_to_card_img;
         RelativeLayout search_circle_card_lin;
 
@@ -292,6 +312,7 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
             depth_perc = itemView.findViewById(R.id.depth_perc);
             measurement_tv = itemView.findViewById(R.id.measurement_tv);
             //add_to_cart_tv = itemView.findViewById(R.id.add_to_cart_tv);
+            dis_sub_total_tv=itemView.findViewById(R.id.dis_sub_total_tv);
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
             return_policy_tv = itemView.findViewById(R.id.return_policy_tv);
             discount_tv = itemView.findViewById(R.id.discount_tv);

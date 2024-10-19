@@ -25,6 +25,8 @@
     <color name="shadow_color1">#AD735A33</color>
     <color name="top_bg">#F3F1F1</color>
     <color name="purple_light">#7E3080</color>
+    <color name="purple_light_new">#7d3080</color>
+    <color name="purple_light_border">#ccb6cb</color>
     <color name="light_pink">#FDF4F7</color>
     <color name="light_green">#E8F2E3</color>
     <color name="light_cream">#FBF3E8</color>
@@ -56,6 +58,7 @@
 
     <color name="black_light">#212121</color>
     <color name="light_gray1">#b7b7b7</color>
+    <color name="light_gray2">#717171</color>
     <color name="dark_red">#ff0000</color>
     <color name="yellow">#cea465</color>
     <color name="gray1">#e5e3e3</color>

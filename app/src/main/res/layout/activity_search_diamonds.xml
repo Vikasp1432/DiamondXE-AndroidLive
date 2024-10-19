@@ -91,6 +91,12 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_below="@+id/tool_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/sha_gray1"/>
+
     <!--Search Layout Not Use-->
     <LinearLayout
         android:id="@+id/search_shadow_lin1"
@@ -173,9 +179,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginLeft="@dimen/dimen_35"
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_35"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="2">
@@ -189,8 +195,8 @@
                         android:layout_marginBottom="@dimen/dimen_10"
                         android:layout_weight="1"
                         android:elevation="@dimen/dimen_10"
-                        android:paddingLeft="@dimen/dimen_5"
-                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingLeft="@dimen/dimen_3"
+                        android:paddingTop="@dimen/dimen_5"
                         android:paddingRight="@dimen/dimen_5"
                         android:paddingBottom="@dimen/dimen_10"
                         app:cardCornerRadius="@dimen/dimen_7"
@@ -204,10 +210,10 @@
                             android:layout_weight="1"
                             android:background="@drawable/background_gradient"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingLeft="@dimen/dimen_3"
+                            android:paddingTop="@dimen/dimen_6"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_6"
                             android:text="@string/natural"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_14" />
@@ -238,9 +244,9 @@
                             android:background="@drawable/border_dark_purple"
                             android:gravity="center"
                             android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingTop="@dimen/dimen_6"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_6"
                             android:text="@string/lab_grown"
                             android:textColor="@color/purple_light"
                             android:textSize="@dimen/dimen_14" />
@@ -252,6 +258,8 @@
 
                 <!--Shape Layout-->
                 <LinearLayout
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_5"
@@ -261,12 +269,10 @@
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginRight="@dimen/dimen_20"
                         android:paddingTop="@dimen/dimen_5"
                         android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/shape"
-                        android:textColor="@color/purple"
+                        android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
 
 
@@ -274,7 +280,6 @@
                         android:id="@+id/recycler_shape_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_10"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -290,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginRight="@dimen/dimen_20">
+                        android:layout_marginRight="@dimen/dimen_16">
 
                         <TextView
                             style="@style/SemiBoldFontType"
@@ -321,12 +326,12 @@
 
                     <!--Best Medium Low Button Layout-->
                     <LinearLayout
+                        android:layout_marginTop="@dimen/dimen_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:layout_marginRight="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_16"
+                        android:layout_marginRight="@dimen/dimen_16"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="3">
@@ -356,9 +361,9 @@
                                 android:background="@drawable/border_without_line"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/dimen_5"
-                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_8"
                                 android:paddingRight="@dimen/dimen_5"
-                                android:paddingBottom="@dimen/dimen_10"
+                                android:paddingBottom="@dimen/dimen_8"
                                 android:text="@string/best"
                                 android:textColor="@color/purple_light"
                                 android:textSize="@dimen/dimen_14" />
@@ -389,9 +394,9 @@
                                 android:background="@drawable/border_without_line"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/dimen_5"
-                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_8"
                                 android:paddingRight="@dimen/dimen_5"
-                                android:paddingBottom="@dimen/dimen_10"
+                                android:paddingBottom="@dimen/dimen_8"
                                 android:text="@string/medium"
                                 android:textColor="@color/purple_light"
                                 android:textSize="@dimen/dimen_14" />
@@ -423,9 +428,9 @@
                                 android:background="@drawable/border_without_line"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/dimen_5"
-                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_8"
                                 android:paddingRight="@dimen/dimen_5"
-                                android:paddingBottom="@dimen/dimen_10"
+                                android:paddingBottom="@dimen/dimen_8"
                                 android:text="@string/low"
                                 android:textColor="@color/purple_light"
                                 android:textSize="@dimen/dimen_14" />
@@ -448,9 +453,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginRight="@dimen/dimen_20"
+                        android:layout_marginRight="@dimen/dimen_16"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_2"
                         android:text="@string/price"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -463,7 +468,7 @@
                         <com.dd.ShadowLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginLeft="@dimen/dimen_16"
                             android:layout_marginRight="@dimen/dimen_5"
                             android:layout_weight="1"
                             app:sl_cornerRadius="@dimen/dimen_8"
@@ -579,9 +584,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginRight="@dimen/dimen_20"
+                        android:layout_marginRight="@dimen/dimen_16"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_2"
                         android:text="@string/carat"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -594,7 +599,7 @@
                         <com.dd.ShadowLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginLeft="@dimen/dimen_16"
                             android:layout_marginRight="@dimen/dimen_5"
                             android:layout_weight="1"
                             app:sl_cornerRadius="@dimen/dimen_8"
@@ -714,18 +719,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_20"
-                            android:layout_marginRight="@dimen/dimen_25"
+                            android:layout_marginRight="@dimen/dimen_16"
                             android:paddingTop="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_5"
                             android:text="@string/color_text"
                             android:textColor="@color/purple_light"
                             android:textSize="@dimen/dimen_16" />
 
                         <RadioGroup
+                            android:gravity="center_vertical"
                             android:id="@+id/color_radio_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:paddingTop="@dimen/dimen_5"
                             android:layout_marginTop="@dimen/dimen_1"
                             android:orientation="horizontal">
 
@@ -734,9 +740,9 @@
                                 style="@style/SemiBoldFontType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:backgroundTint="@color/purple"
+                                android:backgroundTint="@color/purple_light"
                                 android:button="@drawable/radio_btn"
-                                android:buttonTint="@color/purple"
+                                android:buttonTint="@color/purple_light"
                                 android:checked="true"
                                 android:paddingLeft="@dimen/dimen_5"
                                 android:text="@string/white_text"
@@ -748,9 +754,9 @@
                                 style="@style/SemiBoldFontType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:layout_marginLeft="@dimen/dimen_16"
                                 android:button="@drawable/radio_btn"
-                                android:buttonTint="@color/purple"
+                                android:buttonTint="@color/purple_light"
                                 android:paddingLeft="@dimen/dimen_5"
                                 android:text="@string/fancy_text"
                                 android:textColor="@color/black"
@@ -781,9 +787,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginRight="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_16"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/clarity"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -811,7 +816,6 @@
                         android:layout_marginLeft="@dimen/dimen_20"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/certificate"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -839,7 +843,6 @@
                         android:layout_marginLeft="@dimen/dimen_20"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/fluorescence"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -867,7 +870,6 @@
                         android:layout_marginLeft="@dimen/dimen_20"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/make"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -896,7 +898,6 @@
                         android:layout_marginLeft="@dimen/dimen_20"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
                         android:text="@string/returnable"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
@@ -923,9 +924,9 @@
                             android:background="@drawable/background_white"
                             android:gravity="center"
                             android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingTop="@dimen/dimen_8"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_8"
                             android:text="@string/yes"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14" />
@@ -942,9 +943,9 @@
                             android:gravity="center"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingTop="@dimen/dimen_8"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_8"
                             android:text="@string/no"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14" />
@@ -963,9 +964,9 @@
                             android:gravity="center"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_10"
+                            android:paddingTop="@dimen/dimen_8"
                             android:paddingRight="@dimen/dimen_15"
-                            android:paddingBottom="@dimen/dimen_10"
+                            android:paddingBottom="@dimen/dimen_8"
                             android:text="@string/advance_filters"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_14" />

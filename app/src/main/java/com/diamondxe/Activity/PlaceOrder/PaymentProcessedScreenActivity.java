@@ -9,6 +9,7 @@ import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
@@ -23,6 +24,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,13 +48,17 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.diamondxe.Activity.PaymentStatusScreenActivity;
+import com.diamondxe.Adapter.AddToCartListAdapter;
+import com.diamondxe.Adapter.CouponsAdapter;
 import com.diamondxe.Adapter.Dealer.AllBankNameListAdapter;
 import com.diamondxe.Adapter.Dealer.BankNEFTListAdapter;
 import com.diamondxe.Adapter.Dealer.PopularBankListAdapter;
+import com.diamondxe.Adapter.MyOrder.RecentOrderDetailsListAdapter;
 import com.diamondxe.Adapter.UPIOptionListAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.AddToCartListModel;
+import com.diamondxe.Beans.CouponsListModel;
 import com.diamondxe.Beans.Dealer.BankNEFTListModel;
 import com.diamondxe.Beans.UPIAppInfoListModel;
 import com.diamondxe.Interface.DialogItemClickInterface;
@@ -63,6 +70,7 @@ import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.PaymentUtils;
 import com.diamondxe.Utils.Utils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.phonepe.intent.sdk.api.B2BPGRequest;
 import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
@@ -93,18 +101,18 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     private CardView order_summary_view_card;
 
     //-----------------------------------------For Payment-----------------------------------------------------------------
-    private LinearLayout  show_bank_name_lin, bank_account_details_lin, show_all_bank_lin, upi_option_lin, credit_card_main_lin, net_banking_main_lin;
-    private TextView rtgs_tv, card_type_tv, net_banking_tv,name_error_tv, company_name_error_tv,
+    private LinearLayout  show_bank_name_lin, show_upi_list,bank_account_details_lin, show_all_bank_lin, upi_option_lin, credit_card_main_lin, net_banking_main_lin,upi_main_lin;
+    private TextView rtgs_tv, card_type_tv, upi_tv,net_banking_tv,name_error_tv, company_name_error_tv,
             amount_error_tv, remark_error_tv,branch_name_tv,ifsc_code_tv,swift_code_tv,bank_name_tv,account_number_tv,mode_payment_tv,select_date_tv,
             payment_mode_error_tv, cheque_no_error_tv, date_error_tv, cheque_mode_tv, neft_mode_tv, rgts_mode_tv, wire_transfer_mode_tv,others_mode_tv,
             payment_option_error_tv,select_bank_tv, select_mode_lbl, select_bank_error_tv,total_amount_tv, final_amount_tv1,shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
-            sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv,available_wallet_points_tv;
+            sub_total_tv, bank_charges_tv,noupifound_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv,available_wallet_points_tv;
     private EditText  cheque_et;
-    private RelativeLayout proceed_to_pay_rel, rtgs_rel, card_type_rel, net_banking_rel, upi_rel, mode_payment_rel,select_date_rel,
+    private RelativeLayout proceed_to_pay_rel, rtgs_rel, card_type_rel, net_banking_rel,upi_relative, upi_rel, mode_payment_rel,select_date_rel,
             cheque_rel, show_all_bank_rel;
     private ImageView upi_option_down_arrow_img;
     boolean isSelectNetBankingBank = false;
-
+    private BottomSheetDialog dialog;
     private RecyclerView recycler_view, recycler_view_upi;
     ArrayList<BankNEFTListModel> modelArrayList;
     ArrayList<BankNEFTListModel> popularBankArrayList;
@@ -137,7 +145,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     //String PAYMENT_BY_CARD = "CARD";
     String PAYMENT_BY_CARD = "PAY_PAGE";
     String shippingCountryName = "United Arab Emirates";
-
+    public ArrayList<CouponsListModel> couponsListModelArrayList;
     //-------------------------------------------------Payment End-------------------------------------------------------------
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -158,6 +166,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             orderTotalCharge = "", orderTotalChargeTax = "", orderTotalChargeWithTax = "", orderTotalTaxes = "", orderTotalAmount = "", orderTaxPerOnCharges = "", orderFinalAmount = "", orderBankCharge = "", orderBankChargePerc = "",orderFinalAmountWithOutFormat="",
             orderCouponStatus="", orderCouponMessage="",orderWalletPonits="",availableWalletPoints="",userRole="";
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    TextView viewallcoupon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +176,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         context = activity = this;
 
         orderItemArrayList = new ArrayList<>();
+        couponsListModelArrayList = new ArrayList<>();
 
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
@@ -176,10 +186,12 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         shipping_img = findViewById(R.id.shipping_img);
         kyc_img = findViewById(R.id.kyc_img);
         payment_img = findViewById(R.id.payment_img);
-
+        viewallcoupon=findViewById(R.id.viewallcoupon);
+        viewallcoupon.setOnClickListener(this);
         shipping_rel = findViewById(R.id.shipping_rel);
         kyc_rel = findViewById(R.id.kyc_rel);
         payment_rel = findViewById(R.id.payment_rel);
+        noupifound_tv=findViewById(R.id.noupifound_tv);
 
         shipping_card_view = findViewById(R.id.shipping_card_view);
         shipping_card_view.setOnClickListener(this);
@@ -287,6 +299,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         rtgs_tv = findViewById(R.id.rtgs_tv);
         card_type_tv = findViewById(R.id.card_type_tv);
         net_banking_tv = findViewById(R.id.net_banking_tv);
+        upi_tv =findViewById(R.id.upi_tv);
 
         rtgs_rel = findViewById(R.id.rtgs_rel);
         rtgs_rel.setOnClickListener(this);
@@ -296,6 +309,9 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         net_banking_rel = findViewById(R.id.net_banking_rel);
         net_banking_rel.setOnClickListener(this);
+
+        upi_relative=findViewById(R.id.upi_rela);
+        upi_relative.setOnClickListener(this);
 
         recycler_view = findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
@@ -312,6 +328,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         show_bank_name_lin = findViewById(R.id.show_bank_name_lin);
         bank_account_details_lin = findViewById(R.id.bank_account_details_lin);
         show_all_bank_lin = findViewById(R.id.show_all_bank_lin);
+        show_upi_list=findViewById(R.id.show_upi_list);
 
         show_all_bank_rel = findViewById(R.id.show_all_bank_rel);
         show_all_bank_rel.setOnClickListener(this);
@@ -348,6 +365,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         upi_option_lin = findViewById(R.id.upi_option_lin);
         credit_card_main_lin = findViewById(R.id.credit_card_main_lin);
         net_banking_main_lin = findViewById(R.id.net_banking_main_lin);
+        upi_main_lin=findViewById(R.id.upi_main_lin);
 
 
         if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
@@ -361,9 +379,10 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             rtgs_tv.setText(getResources().getString(R.string.bank_transfer));
         }
         else{
-            upi_option_lin.setVisibility(View.VISIBLE);
+            upi_option_lin.setVisibility(View.GONE);
             credit_card_main_lin.setVisibility(View.VISIBLE);
             net_banking_main_lin.setVisibility(View.VISIBLE);
+            upi_main_lin.setVisibility(View.VISIBLE);
 
             cheque_et.setHint(getResources().getString(R.string.enter_utr_cheque_no));
 
@@ -386,7 +405,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         getDXEBankDetailsAPI(true);
         getPaymentOptionAPI(false);
         getBankChargesAPI(true);
-
+        getAllCouponsAPI(true);
         // Set Alpha For Background.
         apply_wallet_points_lin.setAlpha(0.5f);
         apply_loyalty_points_lin.setAlpha(0.5f);
@@ -530,10 +549,12 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         rtgs_rel.setBackgroundResource(R.drawable.background_select_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         // If Payment Option Selected After that Error Gone
         payment_option_error_tv.setVisibility(View.GONE);
@@ -826,6 +847,10 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             }
             isArrowDown = !isArrowDown;
         }
+        else if(id == R.id.viewallcoupon)
+        {
+            showOrderDetailsBottomDialog();
+        }
         else if(id == R.id.rtgs_rel)
         {
             Utils.hideKeyboard(activity);
@@ -843,6 +868,14 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             Utils.hideKeyboard(activity);
 
             netBankingSelected();
+
+        }
+        else if(id == R.id.upi_rela)
+        {
+
+            Utils.hideKeyboard(activity);
+
+            UPISelected();
 
         }
         else if(id == R.id.upi_rel)
@@ -904,6 +937,48 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         }
     }
 
+    RecyclerView recycler_coupone_list_details;
+    CouponsAdapter couponsAdapter;
+    // View Coupone
+    private void showOrderDetailsBottomDialog()
+    {
+        //all_coupons_activity
+        dialog = new BottomSheetDialog(context, R.style.BottomSheetDialog);
+        dialog.setContentView(R.layout.all_coupons_activity);
+
+        recycler_coupone_list_details = dialog.findViewById(R.id.recycler_view);
+        recycler_coupone_list_details.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        recycler_coupone_list_details.setLayoutManager(layoutManager);
+        recycler_coupone_list_details.setNestedScrollingEnabled(false);
+
+        couponsAdapter = new CouponsAdapter(couponsListModelArrayList, context, this);
+        recycler_coupone_list_details.setAdapter(couponsAdapter);
+        couponsAdapter.notifyDataSetChanged();
+
+        ImageView ib_cross = dialog.findViewById(R.id.ib_cross);
+
+        ib_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(window.getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = 1000; // Set your desired fixed height here, in pixels
+
+            window.setAttributes(lp);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+        dialog.show();
+    }
+
     void clearCouponCode()
     {
         coupon_error_rel.setVisibility(View.GONE); // Coupon Error Code Layout
@@ -939,11 +1014,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     {
         rtgs_rel.setBackgroundResource(R.drawable.background_select_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         // If Payment Option Selected After that Error Gone
         payment_option_error_tv.setVisibility(View.GONE);
@@ -967,7 +1044,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
         calculateAmountWithCharges();
-
+        show_upi_list.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
         bank_account_details_lin.setVisibility(View.VISIBLE); // Bank Account Details Layout
         show_all_bank_lin.setVisibility(View.GONE); // Select Bank DropDown Layout Gone
@@ -978,11 +1055,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     {
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_select_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
         editTextAndTextViewValueBlank();
@@ -1001,10 +1080,56 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
         calculateAmountWithCharges();
-
+        show_upi_list.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.GONE); // Bank List Layout
         bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
         show_all_bank_lin.setVisibility(View.GONE); // Select Bank DropDown Layout Gone
+    }
+
+    //UPI Select
+    void UPISelected()
+    {
+
+        rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
+        card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
+        net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_select_payment_option);
+
+        rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
+
+        // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
+       // editTextAndTextViewValueBlank();
+
+        // If Payment Option Selected After that Error Gone
+        payment_option_error_tv.setVisibility(View.GONE);
+
+        show_upi_list.setVisibility(View.VISIBLE);
+        recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
+
+        selectPaymentOptionClearUPIOption(UPI);
+
+        showUPIAppsOption(upiAppsArrayList);
+
+
+        ///////////
+
+        editTextAndTextViewValueBlank();
+
+        recycler_view.setVisibility(View.GONE); // Bank List Layout Show
+        select_bank_error_tv.setVisibility(View.GONE); // Hide Bank Selection Required Error.
+
+        isSelectNetBankingBank = false; // Use For Check Validation Net Banking Bank Not Selected
+
+        // Amount  Calculated Final Amount and Show Amount in Bottom of Screen
+        calculateAmountWithCharges();
+
+
+        show_bank_name_lin.setVisibility(View.GONE); // Bank List Layout
+        bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
+        show_all_bank_lin.setVisibility(View.GONE);
     }
 
     // Net Banking Option Selected
@@ -1012,10 +1137,12 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     {
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_select_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
 
         // If Payment Option Selected After that Error Gone
@@ -1048,7 +1175,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         popularBankListAdapter = new PopularBankListAdapter(popularBankArrayList, context , this);
         recycler_view.setAdapter(popularBankListAdapter);
-
+        show_upi_list.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
         bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
         show_all_bank_lin.setVisibility(View.VISIBLE); // Select Bank DropDown Layout Visible
@@ -1069,8 +1196,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                 upi_option_down_arrow_img.setImageResource(R.drawable.drop_down);
             }
             isArrowDown = !isArrowDown;*/
-
-        recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
+        show_upi_list.setVisibility(View.VISIBLE);
+       // recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
 
         selectPaymentOptionClearUPIOption(UPI);
 
@@ -1089,7 +1216,10 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                     item.setSelected(false);
                 }
                 selectedUPIPackage = "";
-                upiOptionListAdapter.notifyDataSetChanged();
+                if(upiOptionListAdapter!=null){
+                    upiOptionListAdapter.notifyDataSetChanged();
+                }
+
             }
             else{}
         }
@@ -1107,6 +1237,25 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,showLoader,
+                    "POST");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+        }
+    }
+
+    public void getAllCouponsAPI(boolean showLoader)
+    {
+        String uuid = CommonUtility.getAndroidId(context);
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+           /* urlParameter.put("sessionId", "" + uuid);
+            urlParameter.put("countryName", "" + Constant.shippingAddressNameForShowHidePaymentOption);*/
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_COUPONS_LIST, ApiConstants.GET_COUPONS_LIST_ID,showLoader,
                     "POST");
 
         } else {
@@ -1744,6 +1893,79 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                     }
                     break;
 
+                case ApiConstants.GET_COUPONS_LIST_ID:
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        if(couponsListModelArrayList.size() > 0)
+                        {
+                            couponsListModelArrayList.clear();
+                        }
+                        //Log.e("-------Diamond : ", "Bank Charges : " + jsonObjectData.toString());
+                        try {
+                            JSONArray jObjDetails = jsonObjectData.getJSONArray("details");
+
+                            if (jObjDetails != null && jObjDetails.length() > 0) {
+                                for (int i = 0; i < jObjDetails.length(); i++) {
+                                    JSONObject detailObject = jObjDetails.optJSONObject(i);
+
+                                    CouponsListModel couponsListModel =new CouponsListModel();
+                                    // Extract each field from the object
+                                    String userType = detailObject.optString("usertype");
+                                    String itemType = detailObject.optString("item_type");
+                                    String category = detailObject.optString("category");
+                                    String code = detailObject.optString("code");
+                                    String description = detailObject.optString("description");
+                                    String discountType = detailObject.optString("type");
+                                    String currencyCode = detailObject.optString("currency_code");
+                                    String value = detailObject.optString("value");
+                                    String termsAndConditions = detailObject.optString("terms_and_conditions");
+                                    String startDate = detailObject.optString("start_date");
+                                    String endDate = detailObject.optString("end_date");
+
+                                    couponsListModel.setCategory(CommonUtility.checkString(detailObject.optString("usertype")));
+                                    couponsListModel.setItemType(CommonUtility.checkString(detailObject.optString("item_type")));
+                                    couponsListModel.setCategory(CommonUtility.checkString(detailObject.optString("category")));
+                                    couponsListModel.setCode(CommonUtility.checkString(detailObject.optString("code")));
+                                    couponsListModel.setDescription(CommonUtility.checkString(detailObject.optString("description")));
+                                    couponsListModel.setDiscountType(CommonUtility.checkString(detailObject.optString("type")));
+                                    couponsListModel.setCurrencyCode(CommonUtility.checkString(detailObject.optString("currency_code")));
+                                    couponsListModel.setValue(CommonUtility.checkString(detailObject.optString("value")));
+                                    couponsListModel.setTermsAndConditions(CommonUtility.checkString(detailObject.optString("terms_and_conditions")));
+                                    couponsListModel.setStartDate(CommonUtility.checkString(detailObject.optString("start_date")));
+                                    couponsListModel.setEndDate(CommonUtility.checkString(detailObject.optString("end_date")));
+                                    couponsListModelArrayList.add(couponsListModel);
+                                    // Process or store the values as needed
+                                    Log.d("DiscountOffer", "UserType: " + userType);
+                                    Log.d("DiscountOffer", "ItemType: " + itemType);
+                                    Log.d("DiscountOffer", "Category: " + category);
+                                    Log.d("DiscountOffer", "Code: " + code);
+                                    Log.d("DiscountOffer", "Description: " + description);
+                                    Log.d("DiscountOffer", "Discount Type: " + discountType);
+                                    Log.d("DiscountOffer", "Currency: " + currencyCode);
+                                    Log.d("DiscountOffer", "Value: " + value);
+                                    Log.d("DiscountOffer", "T&C: " + termsAndConditions);
+                                    Log.d("DiscountOffer", "StartDate: " + startDate);
+                                    Log.d("DiscountOffer", "EndDate: " + endDate);
+
+
+                                    // Add any other logic for processing the details here
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            Log.e("ChargesError", "Invalid format for charges", e);
+                        }
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {}
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        //Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
             }
 
         } catch (Exception e) {
@@ -1759,6 +1981,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             int enterAmount = Integer.parseInt(totalOrderAmount);
             if(enterAmount>500000)
             {
+                upi_main_lin.setVisibility(View.GONE);// UPI Option Hide
                 upi_option_lin.setVisibility(View.GONE); // UPI Option Hide
                 //paymentModeType = ""; // Payment Option Blank
                 selectedUPIPackage = ""; // UPI Package name blank
@@ -1777,12 +2000,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             }
             else
             {
+                upi_main_lin.setVisibility(View.VISIBLE);
                 if(Constant.shippingAddressNameForShowHidePaymentOption.equalsIgnoreCase(shippingCountryName))
                 {
                     upi_option_lin.setVisibility(View.GONE); // UPI Option Gone
                 }
                 else{
-                    upi_option_lin.setVisibility(View.VISIBLE); // UPI Option Visible
+                    upi_option_lin.setVisibility(View.GONE); // UPI Option Visible
                 }
 
             }
@@ -1797,6 +2021,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     @Override
     public void itemClick(int position, String action)
     {
+
         // RTGS/NEFT Bank
         if(action.equalsIgnoreCase("selectBank"))
         {
@@ -1990,6 +2215,20 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             // Notify the adapter for the UPI options list to update the UI.
             upiOptionListAdapter.notifyDataSetChanged();
+        }
+        else if(action.equalsIgnoreCase("AllCoupon"))
+        {
+
+            Log.e("code",".....@@@@@@@....."+couponsListModelArrayList.get(position).getCode());
+           // coupon_point_et.setText(couponsListModelArrayList.get(position).getCode());
+
+            getCheckOutDetailsAPI(false, couponsListModelArrayList.get(position).getCode(), wallet_point_et.getText().toString().trim(),
+                    "");
+            if (dialog!=null)
+            {
+                dialog.dismiss();
+            }
+
         }
     }
 
@@ -2252,6 +2491,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     }
 
     // Get all UPI App
+    // Working code
     private ArrayList<UPIAppInfoListModel> getInstalledUPIApps() {
         ArrayList<UPIAppInfoListModel> upiAppsList = new ArrayList<>();
         Uri uri = Uri.parse("upi://pay"); // Use a general UPI URI
@@ -2274,13 +2514,62 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         return upiAppsList;
     }
 
+    //
+
+
+    //working code if app only install
+    /*private ArrayList<UPIAppInfoListModel> getInstalledUPIApps() {
+        ArrayList<UPIAppInfoListModel> upiAppsList = new ArrayList<>();
+        PackageManager packageManager = getApplication().getPackageManager();
+
+        // List of known UPI app package names
+        String[] knownUPIPackages = {
+                "com.google.android.apps.nbu.paisa.user", // Google Pay
+                "com.phonepe.app",                        // PhonePe
+                "net.one97.paytm",                        // Paytm
+                "in.org.npci.upiapp",                     // BHIM
+                // Add more known UPI app package names as needed
+        };
+
+        for (String packageName : knownUPIPackages) {
+            try {
+                ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
+                String appName = packageManager.getApplicationLabel(appInfo).toString();
+                Drawable appIcon = packageManager.getApplicationIcon(appInfo);
+                upiAppsList.add(new UPIAppInfoListModel(packageName, appName, appIcon, false));
+            } catch (PackageManager.NameNotFoundException e) {
+                // App not installed, skip
+            }
+        }
+
+        return upiAppsList;
+    }*/
+
+
+
     // Show All UPI App Name
     private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
+
+        Log.e("upiApps","...2521...."+upiApps.isEmpty());
+        if (upiApps.isEmpty())
+        {
+
+            noupifound_tv.setVisibility(View.VISIBLE);
+            recycler_view_upi.setVisibility(View.GONE);
+        }
+        else
+        {
+            noupifound_tv.setVisibility(View.GONE);
+            noupifound_tv.setText("Found");
+            recycler_view_upi.setVisibility(View.VISIBLE);
+        }
         if (upiApps.isEmpty()) {
-            Toast.makeText(this, "No UPI apps installed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.noupifound, Toast.LENGTH_SHORT).show();
             upi_option_lin.setVisibility(View.GONE);
             return;
         }
+
+        Log.e("upiApps","...2521..**..Size.."+upiApps.size());
         upiOptionListAdapter = new UPIOptionListAdapter(upiApps, context , this);
         recycler_view_upi.setAdapter(upiOptionListAdapter);
     }

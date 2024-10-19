@@ -429,6 +429,22 @@ public class CommonUtility {
 		return "";
 	}
 
+	public static double checkDouble(String value) {
+		double updatedValue = 0.0; // Default value for invalid inputs
+
+		if (value == null || value.trim().equalsIgnoreCase("") || value.equalsIgnoreCase("null")) {
+			updatedValue = 0.0; // Return default value
+		} else {
+			try {
+				updatedValue = Double.parseDouble(value); // Parse the value as double
+			} catch (NumberFormatException e) {
+				updatedValue = 0.0; // Handle the case where value is not a valid double
+			}
+		}
+
+		return updatedValue;
+	}
+
 	public static String checkString(String value)
 	{
 		String updatedValue = "";

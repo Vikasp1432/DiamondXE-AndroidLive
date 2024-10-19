@@ -6,8 +6,25 @@ import java.io.Serializable;
 public class TopDiamondImageModel implements Serializable {
 
     String id="", image = "", name="", price="",category="", carat="", certificateNo="", currencySymbol="",showingSubTotal="";
+    double coupondiscountperc=0,subtotalaftercoupondiscount=0;
 
     boolean isFirstPosition = false;
+
+    public double getCoupondiscountperc() {
+        return coupondiscountperc;
+    }
+
+    public void setCoupondiscountperc(double coupondiscountperc) {
+        this.coupondiscountperc = coupondiscountperc;
+    }
+
+    public double getSubtotalaftercoupondiscount() {
+        return subtotalaftercoupondiscount;
+    }
+
+    public void setSubtotalaftercoupondiscount(double subtotalaftercoupondiscount) {
+        this.subtotalaftercoupondiscount = subtotalaftercoupondiscount;
+    }
 
     public String getId() {
         return id;

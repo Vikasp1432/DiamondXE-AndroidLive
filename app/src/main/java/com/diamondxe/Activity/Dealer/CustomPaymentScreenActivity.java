@@ -1791,6 +1791,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
     // Show All UPI App Name
     private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
+        Log.e("upiApps","...1794........"+upiApps.size());
         if (upiApps.isEmpty()) {
             Toast.makeText(this, "No UPI apps installed", Toast.LENGTH_SHORT).show();
             upi_option_lin.setVisibility(View.GONE);

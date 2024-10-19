@@ -9,6 +9,23 @@ public class WishListModel implements Serializable {
             luster = "", eyeClean = "", diamondImage = "", diamondVideo = "", discount = "", rapaportPricePerCt = "", labGrownDiaPrice = "",
             naturalDiaPrice = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", totalGstPerc = "", pricePerCt = "", subtotal = "", totalPrice = "", isCart = "", onHold = "", shippingCharge = "", platformFeeAmt = "",
             dxeMarkup = "",stockNo="",showingSubTotal="",currencySymbol="";
+    double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+
+    public double getCoupondiscountperc() {
+        return coupondiscountperc;
+    }
+
+    public void setCoupondiscountperc(double coupondiscountperc) {
+        this.coupondiscountperc = coupondiscountperc;
+    }
+
+    public double getSubtotalaftercoupondiscount() {
+        return subtotalaftercoupondiscount;
+    }
+
+    public void setSubtotalaftercoupondiscount(double subtotalaftercoupondiscount) {
+        this.subtotalaftercoupondiscount = subtotalaftercoupondiscount;
+    }
 
     public String getCertificateNo() {
         return certificateNo;

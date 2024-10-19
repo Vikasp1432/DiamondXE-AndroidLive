@@ -1128,8 +1128,9 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             SearchResultTypeModel model = new SearchResultTypeModel();
+                            model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
+                            model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStock_id(CommonUtility.checkString(objectCodes.optString("stock_id")));
-
                             model.setItem_name(CommonUtility.checkString(objectCodes.optString("item_name")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));
                             model.setSupplier_id(CommonUtility.checkString(objectCodes.optString("supplier_id")));

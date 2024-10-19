@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid android:color="@color/bg_color"/> <!-- Green color -->
+
+    <size
+        android:width="100dp"
+        android:height="100dp" /> <!-- Set size of the circle -->
+
+</shape>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        &lt;!&ndash; Background shape with rounded corners &ndash;&gt;
+        <item>
+            <shape android:shape="rectangle">
+                <solid android:color="#FFFFFF" /> &lt;!&ndash; Background color &ndash;&gt;
+                <corners android:radius="16dp" />  &lt;!&ndash; Card rounded corners &ndash;&gt;
+            </shape>
+        </item>
+
+        &lt;!&ndash; Left cut in the middle &ndash;&gt;
+        <item android:top="50dp" android:left="-16dp">
+            <shape android:shape="oval">
+                <solid android:color="#F0F0F0" /> &lt;!&ndash; Same as background color &ndash;&gt;
+            </shape>
+        </item>
+
+        &lt;!&ndash; Right cut in the middle &ndash;&gt;
+        <item android:top="50dp" android:right="-16dp">
+            <shape android:shape="oval">
+                <solid android:color="#F0F0F0" /> &lt;!&ndash; Same as background color &ndash;&gt;
+            </shape>
+        </item>
+    </layer-list>
+    -->
