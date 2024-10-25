@@ -10,6 +10,7 @@ import static com.diamondxe.ApiCalling.ApiConstants.WISHLIST_FRAGMENT;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,8 +72,8 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     private RelativeLayout container_body, show_more_data_rel;
     private LinearLayout lin_enquiry;
     private ProgressBar progressBar;
-    private CardView search_circle_card, search_circle_card1_cross_country,curve_rel_country;
-    private RelativeLayout show_popup_rel_country, card_popup1_country, country_layout_rel;
+    private CardView search_circle_card, search_circle_card1_cross_country;
+    private RelativeLayout show_popup_rel_country, card_popup1_country, country_layout_rel,curve_rel_country;
     private View translucent_background;
     private Animation rotateAnimation;
     private CountryListModel lastSelectedCountry; // Track the last selected country
@@ -136,6 +137,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         arrow_img = findViewById(R.id.arrow_img);
 
         lin_enquiry = findViewById(R.id.lin_enquiry);
+        lin_enquiry.setOnClickListener(this);
 
         translucent_background = findViewById(R.id.translucent_background);
         translucent_background.setOnClickListener(this);
@@ -541,6 +543,11 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         }
         else if(id == R.id.show_popup_rel_country)
         {}
+        else if(id == R.id.lin_enquiry){
+            Intent intentcall = new Intent(Intent.ACTION_DIAL);
+            intentcall.setData(Uri.parse("tel:9892003399"));
+            startActivity(intentcall);
+        }
     }
 
     // Hide Currency List View Show in Screen On Cross Button click and Screen Touch Event Screen Touch Means When Show Transparency.

@@ -152,11 +152,24 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         DecimalFormat formatter = new DecimalFormat("#,###,###");
 
+        Log.e("getCurrencySymbol..",".Else........"+list.get(position).getCurrencySymbol());
         //discount_sub_total_tv
+       /* String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+        String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);*/
+
+
         if (list.get(position).getCoupondiscountperc() > 0) {
 
+            Log.e("getSubtotalaftercoupondiscount","159................"+list.get(position).getSubtotalaftercoupondiscount());
+            Log.e("getShowingSubTotal....","160........."+list.get(position).getShowingSubTotal());
+
+           String selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
+           String selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
             String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, getsubtotalPrice);
+
+
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(subTotalFormat));
             holder.discount_sub_total_tv.setPaintFlags(holder.discount_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.discount_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
 
@@ -177,6 +190,7 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 e.printStackTrace();
                 // Handle the exception, maybe set a default value or show an error message
             }*/
+                Log.e("getShowingSubTotal..",".Else........"+list.get(position).getShowingSubTotal());
                 holder.discount_sub_total_tv.setVisibility(View.GONE);
                 holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
             }
@@ -345,6 +359,5 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         }
     }
-
 
 }

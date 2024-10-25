@@ -121,7 +121,7 @@ public class CertificateWebViewActivity extends SuperActivity implements Recycle
 
             String extension =  CommonUtility.getFileExtension(certificateFileUrl);
             webView.getSettings().setSupportZoom(true);
-            //Log.e("------extension------ : ", extension.toString());
+            Log.e("------certificateFileUrl------ : ", certificateFileUrl);
             if(extension.equalsIgnoreCase(".pdf"))
             {
                 webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + certificateFileUrl);

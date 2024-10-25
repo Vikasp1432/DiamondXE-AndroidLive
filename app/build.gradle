@@ -16,8 +16,8 @@ android {
         applicationId "com.diamondxe"
         minSdk 24
         targetSdk 34
-        versionCode 9
-        versionName "v1.01.108"
+        versionCode 11
+        versionName "v1.01.110"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,6 +27,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            /*shrinkResources true*/
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             /*minifyEnabled true
             //useProguard true

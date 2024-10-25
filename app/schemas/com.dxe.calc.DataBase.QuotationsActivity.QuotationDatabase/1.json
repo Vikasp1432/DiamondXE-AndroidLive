@@ -1,0 +1,184 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "af3d49838b2bacb43e1ee2277fce2fd1",
+    "entities": [
+      {
+        "tableName": "data_model",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `metalWeight` TEXT NOT NULL, `metalRate` TEXT NOT NULL, `metalOutput` TEXT NOT NULL, `labourWeight` TEXT NOT NULL, `labourRate` TEXT NOT NULL, `labourOutput` TEXT NOT NULL, `solitaireWeight` TEXT NOT NULL, `solitaireRate` TEXT NOT NULL, `solitaireOutput` TEXT NOT NULL, `sideWeight` TEXT NOT NULL, `sideRate` TEXT NOT NULL, `sideOutput` TEXT NOT NULL, `colStoneWeight` TEXT NOT NULL, `colStoneRate` TEXT NOT NULL, `colStoneOutput` TEXT NOT NULL, `charges` TEXT NOT NULL, `tax` TEXT NOT NULL, `totalPrice` TEXT NOT NULL, `currentdatetime` TEXT NOT NULL, `caret` TEXT NOT NULL, `itemName` TEXT NOT NULL, `radiobuttonName` TEXT NOT NULL, `chargeTxt` TEXT NOT NULL, `solitairetxt` TEXT NOT NULL, `sidediatxt` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "metalWeight",
+            "columnName": "metalWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "metalRate",
+            "columnName": "metalRate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "metalOutput",
+            "columnName": "metalOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "labourWeight",
+            "columnName": "labourWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "labourRate",
+            "columnName": "labourRate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "labourOutput",
+            "columnName": "labourOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solitaireWeight",
+            "columnName": "solitaireWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solitaireRate",
+            "columnName": "solitaireRate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solitaireOutput",
+            "columnName": "solitaireOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sideWeight",
+            "columnName": "sideWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sideRate",
+            "columnName": "sideRate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sideOutput",
+            "columnName": "sideOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colStoneWeight",
+            "columnName": "colStoneWeight",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colStoneRate",
+            "columnName": "colStoneRate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colStoneOutput",
+            "columnName": "colStoneOutput",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charges",
+            "columnName": "charges",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tax",
+            "columnName": "tax",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalPrice",
+            "columnName": "totalPrice",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentdatetime",
+            "columnName": "currentdatetime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caret",
+            "columnName": "caret",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemName",
+            "columnName": "itemName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "radiobuttonName",
+            "columnName": "radiobuttonName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chargeTxt",
+            "columnName": "chargeTxt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solitairetxt",
+            "columnName": "solitairetxt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sidediatxt",
+            "columnName": "sidediatxt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af3d49838b2bacb43e1ee2277fce2fd1')"
+    ]
+  }
+}

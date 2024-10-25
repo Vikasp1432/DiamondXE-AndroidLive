@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +97,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             rel_other_tax, rel_diamond_tax, coupon_code_value_rel, coupon_error_rel, wallet_apply_point_rel,cross_wallet_rel;
     private CardView shipping_card_view, kyc_card_view, payment_card_view, points_summary_view_card;
     private LinearLayout points_details_lin, view_order_summary_details_lin, apply_wallet_points_lin, apply_loyalty_points_lin, apply_coupon_points_lin;
-    private TextView proceed_to_pay_tv, apply_wallet_points_tv, apply_loyalty_points_tv, apply_coupon_tv, coupon_code_value_tv,wallet_apply_charges_tv;
+    private TextView proceed_to_pay_tv, orderitemprice,apply_wallet_points_tv, apply_loyalty_points_tv, apply_coupon_tv, coupon_code_value_tv,wallet_apply_charges_tv;
     private EditText coupon_point_et, wallet_point_et, loyalty_point_et;
     private CardView order_summary_view_card;
 
@@ -183,6 +184,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
+        orderitemprice=findViewById(R.id.orderitemprice);
         shipping_img = findViewById(R.id.shipping_img);
         kyc_img = findViewById(R.id.kyc_img);
         payment_img = findViewById(R.id.payment_img);
@@ -938,6 +940,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     }
 
     RecyclerView recycler_coupone_list_details;
+    TextView nooffertext;
     CouponsAdapter couponsAdapter;
     // View Coupone
     private void showOrderDetailsBottomDialog()
@@ -945,13 +948,23 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         //all_coupons_activity
         dialog = new BottomSheetDialog(context, R.style.BottomSheetDialog);
         dialog.setContentView(R.layout.all_coupons_activity);
-
+        nooffertext=dialog.findViewById(R.id.nooffertext);
         recycler_coupone_list_details = dialog.findViewById(R.id.recycler_view);
-        recycler_coupone_list_details.setHasFixedSize(true);
+        recycler_coupone_list_details.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_coupone_list_details.setLayoutManager(layoutManager);
         recycler_coupone_list_details.setNestedScrollingEnabled(false);
 
+        if (couponsListModelArrayList.isEmpty())
+        {
+            nooffertext.setVisibility(View.VISIBLE);
+            recycler_coupone_list_details.setVisibility(View.GONE);
+
+        }
+        else {
+            nooffertext.setVisibility(View.GONE);
+            recycler_coupone_list_details.setVisibility(View.VISIBLE);
+        }
         couponsAdapter = new CouponsAdapter(couponsListModelArrayList, context, this);
         recycler_coupone_list_details.setAdapter(couponsAdapter);
         couponsAdapter.notifyDataSetChanged();
@@ -971,7 +984,10 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(window.getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = 1000; // Set your desired fixed height here, in pixels
+            //lp.height = 1000; // Set your desired fixed height here, in pixels
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            int height = (int) (displayMetrics.heightPixels * 0.5); // 50% of the screen height
+            lp.height = height;
 
             window.setAttributes(lp);
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -1805,7 +1821,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                             String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalAmount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
-
+                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
+                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
                         }else{}
 
                         // Bank Charges

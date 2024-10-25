@@ -352,6 +352,8 @@ public class MyCardListScreenActivity extends SuperActivity implements RecyclerI
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             AddToCartListModel model = new AddToCartListModel();
+                            model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
+                            model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStockId(CommonUtility.checkString(objectCodes.optString("stock_id")));
                             model.setItemName(CommonUtility.checkString(objectCodes.optString("item_name")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));

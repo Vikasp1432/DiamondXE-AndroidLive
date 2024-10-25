@@ -42,6 +42,7 @@
     <color name="shadow_color">#99AD735A</color>
     <color name="light_gray">#dbd3dd</color>
 
+    <color name="purple_571457">#571457</color>
     <color name="purple_gradient_top">#7e3080</color>
     <color name="purple_gradient_bottom">#541355</color>
     <color name="bg_color">#F2F0F0</color>
@@ -110,6 +111,14 @@
     <color name="color_D5D5D5">#D5D5D5</color>
     <color name="color_C3C4C799">#99C3C4C7</color>
     <color name="color_717070">#717070</color>
+
+
+
+    <color name="color_4a183b">#4A183A</color>
+    <color name="color_1d0819">#1d0819</color>
+    <color name="color_77285f">#77285f</color>
+
+    <color name="white_B7A3B0">#B7A3B0</color>
 
 
 </resources>

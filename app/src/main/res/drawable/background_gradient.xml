@@ -14,7 +14,7 @@
         <stroke android:width="0dp" android:color="@color/purple" />
         <gradient android:angle="270"
             android:startColor="@color/purple_gradient_top"
-            android:endColor="@color/purple_gradient_bottom"
+            android:endColor="@color/purple_571457"
             />
     </shape>
 </item>

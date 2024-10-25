@@ -51,7 +51,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
     private ImageView back_img, shipping_img, kyc_img, payment_img, drop_arrow_img, other_tax_info_img, diamond_tax_info_img,document_drop_down_img;
     private CardView  shipping_card_view, kyc_card_view, payment_card_view;
     private TextView  continue_tv, kyc_verified_lbl,kyc_verified_lbl1, total_amount_tv, kyc_document_resubmit,
-            final_amount_tv1,shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
+            final_amount_tv1,shipping_and_handling_tv,orderitemprice, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
             sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
     private RelativeLayout shipping_rel, kyc_rel, payment_rel, viewpager_layout, rel_other_tax, rel_diamond_tax;
     private LinearLayout address_main_lin, kyc_verification_main_lin, view_order_summary_details_lin, kyc_document_layout_lin, open_document_lin;
@@ -108,7 +108,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
 
         total_amount_tv = findViewById(R.id.total_amount_tv);
         final_amount_tv1 = findViewById(R.id.final_amount_tv1);
-
+        orderitemprice=findViewById(R.id.orderitemprice);
         shipping_and_handling_tv = findViewById(R.id.shipping_and_handling_tv);
         platform_fees_tv = findViewById(R.id.platform_fees_tv);
         total_charges_tv = findViewById(R.id.total_charges_tv);
@@ -639,6 +639,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                         orderBankCharge = CommonUtility.checkString(jsonObjectData.optString("bank_charge"));
                         orderBankChargePerc = CommonUtility.checkString(jsonObjectData.optString("bank_charge_perc"));
 
+                        Log.e("orderSubTotal","..642###........"+orderSubTotal);
                         // Sub Total Charges
                         if(orderSubTotal!=null && !orderSubTotal.equalsIgnoreCase(""))
                         {
@@ -646,6 +647,9 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+
+                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
                         } else{}
 
                         // Final Amount
@@ -657,6 +661,9 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                             total_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(finalAmountTotalFormat));
                             final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(finalAmountTotalFormat));
                         } else{}
+
+                        // item change
+
 
                         // Shipping Charges
                         if(orderShippingCharge!=null && !orderShippingCharge.equalsIgnoreCase(""))

@@ -165,6 +165,7 @@
     <string name="no_result_found">No result found</string>
 
     <string name="go_to_cart">Go to Cart</string>
+    <string name="noofferavailable">No offer available</string>
     <string name="allofferforyou">All offers for you</string>
     <string name="diamond_details">Diamond Details</string>
     <string name="product_details">Product Details</string>
@@ -997,4 +998,15 @@ the slider to measure ring size.</string>
         <item>CPP</item>
 
     </string-array>
+
+    <string name="byinviteonly">By invite only</string>
+    <string name="deluxfeature">DXE LUXE features premium natural diamonds that  epitomise unparalleled beauty and luxury.</string>
+    <string name="TimelessElegance">Timeless Elegance. Elite &amp; Exclusive.</string>
+    <string name="dxeluxe">DXE LUXE</string>
+
+    <string name="thankyou">Thank you for expressing \n your interest</string>
+    <string name="thankyoulongtext">Thank you for your time. After a thorough review and necessary checks, our team will contact you via your mobile number.</string>
+
+    <string name="luxenote">Note : To complete the verification process, please provide either your mobile number or email. Submitting at least one is required.</string>
+
 </resources>

@@ -40,11 +40,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.diamondxe.Activity.AccountSectionActivity;
+import com.diamondxe.Activity.DXELuex.DXELuexRegisterActivity;
 import com.diamondxe.Activity.DiamondDetailsActivity;
 import com.diamondxe.Activity.HomeScreenActivity;
 import com.diamondxe.Activity.Jewellery.JewelleryScreenActivity;
 import com.diamondxe.Activity.LoginScreenActivity;
 import com.diamondxe.Activity.SearchDiamondsActivity;
+import com.diamondxe.Activity.WebViewNewActivity;
 import com.diamondxe.Adapter.CustomerStoriesListAdapter;
 import com.diamondxe.Adapter.GiftImageListAdapter;
 import com.diamondxe.Adapter.LabGrownDiamondListAdapter;
@@ -146,7 +148,6 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             dxeLuxeImage="",dxeLuxeLink="",mediaTitle="",customerStoriesTitle="";
     String selectedCurrencyCode = "", selectedCurrencyValue = "", selectedCurrencyDesc="", selectedCurrencyImage="";
     String cmsEmail = "", cmsPhone1 = "", cmsPhone2 = "", cmsAddress = "", cmsLinkedinLink = "", cmsTwitterLink = "", cmsFacebookLink = "", cmsInstagramLink = "", cmsYoutubeLink = "";
-
     int newWith;
     int width;
 
@@ -769,16 +770,26 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         else if(id == R.id.register_img)
         {
             //Toast.makeText(context,"Banner click...",Toast.LENGTH_SHORT).show();
-            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+           /* Intent intent1 = new Intent(Intent.ACTION_VIEW);
             intent1.setData(Uri.parse("https://diamondxe.com/limitedoffer"));
-            startActivity(intent1);
-           /* Intent intent1 = new Intent(context, WebViewActivity.class);
+            startActivity(intent1);*/
+            Intent intent1 = new Intent(context, WebViewNewActivity.class);
             intent1.putExtra("url", "https://diamondxe.com/limitedoffer");
             intent1.putExtra("title", "");
-            startActivity(intent1);*/
+            startActivity(intent1);
         }
         else if(id == R.id.dxe_luxe_img)
         {
+
+           /* if(!user_login.equalsIgnoreCase(""))
+            {
+                startActivity(new Intent(context, DXELuexRegisterActivity.class));
+            }
+            else{
+                intent = new Intent(activity, LoginScreenActivity.class);
+                startActivity(intent);
+            }*/
+
         }
         else if(id == R.id.transparent_price_card_view)
         {
@@ -1730,7 +1741,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
                 public void run() {
                     handler.post(Update);
                 }
-            }, 3000, 3000);
+            }, 5000, 5000);
         } else {
         }
 

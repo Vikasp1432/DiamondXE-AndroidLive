@@ -131,9 +131,7 @@
                             android:layout_marginRight="@dimen/dimen_15"
                             android:layout_marginBottom="@dimen/dimen_10"
                             android:elevation="@dimen/dimen_5"
-                            android:outlineAmbientShadowColor="@color/black"
-                            android:outlineSpotShadowColor="@color/black"
-                            app:cardBackgroundColor="@color/transparent"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="@dimen/dimen_7"
                             app:cardElevation="@dimen/dimen_5">
 

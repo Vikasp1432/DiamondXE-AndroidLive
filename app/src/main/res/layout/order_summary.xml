@@ -154,8 +154,38 @@
                             android:paddingTop="@dimen/dimen_8"
                             android:paddingBottom="@dimen/dimen_8">
 
+                            <!--total id-->
+                            <RelativeLayout
+                                android:id="@+id/orderlv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_10">
+
+                                <TextView
+                                    android:text="Diamond"
+                                    android:id="@+id/orderitem"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_14" />
+
+                                <TextView
+                                    android:id="@+id/orderitemprice"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="₹0"
+                                    android:textColor="@color/grey"
+                                    android:textSize="@dimen/dimen_16" />
+                            </RelativeLayout>
+
                             <!--Coupon Code Layout-->
                             <RelativeLayout
+                                android:layout_marginTop="@dimen/dimen_8"
                                 android:id="@+id/coupon_code_value_rel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -188,6 +218,7 @@
 
                             <!--Shipping And Handling Layout-->
                             <RelativeLayout
+                                android:layout_marginTop="@dimen/dimen_8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_10"

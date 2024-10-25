@@ -59,7 +59,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
     private ImageView back_img, shipping_img, kyc_img, payment_img, drop_arrow_img, other_tax_info_img, diamond_tax_info_img;
     private CardView no_shipping_address_card, no_billing_address_card, shipping_card_view, kyc_card_view, payment_card_view;
-    private TextView add_shipping_address_tv, add_billing_address_tv, continue_tv, kyc_verified_lbl,kyc_verified_lbl1, total_amount_tv,
+    private TextView add_shipping_address_tv, orderitemprice,add_billing_address_tv, continue_tv, kyc_verified_lbl,kyc_verified_lbl1, total_amount_tv,
             final_amount_tv1,shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
             sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
     private RelativeLayout shipping_rel, kyc_rel, payment_rel, viewpager_layout, rel_other_tax, rel_diamond_tax;
@@ -117,7 +117,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         total_amount_tv = findViewById(R.id.total_amount_tv);
         final_amount_tv1 = findViewById(R.id.final_amount_tv1);
-
+        orderitemprice=findViewById(R.id.orderitemprice);
         shipping_and_handling_tv = findViewById(R.id.shipping_and_handling_tv);
         platform_fees_tv = findViewById(R.id.platform_fees_tv);
         total_charges_tv = findViewById(R.id.total_charges_tv);
@@ -508,6 +508,12 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         {
             urlParameter = new HashMap<String, String>();
 
+            Log.e("collectFromHub","...521..."+Constant.collectFromHub);
+            Log.e("shippingCountryName","...521..."+Constant.shippingCountryName);
+            Log.e("billingCountryName","...521..."+Constant.billingCountryName);
+            Log.e("certificateNumber","...521..."+Constant.certificateNumber);
+
+
             urlParameter.put("couponCode", "");
             urlParameter.put("walletPoints", "");
             urlParameter.put("paymentMode", "");
@@ -518,6 +524,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             urlParameter.put("billingCountry", Constant.billingCountryName);
             urlParameter.put("shippingCountry", Constant.shippingCountryName);
 
+            Log.e("urlParameter","...521..."+urlParameter);
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID,showLoader, "POST");
 
@@ -584,7 +591,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.e("Diamonds : ", "--------JSONObject----Shipping---- : " + jsonObject);
+                        Log.e("Diamonds : ", "---594-----JSONObject----Shipping---- : " + jsonObject);
 
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
@@ -622,6 +629,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             // Check IS Default Address Set Selected For Select Radio Button
                             if(objectCodes.optString("IsDefault").equalsIgnoreCase("1"))
                             {
+                                /*Log.e("CountryNameS",""+CommonUtility.checkString(objectCodes.optString("CountryNameS")));
+                                Log.e("PinCode",""+CommonUtility.checkString(objectCodes.optString("PinCode")));
+                                Log.e("AddressId",""+CommonUtility.checkString(objectCodes.optString("AddressId")));*/
                                 model.setSelected(true);
                                 isSelectShippingAddress = true;
                                 Constant.deliveryPincode = CommonUtility.checkString(objectCodes.optString("PinCode"));
@@ -854,6 +864,8 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
                         } else{}
 
                         // Final Amount

@@ -1,15 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDisablePreview">true</item>
-    </style>
 
+    </style>
+    <!--<item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowDisablePreview">true</item>-->
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/black_like</item>
+        <item name="colorAccent">@color/red</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
         <item name="actionBarTabTextStyle">@color/white</item>

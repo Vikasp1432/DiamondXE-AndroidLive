@@ -100,14 +100,13 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             details_remark_tv, details_report_tv, current_add_to_cart_tv, buy_now_tv, select_lbl, culet_id, recommanded_tv_lbl;
     private ImageView bottom_search_icon, back_img, drop_arrow_img, select_image_img,select_360_img,select_certificate_img,select_size_img,
             diamond_img, current_status_img, current_returnable_img, bottom_search_icon_cross;
-    private CardView select_pin_code_card, add_to_cart_card_view,buy_now_card_view, top_img_card, search_circle_card, search_circle_card1_cross,
-            curve_rel;
+    private CardView select_pin_code_card, add_to_cart_card_view,buy_now_card_view, top_img_card, search_circle_card, search_circle_card1_cross;
     private ScrollView scrollView;
-    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
+    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel,curve_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
     private RelativeLayout diamond_details_rel, viewpager_layout, show_popup_rel, viewpager_buyer_layout;
-    private LinearLayout show_diamond_details_lin, select_img_lin, select_360_view_lin, select_certificate_lin, select_size_lin;
+    private LinearLayout call_for_enquiry,show_diamond_details_lin, select_img_lin, select_360_view_lin, select_certificate_lin, select_size_lin;
     public ArrayList<SearchResultTypeModel> recommandDiamondArrayList;
     DiamondCaratTypeListAdapter diamondCaratTypeListAdapter;
     DiamondShapeImageListAdapter shapeImageListAdapter;
@@ -258,6 +257,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         account_rel = findViewById(R.id.account_rel);
         account_rel.setOnClickListener(this);
+
+        call_for_enquiry=findViewById(R.id.call_for_enquiry);
+        call_for_enquiry.setOnClickListener(this);
 
         home_img = findViewById(R.id.home_img);
         categories_img = findViewById(R.id.categories_img);
@@ -939,6 +941,12 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             search_circle_card.setVisibility(View.VISIBLE); // Bottom Plus Icon Show
             show_popup_rel.setVisibility(View.GONE); // Bottom Plus Icon Show
         }
+        else if(id==R.id.call_for_enquiry)
+        {
+            Intent intentcall = new Intent(Intent.ACTION_DIAL);
+            intentcall.setData(Uri.parse("tel:9892003399"));
+            startActivity(intentcall);
+        }
     }
 
     // This function ensures that all bottom bar elements (home, category, wishlist, cart, account) are both
@@ -1038,7 +1046,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
         if(userRole.equalsIgnoreCase("BUYER"))
         {
-
             viewPagerBuyer.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
             tabLayoutBuyer.setupWithViewPager(viewPagerBuyer, true);
             final float density = getResources().getDisplayMetrics().density;
@@ -1502,7 +1509,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             DecimalFormat formatter = new DecimalFormat("#,###,###");
 
            // Log.e("getCoupondiscountperc","..1134..."+list.get(position).getCoupondiscountperc());
-            if (list.get(position).getCoupondiscountperc() > 0.0) {
+            /*if (list.get(position).getCoupondiscountperc() > 0.0) {
                 Log.e("In IF","..1356*******...");
                 String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
                 sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
@@ -1519,6 +1526,29 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     dis_sub_total_tv.setVisibility(View.GONE);
                     sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
                 }
+            }*/
+
+           /* String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode,
+                    list.get(position).getShowingSubTotal());*/
+            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode,
+                    String.valueOf(list.get(position).getSubtotalaftercoupondiscount()));
+            Log.e("In IF","subTotalDiscountFormat......1356*******.1...."+subTotalDiscountFormat+".....Original..."+list.get(position).getSubtotalaftercoupondiscount());
+            Log.e("In IF","subTotalFormat......1356*******..2..."+"...Original..."+list.get(position).getShowingSubTotal());
+            Log.e("In IF","getCurrencySymbol......1356*******..3..."+getCurrencySymbol);
+            if (list.get(position).getCoupondiscountperc()>0)
+            {
+                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
+                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                dis_sub_total_tv.setText(getCurrencySymbol + "" +
+                        CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            }
+            else
+            {
+                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
+                dis_sub_total_tv.setVisibility(View.GONE);
+                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
             }
 
 
@@ -1835,8 +1865,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         supplier_comment = CommonUtility.checkString(jObjDetails.optString("supplier_comment"));
                         stock_no = CommonUtility.checkString(jObjDetails.optString("stock_no"));
 
-                        stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
-                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));
+                        /*stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));*/
 
                          if(!diamond_image.equalsIgnoreCase(""))
                          {
@@ -1921,7 +1951,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
-                            Log.e("In IF","subTotalDiscountFormat......1356*******..."+subTotalDiscountFormat);
+                            /*Log.e("In IF","subTotalDiscountFormat......1946*******..."+subTotalDiscountFormat+"..original..."+subtotalaftercoupondiscount);
+                            Log.e("In IF","subTotalDiscountFormat......1947*******..."+subTotalFormat+"...subtotal.."+subtotal);
+                            Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);*/
                             if (coupondiscountperc>0)
                             {
                                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));

@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
@@ -46,8 +45,32 @@
         tools:replace="android:label"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.NavWebViewActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace"  />
+        <activity
+            android:name=".Activity.DXELuex.DXELuexRegisterActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
+        <activity
             android:name=".Activity.WebViewNewActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:node="replace" />
         <activity
             android:name=".Activity.DemoMainActivity"
             android:exported="false" />
@@ -56,6 +79,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
@@ -596,7 +620,8 @@
             android:theme="@style/Theme.DXECalc.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:node="replace" />
-        <activity
+        <!--
+<activity
             android:name="com.dxe.calc.login.LoginActivity"
             android:exported="false"
             android:hardwareAccelerated="true"
@@ -606,6 +631,7 @@
             android:theme="@style/Theme.DXECalc.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:node="replace" />
+        -->
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:exported="true"

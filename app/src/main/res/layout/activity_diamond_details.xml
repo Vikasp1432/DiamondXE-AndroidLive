@@ -720,8 +720,6 @@
                     android:layout_marginBottom="@dimen/dimen_10"
                     android:layout_weight="1"
                     android:elevation="@dimen/dimen_30"
-                    android:outlineAmbientShadowColor="@color/purple_gradient_bottom"
-                    android:outlineSpotShadowColor="@color/purple_gradient_bottom"
                     android:paddingLeft="@dimen/dimen_5"
                     android:paddingTop="@dimen/dimen_10"
                     android:paddingRight="@dimen/dimen_5"
@@ -797,8 +795,6 @@
                 android:layout_marginRight="@dimen/dimen_12"
                 android:layout_marginBottom="@dimen/dimen_10"
                 android:elevation="@dimen/dimen_5"
-                android:outlineAmbientShadowColor="@color/purple"
-                android:outlineSpotShadowColor="@color/purple"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/dimen_8"
                 app:cardElevation="@dimen/dimen_5">

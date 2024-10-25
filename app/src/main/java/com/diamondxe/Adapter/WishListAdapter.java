@@ -92,10 +92,16 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.measurement_tv.setText("M: " + list.get(position).getMeasurement());*/
 //dis_sub_total_tv
         Log.e("getCoupondiscountperc",".94........."+list.get(position).getCoupondiscountperc());
+
         if (list.get(position).getCoupondiscountperc() > 0) {
 
+            String selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
+            String selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
             String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, getsubtotalPrice);
+
+           // String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(subTotalFormat));
             holder.dis_sub_total_tv.setPaintFlags(holder.dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
 
@@ -109,10 +115,6 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
         }
-
-
-
-
 
 
         if(list.get(position).getIsReturnable().equalsIgnoreCase("1"))

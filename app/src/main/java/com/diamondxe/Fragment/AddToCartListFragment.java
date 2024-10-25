@@ -565,7 +565,6 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
                         for (int i = 0; i < details.length(); i++)
                         {
                             JSONObject objectCodes = details.getJSONObject(i);
-
                             AddToCartListModel model = new AddToCartListModel();
                             model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
                             model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));

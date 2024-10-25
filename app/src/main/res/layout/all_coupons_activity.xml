@@ -47,11 +47,26 @@
         android:orientation="vertical"
         android:layout_marginBottom="@dimen/dimen_20">
 
+        <TextView
+            android:layout_marginBottom="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_60"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/nooffertext"
+            style="@style/SemiBoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/noofferavailable"
+            android:textColor="@color/light_gray2"
+            android:textSize="@dimen/navigation_bar_title" />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="@dimen/dimen_20"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </LinearLayout>
 
