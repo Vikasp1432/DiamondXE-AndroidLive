@@ -12,6 +12,8 @@ import static com.diamondxe.ApiCalling.ApiConstants.GET_CURRENCY_RATES;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_DIAMONDS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_DIAMONDS_DETAILS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_DXE_BANK_DETAILS;
+import static com.diamondxe.ApiCalling.ApiConstants.GET_GEMSTONES;
+import static com.diamondxe.ApiCalling.ApiConstants.GET_GEMSTONES_DETAILS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_KYC_DETAILS;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_PROFILE;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_RECOMMENDED_DIAMONDS;
@@ -171,21 +173,6 @@ public class VollyApiActivity {
                     else{
                         //Toast.makeText(context, "TransparentActivity is already running", Toast.LENGTH_SHORT).show();
                     }
-
-                    /*ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-                    List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
-                    if (!tasks.isEmpty()) {
-                        ComponentName topActivity = tasks.get(0).topActivity;
-                        if (topActivity.getClassName().equals("com.diamondxe.Activity.TransparentActivity")) {
-                            // TransparentActivity is already running
-                            //Toast.makeText(context, "TransparentActivity is already running", Toast.LENGTH_SHORT).show();
-                        } else {
-                            context.startActivity(new Intent(context, TransparentActivity.class));
-                        }
-                    } else {
-                        context.startActivity(new Intent(context, TransparentActivity.class));
-                    }*/
-
                     //context.startActivity(new Intent(context, TransparentActivity.class));
                 }
             }
@@ -207,7 +194,7 @@ public class VollyApiActivity {
             _requestType.equalsIgnoreCase(GET_ADDRESS_SHIPPING) || _requestType.equalsIgnoreCase(GET_ADDRESS_BILLING) ||
             _requestType.equalsIgnoreCase(GET_KYC_DETAILS) || _requestType.equalsIgnoreCase(DEALER_SETTING) ||
             _requestType.equalsIgnoreCase(PHONE_PE_PAYMENT_OPTION) ||
-            _requestType.equalsIgnoreCase(GET_BANK_CHARGES) || _requestType.equalsIgnoreCase(ORDER_CANCEL_REASON))
+            _requestType.equalsIgnoreCase(GET_BANK_CHARGES) || _requestType.equalsIgnoreCase(ORDER_CANCEL_REASON)||_requestType.equalsIgnoreCase(GET_GEMSTONES) || _requestType.equalsIgnoreCase(GET_GEMSTONES_DETAILS))
             {
                 Uri.Builder builder = Uri.parse(ApiConstants.DOMAIN_NAME + _requestType).buildUpon();
                 for (Map.Entry<String, String> entry : _dataToPost.entrySet()) {

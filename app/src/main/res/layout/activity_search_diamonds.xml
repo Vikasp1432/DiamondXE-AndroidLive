@@ -39,7 +39,8 @@
             android:textSize="@dimen/dimen_16" />
 
         <!--Search Layout-->
-        <LinearLayout
+        <RelativeLayout
+            android:background="@drawable/border_purple_line_view"
             android:id="@+id/search_shadow_lin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,11 +51,13 @@
             android:orientation="vertical">
 
             <EditText
+                android:background="@null"
+                android:backgroundTint="@null"
+                android:layout_toLeftOf="@+id/clear_search"
                 android:id="@+id/search_et"
                 style="@style/SemiBoldFontType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_purple_line_view"
                 android:cursorVisible="true"
                 android:drawableLeft="@mipmap/search_purple"
                 android:drawablePadding="@dimen/dimen_10"
@@ -73,7 +76,18 @@
                 android:visibility="visible" />
 
 
-        </LinearLayout>
+            <ImageView
+                android:layout_marginEnd="@dimen/dimen_5"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/cross"
+                android:id="@+id/clear_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/purple" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/search_diamond_error_tv"
@@ -196,7 +210,7 @@
                         android:layout_weight="1"
                         android:elevation="@dimen/dimen_10"
                         android:paddingLeft="@dimen/dimen_3"
-                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_10"
                         android:paddingRight="@dimen/dimen_5"
                         android:paddingBottom="@dimen/dimen_10"
                         app:cardCornerRadius="@dimen/dimen_7"
@@ -211,9 +225,9 @@
                             android:background="@drawable/background_gradient"
                             android:gravity="center"
                             android:paddingLeft="@dimen/dimen_3"
-                            android:paddingTop="@dimen/dimen_6"
+                            android:paddingTop="@dimen/dimen_10"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_6"
+                            android:paddingBottom="@dimen/dimen_10"
                             android:text="@string/natural"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_14" />
@@ -244,9 +258,9 @@
                             android:background="@drawable/border_dark_purple"
                             android:gravity="center"
                             android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_6"
+                            android:paddingTop="@dimen/dimen_10"
                             android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_6"
+                            android:paddingBottom="@dimen/dimen_10"
                             android:text="@string/lab_grown"
                             android:textColor="@color/purple_light"
                             android:textSize="@dimen/dimen_14" />
@@ -501,9 +515,9 @@
                                     android:background="@drawable/background_search"
                                     android:cursorVisible="true"
                                     android:drawablePadding="@dimen/dimen_15"
-                                    android:hint=""
+                                    android:hint="00"
                                     android:inputType="number"
-                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingLeft="@dimen/dimen_8"
                                     android:paddingTop="@dimen/dimen_10"
                                     android:paddingRight="@dimen/dimen_5"
                                     android:paddingBottom="@dimen/dimen_10"
@@ -553,9 +567,9 @@
                                     android:background="@drawable/background_search"
                                     android:cursorVisible="true"
                                     android:drawablePadding="@dimen/dimen_15"
-                                    android:hint=""
+                                    android:hint="00"
                                     android:inputType="number"
-                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingLeft="@dimen/dimen_8"
                                     android:paddingTop="@dimen/dimen_10"
                                     android:paddingRight="@dimen/dimen_5"
                                     android:paddingBottom="@dimen/dimen_10"
@@ -632,9 +646,9 @@
                                     android:background="@drawable/background_search"
                                     android:cursorVisible="true"
                                     android:drawablePadding="@dimen/dimen_15"
-                                    android:hint=""
+                                    android:hint="00"
                                     android:inputType="numberDecimal"
-                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingLeft="@dimen/dimen_8"
                                     android:paddingTop="@dimen/dimen_10"
                                     android:paddingRight="@dimen/dimen_5"
                                     android:paddingBottom="@dimen/dimen_10"
@@ -684,9 +698,9 @@
                                     android:background="@drawable/background_search"
                                     android:cursorVisible="true"
                                     android:drawablePadding="@dimen/dimen_15"
-                                    android:hint=""
+                                    android:hint="00"
                                     android:inputType="numberDecimal"
-                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingLeft="@dimen/dimen_8"
                                     android:paddingTop="@dimen/dimen_10"
                                     android:paddingRight="@dimen/dimen_5"
                                     android:paddingBottom="@dimen/dimen_10"
@@ -732,6 +746,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingTop="@dimen/dimen_5"
+                            android:layout_marginLeft="@dimen/dimen_20"
                             android:layout_marginTop="@dimen/dimen_1"
                             android:orientation="horizontal">
 
@@ -754,7 +769,7 @@
                                 style="@style/SemiBoldFontType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dimen_16"
+                                android:layout_marginLeft="@dimen/dimen_18"
                                 android:button="@drawable/radio_btn"
                                 android:buttonTint="@color/purple_light"
                                 android:paddingLeft="@dimen/dimen_5"

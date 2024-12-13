@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dimen_40"
         android:paddingTop="@dimen/dimen_20"
-        android:paddingRight="40dp"
+        android:paddingRight="@dimen/dimen_20"
         android:paddingBottom="@dimen/dimen_20"
         tools:background="#33ff0000">
 
@@ -35,11 +35,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_5"
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_marginRight="@dimen/dimen_5">
 
                     <TextView
+                        android:paddingTop="@dimen/dimen_3"
+                        android:paddingRight="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_5"
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -55,27 +59,28 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="right"
                         android:paddingLeft="@dimen/dimen_10"
-                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_3"
                         android:paddingRight="@dimen/dimen_10"
                         android:paddingBottom="@dimen/dimen_5"
                         android:src="@drawable/cross"
-                        android:tint="@color/black"
+                        android:tint="@color/purple_light"
                         tools:ignore="UseAppTint" />
                 </RelativeLayout>
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    app:cardElevation="@dimen/dimen_5"
+                    app:cardCornerRadius="@dimen/dimen_12"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_300"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginRight="@dimen/dimen_5"
-                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
                     android:orientation="vertical">
 
                     <WebView
                         android:id="@+id/webView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@color/transparent"
                         android:scrollbars="none"
                         tools:ignore="WebViewLayout">
@@ -95,7 +100,7 @@
                         android:textSize="@dimen/dimen_16"
                         android:visibility="gone" />
 
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/share_img"
@@ -106,7 +111,6 @@
                     android:paddingLeft="@dimen/dimen_15"
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingRight="@dimen/dimen_15"
-                    android:paddingBottom="@dimen/dimen_5"
                     android:src="@drawable/share" />
 
 

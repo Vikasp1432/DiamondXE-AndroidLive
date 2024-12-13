@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.diamondxe.Beans.Dealer.DealerMarkupListModel;
@@ -54,7 +55,7 @@ public class WalletAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         if(!list.get(position).getOrderID().equalsIgnoreCase(""))
         {
-            holder.order_id_tv.setText(list.get(position).getOrderID());
+            holder.order_id_tv.setText("#"+list.get(position).getOrderID());
         }
         else{
             holder.order_id_tv.setText("-");
@@ -68,9 +69,24 @@ public class WalletAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             holder.status_tv.setText("-");
         }
 
+
+
         if(!list.get(position).getPoints().equalsIgnoreCase(""))
         {
-            holder.points_tv.setText(list.get(position).getPoints());
+            if(list.get(position).getType().equalsIgnoreCase("debit"))
+            {
+
+                holder.points_tv.setTextColor(ContextCompat.getColor(context, R.color.color_fe0000));
+                holder.points_tv.setText(list.get(position).getPoints() +" Debit") ;
+
+            }
+            else if(list.get(position).getType().equalsIgnoreCase("credit"))
+            {
+                holder.points_tv.setTextColor(ContextCompat.getColor(context, R.color.color_109663));
+                holder.points_tv.setText(list.get(position).getPoints()+" Credit") ;
+
+            }
+
         }
         else{
             holder.points_tv.setText("-");

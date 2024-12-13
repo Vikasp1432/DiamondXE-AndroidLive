@@ -30,30 +30,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/image_card_view"
-                    android:layout_width="@dimen/dimen_80"
-                    android:layout_height="@dimen/dimen_80"
+                <RelativeLayout
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_marginTop="@dimen/dimen_5"
                     android:layout_marginRight="@dimen/dimen_8"
-                    android:visibility="gone"
-                    app:cardCornerRadius="@dimen/dimen_5">
+                    android:id="@+id/image_card_view_rv"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100">
 
-                    <ImageView
-                        android:id="@+id/image_view"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ring" />
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content">
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/image_card_view"
+                            android:layout_width="@dimen/dimen_100"
+                            android:layout_height="@dimen/dimen_100"
+                            app:cardCornerRadius="@dimen/dimen_5">
+
+                            <ImageView
+                                android:id="@+id/image_view"
+                                android:layout_width="@dimen/dimen_100"
+                                android:layout_height="@dimen/dimen_100"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/phl_diamond" />
+                        </androidx.cardview.widget.CardView>
+
+
+
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/luex_tag"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_20">
+
+                        <ImageView
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_20"
+                            android:src="@drawable/dxetag2" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_marginRight="@dimen/dimen_5"
-                    android:layout_toRightOf="@+id/image_card_view">
+                    android:layout_toRightOf="@+id/image_card_view_rv">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -318,42 +352,46 @@
 
                             </LinearLayout>
 
+
                             <LinearLayout
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:orientation="vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_alignParentRight="true"
+                                    android:layout_toLeftOf="@+id/dis_sub_total_tv"
+                                    android:layout_marginEnd="@dimen/dimen_2"
+                                    android:id="@+id/sub_total_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/dimen_2"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:paddingLeft="@dimen/dimen_2"
+                                    android:paddingRight="@dimen/dimen_2"
+                                    android:text="45"
+                                    android:textColor="@color/purple_light"
+                                    android:textSize="@dimen/dimen_15" />
+
+                                <TextView
+                                    android:visibility="visible"
+                                    android:id="@+id/dis_sub_total_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dimen_2"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:paddingLeft="@dimen/dimen_2"
+                                    android:paddingRight="@dimen/dimen_2"
+                                    android:text="80"
+                                    android:textColor="@color/light_gray2"
+                                    android:textSize="@dimen/dimen_13" />
 
 
                             </LinearLayout>
-                            <TextView
-                                android:layout_toLeftOf="@+id/dis_sub_total_tv"
-                                android:layout_marginEnd="@dimen/dimen_2"
-                                android:id="@+id/sub_total_tv"
-                                style="@style/BoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/dimen_2"
-                                android:layout_marginRight="@dimen/dimen_3"
-                                android:paddingLeft="@dimen/dimen_2"
-                                android:paddingRight="@dimen/dimen_2"
-                                android:text="45"
-                                android:textColor="@color/purple_light"
-                                android:textSize="@dimen/dimen_16" />
-
-                            <TextView
-                                android:id="@+id/dis_sub_total_tv"
-                                style="@style/BoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/dimen_2"
-                                android:layout_marginRight="@dimen/dimen_3"
-                                android:paddingLeft="@dimen/dimen_2"
-                                android:paddingRight="@dimen/dimen_2"
-                                android:text="80"
-                                android:textColor="@color/light_gray2"
-                                android:textSize="@dimen/dimen_16" />
 
                         </RelativeLayout>
 

@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.diamondxe.Activity.PaymentPages.PayTabsPaymentManager;
+import com.diamondxe.Activity.PaymentPages.PaymentMethod;
+import com.diamondxe.Activity.PaymentPages.RazorpayUtility;
 import com.diamondxe.Activity.PaymentStatusScreenActivity;
 import com.diamondxe.Adapter.Dealer.AllBankNameListAdapter;
 import com.diamondxe.Adapter.Dealer.BankNEFTListAdapter;
@@ -55,10 +59,16 @@ import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.PaymentUtils;
 import com.diamondxe.Utils.Utils;
+import com.payment.paymentsdk.integrationmodels.PaymentSdkApms;
+import com.payment.paymentsdk.integrationmodels.PaymentSdkError;
+import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionDetails;
+import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface;
 import com.phonepe.intent.sdk.api.B2BPGRequest;
 import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
 import com.phonepe.intent.sdk.api.PhonePe;
 import com.phonepe.intent.sdk.api.PhonePeInitException;
+import com.razorpay.PaymentData;
+import com.razorpay.PaymentResultWithDataListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,18 +82,18 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class CustomPaymentScreenActivity extends SuperActivity implements RecyclerInterface , DialogItemClickInterface {
+public class CustomPaymentScreenActivity extends SuperActivity implements RecyclerInterface , DialogItemClickInterface, PaymentResultWithDataListener,CallbackPaymentInterface {
 
     private ImageView back_img, upi_option_down_arrow_img;
-    private LinearLayout custom_payment_lin, history_lin, show_bank_name_lin, bank_account_details_lin, show_all_bank_lin, upi_option_lin,
-            company_name_lin;
-    private TextView custom_payment_tv, history_tv, total_amount_tv, rtgs_tv, card_type_tv, net_banking_tv,name_error_tv, company_name_error_tv,
+    private LinearLayout custom_payment_lin, history_lin,upi_main_lin, show_bank_name_lin, bank_account_details_lin, show_all_bank_lin, upi_option_lin,
+            company_name_lin,show_upi_list;
+    private TextView custom_payment_tv, history_tv,upi_tv, noupifound_tv,total_amount_tv, rtgs_tv, card_type_tv, net_banking_tv,name_error_tv, company_name_error_tv,
             amount_error_tv, remark_error_tv,branch_name_tv,ifsc_code_tv,swift_code_tv,bank_name_tv,account_number_tv,mode_payment_tv,select_date_tv,
             payment_mode_error_tv, cheque_no_error_tv, date_error_tv, cheque_mode_tv, neft_mode_tv, rgts_mode_tv, wire_transfer_mode_tv,others_mode_tv,
             payment_option_error_tv,select_bank_tv, select_mode_lbl, select_bank_error_tv;
     private EditText name_et, company_name_et, amount_et, remark_et, cheque_et;
     private RelativeLayout proceed_to_pay_rel, rtgs_rel, card_type_rel, net_banking_rel, upi_rel, mode_payment_rel,select_date_rel,
-            cheque_rel, show_all_bank_rel;
+            cheque_rel, show_all_bank_rel,upi_relative;
 
     boolean isSelectNetBankingBank = false;
 
@@ -93,7 +103,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     //For Api Calling
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
-
+    RelativeLayout upi_rela;
     private RecyclerView recycler_view, recycler_view_upi;
     ArrayList<BankNEFTListModel> modelArrayList;
     ArrayList<BankNEFTListModel> popularBankArrayList;
@@ -132,6 +142,11 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     //String PAYMENT_BY_CARD = "CARD";
     String PAYMENT_BY_CARD = "PAY_PAGE";
 
+    LinearLayout india_layout,international_layout,net_banking_main_lin;
+    ImageView payment_image;
+    TextView india_text,international_text;
+    String RegionType="IND";
+    String paymentGetwayType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,17 +163,31 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
 
+        payment_image=findViewById(R.id.payment_image);
+        india_text=findViewById(R.id.india_text);
+        international_text=findViewById(R.id.international_text);
+        india_layout=findViewById(R.id.india_layout);
+        india_layout.setOnClickListener(this);
+        net_banking_main_lin=findViewById(R.id.net_banking_main_lin);
+        international_layout=findViewById(R.id.international_layout);
+        international_layout.setOnClickListener(this);
+
+        show_upi_list=findViewById(R.id.show_upi_list);
         custom_payment_lin = findViewById(R.id.custom_payment_lin);
         history_lin = findViewById(R.id.history_lin);
-
+        upi_relative = findViewById(R.id.upi_rela);
         custom_payment_tv = findViewById(R.id.custom_payment_tv);
         custom_payment_tv.setOnClickListener(this);
-
+        upi_tv=findViewById(R.id.upi_tv);
         history_tv = findViewById(R.id.history_tv);
         history_tv.setOnClickListener(this);
-
+        upi_main_lin =findViewById(R.id.upi_main_lin);
+        upi_main_lin.setOnClickListener(this);
+        upi_main_lin.setVisibility(View.VISIBLE);
+        upi_rela=findViewById(R.id.upi_rela);
+        upi_rela.setOnClickListener(this);
         total_amount_tv = findViewById(R.id.total_amount_tv);
-
+        noupifound_tv = findViewById(R.id.noupifound_tv);
         name_et = findViewById(R.id.name_et);
         company_name_et = findViewById(R.id.company_name_et);
         amount_et = findViewById(R.id.amount_et);
@@ -234,10 +263,10 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         upi_rel.setOnClickListener(this);
 
         upi_option_lin = findViewById(R.id.upi_option_lin);
-
+        upi_option_lin.setOnClickListener(this);
         proceed_to_pay_rel = findViewById(R.id.proceed_to_pay_rel);
         proceed_to_pay_rel.setOnClickListener(this);
-
+        upi_option_lin.setVisibility(View.GONE);
         // Initialize PhonePe
         PaymentUtils.initializePhonePe(this);
 
@@ -251,9 +280,9 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
         upiAppsArrayList = getInstalledUPIApps();
 
-        showUPIAppsOption(upiAppsArrayList);
+        //showUPIAppsOption(upiAppsArrayList);
 
-        getDXEBankDetailsAPI(true);
+        getDXEBankDetailsAPI(true,"IND");
         getPaymentOptionAPI(false);
         getBankChargesAPI(true);
     }
@@ -374,9 +403,10 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                     int enterAmount = Integer.parseInt(amount_et.getText().toString().trim());
                     if(enterAmount>500000)
                     {
-                        upi_option_lin.setVisibility(View.GONE); // UPI Option Hide
-                        paymentModeType = ""; // Payment Option Blank
-                        selectedUPIPackage = ""; // UPI Package name blank
+                        upi_main_lin.setVisibility(View.GONE);
+                        upi_option_lin.setVisibility(View.GONE);
+                        paymentModeType = "";
+                        selectedUPIPackage = "";
                         // Check upiAppsArrayList is not empty or null, unselect all uip option and update ui.
                         if(upiAppsArrayList!=null && upiAppsArrayList.size()>0)
                         {
@@ -392,7 +422,15 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                     }
                     else
                     {
-                        upi_option_lin.setVisibility(View.VISIBLE); // UPI Option Visible
+                        if (RegionType.equalsIgnoreCase("IND"))
+                        {
+                            upi_main_lin.setVisibility(View.VISIBLE);
+                        }
+                        else if (RegionType.equalsIgnoreCase("GCC")){
+                            upi_main_lin.setVisibility(View.GONE);
+                        }
+
+                        upi_option_lin.setVisibility(View.GONE); // UPI Option Visible
                     }
                 }
             }
@@ -514,7 +552,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
             //paymentInstrument.put("targetApp", TARGET_URL);
 
-            data.put("paymentInstrument", paymentInstrument); // OBJECT. Mandatory
+            data.put("paymentInstrument", paymentInstrument);
 
             JSONObject deviceContext = new JSONObject();
             deviceContext.put("deviceOS", "ANDROID");
@@ -605,8 +643,8 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         }
         else if(id == R.id.card_type_rel)
         {
-            Utils.hideKeyboard(activity);
 
+            Utils.hideKeyboard(activity);
             creditCardSelected();
         }
         else if(id == R.id.net_banking_rel)
@@ -614,13 +652,84 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             Utils.hideKeyboard(activity);
 
             netBankingSelected();
+        }
+        else if(id == R.id.upi_rela)
+        {
+
+            Log.e("Click..@@@@@@@@","..633....");
+            Utils.hideKeyboard(activity);
+            UPISelected();
+        }
+        else if(id==R.id.international_layout)
+        {
+            RegionType="GCC";
+            international_layout.setBackground(
+                    ContextCompat.getDrawable(this, R.drawable.background_button_shadow)
+            );
+            india_layout.setBackground(
+                    ContextCompat.getDrawable(this, R.drawable.backgroud_with_border)
+            );
+            india_text.setTextColor(
+                    ContextCompat.getColor(this, R.color.purple_light)
+            );
+            international_text.setTextColor(
+                    ContextCompat.getColor(this, R.color.white)
+            );
+            payment_image.setImageDrawable(
+                    ContextCompat.getDrawable(this, R.drawable.paytabs_logo));
+            getDXEBankDetailsAPI(true,"GCC");
+
+            net_banking_main_lin.setVisibility(View.INVISIBLE);
+            upi_main_lin.setVisibility(View.GONE);
+
+
 
         }
-        else if(id == R.id.upi_rel)
+            else if(id==R.id.india_layout)
         {
-            Utils.hideKeyboard(activity);
+            RegionType="IND";
+            getDXEBankDetailsAPI(true,"IND");
+           india_layout.setBackground(
+                    ContextCompat.getDrawable(this, R.drawable.background_button_shadow)
+            );
+            india_text.setTextColor(
+                    ContextCompat.getColor(this, R.color.white)
+            );
+            international_text.setTextColor(
+                    ContextCompat.getColor(this, R.color.purple_light)
+            );
+            international_layout.setBackground(
+                    ContextCompat.getDrawable(this, R.drawable.backgroud_with_border)
+            );
 
-            upiSelected();
+            payment_image.setImageDrawable(
+                    ContextCompat.getDrawable(this, R.drawable.razorpay_laog)
+            );
+
+            if(!amount_et.getText().toString().equalsIgnoreCase(""))
+            {
+                int enterAmount = Integer.parseInt(amount_et.getText().toString().trim());
+                if(enterAmount>500000)
+                {
+                    upi_main_lin.setVisibility(View.GONE);
+                }
+                else {
+                    if (RegionType.equalsIgnoreCase("IND"))
+                    {
+                        upi_main_lin.setVisibility(View.VISIBLE);
+                    }
+                    else if (RegionType.equalsIgnoreCase("GCC")){
+                        upi_main_lin.setVisibility(View.GONE);
+                    }
+
+                    upi_option_lin.setVisibility(View.GONE);
+                }
+            }
+            else {
+
+                upi_main_lin.setVisibility(View.VISIBLE);
+            }
+            net_banking_main_lin.setVisibility(View.VISIBLE);
 
         }
         else if(id == R.id.mode_payment_rel)
@@ -637,6 +746,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         }
         else if(id == R.id.show_all_bank_rel)
         {
+
             Utils.hideKeyboard(activity);
             showAllBankNamePopupWindow();
         }
@@ -644,7 +754,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         {
             Utils.hideKeyboard(activity);
 
-           // Log.d("PAPAYACODERS", "onCreate: " + payloadBase64);
+            Log.d("validateFields()", "Click..@@..: " + validateFields());
            // Log.d("PAPAYACODERS", "onCreate: " + checksum);
 
             if(validateFields())
@@ -667,12 +777,15 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     void neftSelected()
     {
         rtgs_rel.setBackgroundResource(R.drawable.background_select_payment_option);
+        rtgs_rel.setBackgroundResource(R.drawable.background_select_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         // If Payment Option Selected After that Error Gone
         payment_option_error_tv.setVisibility(View.GONE);
@@ -690,13 +803,13 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         setNEFTBanKDetails(); // 0 Position Bank Selected and Show Details
 
         paymentModeType = NEFT;
-
+        Log.e("modelArrayList","....Custom...215...."+modelArrayList.size());
         adapter = new BankNEFTListAdapter(modelArrayList, context , this);
         recycler_view.setAdapter(adapter);
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
         calculateAmountWithCharges();
-
+        show_upi_list.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
         bank_account_details_lin.setVisibility(View.VISIBLE); // Bank Account Details Layout
         show_all_bank_lin.setVisibility(View.GONE); // Select Bank DropDown Layout Gone
@@ -708,10 +821,12 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_select_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
         editTextAndTextViewValueBlank();
@@ -730,7 +845,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
         calculateAmountWithCharges();
-
+        show_upi_list.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.GONE); // Bank List Layout
         bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
         show_all_bank_lin.setVisibility(View.GONE); // Select Bank DropDown Layout Gone
@@ -741,10 +856,12 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     {
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_select_payment_option);
 
         rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
 
         // If Payment Option Selected After that Error Gone
@@ -764,7 +881,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
         paymentModeType = NET_BANKING;
 
-        // Amount  Calculated Final Amount and Show Amount in Bottom of Screen
+        // Amount Calculated Final Amount and Show Amount in Bottom of Screen
         calculateAmountWithCharges();
 
         // All Position Unselected.
@@ -774,17 +891,64 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
         select_bank_tv.setText(""); // Bank Name TextView Blank
         select_bank_tv.setHint(getResources().getString(R.string.select_bank));
-
-        popularBankListAdapter = new PopularBankListAdapter(popularBankArrayList, context , this);
-        recycler_view.setAdapter(popularBankListAdapter);
-
-        show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
+        select_bank_tv.setVisibility(View.GONE);
+        /*popularBankListAdapter = new PopularBankListAdapter(popularBankArrayList, context , this);
+        recycler_view.setAdapter(popularBankListAdapter);*/
+        show_upi_list.setVisibility(View.GONE);
         bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
-        show_all_bank_lin.setVisibility(View.VISIBLE); // Select Bank DropDown Layout Visible
+        show_all_bank_lin.setVisibility(View.GONE);
+        show_bank_name_lin.setVisibility(View.GONE);
+        //show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
+        //show_all_bank_lin.setVisibility(View.VISIBLE);  // Select Bank DropDown Layout Visible
     }
 
-    // UPI Option Selected
-    void upiSelected()
+    void UPISelected()
+    {
+
+        rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
+        card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
+        net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
+        upi_relative.setBackgroundResource(R.drawable.background_select_payment_option);
+
+        rtgs_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        card_type_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        net_banking_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        upi_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
+
+        // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
+        // editTextAndTextViewValueBlank();
+
+        // If Payment Option Selected After that Error Gone
+        payment_option_error_tv.setVisibility(View.GONE);
+
+        show_upi_list.setVisibility(View.VISIBLE);
+        //recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
+        paymentModeType = UPI;
+        selectPaymentOptionClearUPIOption(UPI);
+
+      //  showUPIAppsOption(upiAppsArrayList);
+
+
+        ///////////
+
+        editTextAndTextViewValueBlank();
+
+        recycler_view.setVisibility(View.GONE); // Bank List Layout Show
+        select_bank_error_tv.setVisibility(View.GONE); // Hide Bank Selection Required Error.
+
+        isSelectNetBankingBank = false; // Use For Check Validation Net Banking Bank Not Selected
+
+        // Amount  Calculated Final Amount and Show Amount in Bottom of Screen
+        calculateAmountWithCharges();
+
+
+        show_bank_name_lin.setVisibility(View.GONE); // Bank List Layout
+        bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
+        show_all_bank_lin.setVisibility(View.GONE);
+    }
+
+    // UPI Option Selected  old one
+    /*void upiSelected()
     {
         // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
         editTextAndTextViewValueBlank();
@@ -792,19 +956,19 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         // If Payment Option Selected After that Error Gone
         payment_option_error_tv.setVisibility(View.GONE);
 
-            /*if (isArrowDown) {
+            *//*if (isArrowDown) {
                 upi_option_down_arrow_img.setImageResource(R.drawable.drop_up);
             } else {
                 upi_option_down_arrow_img.setImageResource(R.drawable.drop_down);
             }
-            isArrowDown = !isArrowDown;*/
+            isArrowDown = !isArrowDown;*//*
 
         recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
 
         selectPaymentOptionClearUPIOption(UPI);
 
         //ArrayList<UPIAppInfoListModel> upiAppsArrayList = getInstalledUPIApps();
-    }
+    }*/
 
     // If Select Payment Option Like RTGS/CreditCard/DebitCard/Net Banking Or If User Select UPI Option clear Payment Option.
     void selectPaymentOptionClearUPIOption(String paymentOptionSelectionType)
@@ -824,7 +988,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         }
     }
 
-    public void getDXEBankDetailsAPI(boolean showLoader)
+    public void getDXEBankDetailsAPI(boolean showLoader,String regionType)
     {
         String uuid = CommonUtility.getAndroidId(context);
         if (Utils.isNetworkAvailable(context))
@@ -833,9 +997,11 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
             urlParameter.put("sessionId", "" + uuid);
             urlParameter.put("countryName", "India");
+            urlParameter.put("region", regionType);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter,
+                    ApiConstants.GET_DXE_BANK_DETAILS, ApiConstants.GET_DXE_BANK_DETAILS_ID,
                     showLoader, "POST");
 
         } else {
@@ -870,7 +1036,8 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_BANK_CHARGES, ApiConstants.GET_BANK_CHARGES_ID,
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter,
+                    ApiConstants.GET_BANK_CHARGES, ApiConstants.GET_BANK_CHARGES_ID,
                     showLoader, "GET");
 
 
@@ -884,6 +1051,22 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         String uuid = CommonUtility.getAndroidId(context);
         if (Utils.isNetworkAvailable(context))
         {
+            //this both use
+               // "region" : "IND", // IND, GCC                                                         <---
+              //  "paymentGateway" : "RAZORPAY", // PHONEPE,RAZORPAY,PAYTABS                            <---
+
+
+            if(RegionType.equalsIgnoreCase("IND"))
+            {
+                paymentGetwayType="RAZORPAY";
+            }
+            else  if(RegionType.equalsIgnoreCase("GCC"))
+            {
+                paymentGetwayType="PAYTABS";
+            }
+
+            Log.e("paymentGetwayType","...1001...@@@@@@@@............."+paymentGetwayType);
+            Log.e("RegionType","...1001...@@@@@@@@............."+RegionType);
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
@@ -909,6 +1092,8 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             else{}
 
            // Log.e("------- remark : ", " remark : " +  remark.toString());
+            urlParameter.put("region", RegionType);
+            urlParameter.put("paymentGateway", paymentGetwayType);
             urlParameter.put("remark", remark);
             urlParameter.put("submit", submit);
             urlParameter.put("deviceId", ""+ uuid);
@@ -985,6 +1170,10 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
                 case ApiConstants.GET_DXE_BANK_DETAILS_ID:
 
+                    if(!modelArrayList.isEmpty())
+                    {
+                        modelArrayList.clear();
+                    }
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
@@ -1011,7 +1200,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
                         // Set Bank Detail Using RGTS/NEFT
                         setNEFTBanKDetails();
-
+                        Log.e("modelArrayList","..1016.....##########/...."+modelArrayList.size());
                         adapter = new BankNEFTListAdapter(modelArrayList, context , this);
                         recycler_view.setAdapter(adapter);
                     }
@@ -1053,7 +1242,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                             model.setPriority(CommonUtility.checkString(objectCodes.optString("priority")));
                             model.setImage(CommonUtility.checkString(objectCodes.optString("img")));
                             model.setSelected(false);
-
+                            Log.e("popularBankArrayList","....628....##........."+popularBankArrayList.size());
                             popularBankArrayList.add(model);
                         }
 
@@ -1074,6 +1263,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
                             allBankArrayList.add(model);
                         }
+                        Log.e("allBankArrayList","....628....##........."+allBankArrayList.size());
 
                         /*popularBankListAdapter = new PopularBankListAdapter(popularBankArrayList, context , this);
                         recycler_view.setAdapter(popularBankListAdapter);*/
@@ -1098,6 +1288,21 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                        // Log.e("-------Diamond : ", "RTGS/NEFT : " + jsonObjectData.toString());
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
+                        JSONObject jObjUserDetails = jObjDetails.optJSONObject("user_data");
+
+                        String firstname = CommonUtility.checkString(jObjUserDetails.optString("firstname"));
+                        String lastname = CommonUtility.checkString(jObjUserDetails.optString("lastname"));
+                        String user_email = CommonUtility.checkString(jObjUserDetails.optString("email"));
+                        String user_mobile = CommonUtility.checkString(jObjUserDetails.optString("mobile"));
+
+                        Log.e("paymentModeType","1266......."+paymentModeType);
+
+                        System.out.println("First Name: " + firstname);
+                        System.out.println("Last Name: " + lastname);
+                        System.out.println("Email: " + user_email);
+                        System.out.println("Mobile: " + user_mobile);
+
+
                         // Check Final Submit Value or Calculate Amount.
                         if(finalSubmitValue.equalsIgnoreCase("yes"))
                         {
@@ -1117,7 +1322,117 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                             else{
                                 totalAmount = CommonUtility.checkString(jObjDetails.optString("total_amount"));
                                 callbackUrl = CommonUtility.checkString(jObjDetails.optString("callback_url"));
-                                createCheckSumPaymentInitiatedAndOpenPhonePe();
+                                ///Phone Pe comment here
+                                //createCheckSumPaymentInitiatedAndOpenPhonePe();
+                                Log.e("amount_et","..1239...****************....."+amount_et.getText().toString());
+                                Log.e("Amount In INT","..1240....."+Integer.parseInt(amount_et.getText().toString()));
+                                Log.e("RegionType","..1307...."+RegionType);
+
+                                JSONObject billingAddress = jObjUserDetails.optJSONObject("billing_address");
+
+                                if (RegionType.equalsIgnoreCase("IND"))
+                                {
+                                    if(paymentModeType.equalsIgnoreCase(UPI))
+                                    {
+                                        RazorpayUtility.INSTANCE.initializePayment(
+                                                CustomPaymentScreenActivity.this,
+                                                Integer.parseInt(totalAmount),
+                                                user_mobile,
+                                                user_email,
+                                                PaymentMethod.UPI,
+                                                context.getResources().getString(R.string.app_name),
+                                                R.drawable.appicon
+                                        );
+                                    }
+                                    else if(paymentModeType.equalsIgnoreCase(NET_BANKING))
+                                    {
+                                        RazorpayUtility.INSTANCE.initializePayment(
+                                                CustomPaymentScreenActivity.this,
+                                                Integer.parseInt(totalAmount),
+                                                user_mobile,
+                                                user_email,
+                                                PaymentMethod.NET_BANKING,
+                                                context.getResources().getString(R.string.app_name),
+                                                R.drawable.appicon
+                                        );
+                                    }
+                                    else if(paymentModeType.equalsIgnoreCase(CREDIT_CARD))
+                                    {
+                                        RazorpayUtility.INSTANCE.initializePayment(
+                                                CustomPaymentScreenActivity.this,
+                                                Integer.parseInt(totalAmount),
+                                                user_mobile,
+                                                user_email,
+                                                PaymentMethod.CARD,
+                                                context.getResources().getString(R.string.app_name),
+                                                R.drawable.appicon
+                                        );
+                                    }
+                                }
+                                else if (RegionType.equalsIgnoreCase("GCC"))
+                                {
+                                    String getaddress = "",getcity= "",getstate= "",getcountry= "",getzip= "",getip= "";
+                                    if (billingAddress != null) {
+                                         getaddress = billingAddress.optString("address");
+                                         getcity = billingAddress.optString("city");
+                                         getstate = billingAddress.optString("state");
+                                         getcountry = billingAddress.optString("country");
+                                         getzip = billingAddress.optString("zip");
+                                         getip = billingAddress.optString("ip");
+
+                                        Log.e("Billing Address", "Address: " + getaddress);
+                                        Log.e("Billing Address", "City: " + getcity);
+                                        Log.e("Billing Address", "State: " + getstate);
+                                        Log.e("Billing Address", "Country: " + getcountry);
+                                        Log.e("Billing Address", "Zip: " + getzip);
+                                        //Log.e("Billing Address", "IP: " + ip);
+                                    }
+
+                                    if(paymentModeType.equalsIgnoreCase(CREDIT_CARD)){
+
+                                        /*Log.e("exchange_rate",".1399......"+CommonUtility.checkDouble(jObjDetails.optString("exchange_rate")));
+                                        Log.e("amount_et",".1400......"+CommonUtility.checkInt(jObjDetails.optString("amount")));*/
+
+                                        double exchangeRate = CommonUtility.checkDouble(jObjDetails.optString("exchange_rate")); // Ensure it's a double
+                                        int amount = CommonUtility.checkInt(jObjDetails.optString("amount")); // Ensure it's an integer
+                                        int total_amount = CommonUtility.checkInt(jObjDetails.optString("total_amount"));
+                                        double resultDouble = total_amount * exchangeRate;
+
+                                        int result = (int) resultDouble;
+                                        String formattedResult = String.format("%.2f", resultDouble);
+
+                                        double resultWithTwoDecimals = Double.parseDouble(formattedResult);
+                                        Log.e("resultWithTwoDecimals", "..14000..." + resultWithTwoDecimals);
+
+                                        String currecnySymbol=jObjDetails.optString("currency_symbol");
+                                        String orderID=jObjDetails.optString("order_id");
+
+                                        Log.e("currecnySymbol","..1424...."+currecnySymbol+"....orderID...."+orderID);
+                                        PayTabsPaymentManager.INSTANCE.setCurrencyAndCartId(
+                                                currecnySymbol,
+                                                orderID
+                                        );
+
+                                        PayTabsPaymentManager.INSTANCE.setBillingDetails(
+                                                 getcity,
+                                               getcountry,
+                                                user_email,
+                                                firstname+lastname,
+                                                 user_mobile,
+                                               getstate,
+                                               getaddress,
+                                                getip
+                                        );
+
+                                        PayTabsPaymentManager.INSTANCE.initiateCardPayment(
+                                                CustomPaymentScreenActivity.this,
+                                                resultWithTwoDecimals,
+                                                CustomPaymentScreenActivity.this
+                                        );
+
+                                    }
+                                }
+
                             }
                         }
                         else{
@@ -1178,6 +1493,16 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                     }
                     else {
                         //Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case  ApiConstants.DISMISS_ORDER_ID:
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
+                        // Get the message
+                        String messageFails = jsonObjectData.optString("msg");
+
+                        // Show the message in a toast
+                        Toast.makeText(getApplicationContext(), messageFails, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
@@ -1600,11 +1925,11 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             select_date_rel.setBackgroundResource(R.drawable.border_red_line_view);
             return false;
         }
-        else if (!isSelectNetBankingBank && paymentModeType.equalsIgnoreCase(NET_BANKING)) {
+        /*else if (!isSelectNetBankingBank && paymentModeType.equalsIgnoreCase(NET_BANKING)) {
             select_bank_error_tv.setVisibility(View.VISIBLE);
             show_all_bank_lin.requestFocus();
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -1756,7 +2081,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
             LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
             recycler_view_bank_name.setLayoutManager(layoutManager);
             recycler_view_bank_name.setNestedScrollingEnabled(false);
-
+            Log.e("allBankArrayList",",...#######...1158..."+allBankArrayList.size());
             allBankNameListAdapter = new AllBankNameListAdapter(allBankArrayList, context , this);
             recycler_view_bank_name.setAdapter(allBankNameListAdapter);
 
@@ -1790,7 +2115,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     }
 
     // Show All UPI App Name
-    private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
+    /*private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
         Log.e("upiApps","...1794........"+upiApps.size());
         if (upiApps.isEmpty()) {
             Toast.makeText(this, "No UPI apps installed", Toast.LENGTH_SHORT).show();
@@ -1799,6 +2124,95 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         }
         upiOptionListAdapter = new UPIOptionListAdapter(upiApps, context , this);
         recycler_view_upi.setAdapter(upiOptionListAdapter);
+    }*/
+
+    private void showUPIAppsOption(ArrayList<UPIAppInfoListModel> upiApps) {
+
+        Log.e("upiApps","...2521...."+upiApps.isEmpty());
+        if (upiApps.isEmpty())
+        {
+
+            noupifound_tv.setVisibility(View.VISIBLE);
+            recycler_view_upi.setVisibility(View.GONE);
+        }
+        else
+        {
+            noupifound_tv.setVisibility(View.GONE);
+            noupifound_tv.setText("Found");
+            recycler_view_upi.setVisibility(View.VISIBLE);
+        }
+        if (upiApps.isEmpty()) {
+            Toast.makeText(this, R.string.noupifound, Toast.LENGTH_SHORT).show();
+            upi_option_lin.setVisibility(View.GONE);
+            return;
+        }
+
+        Log.e("upiApps","...2521..**..Size.."+upiApps.size());
+        upiOptionListAdapter = new UPIOptionListAdapter(upiApps, context , this);
+        recycler_view_upi.setAdapter(upiOptionListAdapter);
     }
+
+    @Override
+    public void onPaymentSuccess(String s, PaymentData paymentData) {
+        Constant.comeFrom = "customPayment";
+        Intent intent = new Intent(activity, PaymentStatusScreenActivity.class);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+        finish();
+    }
+
+    @Override
+    public void onPaymentError(int i, String s, PaymentData paymentData) {
+        //Toast.makeText(this, "Payment is Fail:" + s, Toast.LENGTH_SHORT).show();
+        getPaymentCancel(false);
+    }
+
+    // PayTabs payment methods..
+
+    @Override
+    public void onError(@NonNull PaymentSdkError paymentSdkError) {
+        Log.e("paymentSdkError","...2091.....**...."+paymentSdkError.toString());
+        Toast.makeText(this, "Payment is Fail ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentFinish(@NonNull PaymentSdkTransactionDetails paymentSdkTransactionDetails) {
+        Log.e("On payment","Finish......2096....");
+        Log.e("CartAmount","...2112..**...."+paymentSdkTransactionDetails.getCartAmount());
+        Log.e("TransactionType","...2113..**...."+paymentSdkTransactionDetails.getTransactionType());
+        Constant.comeFrom = "customPayment";
+        Intent intent = new Intent(activity, PaymentStatusScreenActivity.class);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+        finish();
+    }
+
+    @Override
+    public void onPaymentCancel()
+    {
+       // Toast.makeText(this, "Payment is Cancel ", Toast.LENGTH_SHORT).show();
+        getPaymentCancel(false);
+    }
+
+    public void getPaymentCancel(boolean showLoader) {
+        Log.e("paymentOrderID", "...1871......" + Constant.paymentOrderID);
+
+        String uuid = CommonUtility.getAndroidId(this);
+        HashMap<String, String> urlParameter = new HashMap<>();
+        urlParameter.put("sessionId", uuid);
+        urlParameter.put("orderId", String.valueOf(Constant.paymentOrderID));
+        urlParameter.put("type", "custom-payment");
+
+        VollyApiActivity vollyApiActivity = new VollyApiActivity(
+                this,
+                this,
+                urlParameter,
+                ApiConstants.DISMISS_ORDER,
+                ApiConstants.DISMISS_ORDER_ID,
+                showLoader,
+                "POST"
+        );
+    }
+
 
 }

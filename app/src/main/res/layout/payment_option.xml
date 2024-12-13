@@ -36,14 +36,17 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
+                        android:paddingBottom="@dimen/dimen_8"
+                        android:paddingTop="@dimen/dimen_8"
                         android:id="@+id/diamond_details_rel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_15"
-                        android:layout_marginTop="@dimen/dimen_5"
                         android:orientation="horizontal">
 
                         <TextView
+                            android:gravity="center_vertical"
+                            android:layout_centerInParent="true"
                             style="@style/SemiBoldFontType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -51,8 +54,86 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_16" />
 
+                        <ImageView
+                            android:visibility="visible"
+                            android:layout_centerInParent="true"
+                            android:layout_marginEnd="@dimen/dimen_15"
+                            android:id="@+id/payment_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/razorpay_laog"
+                            />
 
                     </RelativeLayout>
+
+
+                    <!--Button payment-->
+                    <LinearLayout
+                        android:layout_below="@+id/diamond_details_rel"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:id="@+id/payment_button_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_15"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:id="@+id/india_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_button_shadow">
+
+                            <TextView
+                                android:id="@+id/india_text"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="Debit"
+                                android:paddingLeft="@dimen/dimen_5"
+                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingRight="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_10"
+                                android:text="@string/India"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen_12" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/international_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_weight="1"
+                            android:background="@drawable/backgroud_with_border">
+
+                            <TextView
+                                android:id="@+id/international_text"
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="Debit"
+                                android:paddingLeft="@dimen/dimen_5"
+                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingRight="@dimen/dimen_5"
+                                android:paddingBottom="@dimen/dimen_10"
+                                android:text="@string/International"
+                                android:textColor="@color/purple_light"
+                                android:textSize="@dimen/dimen_12" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <!--android:weightSum="4"-->
 
@@ -60,9 +141,9 @@
                         android:id="@+id/show_diamond_details_lin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/diamond_details_rel"
+                        android:layout_below="@+id/payment_button_select"
                         android:layout_marginLeft="@dimen/dimen_10"
-                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_15"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:layout_marginBottom="@dimen/dimen_10"
                         android:orientation="vertical"
@@ -265,6 +346,7 @@
                             android:textColor="@color/dark_red"
                             android:textSize="@dimen/dimen_15"
                             android:visibility="gone" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view_upi"
                             android:layout_width="match_parent"

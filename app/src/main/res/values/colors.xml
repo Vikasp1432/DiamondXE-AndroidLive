@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="color_fe0000">#fe0000</color>
+    <color name="color_109663">#109663</color>
+    <color name="color_e7d6e9">#e7d6e9</color>
     <color name="bg">#FF018786</color>
     <color name="tranprent_20">#FFFFFF</color>
     <color name="purple">#4C0C4B</color>
@@ -20,6 +23,8 @@
     <color name="hint_color">#7D84A8</color>
     <color name="gray">#B9C2CC</color>
     <color name="offwhite">#F8F7F4</color>
+
+    <color name="color_545454">#545454</color>
 
     <color name="line_border_color">#D2CDC9</color>
     <color name="shadow_color1">#AD735A33</color>
@@ -68,7 +73,7 @@
     <color name="light_purple2">#D3C6D3</color>
     <color name="translucent_black">#A6000000</color> <!-- 65% opacity -->
 
-
+    <color name="color_F5F5F5">#F5F5F5</color>
     <color name="off_white_top">#F2F0F0</color>
     <color name="white_bottom">#FFFFFF</color>
 
@@ -112,13 +117,46 @@
     <color name="color_C3C4C799">#99C3C4C7</color>
     <color name="color_717070">#717070</color>
 
-
-
     <color name="color_4a183b">#4A183A</color>
     <color name="color_1d0819">#1d0819</color>
     <color name="color_77285f">#77285f</color>
-
     <color name="white_B7A3B0">#B7A3B0</color>
 
+
+    <!--//7E3080-->
+    <color name="payment_sdk_primary_color">#F2F0F0</color>
+    <color name="payment_sdk_secondary_color">#7E3080</color>
+    <color name="payment_sdk_background_color">#F2F0F0</color>
+
+    <!--hint suggest text color-->
+    <color name="payment_sdk_hint_font_color">#D8D8D8</color>
+
+    <!--Pay not button color-->
+    <color name="payment_sdk_button_background_color">#7E3080</color>
+
+    <!--input filed bg color set -->
+    <color name="payment_sdk_input_field_background_color">#F2F0F0</color>
+
+    <!--Card no name card expire date cvv box strock color-->
+    <color name="payment_sdk_stroke_color">#7E3080</color>
+
+    <!--Tittle Header color DIamondXE -->
+    <color name="payment_sdk_title_text_color">#7E3080</color>
+
+    <!--Expiry date hint color-->
+    <color name="payment_sdk_primary_font_color">#77285f</color>
+
+    <!--Powered by test color-->
+    <color name="payment_sdk_secondary_font_color">#7E3080</color>
+
+    <!--yes ,no pay now button text-->
+    <color name="payment_sdk_button_text_color">#D5D5D5</color>
+
+    <color name="payment_sdk_error_text_color">#E91E63</color>
+
+    <color name="payment_sdk_back_black_dim">#444647</color>
+
+    <!--top status bar color change-->
+    <color name="payment_sdk_status_bar_color">#7E3080</color>
 
 </resources>

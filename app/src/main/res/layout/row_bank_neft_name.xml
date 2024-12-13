@@ -37,7 +37,7 @@
                 android:paddingTop="@dimen/dimen_3"
                 android:paddingRight="@dimen/dimen_3"
                 android:paddingBottom="@dimen/dimen_3"
-                android:src="@mipmap/all" />
+                android:src="@drawable/hdfcbanklogo" />
 
         </RelativeLayout>
 

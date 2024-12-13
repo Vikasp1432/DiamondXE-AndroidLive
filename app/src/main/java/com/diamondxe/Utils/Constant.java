@@ -4,6 +4,13 @@ import android.annotation.SuppressLint;
 
 import com.diamondxe.Beans.AttributeDetailsModel;
 import com.diamondxe.Beans.CountryListModel;
+import com.diamondxe.Beans.GemstoneAttri.GemColorAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemCretificateAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemCuttingAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemItemsAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemOriginAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemShapeAttribute;
+import com.diamondxe.Beans.GemstoneAttri.GemTreatmentAttribute;
 import com.diamondxe.Beans.MyOrder.MyOrderListModel;
 
 import java.util.ArrayList;
@@ -73,6 +80,15 @@ import java.util.ArrayList;
 
     public static String manageFragmentCalling="";
 
+    public static ArrayList<GemItemsAttribute> gemItemsAttributeArrayList;
+    public static ArrayList<GemShapeAttribute> shapsGemarraylist;
+    public static ArrayList<GemTreatmentAttribute> gemTreatmentAttributeArrayList;
+    public static ArrayList<GemCuttingAttribute> gemCuttingAttributeArrayList;
+
+    public static ArrayList<GemOriginAttribute> gemOriginAttributeArrayList;
+    public static ArrayList<GemColorAttribute> gemColorAttributeArrayList;
+    public static ArrayList<GemCretificateAttribute> gemCretificateAttributeArrayList;
+
     public static ArrayList<AttributeDetailsModel> cutTypeArrayList;
     public static ArrayList<AttributeDetailsModel> polishTypeArrayList;
     public static ArrayList<AttributeDetailsModel> symmertyTypeArrayList;
@@ -130,6 +146,28 @@ import java.util.ArrayList;
     public static String lotID="";
     public static String location="";
     public static String sortingBy="";
+
+    /////////// GEMSTONE KEY /////////////////////////////////
+    public static String weightFirst="";
+    public static String weightThird="";
+    public static String stockIdGemstone="";
+    public static String selectedshapeTypesItems="";
+    public static String selectedOriginItems="";
+    public static String selectedColorItems="";
+    public static String selectedCertificateItems="";
+    public static String GemstoneReturnValue="";
+
+    public static String selectedGemShapes="";
+    public static String selectedGemTreatment="";
+    public static String selectedItemsAttribute="";
+    public static String selectedCuttingAttribute="";
+
+    public static String selectedPriceGem="";
+    public static String selectedWeightGem="";
+
+
+    ////////////////////////////////////////////////////////////////
+
     public static ArrayList<AttributeDetailsModel> cutTypeArrayList1;
 
     public static ArrayList<AttributeDetailsModel> colorTypeFilterApploedArrayList;

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.APISolutions.ApiSolutionRequestActivity">
+
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="@dimen/dimen_12"
+        android:id="@+id/tool_bar_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/sha_border"
+        android:outlineSpotShadowColor="@color/sha_border"
+        app:cardElevation="@dimen/dimen_5">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:paddingTop="@dimen/dimen_30"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/title_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/back_img"
+                android:text="@string/requestforapi"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_20" />
+
+            <ImageView
+                android:layout_marginTop="@dimen/dimen_30"
+                android:layout_gravity="center"
+                android:id="@+id/image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/api_solution_request" />
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dimen_30"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="@dimen/dimen_50"
+                        android:layout_height="@dimen/dimen_50"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/seamless_api_img" />
+
+                    <TextView
+                        android:layout_weight="700"
+                        android:layout_marginTop="@dimen/dimen_9"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/back_img"
+                        android:text="@string/seamless_api_integration"
+                        android:textColor="@color/black_light"
+                        android:textSize="@dimen/dimen_16" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/back_img"
+                        android:text="$5000"
+                        android:textColor="@color/black_light"
+                        android:textSize="@dimen/dimen_14" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2">
+                    <View
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:id="@+id/verticalLine"
+                        android:layout_width="2dp"
+                        android:layout_height="@dimen/dimen_80"
+                        android:background="@drawable/api_divider" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="@dimen/dimen_50"
+                        android:layout_height="@dimen/dimen_50"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/seamless_api_img" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_9"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        style="@style/SemiBoldFontType"
+                        android:layout_weight="700"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/back_img"
+                        android:text="@string/white_label_solution"
+                        android:textColor="@color/black_light"
+                        android:textSize="@dimen/dimen_16" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/back_img"
+                        android:text="$2500"
+                        android:textColor="@color/black_light"
+                        android:textSize="@dimen/dimen_14" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_36"
+                android:layout_marginBottom="@dimen/dimen_70"
+                android:layout_gravity="center"
+                android:id="@+id/request_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/background_button_shadow">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/all_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_60"
+                    android:paddingTop="@dimen/dimen_12"
+                    android:paddingRight="@dimen/dimen_60"
+                    android:paddingBottom="@dimen/dimen_12"
+                    android:text="@string/request_now"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_16" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

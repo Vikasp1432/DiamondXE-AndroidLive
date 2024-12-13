@@ -55,7 +55,7 @@ class CurrencyListActivity : AppCompatActivity() {
                 binding.countrySearch.clearFocus()
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.countrySearch.windowToken, 0)
-                Log.e("CurrencyListActivity","..Clikc..@@@@@@@@@@.................39*********............")
+                Log.e("CurrencyListActivity","..click..@@@@@@@@@@.................39*********............")
             }
         }
 

@@ -66,31 +66,104 @@
             android:orientation="vertical">
 
             <!--Filter Applied Layout-->
-            <LinearLayout
-                android:id="@+id/filter_type_lin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
+            <RelativeLayout
                 android:layout_marginTop="@dimen/dimen_10"
-                android:layout_marginRight="@dimen/dimen_15">
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/SemiBoldFontType"
+                <LinearLayout
+                    android:id="@+id/filter_type_lin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/filter_applied"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14" />
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15">
 
-                <ImageView
-                    android:id="@+id/arrow_img"
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_applied"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14" />
+
+
+                    <ImageView
+                        android:id="@+id/arrow_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_1"
+                        android:src="@drawable/drop_down" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_toRightOf="@+id/filter_type_lin"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:background="@drawable/border_purple_line_view"
+                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dimen_8"
-                    android:layout_marginTop="@dimen/dimen_1"
-                    android:src="@drawable/drop_down" />
-            </LinearLayout>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Stock"
+                        android:textColor="@color/purple_light"
+                        android:textSize="@dimen/dimen_14" />
+
+
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:spinnerMode="dropdown"
+                            android:id="@+id/spinnerAttributes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="4"
+                            android:background="@null"
+                            android:prompt="@string/to_string" />
+
+                        <ImageView
+                            android:id="@+id/dropdown_"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:paddingRight="@dimen/dimen_10"
+                            android:src="@drawable/down_arrow_new" />
+                    </RelativeLayout>
+
+
+                    <!-- <Spinner
+                         android:theme="@style/ThemeOverlay.AppCompat.Light"
+                         android:paddingBottom="@dimen/dimen_5"
+                         android:paddingTop="@dimen/dimen_5"
+                         android:id="@+id/spinnerAttributes"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:spinnerMode="dropdown" />-->
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedView"
@@ -120,6 +193,7 @@
 
             <!--Diamond Text-->
             <TextView
+                android:id="@+id/diamondtype_text"
                 style="@style/SemiBoldFontType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +201,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_15"
                 android:text="@string/diamond_type"
-                android:textColor="@color/black"
+                android:textColor="@color/light_gray2"
                 android:textSize="@dimen/dimen_14" />
 
             <!--Natural, Lab Grown Tab and Icon-->
@@ -146,7 +220,7 @@
                         android:id="@+id/card_view_natural"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_8"
                         android:layout_marginRight="@dimen/dimen_10"
                         android:layout_marginBottom="@dimen/dimen_10"
                         android:elevation="@dimen/dimen_10"
@@ -182,8 +256,8 @@
                         android:id="@+id/card_view_grown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginLeft="@dimen/dimen_4"
+                        android:layout_marginTop="@dimen/dimen_8"
                         android:layout_marginBottom="@dimen/dimen_10"
                         android:layout_toRightOf="@+id/card_view_natural"
                         android:outlineAmbientShadowColor="@color/shadow_color"
@@ -303,11 +377,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/row_search_result_shimmer_placeholder_list" />
+                        <include
+                            android:id="@+id/shimmer_first"
+                            layout="@layout/row_search_result_shimmer_placeholder_list" />
 
-                        <include layout="@layout/row_search_result_shimmer_placeholder_list" />
+                        <include android:id="@+id/shimmer_secound"
+                            layout="@layout/row_search_result_shimmer_placeholder_list" />
 
-                        <include layout="@layout/row_search_result_shimmer_placeholder_list" />
+                        <include
+                            android:id="@+id/shimmer_third"
+                            layout="@layout/row_search_result_shimmer_placeholder_list" />
 
 
                     </LinearLayout>
@@ -336,7 +415,12 @@
 
         </LinearLayout>
 
-
+        <View
+            android:id="@+id/dim_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <!-- This is your translucent background view -->
@@ -386,7 +470,9 @@
         android:background="@android:color/transparent"
         android:visibility="visible">
 
-        <include layout="@layout/bottom_bar" />
+        <include
+            android:id="@+id/bottom_bat_include"
+            layout="@layout/bottom_bar" />
 
     </RelativeLayout>
 

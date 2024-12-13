@@ -43,7 +43,8 @@
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_marginRight="@dimen/dimen_5"
                 android:layout_toRightOf="@+id/type_tv"
-                android:src="@drawable/cross" />
+                android:src="@drawable/cross"
+                app:tint="@color/black" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

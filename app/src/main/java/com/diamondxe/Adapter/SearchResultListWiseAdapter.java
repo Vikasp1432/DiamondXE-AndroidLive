@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,8 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
     RecyclerInterface recyclerInterface;
     Handler handler = new Handler(Looper.getMainLooper());
     String userRole = "";
-    public SearchResultListWiseAdapter(ArrayList<SearchResultTypeModel> list, Context context, RecyclerInterface recyclerInterface, String userRole) {
+    String searchType="";
+    public SearchResultListWiseAdapter(ArrayList<SearchResultTypeModel> list, Context context, RecyclerInterface recyclerInterface, String userRole,String searchType) {
         this.list = list;
         this.context = context;
         this.arraylist = new ArrayList<SearchResultTypeModel>();
@@ -41,6 +43,7 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
         this.arraylist.addAll(list);
         this.recyclerInterface = recyclerInterface;
         this.userRole = userRole;
+        this.searchType=searchType;
     }
 
     @Override
@@ -54,7 +57,8 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
 
         }
         else
-        {v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_search_result_list_wise, parent, false);
+        {
+            v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.row_search_result_list_wise, parent, false);
 
         }
 
@@ -81,7 +85,14 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
                     .error(R.mipmap.phl_diamond)
                     .into(holder.image_view);
         }
-
+        Log.e("searchType",".....88.......**************...."+searchType);
+        if (searchType.equals("dxeluxe"))
+        {
+            holder.luex_tag.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.luex_tag.setVisibility(View.GONE);
+        }
 
         holder.supplier_id_tv.setText("#"+list.get(position).getStock_no() + " | " + "ID: "+ list.get(position).getSupplier_id());
         holder.name_tv.setText(list.get(position).getShape());
@@ -287,12 +298,13 @@ public class SearchResultListWiseAdapter extends RecyclerView.Adapter<RecyclerVi
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
                 depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv, return_policy_tv,discount_tv, diamond_type;
         ImageView add_to_favt_img,image_view, returnable_img, status_img, add_to_card_img;
-        RelativeLayout search_circle_card_lin;
+        RelativeLayout search_circle_card_lin,luex_tag;
 
         public RecycleViewHolder (View itemView) {
             super (itemView);
 
             root_layout = itemView.findViewById(R.id.root_layout);
+            luex_tag = itemView.findViewById(R.id.luex_tag);
             image_view = itemView.findViewById(R.id.image_view);
             add_to_favt_img = itemView.findViewById(R.id.add_to_favt_img);
             add_to_card_img = itemView.findViewById(R.id.add_to_card_img);

@@ -42,6 +42,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.diamondxe.Activity.AccountSectionActivity;
 import com.diamondxe.Activity.DXELuex.DXELuexRegisterActivity;
 import com.diamondxe.Activity.DiamondDetailsActivity;
+import com.diamondxe.Activity.Gemstones.GemstomeSearchActivity;
 import com.diamondxe.Activity.HomeScreenActivity;
 import com.diamondxe.Activity.Jewellery.JewelleryScreenActivity;
 import com.diamondxe.Activity.LoginScreenActivity;
@@ -74,6 +75,7 @@ import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
 import com.dxe.calc.WebViewActivity;
+import com.dxe.calc.dashboard.CalculatorActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -93,7 +95,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             view_all_news_tv;
     private ImageView registerImg, dxeLuxeImg, bottom_search_icon;
     private RelativeLayout search_circle_rel;
-    private LinearLayout solitaries_lin, jewellery_lin;
+    private LinearLayout solitaries_lin, jewellery_lin,gemstones_lin,dex_lin;
     private CardView solitaires_card_view,rings_card_view,earrings_card_view,pendent_card_view,bracelet_card_view,bangles_card_view,transparent_price_card_view,exchange_buy_back_card_view,
             certificate_lab_card_view,insured_door_step_card_view,customer_support_card_view;
     private RecyclerView recyclerGiftView, recyclerNewArrivalsView, recyclerNaturalGrownView, recyclerMediaSpotlight, recyclerCustomerStories,
@@ -122,7 +124,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
     ViewPager viewPager, viewPagerCustomer;
     TabLayout tabLayout;
     //private CirclePageIndicator circle_indicator;
-    private RelativeLayout viewpager_layout, viewpager_layout_customer;
+    private RelativeLayout viewpager_layout, viewpager_layout_customer,dxe_calc_rev;
 
     private ArrayList<HomeListModel> modelArrayList;
 
@@ -219,6 +221,9 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         wishlist_rel = parentView.findViewById(R.id.wishlist_rel);
         wishlist_rel.setOnClickListener(this);
 
+        dxe_calc_rev = parentView.findViewById(R.id.dxe_calc_rev);
+        dxe_calc_rev.setOnClickListener(this);
+
         cart_rel = parentView.findViewById(R.id.cart_rel);
         cart_rel.setOnClickListener(this);
 
@@ -230,12 +235,13 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         wish_img = parentView.findViewById(R.id.wish_img);
         cart_img = parentView.findViewById(R.id.cart_img);
         account_img = parentView.findViewById(R.id.account_img);
-
+        account_img.setOnClickListener(this);
         home_tv = parentView.findViewById(R.id.home_tv);
         categories_tv = parentView.findViewById(R.id.categories_tv);
         wish_tv = parentView.findViewById(R.id.wish_tv);
         cart_tv = parentView.findViewById(R.id.cart_tv);
         account_tv = parentView.findViewById(R.id.account_tv);
+        account_tv.setOnClickListener(this);
         cart_count_tv = parentView.findViewById(R.id.cart_count_tv);
         wish_list_count_tv = parentView.findViewById(R.id.wish_list_count_tv);
 
@@ -250,7 +256,6 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         wish_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
         cart_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
         account_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
-
 
         user_login = CommonUtility.getGlobalString(context, "user_login");
         featuresTitle = CommonUtility.getGlobalString(context, "featuresTitle");
@@ -277,9 +282,12 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
 
         solitaries_lin = parentView.findViewById(R.id.solitaries_lin);
         solitaries_lin.setOnClickListener(this);
+        dex_lin=parentView.findViewById(R.id.dex_lin);
+        dex_lin.setOnClickListener(this);
+        gemstones_lin=parentView.findViewById(R.id.gemstones_lin);
+        gemstones_lin.setOnClickListener(this);
         jewellery_lin = parentView.findViewById(R.id.jewellery_lin);
         jewellery_lin.setOnClickListener(this);
-
 
         solitaires_card_view = parentView.findViewById (R.id.solitaires_card_view);
         solitaires_card_view.setOnClickListener(this);
@@ -740,10 +748,40 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             startActivity(intent);
             getActivity().overridePendingTransition(0,0);
         }
+        else if(id == R.id.dex_lin)
+        {
+            Constant.searchTitleName = ApiConstants.DXE_LUXE;
+            Constant.searchType=ApiConstants.DXE_LUXE;
+            Constant.filterClear="";
+            if(!user_login.equalsIgnoreCase(""))
+            {
+                Log.e("User","Login h...**************");
+
+                /*Intent intent1 = new Intent(context, SearchDiamondsActivity.class);
+                intent1.putExtra("intentvalue","dxeluxe");
+                startActivity(intent1);*/
+
+                getLuxeUserStatus(false);
+                //startActivity(new Intent(context, DXELuexRegisterActivity.class));
+            }
+            else{
+                //startActivity(new Intent(context, LoginScreenActivity.class));
+                intent = new Intent(activity, DXELuexRegisterActivity.class);
+                startActivity(intent);
+            }
+        }
+
         else if(id == R.id.jewellery_lin)
         {
             intent = new Intent(context, JewelleryScreenActivity.class);
+            intent.putExtra("intentvalue","jewellery");
             startActivity(intent);
+            getActivity().overridePendingTransition(0,0);
+        }
+        else if(id == R.id.gemstones_lin)
+        {
+            Intent intent1 = new Intent(context, GemstomeSearchActivity.class);
+            startActivity(intent1);
             getActivity().overridePendingTransition(0,0);
         }
         else if (id == R.id.natural_diamond_tv)
@@ -777,18 +815,27 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             intent1.putExtra("url", "https://diamondxe.com/limitedoffer");
             intent1.putExtra("title", "");
             startActivity(intent1);
+            //startActivity(intent1);
         }
         else if(id == R.id.dxe_luxe_img)
         {
 
-           /* if(!user_login.equalsIgnoreCase(""))
+            if(!user_login.equalsIgnoreCase(""))
             {
-                startActivity(new Intent(context, DXELuexRegisterActivity.class));
+                Log.e("User","Login h...**************");
+
+                /*Intent intent1 = new Intent(context, SearchDiamondsActivity.class);
+                intent1.putExtra("intentvalue","dxeluxe");
+                startActivity(intent1);*/
+
+                getLuxeUserStatus(false);
+                //startActivity(new Intent(context, DXELuexRegisterActivity.class));
             }
             else{
-                intent = new Intent(activity, LoginScreenActivity.class);
+                //startActivity(new Intent(context, LoginScreenActivity.class));
+                intent = new Intent(activity, DXELuexRegisterActivity.class);
                 startActivity(intent);
-            }*/
+            }
 
         }
         else if(id == R.id.transparent_price_card_view)
@@ -824,8 +871,23 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+        else if(id == R.id.dxe_calc_rev)
+        {
+            Log.e("Call...","..839.........");
+            Intent intent1 = new Intent(context, CalculatorActivity.class);
+            startActivity(intent1);
+
+            /*Fragment fragment = new WishlistFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();*/
+
+        }
         else if(id == R.id.wishlist_rel)
         {
+
             Fragment fragment = new WishlistFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -844,14 +906,58 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             fragmentTransaction.commit();
 
         }
+        else if(id == R.id.account_img)
+        {
+            String user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                Log.e("In IF","...890...#############.........");
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);
+            }
+        }
         else if(id == R.id.account_rel)
         {
             String user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                Log.e("In IF","...890...#############.........");
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(0,0);
+            }
+        }
+        else if(id == R.id.account_tv)
+        {
+            String user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                Log.e("In IF","...890...#############.........");
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
             else
             {
@@ -985,6 +1091,27 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(getActivity(),this, urlParameter, ApiConstants.GET_CMS_DETAILS, ApiConstants.GET_CMS_DETAILS_ID,showLoader, "GET");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
+    }
+
+    public void getLuxeUserStatus(boolean showLoader)
+    {
+        String uuid = CommonUtility.getAndroidId(context);
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("sessionId", "" + uuid);
+
+            //urlParameter.put("user_id", CommonUtility.getGlobalString(getActivity(),"user_id"));
+            //urlParameter.put("authToken", CommonUtility.getGlobalString(getActivity(),"mobile_auth_token"));
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(getActivity(),this, urlParameter, ApiConstants.LUXE_USER_Status, ApiConstants.LUXE_USER_STATUS_ID,showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1534,6 +1661,48 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
 
                          showCardCount();
 
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case ApiConstants.LUXE_USER_STATUS_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        JSONObject details = jsonObjectData.getJSONObject("details");
+
+                        Log.e("details","...1581...**************......"+details);
+                        int isLuxeMember = details.optInt("isLuxeMember");
+                        Log.e("isLuxeMember", "...1581...**************......" + isLuxeMember);
+
+                        // working comment for check
+                        if(isLuxeMember==0)
+                        {
+                            startActivity(new Intent(context, DXELuexRegisterActivity.class));
+                        }
+                        else {
+                            Constant.searchTitleName = ApiConstants.DXE_LUXE;
+                            Constant.searchType = ApiConstants.DXE_LUXE;
+                            Constant.filterClear="";
+                            Intent intent = new Intent(context, SearchDiamondsActivity.class);
+                            intent.putExtra("intentvalue","dxeluxe");
+                            startActivity(intent);
+                            //start search activity
+                        }
+
+                         /*Intent intent = new Intent(context, SearchDiamondsActivity.class);
+                        intent.putExtra("intentvalue","dxeluxe");
+                        startActivity(intent);*/
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {

@@ -429,16 +429,32 @@ public class CommonUtility {
 		return "";
 	}
 
-	public static double checkDouble(String value) {
-		double updatedValue = 0.0; // Default value for invalid inputs
+	public static int checkInt(String value) {
+		int updatedValue = 0;
 
 		if (value == null || value.trim().equalsIgnoreCase("") || value.equalsIgnoreCase("null")) {
-			updatedValue = 0.0; // Return default value
+			updatedValue = 0;
 		} else {
 			try {
-				updatedValue = Double.parseDouble(value); // Parse the value as double
+				updatedValue = Integer.parseInt(value);
 			} catch (NumberFormatException e) {
-				updatedValue = 0.0; // Handle the case where value is not a valid double
+				updatedValue = 0;
+			}
+		}
+
+		return updatedValue;
+	}
+
+	public static double checkDouble(String value) {
+		double updatedValue = 0.0;
+
+		if (value == null || value.trim().equalsIgnoreCase("") || value.equalsIgnoreCase("null")) {
+			updatedValue = 0.0;
+		} else {
+			try {
+				updatedValue = Double.parseDouble(value);
+			} catch (NumberFormatException e) {
+				updatedValue = 0.0;
 			}
 		}
 
@@ -663,6 +679,59 @@ public class CommonUtility {
 	}
 
 	public static BottomSheetDialog dialog;
+
+	public static void datePicker1(
+			Context context,
+			final DialogItemClickInterface dialogItemClickInterface,
+			final String date1,
+			final String valueFor,
+			long minDate,
+			long maxDate
+	) {
+		if (date1 != null && !date1.trim().isEmpty()) {
+			cu_mDay = Integer.parseInt(CommonUtility.convertDateFormat(date1, "MM/dd/yyyy", "dd"));
+			cu_month = Integer.parseInt(CommonUtility.convertDateFormat(date1, "MM/dd/yyyy", "MM")) - 1;
+			cu_year = Integer.parseInt(CommonUtility.convertDateFormat(date1, "MM/dd/yyyy", "yyyy"));
+		} else {
+			Calendar cc = Calendar.getInstance();
+			cu_year = cc.get(Calendar.YEAR);
+			cu_month = cc.get(Calendar.MONTH);
+			cu_mDay = cc.get(Calendar.DAY_OF_MONTH);
+		}
+
+		DatePickerDialog datePickerDialog = new DatePickerDialog(
+				context,
+				R.style.DialogTheme,
+				(view, year, monthOfYear, dayOfMonth) -> {
+					String selectedDate = String.format("%02d/%02d/%d", dayOfMonth, monthOfYear + 1, year);
+
+					try {
+						SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+						SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+						Date date = inputFormat.parse(selectedDate);
+						String formattedDate = outputFormat.format(date);
+
+						dialogItemClickInterface.dialogItemClick(formattedDate, valueFor);
+					} catch (ParseException e) {
+						e.printStackTrace();
+						dialogItemClickInterface.dialogItemClick(null, valueFor);
+					}
+				},
+				cu_year,
+				cu_month,
+				cu_mDay
+		);
+
+		if (minDate != 0) {
+			datePickerDialog.getDatePicker().setMinDate(minDate);
+		}
+
+		if (maxDate != 0) {
+			datePickerDialog.getDatePicker().setMaxDate(maxDate);
+		}
+
+		datePickerDialog.show();
+	}
 
 
 	public static int cu_year,cu_month,cu_mDay;

@@ -35,10 +35,11 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
     RecyclerInterface recyclerInterface;
 
     Handler handler = new Handler(Looper.getMainLooper());
-
+    String searchType="";
     String userRole = "";
 
-    public SearchResultListAdapter(ArrayList<SearchResultTypeModel> list, Context context, RecyclerInterface recyclerInterface, String userRole) {
+    public SearchResultListAdapter(ArrayList<SearchResultTypeModel> list, Context context, RecyclerInterface recyclerInterface, String userRole,
+                                   String searchType) {
         this.list = list;
         this.context = context;
         this.arraylist = new ArrayList<SearchResultTypeModel>();
@@ -46,6 +47,7 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.arraylist.addAll(list);
         this.recyclerInterface = recyclerInterface;
         this.userRole = userRole;
+        this.searchType=searchType;
     }
 
 
@@ -95,6 +97,14 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.name_tv.setText(list.get(position).getShape());
         holder.item_type_tv.setText(list.get(position).getCarat() + context.getResources().getString(R.string.ct) + " | " + list.get(position).getColor() + " | " + list.get(position).getClarity());
 
+        Log.e("searchType",".....88.......**************...."+searchType);
+        if (searchType.equals("dxeluxe"))
+        {
+            holder.luex_tag.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.luex_tag.setVisibility(View.GONE);
+        }
         if(list.get(position).getCut_grade().equalsIgnoreCase(""))
         {
             holder.cut_grade_tv.setText("-");
@@ -207,7 +217,6 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
             holder.diamond_type.setText("LAB");
         }
 
-
         if(list.get(position).getIs_returnable().equalsIgnoreCase("1"))
         {
             holder.returnable_img.setVisibility(View.VISIBLE);
@@ -215,6 +224,7 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
         else{
             holder.returnable_img.setVisibility(View.GONE);
         }
+
         if(list.get(position).getStatus().equalsIgnoreCase("Available"))
         {
             holder.status_img.setVisibility(View.VISIBLE);
@@ -325,7 +335,7 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
                 depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,discount_sub_total_tv,return_policy_tv, discount_tv,diamond_type;
         ImageView add_to_favt_img,image_view, returnable_img, status_img;
-        RelativeLayout search_circle_card_lin;
+        RelativeLayout search_circle_card_lin,luex_tag;
 
         public RecycleViewHolder (View itemView) {
             super (itemView);
@@ -335,7 +345,7 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<RecyclerView.V
             add_to_favt_img = itemView.findViewById(R.id.add_to_favt_img);
             returnable_img = itemView.findViewById(R.id.returnable_img);
             status_img = itemView.findViewById(R.id.status_img);
-
+            luex_tag = itemView.findViewById(R.id.luex_tag);
             supplier_id_tv = itemView.findViewById(R.id.supplier_id_tv);
             name_tv = itemView.findViewById(R.id.name_tv);
             item_type_tv = itemView.findViewById(R.id.item_type_tv);

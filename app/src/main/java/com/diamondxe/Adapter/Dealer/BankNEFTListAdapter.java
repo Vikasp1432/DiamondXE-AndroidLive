@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class BankNEFTListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final RecycleViewHolder holder = (RecycleViewHolder) viewHolder;
 
 
+        Log.e("getBank",",.............."+list.get(position).getBank().toUpperCase());
         if(list.get(position).isSelected())
         {
             holder.img_rel.setBackgroundResource(R.drawable.background_select_payment_option);

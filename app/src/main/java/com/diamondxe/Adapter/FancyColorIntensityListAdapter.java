@@ -64,6 +64,7 @@ public class FancyColorIntensityListAdapter extends ArrayAdapter<AttributeDetail
 
         AttributeDetailsModel currentItem = getItem(position);
 
+        Log.e("AttributeDetailsModel","CAll.....Select.67......"+position);
         if (position == 0) { // Hint item
             textView.setText(hint); // Set hint if the item is null (i.e., at HINT_POSITION)
             textView.setTextColor(ContextCompat.getColor(context, R.color.white)); // Red color for hint in dropdown

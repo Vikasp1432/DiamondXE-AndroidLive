@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bottom_gradient"
+    tools:context=".Activity.AdvanceFiltersActivity">
+
+    <RelativeLayout
+        android:id="@+id/tool_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_purple"
+        android:paddingTop="@dimen/dimen_5"
+        android:paddingBottom="@dimen/dimen_5">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_10"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/SemiBoldFontType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_toRightOf="@+id/back_img"
+            android:text="@string/advance_filters"
+            android:textColor="@color/purple_light"
+            android:textSize="@dimen/dimen_18" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar_rel"
+        android:layout_below="@+id/tool_bar_layout"
+        android:background="@color/bg_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:orientation="vertical">
+
+            <!--Shapes Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_12"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1.2"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/shape"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_shapes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.8" />
+
+            </LinearLayout>
+
+            <!--Treatment Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_12"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1.2"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/treatment"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_treatment_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.8" />
+
+            </LinearLayout>
+
+            <!--Item Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_12"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1.2"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/Item"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_item_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.8" />
+
+            </LinearLayout>
+
+            <!--Cutting Style Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_12"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1.2"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/cuttingstyle"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_cutting_style_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.8" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/purple_light"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:elevation="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/dimen_7"
+                app:cardElevation="@dimen/dimen_5">
+
+                <TextView
+                    android:id="@+id/clear_filter_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/clear_all"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dimen_7">
+
+                <TextView
+                    android:id="@+id/apply_filter_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/apply"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14" />
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

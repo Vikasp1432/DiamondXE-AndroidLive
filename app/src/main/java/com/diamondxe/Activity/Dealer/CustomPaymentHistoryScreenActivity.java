@@ -197,7 +197,9 @@ public class CustomPaymentHistoryScreenActivity extends SuperActivity implements
     public void getSuccessResponce(JSONObject jsonObject, int service_ID)
     {
         if(pageNo == 1)
-        {}else{
+        {
+
+        }else{
             progressBar.setVisibility(View.GONE);
         }
         try {

@@ -40,6 +40,7 @@ import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
+import com.dxe.calc.dashboard.CalculatorActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
@@ -54,7 +55,7 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
     private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
-    private RelativeLayout search_circle_rel;
+    private RelativeLayout search_circle_rel,dxe_calc_rev;
 
     String user_login = "";
 
@@ -103,6 +104,9 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         home_rel = parentView.findViewById(R.id.home_rel);
         home_rel.setOnClickListener(this);
 
+        dxe_calc_rev = parentView.findViewById(R.id.dxe_calc_rev);
+        dxe_calc_rev.setOnClickListener(this);
+
         category_rel = parentView.findViewById(R.id.category_rel);
         category_rel.setOnClickListener(this);
 
@@ -120,6 +124,7 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         wish_img = parentView.findViewById(R.id.wish_img);
         cart_img = parentView.findViewById(R.id.cart_img);
         account_img = parentView.findViewById(R.id.account_img);
+        account_img.setOnClickListener(this);
         wish_list_count_tv = parentView.findViewById(R.id.wish_list_count_tv);
 
         home_tv = parentView.findViewById(R.id.home_tv);
@@ -127,6 +132,7 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         wish_tv = parentView.findViewById(R.id.wish_tv);
         cart_tv = parentView.findViewById(R.id.cart_tv);
         account_tv = parentView.findViewById(R.id.account_tv);
+        account_tv.setOnClickListener(this);
         cart_count_tv = parentView.findViewById(R.id.cart_count_tv);
 
         home_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
@@ -222,6 +228,11 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
             transaction.replace(R.id.container_body, newFragment);
             transaction.commit();
         }
+        else if(id == R.id.dxe_calc_rev) {
+            Log.e("Call...", "..839.........");
+            Intent intent1 = new Intent(context, CalculatorActivity.class);
+            startActivity(intent1);
+        }
         else if(id == R.id.category_rel)
         {
             Fragment fragment = new CategoryFragmentList();
@@ -249,9 +260,57 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
             user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);*/
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(0,0);
+            }
+        }
+        else if (id == R.id.account_tv) {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);*/
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);
+            }
+        }
+        else if (id == R.id.account_img) {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0,0);*/
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
             else
             {
@@ -405,6 +464,8 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
                             modelArrayList.clear();
                         }else{}
 
+                        //isDxeLUXE
+
                         for (int i = 0; i < details.length(); i++)
                         {
                             JSONObject objectCodes = details.getJSONObject(i);
@@ -444,7 +505,7 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
                             model.setIsCart(CommonUtility.checkString(objectCodes.optString("is_cart")));
                             model.setOnHold(CommonUtility.checkString(objectCodes.optString("on_hold")));
                             model.setStockNo(CommonUtility.checkString(objectCodes.optString("stock_no")));
-
+                            model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
                             modelArrayList.add(model);
 
                         }
@@ -569,9 +630,14 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         }
         else if(action.equalsIgnoreCase("viewDetails"))
         {
+
             Constant.manageClickEventForRedirection="";
             CommonUtility.setGlobalString(context, "certificate_number", modelArrayList.get(position).getCertificateNo());
             Intent intent = new Intent(activity, DiamondDetailsActivity.class);
+            if (modelArrayList.get(position).getIsDxeLUXE()==1)
+            {
+                intent.putExtra("intentvalue","dxeluxe");
+            }
             startActivity(intent);
             getActivity().overridePendingTransition(0,0);
 

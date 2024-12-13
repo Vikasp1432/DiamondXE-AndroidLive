@@ -1,29 +1,42 @@
 package com.diamondxe.Activity;
 
+import static com.diamondxe.ApiCalling.ApiConstants.ACCOUNT_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CART_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CATEGORY_FRAGMENT;
+import static com.diamondxe.ApiCalling.ApiConstants.DXE_CALC;
 import static com.diamondxe.ApiCalling.ApiConstants.HOME_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.USER_BUYER;
 import static com.diamondxe.ApiCalling.ApiConstants.USER_DEALER;
 import static com.diamondxe.ApiCalling.ApiConstants.WISHLIST_FRAGMENT;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -36,6 +49,7 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +59,10 @@ import com.diamondxe.Adapter.SearchResultListAdapter;
 import com.diamondxe.Adapter.SearchResultListWiseAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
+import com.diamondxe.Beans.AttributeDetailsModel;
 import com.diamondxe.Beans.CountryListModel;
 import com.diamondxe.Beans.SearchResultTypeModel;
+import com.diamondxe.Fragment.AccountSectionFragment;
 import com.diamondxe.Interface.RecyclerInterface;
 import com.diamondxe.Network.EndlessRecyclerViewScrollListener;
 import com.diamondxe.Network.SuperActivity;
@@ -54,14 +70,18 @@ import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
+import com.diamondxe.databinding.ApiSolutionRequestDialogBinding;
+import com.dxe.calc.dashboard.CalculatorActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.squareup.picasso.Picasso;
-
+import org.checkerframework.checker.units.qual.A;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,18 +99,19 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     private CountryListModel lastSelectedCountry; // Track the last selected country
     private CircleImageView selected_country_img;
     private TextView selected_country_name,selected_country_desc;
-    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
-    private ImageView home_img, categories_img, wish_img, cart_img, account_img;
+    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel,dxe_calc_rev;
+    private ImageView home_img, categories_img, wish_img, cart_img, account_img,dropdown_;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
     NestedScrollView nestedView;
     private boolean isArrowDown = false;
     private LinearLayout filter_type_lin;
     private CardView card_view_natural, card_view_grown,image_card_view_shimmer;
-    private TextView natural_tv, grown_tv, error_tv;
+    private TextView natural_tv, grown_tv, error_tv,diamondtype_text;
     String manageAPICall = "",user_login="";
     ColorTypeAppliedFilterDataAdapter colorTypeAppliedFilterDataAdapter;
     int lastPosition = 0;
     int lastIndex;
+    int checkOtherLocation = 0;
     private Spinner spinner_sorting_price;
     SearchResultListAdapter searchResultListAdapter;
     SearchResultListWiseAdapter searchResultListWiseAdapter;
@@ -98,6 +119,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     ArrayList<CountryListModel> countryArrayList;
     ArrayList<CountryListModel> selectedItems;
     CurrencyListAdapter countryListAdapter;
+    List<AttributeDetailsModel> attributeNames;
     ArrayList<CountryListModel> localCurrencyArrayList = new ArrayList<>();
     int pageNo = 1;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -107,11 +129,16 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
     private ShimmerFrameLayout shimmer_view_container;
+    ArrayList<AttributeDetailsModel> attributeDetailsModels=new ArrayList<>();
     String cardViewAndListViewParttenShow = "CardView";
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
     String userRole = "";
     LinearLayoutManager layoutManager;
-
+    String stocklocation="";
+    String searchType="";
+    Spinner spinnerAttributes;
+    View dim_overlay;
+    String getActivityValue = null;
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +146,26 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         setContentView(R.layout.activity_search_result);
 
         context = activity = this;
+        attributeDetailsModels=new ArrayList<>();
+        Intent intent = getIntent();
+        String intentValue = null;
 
+
+        if (intent != null) {
+            intentValue = intent.getStringExtra("intentvalue");
+            getActivityValue = intent.getStringExtra("gemStoneValue");
+        }
+
+        if (getActivityValue!=null)
+        {
+            Log.e("IntentValue", "..............162..........."+getActivityValue);
+        }
+        if (intentValue != null) {
+            searchType=intentValue;
+            Log.e("Search result", "Received intent value : " + intentValue);
+        } else {
+            Log.e("IntentValue", "No intent value received.");
+        }
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
         modelArrayList = new ArrayList<>();
@@ -128,8 +174,11 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
         getCurrencyData();
 
+        dim_overlay=findViewById(R.id.dim_overlay);
+        dropdown_ = findViewById(R.id.dropdown_);
+        dropdown_.setOnClickListener(this);
         container_body = findViewById(R.id.main);
-
+        spinnerAttributes = findViewById(R.id.spinnerAttributes);
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
 
@@ -147,6 +196,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
         shimmer_view_container = findViewById(R.id.shimmer_view_container);
         image_card_view_shimmer = findViewById(R.id.image_card_view_shimmer);
+        diamondtype_text = findViewById(R.id.diamondtype_text);
 
         filter_type_lin = findViewById(R.id.filter_type_lin);
         filter_type_lin.setOnClickListener(this);
@@ -213,6 +263,9 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         wishlist_rel = findViewById(R.id.wishlist_rel);
         wishlist_rel.setOnClickListener(this);
 
+        dxe_calc_rev=findViewById(R.id.dxe_calc_rev);
+        dxe_calc_rev.setOnClickListener(this);
+
         cart_rel = findViewById(R.id.cart_rel);
         cart_rel.setOnClickListener(this);
 
@@ -230,6 +283,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         wish_tv = findViewById(R.id.wish_tv);
         cart_tv = findViewById(R.id.cart_tv);
         account_tv = findViewById(R.id.account_tv);
+        account_tv.setOnClickListener(this);
         cart_count_tv = findViewById(R.id.cart_count_tv);
         wish_list_count_tv = findViewById(R.id.wish_list_count_tv);
 
@@ -238,7 +292,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         wish_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
         cart_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
         account_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
-
+        account_img.setOnClickListener(this);
         home_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
         categories_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
         wish_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
@@ -274,7 +328,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
         Constant.cutTypeArrayList1 = new ArrayList<>();
 
-         layoutManager = new LinearLayoutManager(activity);
+        layoutManager = new LinearLayoutManager(activity);
         recycler_view.setLayoutManager(layoutManager);
         recycler_view.setNestedScrollingEnabled(false);
 
@@ -288,11 +342,12 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         recycler_view_apply_filter.setLayoutManager(layoutManagerAppliedFilter);
         recycler_view_apply_filter.setNestedScrollingEnabled(false);
 
+//        Log.e("colorType","FilterApploedArrayList.....336....."+Constant.colorTypeFilterApploedArrayList.size());
         colorTypeAppliedFilterDataAdapter = new ColorTypeAppliedFilterDataAdapter(Constant.colorTypeFilterApploedArrayList,context,this);
         recycler_view_apply_filter.setAdapter(colorTypeAppliedFilterDataAdapter);
 
         // CardView Type Format List.
-        searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole);
+        searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole,searchType);
         recycler_view.setAdapter(searchResultListAdapter);
 
         CommonUtility.startZoomAnimation(bottom_search_icon);
@@ -302,6 +357,9 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("Load more","...222...######.........74");
+                Log.e("Load more",".Search1.....######.........74.."+modelArrayList.size());
+                Log.e("Load more",".2...Search..######.........74.."+Constant.lazyLoadingLimit);
 
                 if (modelArrayList.size()>= Constant.lazyLoadingLimit)
                 {
@@ -345,6 +403,31 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         };
 
         getOnBackPressedDispatcher().addCallback(this, callback);
+        searchTypeIntent();
+        onAttributeCall(false);
+    }
+
+    public void onAttributeCall(boolean showLoader)
+    {
+        Log.e("onBindDetails","............CALL......................");
+        String uuid = CommonUtility.getAndroidId(context);
+
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("sessionId", "" + uuid);
+
+            //urlParameter.put("user_id", CommonUtility.getGlobalString(getActivity(),"user_id"));
+            //urlParameter.put("authToken", CommonUtility.getGlobalString(context,"mobile_auth_token"));
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_ATTRIBUTES, ApiConstants.GET_ATTRIBUTES_ID,showLoader, "GET");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            //recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
     }
 
     // Updates the local currency list based on the selected currency code.
@@ -375,6 +458,16 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         recycler_view_country_list.setAdapter(countryListAdapter);
     }
 
+    public void searchTypeIntent()
+    {
+        if(searchType.equals("dxeluxe"))
+        {
+            card_view_natural.setVisibility(View.GONE);
+            card_view_grown.setVisibility(View.GONE);
+            diamondtype_text.setVisibility(View.GONE);
+        }
+    }
+
     // Get Currency value, Code, Flag
     void getCurrencyData()
     {
@@ -386,13 +479,13 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
     void listViewFormatAdapterSet()
     {
-        searchResultListWiseAdapter = new SearchResultListWiseAdapter(modelArrayList,context,this, userRole);
+        searchResultListWiseAdapter = new SearchResultListWiseAdapter(modelArrayList,context,this, userRole,searchType);
         recycler_view.setAdapter(searchResultListWiseAdapter);
     }
 
     void cardViewFormatAdapterSet()
     {
-        searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole);
+        searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole,searchType);
         recycler_view.setAdapter(searchResultListAdapter);
     }
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -434,11 +527,18 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
             listViewFormatAdapterSet();
         }
+        else  if (id == R.id.dropdown_){
+            //spinnerAttributes.performClick();
+            dim_overlay.setVisibility(View.VISIBLE);
+            showCustomDropdown(spinnerAttributes, attributeNames);
+        }
         else if(id == R.id.search_circle_card)
         {
-            translucent_background.setVisibility(View.VISIBLE); // Activity Transparency Visible
+            Log.e("search_circle_card",".523...********************...");
 
-            bottomBarClickableFalse();// When Transparency Show Click False
+            translucent_background.setVisibility(View.VISIBLE);
+
+            bottomBarClickableFalse();
 
             bottom_search_icon.setImageResource(R.drawable.cross);
             bottom_search_icon.setColorFilter(ContextCompat.getColor(context, R.color.white));
@@ -500,6 +600,13 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             startActivity(intent);
             overridePendingTransition(0,0);
         }
+        else if(id == R.id.dxe_calc_rev)
+        {
+            Constant.manageFragmentCalling = DXE_CALC;
+            Intent intent1 = new Intent(context, CalculatorActivity.class);
+            startActivity(intent1);
+            overridePendingTransition(0,0);
+        }
         else if(id == R.id.category_rel)
         {
             Constant.manageFragmentCalling = CATEGORY_FRAGMENT;
@@ -521,14 +628,77 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             startActivity(intent);
             overridePendingTransition(0,0);
         }
+        else if (id == R.id.account_img) {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
+        else if (id == R.id.account_tv) {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
         else if(id == R.id.account_rel)
         {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+
             }
             else
             {
@@ -539,6 +709,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         }
         else if(id == R.id.translucent_background)
         {
+
             hideCurrencyListLayout();
         }
         else if(id == R.id.show_popup_rel_country)
@@ -896,17 +1067,28 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         shimmer_view_container.setVisibility(View.GONE);
     }
 
+    // 899
     public void onBindDetails(boolean showLoader)
     {
         String uuid = CommonUtility.getAndroidId(context);
         if (Utils.isNetworkAvailable(context))
         {
+
+            // urlParameter.put("isLuxe", "1");
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("limit", "" + Constant.lazyLoadingLimit);
             urlParameter.put("page", ""+ pageNo);
-            urlParameter.put("isLuxe", "0");
+            if(searchType.equals("dxeluxe"))
+            {
+                urlParameter.put("isLuxe", "1");
+            }
+            else {
+                urlParameter.put("isLuxe", "0");
+            }
+            Log.e("stocklocation","1074......#######..................."+stocklocation);
+            urlParameter.put("searchLocation", stocklocation);
             urlParameter.put("certificateNo", "");
             urlParameter.put("keyWord", Constant.searchKeyword);
             urlParameter.put("category", Constant.searchType);
@@ -924,7 +1106,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             urlParameter.put("depthFrom", Constant.depthFrmInput);
             urlParameter.put("depthTo", Constant.depthToInput);
             urlParameter.put("lotId", Constant.lotID);
-            urlParameter.put("searchLocation", Constant.location);
             urlParameter.put("certificate", Constant.certificateValue);
             urlParameter.put("fluorescence", Constant.fluorescenceValue);
             urlParameter.put("cut", Constant.cutValue);
@@ -955,7 +1136,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                     urlParameter.put("currValue", "1");
                 }
             }
-
             urlParameter.put("tablePerFrom", Constant.tableFrm);
             urlParameter.put("tablePerTo", Constant.tableTo);
             urlParameter.put("depthPerFrom", Constant.depthFrmSpinner);
@@ -967,6 +1147,10 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             urlParameter.put("sortBy", Constant.sortingBy);
             urlParameter.put("sessionId", "" + uuid);
 
+
+            for (Map.Entry<String, String> entry : urlParameter.entrySet()) {
+                Log.e("Constant Value..Search...1152....", entry.getKey() + " : " + entry.getValue());
+            }
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DIAMONDS, ApiConstants.GET_DIAMONDS_ID,showLoader, "GET");
@@ -1080,7 +1264,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             shimmerStop();
         }
         try {
-            Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
+            Log.e("------Diamond----- : ", "--------JSONObject-----**--- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -1092,7 +1276,10 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONArray details = jsonObjectData.getJSONArray("details");
+                        int avgDiamondPrice = jsonObjectData.optInt("check_other_locations");
 
+                        checkOtherLocation=avgDiamondPrice;
+                        Log.e("checkOtherLocation",",....1272..."+checkOtherLocation);
                         if(pageNo == 1)
                         {
                             if(modelArrayList.size() > 0)
@@ -1174,6 +1361,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                             model.setStock_no(CommonUtility.checkString(objectCodes.optString("stock_no")));
                             model.setCurrencySymbol(ApiConstants.rupeesIcon);
 
+
                             if(details.length()-1 == i)
                             {
                                 model.setVisible(true);
@@ -1201,11 +1389,11 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                            // Check Which Type Of icon Selected From Ex CardView Icon Selected Sow List CardView Format otherwise Show ListView Format
                            if(cardViewAndListViewParttenShow.equalsIgnoreCase("CardView"))
                            {
-                               searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole);
+                               searchResultListAdapter = new SearchResultListAdapter(modelArrayList,context,this, userRole,searchType);
                                recycler_view.setAdapter(searchResultListAdapter);
                            }
                            else{
-                               searchResultListWiseAdapter = new SearchResultListWiseAdapter(modelArrayList,context,this, userRole);
+                               searchResultListWiseAdapter = new SearchResultListWiseAdapter(modelArrayList,context,this, userRole,searchType);
                                recycler_view.setAdapter(searchResultListWiseAdapter);
                            }
                        }
@@ -1383,6 +1571,64 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
                         Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
                     }
                     break;
+
+                case ApiConstants.GET_ATTRIBUTES_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
+                        JSONArray details = jsonObjectData.getJSONArray("details");
+                        for (int i = 0; i < details.length(); i++) {
+                            attributeDetailsModels.clear();
+                            JSONObject objectCode = details.getJSONObject(i);
+
+                            String AttribType = objectCode.getString("AttribType");
+
+                            JSONArray attribDetails = objectCode.getJSONArray("AttribDetails");
+
+                            for (int j = 0; j < attribDetails.length(); j++) {
+                                JSONObject innerObjectCodes = attribDetails.getJSONObject(j);
+
+                                // String ss = innerObjectCodes.optString("DisplayAttr");
+
+                                AttributeDetailsModel model = new AttributeDetailsModel();
+
+                                model.setAttribId(CommonUtility.checkString(innerObjectCodes.optString("AttribId")));
+                                model.setAttribTypeId(CommonUtility.checkString(innerObjectCodes.optString("AttribTypeId")));
+                                model.setAttribType(CommonUtility.checkString(innerObjectCodes.optString("AttribType")));
+                                model.setAttribCode(CommonUtility.checkString(innerObjectCodes.optString("AttribCode")));
+                                model.setSortOrder(CommonUtility.checkString(innerObjectCodes.optString("SortOrder")));
+                                model.setDisplayAttr(CommonUtility.checkString(innerObjectCodes.optString("DisplayAttr")));
+                                // model.setFirstPosition(getFirstPosition(model, j));
+                                model.setSelected(false);
+
+                                attributeDetailsModels.add(model);
+
+
+                            }
+                        }
+
+                        //Log.e("attributeDetailsModels", ".3525....################........" + attributeDetailsModels.size());
+                       // spinnerAttributes.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.purple_light), PorterDuff.Mode.SRC_ATOP);
+
+                       attributeNames = new ArrayList<>(attributeDetailsModels);
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                this,
+                                android.R.layout.simple_spinner_item,
+                                convertAttributeListToNames(attributeNames)
+                        );
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerAttributes.setAdapter(adapter);
+
+                        spinnerAttributes.setOnTouchListener((v, event) -> {
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+                                dim_overlay.setVisibility(View.VISIBLE);
+                                showCustomDropdown(v, attributeNames);
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
+                        break;
             }
 
         } catch (Exception e) {
@@ -1390,17 +1636,120 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         }
         finally
         {
-            if (modelArrayList !=null && modelArrayList.size()<=0)
+            if (checkOtherLocation==1)
+            {
+                StockLocationNoDataFound(this);
+            }
+            else if (modelArrayList !=null && modelArrayList.size()<=0)
             {
                 error_tv.setVisibility(View.VISIBLE);
                 error_tv.setText(""+ ApiConstants.NO_RESULT_FOUND);
                 recycler_view.setVisibility(View.GONE);
             } else {
+                if (dialogBuilder!=null)
+                {
+                    if(alertDialog.isShowing())
+                    {
+                        alertDialog.dismiss();
+                        isDialogVisible = false;
+                    }
+                }
                 error_tv.setVisibility(View.GONE);
                 recycler_view.setVisibility(View.VISIBLE);
             }
         }
     }
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
+    private boolean isDialogVisible = false;
+    public void StockLocationNoDataFound(Activity activity) {
+        if (isDialogVisible) {
+            return;
+        }
+
+         dialogBuilder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        View dialogView = inflater.inflate(R.layout.stock_location_notfound_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+         alertDialog = dialogBuilder.create();
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        alertDialog.setCancelable(true);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        isDialogVisible = true;
+
+        LinearLayout okbutton = dialogView.findViewById(R.id.ok_button);
+        okbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                isDialogVisible = false;
+            }
+        });
+
+        ImageView crossImg = dialogView.findViewById(R.id.cross_img);
+        crossImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                isDialogVisible = false;
+            }
+        });
+    }
+
+
+    private List<String> convertAttributeListToNames(List<AttributeDetailsModel> models) {
+        List<String> names = new ArrayList<>();
+        for (AttributeDetailsModel model : models) {
+            names.add(model.getDisplayAttr());
+        }
+        return names;
+    }
+
+    private void showCustomDropdown(View anchor, List<AttributeDetailsModel> data) {
+        PopupWindow popupWindow = new PopupWindow(this);
+        ListView listView = new ListView(this);
+        List<String> displayNames = new ArrayList<>();
+        for (AttributeDetailsModel model : data) {
+            displayNames.add(model.getDisplayAttr());
+        }
+        popupWindow.setOnDismissListener(() -> {
+            // Hide the overlay when the popup is dismissed
+            dim_overlay.setVisibility(View.GONE);
+        });
+        // Set the adapter for the ListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                displayNames
+        );
+        listView.setAdapter(adapter);
+
+        popupWindow.setContentView(listView);
+        popupWindow.setWidth(anchor.getWidth());
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.showAsDropDown(anchor);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            AttributeDetailsModel selectedModel = data.get(position);
+
+            // Log the selected item's details
+            Log.e("Dropdown", "Selected item details: " + selectedModel.getDisplayAttr());
+            Log.e("Dropdown", "Selected item details: " + selectedModel.getAttribCode());
+            spinnerAttributes.setSelection(position);
+            stocklocation = selectedModel.getAttribCode();
+            onBindDetails(false);
+            dim_overlay.setVisibility(View.GONE);
+            // Dismiss the popup
+            popupWindow.dismiss();
+        });
+    }
+
 
     void setSubTotalAccordingCurrencyWise(String value, String currencyCode)
     {
@@ -1410,7 +1759,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             String getCurrencySymbol = CommonUtility.getCurrencySymbol(currencyCode);
             modelArrayList.get(i).setShowingSubTotal(subTotalFormat);
             modelArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
-
         }
 
         if(cardViewAndListViewParttenShow.equalsIgnoreCase("CardView"))
@@ -1483,6 +1831,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
     @Override
     public void itemClick(int position, String action) {
 
+        Log.e("action","1829,,..Search...##....,,"+action);
         if(action.equalsIgnoreCase("searchDiamondDetails"))
         {
             bottom_search_icon.setImageResource(R.drawable.plus);
@@ -1501,11 +1850,41 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             Constant.manageClickEventForRedirection="";
             CommonUtility.setGlobalString(context, "certificate_number", model.getCertificate_no());
             Intent intent = new Intent(activity, DiamondDetailsActivity.class);
+            if(searchType.equals("dxeluxe"))
+            {
+                intent.putExtra("intentvalue","dxeluxe");
+            }
+            intent.putExtra("activityvalue","");
             startActivity(intent);
             overridePendingTransition(0,0);
         }
         else if(action.equalsIgnoreCase("countryType"))
         {
+
+
+            //LinearLayout linearLayout = findViewById(R.id.lin_enquiry);
+            /*ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
+            int bottomMarginInPx = (int) (60 * getResources().getDisplayMetrics().density);
+            layoutParams.bottomMargin = bottomMarginInPx;
+            linearLayout.setLayoutParams(layoutParams);*/
+            /*if (linearLayout.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
+
+                // Convert 60dp to pixels using the display metrics
+                int bottomMarginInPx = (int) (60 * getResources().getDisplayMetrics().density);
+
+                // Update the bottom margin
+                layoutParams.bottomMargin = bottomMarginInPx;
+
+                // Reassign the updated layout parameters to the LinearLayout
+                linearLayout.setLayoutParams(layoutParams);
+            } else {
+                // Log or handle if LayoutParams is not an instance of MarginLayoutParams
+                Log.e("LayoutParamsError", "LinearLayout does not support MarginLayoutParams.");
+            }*/
+
+            ///////////////////////////////////////////////////////////////////////////////////
+
             //CountryListModel model = Constant.currencyArrayList.get(position);
             CountryListModel model = localCurrencyArrayList.get(position);
             SearchResultTypeModel resultModel = modelArrayList.get(position);
@@ -1541,9 +1920,9 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
 
             Log.e("-------country_image------- : ", model.getImage());
 
+
             // Set Sub Total Amount According to Currency
             setSubTotalAccordingCurrencyWise(model.getValue(),model.getCurrency());
-
             updateLocalCurrencyList();
 
         }

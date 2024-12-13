@@ -1,5 +1,6 @@
 package com.diamondxe.Activity.Dealer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -255,6 +256,7 @@ public class WalletScreenActivity extends SuperActivity implements RecyclerInter
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID)
     {
@@ -278,7 +280,7 @@ public class WalletScreenActivity extends SuperActivity implements RecyclerInter
 
                         String availableWalletPoints = CommonUtility.checkString(jObjDetails.optString("wallet_points"));
 
-                        available_points_tv.setText(getResources().getString(R.string.available_wallet_points) + availableWalletPoints);
+                        available_points_tv.setText(getResources().getString(R.string.available_wallet_points) +" "+availableWalletPoints);
                         redemption_points_value_tv.setText(getResources().getString(R.string.redemption_value));
 
                         JSONArray details = jObjDetails.getJSONArray("history");

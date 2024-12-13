@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/submit_from"
                 android:layout_marginLeft="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_5"
                 android:layout_marginRight="@dimen/dimen_8"
                 android:layout_marginBottom="@dimen/dimen_10"
                 android:orientation="vertical">
@@ -278,6 +278,7 @@
 
 
                         <LinearLayout
+                            android:visibility="invisible"
                             android:gravity="center"
                             android:id="@+id/verify"
                             android:layout_width="0dp"
@@ -295,7 +296,7 @@
                                 android:layout_marginRight="@dimen/dimen_10"
                                 android:layout_weight="1"
                                 android:background="@drawable/dxe_luxe_verify"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/verify_mobile_tv"
@@ -318,12 +319,10 @@
                             <ImageView
                                 android:id="@+id/buyer_mobile_verify_img"
                                 android:layout_width="wrap_content"
+                                android:layout_gravity="end"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/dimen_15"
                                 android:src="@drawable/luxe_verify"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -426,7 +425,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/dimen_15"
                             android:src="@drawable/luxe_verify"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </RelativeLayout>
 
@@ -437,7 +436,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_2"
                         android:text="@string/email_required"
-                        android:textColor="@color/dark_red"
+                        android:textColor="@color/red"
                         android:textSize="@dimen/dimen_9"
                         android:visibility="gone" />
 
@@ -461,6 +460,7 @@
             </LinearLayout>
 
             <TextView
+                android:alpha="0.4"
                 android:id="@+id/submit_from"
                 style="@style/SemiBoldFontType"
                 android:layout_width="wrap_content"

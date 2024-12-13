@@ -611,7 +611,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.v("------Diamond----- : ", "--------CheckOut_Details------- : " + jsonObject);
+                        Log.v("------Diamond----- : ", "--614------CheckOut_Details------- : " + jsonObject);
 
                         isCoupanApplied = CommonUtility.checkString(jsonObjectData.optString("is_coupan_applied"));
                         orderCouponCode = CommonUtility.checkString(jsonObjectData.optString("coupon_code"));
@@ -790,6 +790,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                             model.setDxePrefered(CommonUtility.checkString(objectCodes.optString("dxe_prefered")));
                             model.setOnHold(CommonUtility.checkString(objectCodes.optString("on_hold")));
                             model.setStockNo(CommonUtility.checkString(objectCodes.optString("stock_no")));
+                            model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
 
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
@@ -962,6 +963,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
         public Object instantiateItem(ViewGroup container, final int position) {
 
             // Declare Variables
+            RelativeLayout luex_tag;
             ImageView pagerImg, status_img, returnable_img;
             CardView root_layout;
             TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv,  return_policy_tv, sub_total_tv,diamond_type;
@@ -970,6 +972,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
             status_img = (ImageView) itemView.findViewById(R.id.status_img);
             returnable_img = (ImageView) itemView.findViewById(R.id.returnable_img);
+            luex_tag =(RelativeLayout) itemView.findViewById(R.id.luex_tag);
 
             supplier_id_tv_pager = itemView.findViewById(R.id.supplier_id_tv);
             diamond_type = itemView.findViewById(R.id.diamond_type);
@@ -998,6 +1001,13 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
             }
 
 
+            if (list.get(position).getIsDxeLUXE()==1)
+            {
+                luex_tag.setVisibility(View.VISIBLE);
+            }
+            else {
+                luex_tag.setVisibility(View.GONE);
+            }
             supplier_id_tv_pager.setText("#"+list.get(position).getStockNo() + " | " + list.get(position).getSupplierId());
             name_tv_Pager.setText(list.get(position).getShape());
             item_type_tv.setText(list.get(position).getCarat() + getResources().getString(R.string.ct) + " " + list.get(position).getColor() + " " + list.get(position).getClarity());

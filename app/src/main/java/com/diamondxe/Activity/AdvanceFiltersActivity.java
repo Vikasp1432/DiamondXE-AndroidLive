@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -95,7 +96,7 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
     Spinner spinner_fancy_intensity_view,spinner_fancy_over_tone_view, table_from_spinner, table_to_spinner,depth_from_spinner,depth_to_spinner,
             crown_from_spinner, crown_to_spinner,pavillion_from_spinner,pavillion_to_spinner;
 
-
+  //  AutoCompleteTextView spinner_fancy_intensity_view;
     private Activity activity;
     private Context context;
     //For Api Calling
@@ -228,8 +229,11 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
         String hintFromCrown = getResources().getString(R.string.from_string1);
         String hintToCrown = getResources().getString(R.string.to_string1);
 
-
-        spinner_fancy_intensity_view.setDropDownVerticalOffset(80);
+        /*spinner_fancy_intensity_view.setOnClickListener(v -> {
+            if (!spinner_fancy_intensity_view.isPopupShowing()) {
+                spinner_fancy_intensity_view.showDropDown();
+            }
+        });*/
         fancyColorIntensityListAdapter = new FancyColorIntensityListAdapter(context, Constant.fancyColorIntensityArrayList, hint);
         spinner_fancy_intensity_view.setAdapter(fancyColorIntensityListAdapter);
 
@@ -269,7 +273,9 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
         pavillionToDataListAdapter = new PavillionToDataListAdapter(context, Constant.pavillionArrayList, hintToCrown);
         pavillion_to_spinner.setAdapter(pavillionToDataListAdapter);
 
-        spinner_fancy_intensity_view.setOnItemSelectedListener(
+
+
+       /* spinner_fancy_intensity_view.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -287,10 +293,10 @@ public class AdvanceFiltersActivity extends SuperActivity implements RecyclerInt
                     {
                     }
 
-                });
+                });*/
 
 
-        spinner_fancy_intensity_view.setPrompt(getResources().getString(R.string.select_intensity));
+       // spinner_fancy_intensity_view.setText(getResources().getString(R.string.select_intensity));
 
 
         spinner_fancy_over_tone_view.setOnItemSelectedListener(

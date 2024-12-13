@@ -500,7 +500,7 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.v("------Diamond----- : ", "--------CheckOut_Details------- : " + jsonObject);
+                        Log.v("------Diamond----- : ", "503***********--------CheckOut_Details------- : " + jsonObject);
 
                         isCoupanApplied = CommonUtility.checkString(jsonObjectData.optString("is_coupan_applied"));
                         orderCouponCode = CommonUtility.checkString(jsonObjectData.optString("coupon_code"));
@@ -648,6 +648,7 @@ public class PlaceOrderBuyerKYCVerificationActivity extends SuperActivity implem
                         {
                             orderItemArrayList.clear();
                         }
+                        Log.e("details","...651.....@@@@@@@@.............."+details);
                         for (int i = 0; i < details.length(); i++)
                         {
                             JSONObject objectCodes = details.getJSONObject(i);

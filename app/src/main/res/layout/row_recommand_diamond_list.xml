@@ -32,27 +32,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/image_card_view"
+
+                <RelativeLayout
+                    android:id="@+id/image_card_view_rv"
                     android:layout_width="@dimen/dimen_80"
                     android:layout_height="@dimen/dimen_80"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_marginTop="@dimen/dimen_5"
                     android:layout_marginRight="@dimen/dimen_8"
-                    app:cardCornerRadius="@dimen/dimen_5">
+                    android:layout_marginBottom="@dimen/dimen_5">
 
-                    <ImageView
-                        android:id="@+id/image_view"
-                        android:layout_width="@dimen/dimen_80"
-                        android:layout_height="@dimen/dimen_80"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/phl_diamond" />
-                </androidx.cardview.widget.CardView>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/image_card_view"
+                            android:layout_width="@dimen/dimen_80"
+                            android:layout_height="@dimen/dimen_80"
+                            app:cardCornerRadius="@dimen/dimen_5">
+
+                            <ImageView
+                                android:id="@+id/image_view"
+                                android:layout_width="@dimen/dimen_80"
+                                android:layout_height="@dimen/dimen_80"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/phl_diamond" />
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/luex_tag"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_20"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_20"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/dxetag2" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/image_card_view">
+                    android:layout_toRightOf="@+id/image_card_view_rv">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -417,9 +450,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+
                     <TextView
                         android:id="@+id/sub_total_tv"
                         style="@style/BoldFontType"
@@ -433,7 +467,7 @@
                         android:paddingBottom="@dimen/dimen_5"
                         android:text=""
                         android:textColor="@color/purple_light"
-                        android:textSize="@dimen/dimen_16" />
+                        android:textSize="@dimen/dimen_17" />
 
                     <TextView
                         android:id="@+id/dis_sub_total_tv"
@@ -441,8 +475,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:paddingRight="@dimen/dimen_5"
                         android:layout_marginTop="@dimen/dimen_5"
+                        android:paddingRight="@dimen/dimen_5"
                         android:text=""
                         android:textColor="@color/grey_light"
                         android:textSize="@dimen/dimen_16" />

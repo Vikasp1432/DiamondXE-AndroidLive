@@ -362,6 +362,8 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
             urlParameter.put("sessionId", "" + uuid);
             urlParameter.put("orderId", Constant.paymentOrderID);
 
+            Log.e("comeFrom","..365........"+Constant.comeFrom);
+            Log.e("paymentOrderID","..366........"+Constant.paymentOrderID);
             vollyApiActivity = null;
 
             if(Constant.comeFrom.equalsIgnoreCase("customPayment"))
@@ -369,8 +371,14 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                 vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.CUSTOM_PAYMENT_STATUS,
                         ApiConstants.CUSTOM_PAYMENT_STATUS_ID,showLoader, "POST");
             }
+            else if(Constant.comeFrom.equalsIgnoreCase("APISOLUTION"))
+            {
+                vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.SOLUTION_ACCOUNT_RECHARGE_STATUS,
+                        ApiConstants.SOLUTION_ACCOUNT_RECHARGE_STATUS_ID,showLoader, "POST");
+            }
             else
             {
+                Log.e("In else,,,,","381....@@@@@@@@@@>....................");
                 vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ORDER_PAYMENT_STATUS,
                         ApiConstants.ORDER_PAYMENT_STATUS_ID,showLoader, "POST");
             }
@@ -405,7 +413,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                          finalAmount = CommonUtility.checkString(jObjDetails.optString("final_amount"));
                          paymentMode = CommonUtility.checkString(jObjDetails.optString("payment_mode"));
                          paymentStatus = CommonUtility.checkString(jObjDetails.optString("payment_status"));
-
+                         Log.e("paymentStatus","..413...."+paymentStatus);
                         if(paymentStatus.equalsIgnoreCase("Paid"))
                         {
                             paymentStatusSuccessfully();
@@ -432,11 +440,13 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                     }
                     break;
 
+
+
                 case ApiConstants.ORDER_PAYMENT_STATUS_ID:
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.e("Order Payment : ", "Order Payment");
+                        Log.e("Order Payment : ", "Order Payment..449*********");
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
                         referenceNo = CommonUtility.checkString(jObjDetails.optString("order_id"));
@@ -474,6 +484,56 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                         Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
                     }
                     break;
+
+                case ApiConstants.SOLUTION_ACCOUNT_RECHARGE_STATUS_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        Log.e("SOLUTION_ACCOUNT_RECHARGE_STATUS_ID","Success call......@@@@@@@@@@@@@@@@@@.......................");
+                        JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+
+                        referenceNo = CommonUtility.checkString(jObjDetails.optString("reference_no"));
+                        transactionId = CommonUtility.checkString(jObjDetails.optString("transaction_id"));
+                        currencyCode = CommonUtility.checkString(jObjDetails.optString("currency_code"));
+                        currencySymbol = CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        amount = CommonUtility.checkString(jObjDetails.optString("amount"));
+                        bankCharge = CommonUtility.checkString(jObjDetails.optString("bank_charge"));
+                        finalAmount = CommonUtility.checkString(jObjDetails.optString("final_amount"));
+                        paymentMode = CommonUtility.checkString(jObjDetails.optString("payment_mode"));
+                        paymentStatus = CommonUtility.checkString(jObjDetails.optString("payment_status"));
+
+                        Log.e("finalAmount","Success call..1....."+finalAmount);
+                        Log.e("amount","Success call..2....."+amount);
+                        Log.e("transactionId","Success call...3...."+transactionId);
+                        Log.e("paymentStatus","Success call..4....."+paymentStatus);
+
+
+                        if(paymentStatus.equalsIgnoreCase("Paid"))
+                        {
+                            paymentStatusSuccessfully();
+                        }
+                        else if(paymentStatus.equalsIgnoreCase("In-Progress") || paymentStatus.equalsIgnoreCase("Pending"))
+                        {
+                            paymentStatusPending();
+                        }
+                        else if(paymentStatus.equalsIgnoreCase("Failed"))
+                        {
+                            paymentStatusFailed();
+                        }
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(activity, "" + message , Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
             }
 
         } catch (Exception e) {

@@ -817,6 +817,7 @@ public class BuyerKYCVerificationDocUploadActivity extends SuperActivity impleme
         {
             Utils.hideKeyboard(activity);
             dob = date_of_birth_tv.getText().toString().trim();
+            Log.e("dob","...820...."+dob);
             CommonUtility.datePicker(context, BuyerKYCVerificationDocUploadActivity.this, dob, "dob", 0, System.currentTimeMillis());
         }
         else if(id == R.id.cancel_tv)

@@ -9,8 +9,16 @@ public class SearchResultTypeModel implements Serializable {
             fluorescence_intensity= "", carat= "", color= "", clarity= "", shape= "", shade= "", table_perc= "", depth_perc= "", luster= "", eye_clean= "", diamond_image= "",
             diamond_video= "", total_gst_perc= "", status= "", subtotal= "", total_price= "", is_returnable= "", dxe_prefered= "", is_cart= "", is_wishlist= "", on_hold= "", r_discount= "",
             r_discount_type= "",currencySymbol = "", showingSubTotal="",stock_no="";
-
+    int isDxeLUXE=0,check_other_locations=0;
     double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+
+    public int getIsDxeLUXE() {
+        return isDxeLUXE;
+    }
+
+    public void setIsDxeLUXE(int isDxeLUXE) {
+        this.isDxeLUXE = isDxeLUXE;
+    }
 
     public double getCoupondiscountperc() {
         return coupondiscountperc;
@@ -26,6 +34,14 @@ public class SearchResultTypeModel implements Serializable {
 
     public void setSubtotalaftercoupondiscount(double subtotalaftercoupondiscount) {
         this.subtotalaftercoupondiscount = subtotalaftercoupondiscount;
+    }
+
+    public int getCheck_other_locations() {
+        return check_other_locations;
+    }
+
+    public void setCheck_other_locations(int check_other_locations) {
+        this.check_other_locations = check_other_locations;
     }
 
     boolean isVisible = false;

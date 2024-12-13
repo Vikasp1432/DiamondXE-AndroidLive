@@ -291,7 +291,7 @@ public class MyCardListScreenActivity extends SuperActivity implements RecyclerI
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
 
         try {
-            Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
+            Log.v("------Diamond----- : ", "Cart...2233333----------JSONObject-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -373,7 +373,7 @@ public class MyCardListScreenActivity extends SuperActivity implements RecyclerI
                             model.setDxePrefered(CommonUtility.checkString(objectCodes.optString("dxe_prefered")));
                             model.setOnHold(CommonUtility.checkString(objectCodes.optString("on_hold")));
                             model.setStockNo(CommonUtility.checkString(objectCodes.optString("stock_no")));
-
+                            model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
                             modelArrayList.add(model);
 
                         }

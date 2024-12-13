@@ -554,6 +554,8 @@
     </style>
 
 
-
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/dropdwon</item>
+    </style>
 
 </resources>

@@ -96,13 +96,13 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
                 loading = true;
             }*/
 
-
+            Log.e("dy","...99......."+dy);
             if(dy > 0) //check for scroll down
             {
                 visibleItemCount = mLayoutManager.getChildCount();
                 totalItemCount = mLayoutManager.getItemCount();
                 pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-
+                Log.e("loading","....105......"+loading);
                 if (loading)
                 {
                     if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)

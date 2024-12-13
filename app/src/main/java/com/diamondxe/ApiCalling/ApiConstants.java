@@ -7,10 +7,10 @@ import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
 
 public interface ApiConstants {
 
-   // String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
+    String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
 
     // Live Server URL
-    String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
+    //String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
 
     /*String DOMAIN_IMAGE_NAME = "http://192.168.2.194/diamond/";
     String DOMAIN_IMAGE = "http://192.168.2.194/diamond";*/
@@ -79,6 +79,21 @@ public interface ApiConstants {
     String RETURN_ORDER_CHECKOUT = "return-order-checkout";
     String RETURN_ORDER = "return-order";
     String GET_COUPONS_LIST = "coupon-offers-list";
+    String LUXE_USER_REGISTRATION = "dxe-luxe-registration";
+    String LUXE_USER_Status = "dxe-luxe-status";
+    String API_SOLUTION_ACCESS = "dealer/api-solution-access";
+    String APPLY_API_SOLUTION = "dealer/apply-for-api-solution";
+    String ACCOUNT_STATEMENT = "dealer/account-statement";
+    String GENERATEAPI_KEY = "dealer/generate-api-key";
+    String GET_API_KEY = "dealer/get-api-key";
+    String SOLUTION_ACCOUNT_RECHARGE = "dealer/account-recharge";
+    String SOLUTION_ACCOUNT_RECHARGE_STATUS = "dealer/account-recharge-status";
+    String CREATE_DEMAND = "create-demand";
+    String DISMISS_ORDER = "dismiss-order";
+    String GET_GEMSTONES = "get-gemstones";
+    String GET_GEMSTONES_DETAILS = "get-gemstone-details";
+    //account-recharge
+
 
     int HOME_ID = 2;
     int LOGOUT_ID = 3;
@@ -146,6 +161,19 @@ public interface ApiConstants {
     int RETURN_ORDER_CHECKOUT_ID = 65;
     int RETURN_ORDER_PARTIAL_CHECKOUT_ID = 66;
     int GET_COUPONS_LIST_ID=67;
+    int LUXE_USER_REGISTRATION_ID=68;
+    int LUXE_USER_STATUS_ID=69;
+    int API_SOLUTION_ACCESS_ID=70;
+    int APPLY_API_SOLUTION_ID=71;
+    int ACCOUNT_STATEMENT_ID=72;
+    int GENERATEAPI_KEY_ID=73;
+    int GET_API_KEY_ID=74;
+    int SOLUTION_ACCOUNT_RECHARGE_ID=75;
+    int SOLUTION_ACCOUNT_RECHARGE_STATUS_ID=76;
+    int CREATE_DEMAND_ID=77;
+    int DISMISS_ORDER_ID=78;
+    int GET_GEMSTONES_ID=79;
+    int GET_GEMSTONES_DETAILS_ID=80;
 
 
     String MSG_INTERNETERROR = "Internet connection is not available.";
@@ -171,9 +199,12 @@ public interface ApiConstants {
 
     String NATURAL = "natural";
     String LAB_GROWN = "labgrown";
-
+    String DXE_LUXE = "DXE LUXE";
+    String GEMESTONES = "Gemstone";
     String WISHLIST_FRAGMENT = "wishlist_fragment";
     String CART_FRAGMENT = "cart_fragment";
+    String ACCOUNT_FRAGMENT = "account_fragment";
+    String DXE_CALC = "calc_activity";
     String CATEGORY_FRAGMENT = "category_fragment";
     String HOME_FRAGMENT = "Home_fragment";
 

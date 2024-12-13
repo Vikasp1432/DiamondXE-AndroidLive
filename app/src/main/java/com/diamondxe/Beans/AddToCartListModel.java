@@ -10,8 +10,17 @@ public class AddToCartListModel implements Serializable {
             sgstPer = "", sgstAmt = "", igstPer = "", igstAmt = "", tax = "", totalPrice = "", labGrownDiaPrice = "", naturalDiaPrice = "", shippingCharge = "",
             platformFeeAmt = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", onHold = "", dxeMarkup = "", dealerMarkupCommission = "",
             platformFeeTax = "", shippingChargeTax = "", totalAmount = "", totalTax = "", totalCharges = "",showingSubTotal="",currencySymbol="";
-
+    int isDxeLUXE=0;
     double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+
+
+    public int getIsDxeLUXE() {
+        return isDxeLUXE;
+    }
+
+    public void setIsDxeLUXE(int isDxeLUXE) {
+        this.isDxeLUXE = isDxeLUXE;
+    }
 
     public double getCoupondiscountperc() {
         return coupondiscountperc;

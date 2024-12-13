@@ -69,7 +69,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dimen_10">
+                >
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -125,6 +125,7 @@
                     android:layout_alignParentRight="true">
 
                     <ImageView
+                        android:layout_marginTop="@dimen/dimen_10"
                         android:id="@+id/current_status_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -134,16 +135,31 @@
                         android:visibility="visible" />
 
                     <ImageView
+                        android:layout_marginTop="@dimen/dimen_5"
                         android:id="@+id/current_returnable_img"
-                        android:layout_width="@dimen/dimen_30"
-                        android:layout_height="@dimen/dimen_30"
+                        android:layout_width="@dimen/dimen_35"
+                        android:layout_height="@dimen/dimen_35"
                         android:layout_marginLeft="@dimen/dimen_5"
                         android:layout_toRightOf="@+id/current_status_img"
-                        android:paddingLeft="@dimen/dimen_5"
-                        android:paddingTop="@dimen/dimen_5"
-                        android:paddingRight="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
+                        android:paddingLeft="@dimen/dimen_8"
+                        android:paddingTop="@dimen/dimen_8"
+                        android:paddingRight="@dimen/dimen_8"
+                        android:paddingBottom="@dimen/dimen_8"
                         android:src="@drawable/returnable" />
+
+                    <RelativeLayout
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/current_returnable_img"
+                        android:visibility="visible"
+                        android:id="@+id/luex_tag"
+                        android:layout_width="@dimen/dimen_45"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_45"
+                            android:src="@drawable/luxetag11" />
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
@@ -153,10 +169,10 @@
             <!--Diamond Image Layout-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/top_img_card"
-                android:layout_width="@dimen/dimen_120"
-                android:layout_height="@dimen/dimen_120"
+                android:layout_width="@dimen/dimen_150"
+                android:layout_height="@dimen/dimen_130"
                 android:layout_gravity="center"
-                app:cardCornerRadius="@dimen/dimen_10">
+                app:cardCornerRadius="@dimen/dimen_12">
 
                 <ImageView
                     android:id="@+id/diamond_img"
@@ -297,6 +313,7 @@
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/size_view"
                         android:layout_width="0.5dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"
@@ -345,7 +362,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginLeft="@dimen/dimen_12"
                 android:layout_marginRight="@dimen/dimen_12"
-                android:layout_marginBottom="@dimen/dimen_15"
+                android:layout_marginBottom="@dimen/dimen_10"
                 android:elevation="@dimen/dimen_5"
                 android:outlineAmbientShadowColor="@color/shadow_color"
                 android:outlineSpotShadowColor="@color/shadow_color"
@@ -357,9 +374,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
                     android:layout_marginRight="@dimen/dimen_5"
-                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -408,7 +425,7 @@
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_4">
+                                    >
 
                                     <!--ID Text-->
                                     <TextView
@@ -523,7 +540,6 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_3"
                                     android:orientation="horizontal">
 
                                     <TextView
@@ -556,7 +572,7 @@
                                 android:layout_below="@id/rounded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toLeftOf="@+id/sub_total_tv">
+                                >
 
                                 <TextView
                                     android:id="@+id/cut_grade_tv"
@@ -643,54 +659,68 @@
                                     android:textSize="@dimen/dimen_11" />
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/sub_total_tv"
-                                style="@style/BoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="@dimen/dimen_2"
-                                android:layout_marginRight="@dimen/dimen_3"
-                                android:gravity="right"
-                                android:paddingLeft="@dimen/dimen_2"
-                                android:paddingRight="@dimen/dimen_2"
-                                android:text="0.00"
-                                android:textColor="@color/purple_light"
-                                android:textSize="@dimen/dimen_15" />
 
-                            <TextView
-                                android:layout_below="@+id/sub_total_tv"
-                                android:id="@+id/dis_sub_total_tv"
-                                style="@style/BoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                            <RelativeLayout
+                                android:layout_alignParentBottom="true"
+                                android:paddingBottom="@dimen/dimen_5"
                                 android:layout_gravity="right"
-                                android:layout_marginLeft="@dimen/dimen_2"
-                                android:layout_marginRight="@dimen/dimen_3"
-                                android:gravity="right"
-                                android:paddingLeft="@dimen/dimen_2"
-                                android:paddingRight="@dimen/dimen_2"
-                                android:layout_marginBottom="@dimen/dimen_2"
-                                android:textColor="@color/light_gray2"
-                                android:textSize="@dimen/dimen_14" />
-
-                            <TextView
-                                android:layout_below="@+id/dis_sub_total_tv"
-                                android:id="@+id/shipping_lbl"
-                                style="@style/BoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:layout_marginLeft="@dimen/dimen_2"
-                                android:layout_marginRight="@dimen/dimen_5"
-                                android:paddingLeft="@dimen/dimen_2"
-                                android:paddingRight="@dimen/dimen_2"
-                                android:text="@string/shipping_taxes_extra"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/dimen_9"
-                                android:textStyle="italic" />
+                                android:layout_alignParentEnd="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/sub_total_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="@dimen/dimen_2"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:gravity="bottom"
+                                    android:paddingLeft="@dimen/dimen_2"
+                                    android:paddingRight="@dimen/dimen_2"
+                                    android:text="0.00"
+                                    android:textColor="@color/purple_light"
+                                    android:textSize="@dimen/dimen_16" />
+
+                                <TextView
+                                    android:visibility="gone"
+                                    android:layout_below="@+id/sub_total_tv"
+                                    android:id="@+id/dis_sub_total_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="right"
+                                    android:layout_marginLeft="@dimen/dimen_2"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:gravity="right"
+                                    android:paddingLeft="@dimen/dimen_2"
+                                    android:paddingRight="@dimen/dimen_2"
+                                    android:layout_marginBottom="@dimen/dimen_2"
+                                    android:textColor="@color/light_gray2"
+                                    android:textSize="@dimen/dimen_13" />
+
+                                <TextView
+                                    android:layout_below="@+id/dis_sub_total_tv"
+                                    android:id="@+id/shipping_lbl"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="@dimen/dimen_2"
+                                    android:layout_marginRight="@dimen/dimen_5"
+                                    android:paddingLeft="@dimen/dimen_2"
+                                    android:paddingRight="@dimen/dimen_2"
+                                    android:text="@string/shipping_taxes_extra"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_9"
+                                    android:textStyle="italic" />
+                            </RelativeLayout>
+
+
+
 
                         </RelativeLayout>
 

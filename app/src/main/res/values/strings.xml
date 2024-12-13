@@ -6,12 +6,12 @@
 
     <string name="navigation_home">Home</string>
 
-    <string name="navigation_search_diamond">Search Diamonds</string>
+    <string name="navigation_search_diamond">Search Products</string>
     <string name="navigation_natural_diamond">Natural Diamond</string>
-    <string name="navigation_lab_grown_diamond">Lab-Grown Diamond</string>
+    <string name="navigation_lab_grown_diamond">Lab Grown Diamond</string>
     <string name="navigation_fancy_diamond">Fancy Colour Diamond</string>
 
-    <string name="navigation_create_diamond">Create Diamonds</string>
+    <string name="navigation_create_diamond">Create Diamond</string>
 
     <string name="navigation_Jewellery">Jewellery</string>
     <string name="navigation_rings">Rings</string>
@@ -35,6 +35,7 @@
     <string name="navigation_blogs">Blogs</string>
     <string name="navigation_media_gallery">Media Gallery</string>
     <string name="navigation_support">Support</string>
+    <string name="navigation_faq">FAQ’s</string>
     <string name="navigation_terms_condition">Terms &amp; Conditions</string>
     <string name="navigation_privacy_policy">Privacy Policy</string>
 
@@ -60,7 +61,7 @@
     <string name="newArrivals">New Arrivals</string>
     <string name="topDeals">Top Deals</string>
     <string name="naturalDiamonds">Natural Diamonds</string>
-    <string name="labGrownDiamonds">Lab-Grown Diamonds</string>
+    <string name="labGrownDiamonds">Lab Grown Diamonds</string>
     <string name="diamondPromises">DiamondXE Promises</string>
 
     <string name="transParentPrices">Transparent Prices</string>
@@ -78,16 +79,18 @@
     <string name="customerStories">Customer stories</string>
 
     <string name="bottomBarHome">Home</string>
+    <string name="bottomBarCalc">Calculator</string>
     <string name="bottomBarCategories">Category</string>
     <string name="bottomBarWish">Wishlist</string>
     <string name="bottomBarCart">Cart</string>
     <string name="bottomBarAccount">Account</string>
-
+    <string name="navigationcalc">Price Calculator</string>
     <string name="viewAllNews"><u>View All News</u></string>
 
     <string name="hello_guest">Hello Guest!!!</string>
     <string name="version_name">Version</string>
 
+    <string name="search_gemestone_hint">Search Gemstone</string>
     <string name="search_diamond_hint">Search diamond</string>
     <string name="natural">Natural</string>
     <string name="lab_grown">Lab Grown</string>
@@ -213,6 +216,9 @@
     <string name="termscondition">*T&amp;C apply</string>
 
     <string name="excluding_and_taxes_shipping">excluding taxes &amp; shipping</string>
+
+    <string name="include_taxesfees">Include taxes &amp; Fees</string>
+
     <string name="including_and_taxes_shipping">Including taxes &amp; shipping</string>
     <string name="place_order">Place Order</string>
     <string name="empty_cart">Your cart is empty</string>
@@ -229,6 +235,7 @@
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="signup_now">Don\'t have an account? <u><b>Sign up Now</b></u></string>
+    <string name="name_required">Name is required</string>
     <string name="email_required">Email is required</string>
     <string name="email_verify_required">Email verify is required</string>
     <string name="password_required">Password is required</string>
@@ -266,7 +273,8 @@
     <string name="buyer_register_msg">Registering as a buyer, you can search\n and make your purchase.</string>
     <string name="dealer_register_msg">Registering as a dealer enables you to receive\n additional benefits on prices within the same trade.</string>
     <string name="supplier_register_msg">Upload your stock and sell on the platform</string>
-
+    <string name="StockID">Stock ID</string>
+    <string name="Stock">Stock :</string>
     <string name="first_name">First Name*</string>
     <string name="last_name">Last Name*</string>
     <string name="enter_your_email_id">Enter your Email*</string>
@@ -397,8 +405,8 @@
     <string name="jeweller">Jeweller</string>
 
     <string name="natu_diamond">Natural Diamonds</string>
-    <string name="lab_diamond">Lab-Grown Diamonds</string>
-    <string name="gematones">Gemstones</string>
+    <string name="lab_diamond">Lab Grown Diamonds</string>
+    <string name="gematones">Gemstone</string>
 
     <string name="company_name_require">Company Name is required</string>
 
@@ -432,7 +440,7 @@
     <string name="refer_a_friend">Refer a Friend</string>
     <string name="loyalty_program">Loyalty Program</string>
     <string name="custom_payment">Custom Payment</string>
-    <string name="api_solutions">API Solutions</string>
+    <string name="api_solutions">API Solution</string>
     <string name="delete_account">Delete Account</string>
 
     <string name="personal_profile">Personal Profile</string>
@@ -549,8 +557,9 @@
     <string name="status_lbl">Status</string>
     <string name="points_lbl">Points</string>
     <string name="remark1">Remark</string>
-    <string name="available_wallet_points">Available Wallet Points : </string>
-    <string name="redemption_value">1 Point = 1 R Redemption</string>
+    <string name="available_points">Available Points :  </string>
+    <string name="available_wallet_points">Available Wallet Points :  </string>
+    <string name="redemption_value">1 Point = 1R Redemption</string>
     <string name="press_back_again">Press back again to exit</string>
     <string name="please_wait_loading_more_data">Please wait, loading more data…</string>
     <string name="clear_all_filter"><u>Clear All</u></string>
@@ -620,6 +629,8 @@
     <string name="transaction_id">Transaction ID</string>
     <string name="bank_selection_required">Bank selection is required</string>
 
+    <string name="enddate">End Date</string>
+    <string name="startdate">Start Date</string>
     <string name="shipping">Shipping</string>
     <string name="payment">Payment</string>
     <string name="reset">Reset</string>
@@ -742,6 +753,9 @@
     <string name="no_pickup_address">No Pickup Address</string>
     <string name="please_select_pickup_address">Please select pickup address.</string>
     <string name="refund_mode">Refund Mode</string>
+
+
+    <string name="quality">Quality</string>
 
     <string name="wallet_msg">After the quality check is passed</string>
     <string name="wallet_msg1">will be instantly This refunded to your wallet points.</string>
@@ -999,6 +1013,22 @@ the slider to measure ring size.</string>
 
     </string-array>
 
+    <string name="amount_to_be_uploaded">Amount to be uploaded</string>
+    <string name="closing_balance">Closing Balance</string>
+    <string name="opening_balance">Opening Balance</string>
+    <string name="API_key">API Key</string>
+    <string name="upload_amount">Upload Amount</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="request_submitter_success">Your request has been submitted successfully</string>
+    <string name="request_now">Request now</string>
+    <string name="confirmation">Confirmation!</string>
+    <string name="generate_api">Generate API</string>
+    <string name="change_stock_location">Change Stock Location</string>
+    <string name="change_stock_location_des">Select a different stock location to explore your preferred diamond options.</string>
+
+    <string name="white_label_solution"> White Label \nSolution  at</string>
+    <string name="seamless_api_integration">Seamless API \nIntegration at</string>
+    <string name="requestforapi">Request for API</string>
     <string name="byinviteonly">By invite only</string>
     <string name="deluxfeature">DXE LUXE features premium natural diamonds that  epitomise unparalleled beauty and luxury.</string>
     <string name="TimelessElegance">Timeless Elegance. Elite &amp; Exclusive.</string>
@@ -1007,6 +1037,32 @@ the slider to measure ring size.</string>
     <string name="thankyou">Thank you for expressing \n your interest</string>
     <string name="thankyoulongtext">Thank you for your time. After a thorough review and necessary checks, our team will contact you via your mobile number.</string>
 
-    <string name="luxenote">Note : To complete the verification process, please provide either your mobile number or email. Submitting at least one is required.</string>
+    <string name="luxenote">Note: To complete the verification process, please provide your email. Mobile number is optional.</string>
+    <string name="noPrice">No. Pieces</string>
+    <string name="priority">Priority</string>
+    <string name="user_details">User details</string>
+    <string name="instructions">Instructions</string>
+    <string name="create_your_demand">Create your demand</string>
+    <string name="value">Value</string>
+    <string name="pricecarat">Price/Carat</string>
+    <string name="Name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="putyourinstruction">Put your instructions here...</string>
+    <string name="pleaseselectcolor">Please Select Color</string>
+    <string name="thankyou_">Thank you</string>
+    <string name="create_demand_thankyoutext">Your demand has been successfully created, our sales team will get in touch with you soon! \n
+            For immediate assistance, reach out to us \n
+            on +91 9892003399 or email us \n
+            on support@diamondxe.com.</string>
+    <string name="origin">Origin</string>
+
+    <string name="India">India</string>
+    <string name="International">International</string>
+
+    <string name="treatment">Treatment</string>
+    <string name="Item">Item</string>
+
+    <string name="cuttingstyle">Cutting Style</string>
+
 
 </resources>

@@ -1,7 +1,9 @@
 package com.diamondxe.Activity;
 
+import static com.diamondxe.ApiCalling.ApiConstants.ACCOUNT_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CART_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CATEGORY_FRAGMENT;
+import static com.diamondxe.ApiCalling.ApiConstants.DXE_CALC;
 import static com.diamondxe.ApiCalling.ApiConstants.FACEBOOK_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.HOME_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_CODE;
@@ -58,6 +60,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.diamondxe.Activity.CreateDemand.CreateDemandHome;
+import com.diamondxe.Activity.DXELuex.DXELuexRegisterActivity;
+import com.diamondxe.Activity.Gemstones.GemstomeSearchActivity;
+import com.diamondxe.Activity.Jewellery.JewelleryScreenActivity;
 import com.diamondxe.Activity.MyOrder.MyOrderListScreenActivity;
 import com.diamondxe.Adapter.CurrencyListAdapter;
 import com.diamondxe.Adapter.DrawerItemCustomAdapter;
@@ -65,6 +72,7 @@ import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.CountryListModel;
 import com.diamondxe.Beans.DrawerMenuModel;
+import com.diamondxe.Fragment.AccountSectionFragment;
 import com.diamondxe.Fragment.AddToCartListFragment;
 import com.diamondxe.Fragment.CategoryFragmentList;
 import com.diamondxe.Fragment.HomeFragment;
@@ -336,7 +344,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //Toast.makeText(this, "Category is visible", Toast.LENGTH_SHORT).show();
         } else if (currentFragment instanceof WishlistFragment) {
             // Wishlist visible hai
-            //Toast.makeText(this, "WishList is visible", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = ""; // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new WishlistFragment();
@@ -351,7 +358,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             changefrag(fragment);
         } else {
             // Default case
-            //Toast.makeText(this, "No Fragment is visible", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "No Fragment is visible", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -471,8 +478,17 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     protected void onResume() {
         super.onResume();
         // This is Use When User Come For Any Other Activity to Wish List Fragment and Call Fragment.
+        if(Constant.manageFragmentCalling.equalsIgnoreCase(DXE_CALC))
+        {
+            // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
+            Constant.manageFragmentCalling = ""; // Blank After Call Fragment
+            title = "DiamondXE";
+            Fragment fragment = new WishlistFragment();
+            changefrag(fragment);
+        }
         if(Constant.manageFragmentCalling.equalsIgnoreCase(WISHLIST_FRAGMENT))
         {
+           // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = ""; // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new WishlistFragment();
@@ -497,6 +513,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new HomeFragment();
+            changefrag(fragment);
+        }
+        else if(Constant.manageFragmentCalling.equalsIgnoreCase(ACCOUNT_FRAGMENT))
+        {
+            // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
+            Constant.manageFragmentCalling = ""; // Blank After Call Fragment
+            title = "DiamondXE";
+            Fragment fragment = new AccountSectionFragment();
             changefrag(fragment);
         }
         else {}
@@ -583,6 +607,13 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         modelSearch2.setSelected(false);
         drawerSearchModels.add(modelSearch2);
 
+        DrawerMenuModel modelGemstone = new DrawerMenuModel();
+        modelGemstone.setName(getResources().getString(R.string.gematones));
+        modelGemstone.setImage(R.drawable.gemstone_navigation);
+        modelGemstone.setImageSelected(R.drawable.gemstone_navigation);
+        modelGemstone.setSelected(false);
+        drawerSearchModels.add(modelGemstone);
+
         /*DrawerMenuModel modelSearch3 = new DrawerMenuModel();
         modelSearch3.setName(getResources().getString(R.string.navigation_fancy_diamond));
         *//*model31.setImage(R.mipmap.nav_tenant);
@@ -594,12 +625,19 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         menuList.add(model1);
         //-----------------------------End Search Diamond------------------------------------------------------
 
-        /*DrawerMenuModel model2 = new DrawerMenuModel();
+        DrawerMenuModel model3 = new DrawerMenuModel();
+        model3.setName(getResources().getString(R.string.navigation_dxe_luxe));
+        model3.setImage(R.drawable.luxe_navigation);
+        model3.setImageSelected(R.drawable.luxe_navigation);
+        model3.setSelected(false);
+        menuList.add(model3);
+
+        DrawerMenuModel model2 = new DrawerMenuModel();
         model2.setName(getResources().getString(R.string.navigation_create_diamond));
         model2.setImage(R.drawable.create_demand_nav);
         model2.setImageSelected(R.drawable.create_demand_nav);
         model2.setSelected(false);
-        menuList.add(model2);*/
+        menuList.add(model2);
 
         //-------------------------------------Start Jewellery-----------------------------------------------------
         /*DrawerMenuModel model3 = new DrawerMenuModel();
@@ -706,9 +744,9 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         menuList.add(model8);*/
 
         DrawerMenuModel modelPriceCalculator = new DrawerMenuModel();
-        modelPriceCalculator.setName(getResources().getString(R.string.navigation_price_calculator));
-        modelPriceCalculator.setImage(R.drawable.price_calculator_nav);
-        modelPriceCalculator.setImageSelected(R.drawable.price_calculator_nav);
+        modelPriceCalculator.setName(getResources().getString(R.string.navigationcalc));
+        modelPriceCalculator.setImage(R.drawable.calc_logo);
+        modelPriceCalculator.setImageSelected(R.drawable.calc_logo);
         modelPriceCalculator.setSelected(false);
         menuList.add(modelPriceCalculator);
 
@@ -756,6 +794,13 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         modelSupport.setImageSelected(R.drawable.support_new);
         modelSupport.setSelected(false);
         drawerMoreModels.add(modelSupport);
+
+        DrawerMenuModel modelTermFaq = new DrawerMenuModel();
+        modelTermFaq.setName(getResources().getString(R.string.navigation_faq));
+        modelTermFaq.setImage(R.drawable.faq_);
+        modelTermFaq.setImageSelected(R.drawable.faq_);
+        modelTermFaq.setSelected(false);
+        drawerMoreModels.add(modelTermFaq);
 
         DrawerMenuModel modelTermCondition = new DrawerMenuModel();
         modelTermCondition.setName(getResources().getString(R.string.navigation_terms_condition));
@@ -998,7 +1043,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         });
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         alertDialog.setCancelable(true);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
@@ -1314,6 +1358,48 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                     }
                     break;
 
+                case ApiConstants.LUXE_USER_STATUS_ID:
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        JSONObject details = jsonObjectData.getJSONObject("details");
+
+                        Log.e("details","...1581...**************......"+details);
+                        int isLuxeMember = details.optInt("isLuxeMember");
+                        Log.e("isLuxeMember", "...1581...**************......" + isLuxeMember);
+
+                        // working comment for check
+                        if(isLuxeMember==0)
+                        {
+                            startActivity(new Intent(context, DXELuexRegisterActivity.class));
+                            overridePendingTransition(0,0);
+                        }
+                        else {
+                            Intent intent = new Intent(context, SearchDiamondsActivity.class);
+                            intent.putExtra("intentvalue","dxeluxe");
+                            startActivity(intent);
+                            overridePendingTransition(0,0);
+                            //start search activity
+                        }
+
+                         /*Intent intent = new Intent(context, SearchDiamondsActivity.class);
+                        intent.putExtra("intentvalue","dxeluxe");
+                        startActivity(intent);*/
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1323,7 +1409,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
     @Override
     public void getErrorResponce(String error, int service_ID) {
-
     }
 
 
@@ -1377,7 +1462,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             if(chiledPosition==0)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
-                //   fragment = new ContactsTenantFragment();
+                // fragment = new ContactsTenantFragment();
                 Constant.searchTitleName = title;
                 Constant.searchType = ApiConstants.NATURAL;
                 Constant.filterClear="";
@@ -1397,11 +1482,65 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
             if(chiledPosition==2)
             {
-                title = menuList.get(parantPosition).getSubMenu().get(2).getName();
+
+                Constant.searchTitleName =ApiConstants.GEMESTONES;
+                Constant.searchType=ApiConstants.NATURAL;
+                Constant.filterClear="";
+
+                Intent intent = new Intent(context, GemstomeSearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+
+                /*Fragment fragment = new GemstoneFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+                /*Intent intent = new Intent(context, JewelleryScreenActivity.class);
+                intent.putExtra("intentvalue","Gemston");
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
             }
         }
-        // Diamonds Education
+       //
         else if (parantPosition==3)
+        {
+            title = menuList.get(parantPosition).getName();
+            Log.e("User","Login h...**************...1498........."+title);
+            Constant.searchTitleName = title;
+            Constant.searchType = ApiConstants.DXE_LUXE;
+            Constant.filterClear="";
+            if(!user_login.equalsIgnoreCase(""))
+            {
+                Log.e("User","Login h...**************");
+                /*Intent intent1 = new Intent(context, SearchDiamondsActivity.class);
+                intent1.putExtra("intentvalue","dxeluxe");
+                startActivity(intent1);*/
+                getLuxeUserStatus(false);
+                //startActivity(new Intent(context, DXELuexRegisterActivity.class));
+            }
+            else{
+                //startActivity(new Intent(context, LoginScreenActivity.class));
+                Intent intent= new Intent(context, DXELuexRegisterActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+
+            //fragment = new LandLoardDashboardFragment();
+        }
+
+        // Create Demand
+        else if (parantPosition==4)
+        {
+            title = menuList.get(parantPosition).getName();
+            Intent intent = new Intent(context, CreateDemandHome.class);
+            startActivity(intent);
+            overridePendingTransition(0,0);
+            //fragment = new LandLoardDashboardFragment();
+        }
+        // Diamonds Education
+        else if (parantPosition==5)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1410,7 +1549,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //fragment = new LandLoardDashboardFragment();
         }
         // Explore Now
-        else if (parantPosition==4)
+        else if (parantPosition==6)
         {
          /*   title = menuList.get(parantPosition).getName();
             // fragment = new MaintenanceRequestFragment();*/
@@ -1434,7 +1573,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
         }
         // Price Calculator
-        else if (parantPosition==5)
+        else if (parantPosition==7)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(context, CalculatorActivity.class);
@@ -1443,67 +1582,110 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }
         // More
-        else if (parantPosition==6)
+        else if (parantPosition==8)
         {
             if(chiledPosition==0)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/about"));
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/about");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
             if(chiledPosition==1)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(1).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/why-us"));
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/why-us");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
             if(chiledPosition==2)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(2).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/blogs"));
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/blogs");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
             if(chiledPosition==3)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(3).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/media-gallery"));
-                startActivity(intent);
+                startActivity(intent);*/
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/media-gallery");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
             if(chiledPosition==4)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(4).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/contact"));
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/contact");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
             if(chiledPosition==5)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(5).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://diamondxe.com/policy/terms-conditions"));
-                startActivity(intent);
+               /* Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://diamondxe.com/faq"));
+                startActivity(intent);*/
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/faq");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
             if(chiledPosition==6)
             {
                 title = menuList.get(parantPosition).getSubMenu().get(6).getName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://diamondxe.com/policy/privacy-policy"));
-                startActivity(intent);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://diamondxe.com/policy/terms-conditions"));
+                startActivity(intent);*/
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/policy/terms-conditions");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
+            }
+            if(chiledPosition==7)
+            {
+                title = menuList.get(parantPosition).getSubMenu().get(7).getName();
+                Intent intent1 = new Intent(context, WebViewNewActivity.class);
+                intent1.putExtra("url", "https://diamondxe.com/policy/privacy-policy");
+                intent1.putExtra("title", title);
+                startActivity(intent1);
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://diamondxe.com/policy/privacy-policy"));
+                startActivity(intent);*/
             }
         }
         // Contact US
-        else if (parantPosition==7)
+        else if (parantPosition==9)
         {
             if(chiledPosition==0)
             {
@@ -1517,7 +1699,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Rate Us
-        else if (parantPosition==8)
+        else if (parantPosition==10)
         {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1526,8 +1708,9 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }
         // Logout
-        else if (parantPosition==9)
+        else if (parantPosition==11)
         {
+
             if(user_login.equalsIgnoreCase("yes"))
             {
                 logoutDialogPopup(context, context, getResources().getString(R.string.logout_message));
@@ -1547,6 +1730,27 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     public void setListener(FragmentActionInterface fragmentActionInterface)
     {
         this.fragmentActionInterface = fragmentActionInterface;
+    }
+
+    public void getLuxeUserStatus(boolean showLoader)
+    {
+        String uuid = CommonUtility.getAndroidId(context);
+        if (Utils.isNetworkAvailable(context))
+        {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("sessionId", "" + uuid);
+
+            //urlParameter.put("user_id", CommonUtility.getGlobalString(getActivity(),"user_id"));
+            //urlParameter.put("authToken", CommonUtility.getGlobalString(getActivity(),"mobile_auth_token"));
+
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(this,this, urlParameter, ApiConstants.LUXE_USER_Status, ApiConstants.LUXE_USER_STATUS_ID,showLoader, "GET");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            //recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
     }
 
     void logoutDialogPopup(final Activity activity,final Context context,String message)
@@ -1584,8 +1788,6 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         });
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
         alertDialog.setCancelable(true);
         alertDialog.show();
 
@@ -1616,6 +1818,53 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
     private PopupWindow initiateCurrencyPopupWindow() {
         try {
+            // Get the overlay view
+            View dimOverlay = findViewById(R.id.dim_overlay);
+
+            if (mDropdown != null && mDropdown.isShowing()) {
+                mDropdown.dismiss();
+            }
+
+            mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = mInflater.inflate(R.layout.custom_menu_currency, null);
+
+            RecyclerView recyclerViewCurrency = layout.findViewById(R.id.recycler_view_currency);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerViewCurrency.setLayoutManager(layoutManager);
+
+            currencyListAdapter = new CurrencyListAdapter(Constant.currencyArrayList, context, this);
+            recyclerViewCurrency.setAdapter(currencyListAdapter);
+
+            int fixedWidth = dpToPx(200); // Width in dp
+            mDropdown = new PopupWindow(layout, fixedWidth, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+
+            // Show the PopupWindow
+            if (flag_img != null) {
+                mDropdown.showAsDropDown(flag_img, 5, -40);
+
+                // Make the overlay visible
+                dimOverlay.setVisibility(View.VISIBLE);
+            } else {
+                Log.e("PopupWindow", "flag_img is null");
+            }
+
+            // Dismiss listener for PopupWindow
+            mDropdown.setOnDismissListener(() -> {
+                // Hide the overlay when the popup is dismissed
+                dimOverlay.setVisibility(View.GONE);
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mDropdown;
+    }
+
+
+
+    /*private PopupWindow initiateCurrencyPopupWindow() {
+        try {
+            View dimOverlay = findViewById(R.id.dim_overlay);
             if (mDropdown != null && mDropdown.isShowing()) {
                 mDropdown.dismiss();
             }
@@ -1634,21 +1883,27 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             mDropdown = new PopupWindow(layout, fixedWidth, FrameLayout.LayoutParams.WRAP_CONTENT, true);
 
-            /*Drawable background = getResources().getDrawable(android.R.drawable.editbox_dropdown_dark_frame);
-            mDropdown.setBackgroundDrawable(background);*/
+            *//*Drawable background = getResources().getDrawable(android.R.drawable.editbox_dropdown_dark_frame);
+            mDropdown.setBackgroundDrawable(background);*//*
 
             // Ensure pop is not null before using it
             if (flag_img != null) {
                 mDropdown.showAsDropDown(flag_img, 5, -40);
+                // Make the overlay visible
+                dimOverlay.setVisibility(View.VISIBLE);
             } else {
                 Log.e("PopupWindow", "pop is null");
             }
+
+
+            // Dismiss listener for PopupWindow
+            mDropdown.setOnDismissListener(() -> dimOverlay.setVisibility(View.GONE));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mDropdown;
-    }
+    }*/
 
     public int dpToPx(int dp) {
         float density = context.getResources().getDisplayMetrics().density;

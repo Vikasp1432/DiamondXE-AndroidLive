@@ -1,5 +1,7 @@
 package com.diamondxe.Activity;
 
+import static android.app.PendingIntent.getActivity;
+import static com.diamondxe.ApiCalling.ApiConstants.ACCOUNT_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.BUY_NOW;
 import static com.diamondxe.ApiCalling.ApiConstants.CART;
 import static com.diamondxe.ApiCalling.ApiConstants.CART_FRAGMENT;
@@ -9,6 +11,7 @@ import static com.diamondxe.ApiCalling.ApiConstants.USER_BUYER;
 import static com.diamondxe.ApiCalling.ApiConstants.USER_DEALER;
 import static com.diamondxe.ApiCalling.ApiConstants.WISHLIST_FRAGMENT;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -54,6 +57,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -66,6 +72,7 @@ import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.DiamondShapeImageModel;
 import com.diamondxe.Beans.SearchResultTypeModel;
+import com.diamondxe.Fragment.AccountSectionFragment;
 import com.diamondxe.Interface.RecyclerInterface;
 import android.Manifest;
 import com.diamondxe.Network.SuperActivity;
@@ -77,6 +84,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.payment.paymentsdk.sharedclasses.sealed.a;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -123,6 +131,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     public ArrayList<DiamondShapeImageModel> cushionModelArrayList;
     ViewPager viewPager, viewPagerBuyer;
     TabLayout tabLayout, tabLayoutBuyer;
+    RelativeLayout luex_tag;
     //int NUM_PAGES = 0, currentPage = 0;
     private boolean isArrowDown = false;
     private Activity activity;
@@ -157,15 +166,52 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     double coupondiscountperc, subtotalaftercoupondiscount;
     android.app.AlertDialog alertDialog;
     private RelativeLayout card_popup1;
-    View translucent_background;
+    View translucent_background,size_view;
+    String searchType="";
+    String activityValue = "";
+    View cut_grade_view,polish_view,symmetry_view,fluorescence_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diamond_details);
+
 
         context = activity = this;
+        Intent intent = getIntent();
+        String intentValue = null;
 
+        if (intent != null) {
+            intentValue = intent.getStringExtra("intentvalue");
+            activityValue = intent.getStringExtra("activityvalue");
+        }
+        if (activityValue!=null && !activityValue.isEmpty())
+        {
+            if(activityValue.equalsIgnoreCase("gemstone")){
+                setContentView(R.layout.gemstone_details_layout);
+            }
+            cut_grade_view=findViewById(R.id.cut_grade_view);
+            symmetry_view=findViewById(R.id.symmetry_view);
+            polish_view=findViewById(R.id.polish_view);
+            fluorescence_view=findViewById(R.id.fluorescence_view);
+
+        }
+        else {
+            setContentView(R.layout.activity_diamond_details);
+
+            select_size_lin = findViewById(R.id.select_size_lin);
+            select_size_lin.setOnClickListener(this);
+            select_size_tv = findViewById(R.id.select_size_tv);
+            select_size_img = findViewById(R.id.select_size_img);
+            select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.light_gray1));
+            select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.light_gray1));
+        }
+
+        if (intentValue != null) {
+            searchType=intentValue;
+            Log.e("Search result", "Received intent value: " + intentValue);
+        } else {
+            Log.e("IntentValue", "No intent value received.");
+        }
         recommandDiamondArrayList = new ArrayList<>();
         diamondShapeImageModelArrayList = new ArrayList<>();
         princessModelArrayList = new ArrayList<>();
@@ -188,9 +234,11 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         back_img.setOnClickListener(this);
 
         scrollView = findViewById(R.id.scrollView);
+        size_view=findViewById(R.id.size_view);
 
         diamond_img = findViewById(R.id.diamond_img);
         top_img_card = findViewById(R.id.top_img_card);
+        luex_tag = findViewById(R.id.luex_tag);
         top_img_card.setOnClickListener(this);
 
         buy_now_card_view = findViewById(R.id.buy_now_card_view);
@@ -218,7 +266,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_image_img = findViewById(R.id.select_image_img);
         select_360_img = findViewById(R.id.select_360_img);
         select_certificate_img = findViewById(R.id.select_certificate_img);
-        select_size_img = findViewById(R.id.select_size_img);
+
 
         type_tv = findViewById(R.id.type_tv);
         current_return_policy_tv = findViewById(R.id.current_return_policy_tv);
@@ -226,7 +274,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_image_tv = findViewById(R.id.select_image_tv);
         select_360_tv = findViewById(R.id.select_360_tv);
         select_certificate_tv = findViewById(R.id.select_certificate_tv);
-        select_size_tv = findViewById(R.id.select_size_tv);
+
 
         select_img_lin = findViewById(R.id.select_img_lin);
         select_img_lin.setOnClickListener(this);
@@ -237,8 +285,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_certificate_lin = findViewById(R.id.select_certificate_lin);
         select_certificate_lin.setOnClickListener(this);
 
-        select_size_lin = findViewById(R.id.select_size_lin);
-        select_size_lin.setOnClickListener(this);
+
 
         translucent_background = findViewById(R.id.translucent_background);
         translucent_background.setOnClickListener(this);
@@ -266,6 +313,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         wish_img = findViewById(R.id.wish_img);
         cart_img = findViewById(R.id.cart_img);
         account_img = findViewById(R.id.account_img);
+        account_img.setOnClickListener(this);
 
         home_tv = findViewById(R.id.home_tv);
         categories_tv = findViewById(R.id.categories_tv);
@@ -274,7 +322,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         account_tv = findViewById(R.id.account_tv);
         cart_count_tv = findViewById(R.id.cart_count_tv);
         wish_list_count_tv = findViewById(R.id.wish_list_count_tv);
-
+        account_tv.setOnClickListener(this);
         home_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
         categories_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
         wish_img.setColorFilter(ContextCompat.getColor(context, R.color.grey_light));
@@ -404,12 +452,12 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
         select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.light_gray1));
         select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.light_gray1));
-        select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.light_gray1));
 
         select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
         select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.light_gray1));
         select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.light_gray1));
-        select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.light_gray1));
+
+
 
         type_tv.setText("Natural");
 
@@ -417,11 +465,31 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         getCurrencyData();
 
-        onBindDetails(false);
+        //gemstone
+        Log.e("activityValue","..443..."+activityValue);
+        if (activityValue!=null && !activityValue.isEmpty())
+        {
+            if(activityValue.equalsIgnoreCase("gemstone")){
+                onBindDetailsGemStone(false);
+            }
+
+
+        }
+        else {
+            onBindDetails(false);
+        }
+
        // diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
         onBindSizePreviewAPI(true);
 
         manageDeviceBackButton();
+        if(searchType.equals("dxeluxe"))
+        {
+            luex_tag.setVisibility(View.VISIBLE);
+        }
+        else {
+            luex_tag.setVisibility(View.GONE);
+        }
     }
 
     // Diamond Shape Image Data set Using Model.
@@ -760,13 +828,20 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
+            if (activityValue == null || activityValue.isEmpty()) {
+                int grayColor = ContextCompat.getColor(context, R.color.dot_gray);
+                select_size_img.setColorFilter(grayColor);
+                select_size_tv.setTextColor(grayColor);
+            }
+
+
 
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
+
+            Log.e("diamond_image","...838..............."+diamond_image);
          //   diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
             showDiamondImageWebViewPopup(activity, context, diamond_image);
 
@@ -777,12 +852,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
+          //  select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
+            if (activityValue == null || activityValue.isEmpty()) {
+                int grayColor = ContextCompat.getColor(context, R.color.dot_gray);
+                select_size_img.setColorFilter(grayColor);
+                select_size_tv.setTextColor(grayColor);
+            }
 
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
+          //  select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
           //  diamondImage = "https://thnk18.azureedge.net/img/images/Vision360.html?d=J429-230135";
             showDiamondVideoWebViewPopup(activity, context, diamond_video);
@@ -794,12 +874,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
-            select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
+            if (activityValue == null || activityValue.isEmpty()) {
+                int grayColor = ContextCompat.getColor(context, R.color.dot_gray);
+                select_size_img.setColorFilter(grayColor);
+                select_size_tv.setTextColor(grayColor);
+            }
+
+            //select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
 
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
-            select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
+            //select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
             if(user_login.equalsIgnoreCase("yes"))
             {
@@ -831,12 +917,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
+            //select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
+
+            if (activityValue == null || activityValue.isEmpty()) {
+                int grayColor = ContextCompat.getColor(context, R.color.dot_gray);
+                select_size_img.setColorFilter(grayColor);
+                select_size_tv.setTextColor(grayColor);
+            }
 
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
-            select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
+            //select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
 
             if(shape.equalsIgnoreCase(""))
             {
@@ -915,9 +1007,71 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
+              /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
+        else if(id == R.id.account_img)
+        {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+              /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
+        else if(id == R.id.account_tv)
+        {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+              /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
             }
             else
             {
@@ -928,6 +1082,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
         else if(id == R.id.translucent_background)
         {
+
             translucent_background.setVisibility(View.GONE); // Activity Transparency Gone
             bottomBarClickableTrue();// When Transparency Hide Click True
 
@@ -1371,6 +1526,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         public Object instantiateItem(ViewGroup container, final int position) {
 
             // Declare Variables
+            RelativeLayout luex_tag;
             ImageView pagerImg, status_img, returnable_img, add_to_favt_img;
             CardView root_layout;
             TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv, cut_grade_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv, certificate_name_tv, discount_tv, return_policy_tv,
@@ -1393,7 +1549,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             else {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list, container, false);
             }
-
+            luex_tag= (RelativeLayout) itemView.findViewById(R.id.luex_tag);
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
             status_img = (ImageView) itemView.findViewById(R.id.status_img);
             returnable_img = (ImageView) itemView.findViewById(R.id.returnable_img);
@@ -1436,50 +1592,119 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         .into(pagerImg);
             }
 
+            Log.e("getIsDxeLUXE","1460**,............."+list.get(position).getIsDxeLUXE());
+
+            if (list.get(position).getIsDxeLUXE()==1)
+            {
+                luex_tag.setVisibility(View.VISIBLE);
+            }
+            else {
+                luex_tag.setVisibility(View.GONE);
+            }
+
 
             supplier_id_tv_pager.setText("#"+list.get(position).getStock_no() + " | " + list.get(position).getSupplier_id());
             name_tv_Pager.setText(list.get(position).getShape());
             item_type_tv.setText(list.get(position).getCarat() + getResources().getString(R.string.ct) + " " + list.get(position).getColor() + " " + list.get(position).getClarity());
 
-            if(list.get(position).getCut_grade().equalsIgnoreCase(""))
+
+            Log.e("activityValue","..1605....."+activityValue);
+            if (activityValue!=null && !activityValue.isEmpty())
             {
-                cut_grade_tv.setText("-");
-            }
-            else{
-                cut_grade_tv.setText(list.get(position).getCut_grade());
+                if(activityValue.equalsIgnoreCase("gemstone")){
+                    if(list.get(position).getCut_grade().equalsIgnoreCase(""))
+                    {
+                        cut_grade_tv.setVisibility(View.GONE);
+                        cut_grade_tv.setText("-");
+                    }
+                    else{
+                        cut_grade_tv.setText(list.get(position).getCut_grade());
+                    }
+
+                    if(list.get(position).getPolish().equalsIgnoreCase(""))
+                    {
+                        polish_tv.setVisibility(View.GONE);
+                        polish_tv.setText("-");
+                    }
+                    else{
+                        polish_tv.setText(list.get(position).getPolish());
+                    }
+
+                    if(list.get(position).getSymmetry().equalsIgnoreCase(""))
+                    {
+                        symmetry_tv.setVisibility(View.GONE);
+                        symmetry_tv.setText("-");
+                    }
+                    else{
+                        symmetry_tv.setText(list.get(position).getSymmetry());
+                    }
+
+                    if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
+                    {
+                        fluorescence_intensity_tv.setVisibility(View.GONE);
+                        fluorescence_intensity_tv.setText("-");
+                    }
+                    else{
+                        fluorescence_intensity_tv.setText(list.get(position).getFluorescence_intensity());
+                    }
+
+                    if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
+                    {
+                        certificate_name_tv.setVisibility(View.GONE);
+                        certificate_name_tv.setText("-");
+                    }
+                    else{
+                        certificate_name_tv.setText(list.get(position).getCertificate_name());
+                    }
+                }
+
+
             }
 
-            if(list.get(position).getPolish().equalsIgnoreCase(""))
+            else
             {
-                polish_tv.setText("-");
-            }
-            else{
-                polish_tv.setText(list.get(position).getPolish());
+                if(list.get(position).getCut_grade().equalsIgnoreCase(""))
+                {
+                    cut_grade_tv.setText("-");
+                }
+                else{
+                    cut_grade_tv.setText(list.get(position).getCut_grade());
+                }
+
+                if(list.get(position).getPolish().equalsIgnoreCase(""))
+                {
+                    polish_tv.setText("-");
+                }
+                else{
+                    polish_tv.setText(list.get(position).getPolish());
+                }
+
+                if(list.get(position).getSymmetry().equalsIgnoreCase(""))
+                {
+                    symmetry_tv.setText("-");
+                }
+                else{
+                    symmetry_tv.setText(list.get(position).getSymmetry());
+                }
+
+                if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
+                {
+                    fluorescence_intensity_tv.setText("-");
+                }
+                else{
+                    fluorescence_intensity_tv.setText(list.get(position).getFluorescence_intensity());
+                }
+
+                if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
+                {
+                    certificate_name_tv.setText("-");
+                }
+                else{
+                    certificate_name_tv.setText(list.get(position).getCertificate_name());
+                }
             }
 
-            if(list.get(position).getSymmetry().equalsIgnoreCase(""))
-            {
-                symmetry_tv.setText("-");
-            }
-            else{
-                symmetry_tv.setText(list.get(position).getSymmetry());
-            }
 
-            if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-            {
-                fluorescence_intensity_tv.setText("-");
-            }
-            else{
-                fluorescence_intensity_tv.setText(list.get(position).getFluorescence_intensity());
-            }
-
-            if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-            {
-                certificate_name_tv.setText("-");
-            }
-            else{
-                certificate_name_tv.setText(list.get(position).getCertificate_name());
-            }
 
             table_perc_tv.setText("T: " + list.get(position).getTable_perc());
             depth_perc.setText("D: " + list.get(position).getDepth_perc());
@@ -1691,6 +1916,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
 
+
             urlParameter.put("certificateNo", certificate_number);
             urlParameter.put("sessionId", "" + uuid);
 
@@ -1702,6 +1928,27 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             //recyclerNaturalGrownView.setVisibility(View.GONE);
         }
     }
+
+    public void onBindDetailsGemStone(boolean showLoader)
+    {
+        String uuid = CommonUtility.getAndroidId(context);
+        if (Utils.isNetworkAvailable(context))
+        {
+            //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
+            urlParameter = new HashMap<String, String>();
+            Log.e("certificate_number","....."+certificate_number);
+            urlParameter.put("certificateNo", certificate_number);
+            urlParameter.put("sessionId", "" + uuid);
+            //GRS2021-080408
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_GEMSTONES_DETAILS, ApiConstants.GET_GEMSTONES_DETAILS_ID,showLoader, "GET");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            //recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
+    }
+
 
     public void onBindSizePreviewAPI(boolean showLoader)
     {
@@ -1799,6 +2046,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
 
@@ -1956,6 +2204,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);*/
                             if (coupondiscountperc>0)
                             {
+                                dis_sub_total_tv.setVisibility(View.VISIBLE);
                                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
                                 dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                                 dis_sub_total_tv.setText(getCurrencySymbol + "" +
@@ -2171,11 +2420,392 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     }
                     break;
 
+
+                case ApiConstants.GET_GEMSTONES_DETAILS_ID:
+
+                    Log.v("------Diamond----- : ", "--------JSONObject-#$#$#$#$#$$#$------- : " + jsonObject);
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+                        JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+
+                        stock_id = CommonUtility.checkString(jObjDetails.optString("stock_id"));
+                        item_name = CommonUtility.checkString(jObjDetails.optString("item_name"));
+                        supplier_id = CommonUtility.checkString(jObjDetails.optString("supplier_id"));
+                        certificate_no = CommonUtility.checkString(jObjDetails.optString("certificate_no"));
+                        category = CommonUtility.checkString(jObjDetails.optString("category"));
+                        certificate_name = CommonUtility.checkString(jObjDetails.optString("certificate_name"));
+                        cut_grade = CommonUtility.checkString(jObjDetails.optString("cut_grade"));
+                        shape = CommonUtility.checkString(jObjDetails.optString("shape"));
+                        clarity = CommonUtility.checkString(jObjDetails.optString("clarity"));
+                        carat = CommonUtility.checkString(jObjDetails.optString("carat"));
+                        color = CommonUtility.checkString(jObjDetails.optString("color"));
+                        growth_type = CommonUtility.checkString(jObjDetails.optString("growth_type"));
+                        fluorescence_intensity = CommonUtility.checkString(jObjDetails.optString("fluorescence_intensity"));
+                        polish = CommonUtility.checkString(jObjDetails.optString("polish"));
+                        symmetry = CommonUtility.checkString(jObjDetails.optString("symmetry"));
+                        depth_perc = CommonUtility.checkString(jObjDetails.optString("depth_perc"));
+                        table_perc = CommonUtility.checkString(jObjDetails.optString("table_perc"));
+                        discount_amout = CommonUtility.checkString(jObjDetails.optString("discount_amout"));
+                        length = CommonUtility.checkString(jObjDetails.optString("length"));
+                        width = CommonUtility.checkString(jObjDetails.optString("width"));
+                        depth = CommonUtility.checkString(jObjDetails.optString("depth"));
+                        measurement = CommonUtility.checkString(jObjDetails.optString("measurement"));
+                        shade = CommonUtility.checkString(jObjDetails.optString("shade"));
+                        luster = CommonUtility.checkString(jObjDetails.optString("luster"));
+                        eye_clean = CommonUtility.checkString(jObjDetails.optString("eye_clean"));
+                        crown_angle = CommonUtility.checkString(jObjDetails.optString("crown_angle"));
+                        pavillion_angle = CommonUtility.checkString(jObjDetails.optString("pavillion_angle"));
+                        diamond_image = CommonUtility.checkString(jObjDetails.optString("diamond_image"));
+                        diamond_video = CommonUtility.checkString(jObjDetails.optString("diamond_video"));
+                        is_returnable = CommonUtility.checkString(jObjDetails.optString("is_returnable"));
+                        certificate_file = CommonUtility.checkString(jObjDetails.optString("certificate_file"));
+                        girdle_condition = CommonUtility.checkString(jObjDetails.optString("girdle_condition"));
+                        culet = CommonUtility.checkString(jObjDetails.optString("culet"));
+                        location = CommonUtility.checkString(jObjDetails.optString("location"));
+                        crown_height = CommonUtility.checkString(jObjDetails.optString("crown_height"));
+                        pavillion_depth = CommonUtility.checkString(jObjDetails.optString("pavillion_depth"));
+                        inscription = CommonUtility.checkString(jObjDetails.optString("inscription"));
+                        key_to_symbols = CommonUtility.checkString(jObjDetails.optString("key_to_symbols"));
+                        report_comments = CommonUtility.checkString(jObjDetails.optString("report_comments"));
+                        subtotal = CommonUtility.checkString(jObjDetails.optString("subtotal"));
+                        coupondiscountperc=CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
+                        subtotalaftercoupondiscount=CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
+                        is_cart = CommonUtility.checkString(jObjDetails.optString("is_cart"));
+                        is_wishlist = CommonUtility.checkString(jObjDetails.optString("is_wishlist"));
+                        avaliable_status = CommonUtility.checkString(jObjDetails.optString("status"));
+                        r_discount = CommonUtility.checkString(jObjDetails.optString("r_discount"));
+                        supplier_comment = CommonUtility.checkString(jObjDetails.optString("supplier_comment"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("stock_no"));
+
+                        /*stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));*/
+
+                        Log.e("diamond_image","..GemStone....2414..."+diamond_image);
+                        if(!diamond_image.equalsIgnoreCase(""))
+                        {
+                            Picasso.with(context)
+                                    .load(diamond_image)
+                                    .placeholder(R.mipmap.phl_diamond)
+                                    .error(R.mipmap.phl_diamond)
+                                    .into(diamond_img);
+                        }
+                        else{
+                            Picasso.with(context)
+                                    .load(R.mipmap.phl_diamond)
+                                    .placeholder(R.mipmap.phl_diamond)
+                                    .error(R.mipmap.phl_diamond)
+                                    .into(diamond_img);
+                        }
+
+                        supplier_id_tv.setText("#" +stock_no + "  |  " + "ID: " + supplier_id);
+
+                        Log.e("shape","..2501/........."+shape);
+                        Log.e("shape","..2501/........."+shape);
+                       // item_type_tv
+                        name_tv.setText(shape);
+                        item_type_tv.setText(carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
+
+                        //  item_type_tv.setText("- " +  carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
+
+                        if(category.equalsIgnoreCase("Natural"))
+                        {
+                            type_tv.setBackgroundResource(R.drawable.background_yellow);
+                        }
+                        else{
+                            type_tv.setBackgroundResource(R.drawable.background_green_light);
+                        }
+                        type_tv.setText(category);
+
+                        if(is_returnable.equalsIgnoreCase("1"))
+                        {
+                            current_returnable_img.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            current_returnable_img.setVisibility(View.GONE);
+                        }
+
+                        if(cut_grade.equalsIgnoreCase(""))
+                        {
+                            cut_grade_tv.setVisibility(View.GONE);
+                            cut_grade_tv.setText("-");
+                        }
+                        else{
+                            cut_grade_tv.setText(cut_grade);
+                        }
+                        if(polish.equalsIgnoreCase(""))
+                        {
+                            cut_grade_view.setVisibility(View.GONE);
+                            polish_tv.setVisibility(View.GONE);
+                            polish_tv.setText("-");
+                        }
+                        else{
+                            polish_tv.setText(polish);
+                        }
+
+                        if(symmetry.equalsIgnoreCase(""))
+                        {
+                            polish_view.setVisibility(View.GONE);
+                            symmetry_tv.setVisibility(View.GONE);
+                            symmetry_tv.setText("-");
+                        }
+                        else{
+                            symmetry_tv.setText(symmetry);
+                        }
+
+                        if(fluorescence_intensity.equalsIgnoreCase(""))
+                        {
+                            symmetry_view.setVisibility(View.GONE);
+                            fluorescence_intensity_tv.setVisibility(View.GONE);
+                            fluorescence_intensity_tv.setText("-");
+                        }
+                        else{
+                            fluorescence_intensity_tv.setText(fluorescence_intensity);
+                        }
+
+                        if(certificate_name.equalsIgnoreCase(""))
+                        {
+                            fluorescence_view.setVisibility(View.GONE);
+                            certificate_name_tv.setVisibility(View.GONE);
+                            certificate_name_tv.setText("-");
+                        }
+                        else{
+                            certificate_name_tv.setText(certificate_name);
+                        }
+
+                        Log.e("subtotal","..2567....."+subtotal);
+                        if(subtotal!=null && !subtotal.equalsIgnoreCase(""))
+                        {
+                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
+                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+                            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
+                            Log.e("In IF","subTotalDiscountFormat......1946*******..."+subTotalDiscountFormat+"..original..."+subtotalaftercoupondiscount);
+                            Log.e("In IF","subTotalDiscountFormat......1947*******..."+subTotalFormat+"...subtotal.."+subtotal);
+                            Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);
+                            Log.e("In IF","coupondiscountperc......2577*******..."+coupondiscountperc);
+
+                            if (coupondiscountperc>0)
+                            {
+                                dis_sub_total_tv.setVisibility(View.VISIBLE);
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(getCurrencySymbol + "" +
+                                        CommonUtility.currencyFormat(subTotalFormat));
+                            }
+                            else
+                            {
+                                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
+                                dis_sub_total_tv.setVisibility(View.GONE);
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            }
+                            /*if (list.get(position).getCoupondiscountperc() > 0.0) {
+                                Log.e("In IF","..1356*******...");
+                                String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+                                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+
+                                //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+                            }
+                            else
+                            {
+
+                            }*/
+                        }
+                        else{}
+
+                        if(is_cart.equalsIgnoreCase("1"))
+                        {
+                            current_add_to_cart_tv.setText(getResources().getString(R.string.go_to_cart));
+                        }
+                        else{
+                            current_add_to_cart_tv.setText(getResources().getString(R.string.add_to_cart));
+                        }
+
+                        if(measurement.equalsIgnoreCase(""))
+                        {
+                            details_measurements_tv.setVisibility(View.GONE);
+                            details_measurements_tv.setText("-");
+                        }
+                        else{
+                            details_measurements_tv.setText(measurement);
+                        }
+
+                        if(depth_perc.equalsIgnoreCase(""))
+                        {
+                            details_depth_tv.setVisibility(View.GONE);
+                            details_depth_tv.setText("-");
+                        }
+                        else{
+                            details_depth_tv.setText(depth_perc + "%");
+                        }
+
+                        if(table_perc.equalsIgnoreCase(""))
+                        {
+                            details_table_tv.setText("-");
+                        }
+                        else{
+                            details_table_tv.setText(table_perc + "%");
+                        }
+
+                        if(crown_height.equalsIgnoreCase(""))
+                        {
+                            details_crown_height_tv.setText("-");
+                        }
+                        else{
+                            details_crown_height_tv.setText(crown_height + "%");
+                        }
+
+                        if(crown_angle.equalsIgnoreCase(""))
+                        {
+                            details_crown_angle_tv.setText("-");
+                        }
+                        else{
+                            details_crown_angle_tv.setText(crown_angle);
+                        }
+
+                        if(pavillion_depth.equalsIgnoreCase(""))
+                        {
+                            details_pavilion_depth_tv.setText("-");
+                        }
+                        else{
+                            details_pavilion_depth_tv.setText(pavillion_depth + "%");
+                        }
+
+                        if(pavillion_angle.equalsIgnoreCase(""))
+                        {
+                            details_pavilion_angle_tv.setText("-");
+                        }
+                        else{
+                            details_pavilion_angle_tv.setText(pavillion_angle);
+                        }
+
+                        if(shade.equalsIgnoreCase(""))
+                        {
+                            details_shade_tv.setText("-");
+                        }
+                        else{
+                            details_shade_tv.setText(shade);
+                        }
+
+                        if(girdle_condition.equalsIgnoreCase(""))
+                        {
+                            details_condition_cult_tv.setText("-");
+                        }
+                        else{
+                            details_condition_cult_tv.setText(girdle_condition);
+                        }
+
+                        if(growth_type.equalsIgnoreCase(""))
+                        {
+                            details_growth_type_tv.setText("-");
+                        }
+                        else{
+                            details_growth_type_tv.setText(growth_type);
+                        }
+
+                        if(eye_clean.equalsIgnoreCase(""))
+                        {
+                            details_inclusion_tv.setText("-");
+                        }
+                        else{
+                            details_inclusion_tv.setText(eye_clean);
+                        }
+
+
+                        if(avaliable_status.equalsIgnoreCase(""))
+                        {
+                            details_status_tv.setText("-");
+                        }
+                        else{
+                            details_status_tv.setText(avaliable_status);
+                        }
+
+                        Log.e("details_location_tv : ", location);
+                        if(location.equalsIgnoreCase(""))
+                        {
+                            details_location_tv.setText("-");
+                        }
+                        else
+                        {
+                            details_location_tv.setText(location);
+                        }
+
+
+                        details_key_tv.setText(key_to_symbols);
+
+                        if(supplier_comment.equalsIgnoreCase(""))
+                        {
+                            details_remark_tv.setText("-");
+                        }
+                        else
+                        {
+                            details_remark_tv.setText(supplier_comment);
+                        }
+
+                        if(report_comments.equalsIgnoreCase(""))
+                        {
+                            details_report_tv.setText("-");
+                        }
+                        else
+                        {
+                            details_report_tv.setText(report_comments);
+                        }
+
+                        if(culet.equalsIgnoreCase(""))
+                        {
+                            culet_id.setText("-");
+                        }
+                        else{
+                            culet_id.setText(culet);
+                        }
+
+
+                        discount_tv.setText(r_discount);
+
+                        if(!r_discount.equalsIgnoreCase("") && !r_discount.equalsIgnoreCase("-"))
+                        {
+                            discount_tv.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            discount_tv.setVisibility(View.GONE);
+                        }
+
+                        if(avaliable_status.equalsIgnoreCase("Available"))
+                        {
+                            current_status_img.setVisibility(View.VISIBLE);
+                            current_status_img.setBackgroundResource(R.drawable.available);
+                        }
+                        else if(avaliable_status.equalsIgnoreCase("On Hold")){
+                            current_status_img.setVisibility(View.VISIBLE);
+                            current_status_img.setBackgroundResource(R.drawable.onhold);
+                        }
+                        else
+                        {
+                            current_status_img.setVisibility(View.GONE);
+                        }
+                        onBindRecommendedDiamondList(true);
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                        onBindRecommendedDiamondList(true);
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
                 case ApiConstants.GET_RECOMMENDED_DIAMONDS_ID:
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.v("------Diamond----- : ", "--------JSONObject----Recomm---- : " + jsonObject);
+                        Log.v("------Diamond----- : ", "GET_RECOMMENDED_DIAMONDS_ID--------JSONObject----Recomm---- : " + jsonObject);
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
                         if(recommandDiamondArrayList.size() > 0)
@@ -2190,7 +2820,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
                             model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStock_id(CommonUtility.checkString(objectCodes.optString("stock_id")));
-
                             model.setItem_name(CommonUtility.checkString(objectCodes.optString("item_name")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));
                             model.setSupplier_id(CommonUtility.checkString(objectCodes.optString("supplier_id")));
@@ -2225,6 +2854,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             model.setR_discount(CommonUtility.checkString(objectCodes.optString("r_discount")));
                             model.setR_discount_type(CommonUtility.checkString(objectCodes.optString("r_discount_type")));
                             model.setStock_no(CommonUtility.checkString(objectCodes.optString("stock_no")));
+                            model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
                             model.setCurrencySymbol(ApiConstants.rupeesIcon);
 
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
@@ -2562,7 +3192,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             // Set WebView background color to transparent
             webViewImage.setBackgroundResource(R.drawable.background_gradient);
             webViewImage.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
-
+            Log.e("diamondUrl","..3112...."+diamondUrl);
             webViewImage.loadUrl(diamondUrl);
         }
 

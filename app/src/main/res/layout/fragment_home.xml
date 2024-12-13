@@ -5,7 +5,7 @@
     android:id="@+id/activity_add_photo_public"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:background="@color/light_purple">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
@@ -32,54 +32,85 @@
                     android:visibility="gone" />
 
                 <!--For Temporarey Use-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_15"
-                    android:layout_marginRight="@dimen/dimen_10"
-                    android:weightSum="2">
-
-                    <LinearLayout
-                        android:id="@+id/solitaries_lin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:layout_weight="1"
-                        android:background="@color/transparent">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@mipmap/ic_solitaires" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/jewellery_lin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:elevation="@dimen/dimen_5"
-                            android:src="@mipmap/ic_jewellery" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_15"
+                    android:fillViewport="false">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_20"
+                        android:weightSum="4.5"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/solitaries_lin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/dimen_5"
+                            android:background="@color/transparent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/solitairehdpi" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/dex_lin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/dimen_5"
+                            android:background="@color/transparent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dxe_home_img" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/gemstones_lin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/dimen_5">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:elevation="@dimen/dimen_5"
+                                android:src="@drawable/gemstoneshdpi" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/jewellery_lin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/dimen_5"
+                            android:background="@color/transparent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/jewelleryhdpi" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:scrollbars="none"
                     android:visibility="gone">
 
@@ -1164,5 +1195,7 @@
 
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>

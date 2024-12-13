@@ -847,6 +847,7 @@
                                             android:layout_toRightOf="@+id/coupon_points_lbl_img"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content">
+
                                             <TextView
                                                 android:layout_marginTop="@dimen/dimen_3"
                                                 style="@style/SemiBoldFontType"
@@ -863,7 +864,7 @@
                                                 style="@style/SemiBoldFontType"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="&quot;FESTIVE24&quot;"
+                                                android:text="&quot;DXEDEAL&quot;"
                                                 android:textColor="@color/purple"
                                                 android:textSize="@dimen/dimen_13"
                                                 android:visibility="visible" />

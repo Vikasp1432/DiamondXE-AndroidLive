@@ -44,6 +44,18 @@ public class WebViewNewActivity extends SuperActivity {
 
         binding.rlBack.setOnClickListener(view -> finish());
         binding.lblTitle.setText(getString(R.string.back));
+        String url = getIntent().getStringExtra("url");
+        String tittle = getIntent().getStringExtra("title");
+        if (tittle == null || tittle.isEmpty()) {
+            binding.lblTitle.setText(getString(R.string.back));
+        }
+        else {
+            binding.lblTitle.setText(tittle);
+        }
+
+        if (url == null || url.isEmpty()) {
+            url = "https://default-url.com"; // Default URL if none is provided
+        }
 
         WebSettings webSettings = binding.webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -62,7 +74,8 @@ public class WebViewNewActivity extends SuperActivity {
         });
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         WebView.setWebContentsDebuggingEnabled(true);
-        binding.webview.loadUrl("https://diamondxe.com/limitedoffer/");
+       /* binding.webview.loadUrl("https://diamondxe.com/limitedoffer/");*/
+        binding.webview.loadUrl(url);
 
 
     }

@@ -480,7 +480,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/recycler_view_country_list"
                                 android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_marginBottom="@dimen/dimen_40"
+                                android:layout_marginBottom="@dimen/dimen_38"
                                 android:paddingTop="@dimen/dimen_5"
                                 android:paddingBottom="@dimen/dimen_10">
 
@@ -665,8 +665,39 @@
                 android:textColor="@color/purple_light"
                 android:textSize="@dimen/dimen_14" />
         </RelativeLayout>
+
+        <!--Calc tab-->
+        <RelativeLayout
+            android:id="@+id/dxe_calc_rev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/dxe_calc_img"
+                android:layout_width="@dimen/dimen_25"
+                android:layout_height="@dimen/dimen_25"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/calc_logo" />
+
+            <TextView
+                android:id="@+id/dxe_calc_tv"
+                style="@style/SemiBoldFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dxe_calc_img"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/bottomBarCalc"
+                android:textColor="@color/grey_light"
+                android:textSize="@dimen/dimen_14" />
+        </RelativeLayout>
+
         <!--  Categories Tab  -->
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/category_rel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -1003,6 +1003,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             model.setDxePrefered(CommonUtility.checkString(objectCodes.optString("dxe_prefered")));
                             model.setOnHold(CommonUtility.checkString(objectCodes.optString("on_hold")));
                             model.setStockNo(CommonUtility.checkString(objectCodes.optString("stock_no")));
+                            model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
 
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
@@ -1080,6 +1081,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         }
         else if(action.equalsIgnoreCase("selectShippingAddress"))
         {
+            //Toast.makeText(this,".."+shippingAddressArrayList.get(position).getCountryNameS(),Toast.LENGTH_SHORT).show();
             boolean shouldSelect = !shippingAddressArrayList.get(position).isSelected();
             Constant.manageShippingBillingAddressSelection = "shippingAddressSelect";
             if (shouldSelect) {
@@ -1390,13 +1392,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             // Declare Variables
             ImageView pagerImg, status_img, returnable_img;
             CardView root_layout;
+            RelativeLayout luex_tag;
             TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv,  return_policy_tv, sub_total_tv,diamond_type;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View itemView = inflater.inflate(R.layout.row_place_order_item_list, container, false);
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
             status_img = (ImageView) itemView.findViewById(R.id.status_img);
             returnable_img = (ImageView) itemView.findViewById(R.id.returnable_img);
-
+            luex_tag = (RelativeLayout) itemView.findViewById(R.id.luex_tag);
             supplier_id_tv_pager = itemView.findViewById(R.id.supplier_id_tv);
             diamond_type = itemView.findViewById(R.id.diamond_type);
 
@@ -1423,6 +1426,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                         .into(pagerImg);
             }
 
+
+            if (list.get(position).getIsDxeLUXE()==1)
+            {
+                luex_tag.setVisibility(View.VISIBLE);
+            }
+            else {
+                luex_tag.setVisibility(View.GONE);
+            }
 
             supplier_id_tv_pager.setText("#"+list.get(position).getStockNo() + " | " + list.get(position).getSupplierId());
             name_tv_Pager.setText(list.get(position).getShape());

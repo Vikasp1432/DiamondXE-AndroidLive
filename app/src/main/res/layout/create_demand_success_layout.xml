@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="@dimen/dimen_35"
+        app:cardCornerRadius="@dimen/dimen_12"
+        android:id="@+id/tool_bar_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_5"
+        android:outlineAmbientShadowColor="@color/sha_border"
+        android:outlineSpotShadowColor="@color/sha_border"
+        app:cardElevation="@dimen/dimen_5">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/cross_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_5"
+                android:src="@drawable/cross"
+                android:tint="@color/purple_light"
+                tools:ignore="UseAppTint" />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/image_view"
+                android:layout_width="@dimen/dimen_90"
+                android:layout_height="@dimen/dimen_90"
+                android:src="@drawable/thankyou_icon" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dimen_5"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/title_tv"
+                style="@style/RegularFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/back_img"
+                android:text="@string/thankyou_"
+                android:textColor="@color/purple_light"
+                android:textSize="@dimen/dimen_22" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:id="@+id/api_msg"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:gravity="center"
+                android:layout_weight="500"
+                android:layout_gravity="center"
+                style="@style/MediumFontType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:lineSpacingExtra="5dp"
+                android:layout_toRightOf="@+id/back_img"
+                android:text="@string/create_demand_thankyoutext"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_15" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_26"
+                android:layout_marginBottom="@dimen/dimen_45"
+                android:layout_gravity="center"
+                android:id="@+id/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/background_button_shadow">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/okay_tv"
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:paddingLeft="@dimen/dimen_70"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_70"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/ok"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_16" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

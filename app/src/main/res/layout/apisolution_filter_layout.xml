@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:elevation="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_20"
+        app:cardCornerRadius="@dimen/dimen_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/purple"
+        android:outlineSpotShadowColor="@color/purple"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/dimen_5">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginRight="@dimen/dimen_17"
+                android:layout_marginLeft="@dimen/dimen_17"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/signup_option_lin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/account_balance_li"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_weight="1.3"
+                    >
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_8"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_8"
+                        android:text="@string/startdate"
+                        android:textColor="@color/color_545454"
+                        android:textSize="@dimen/dimen_12" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:background="@drawable/backgroud_with_border">
+                        <TextView
+                            android:id="@+id/startdate"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="Debit"
+                            android:paddingLeft="@dimen/dimen_5"
+                            android:paddingTop="@dimen/dimen_8"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:paddingBottom="@dimen/dimen_8"
+                            android:text="DD/MM/YYYY"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_11" />
+
+                        <ImageView
+                            android:paddingEnd="@dimen/dimen_5"
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/start_date_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_20"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/calender" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_weight="1.3"
+                    >
+                    <TextView
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_8"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_8"
+                        android:text="@string/enddate"
+                        android:textColor="@color/color_545454"
+                        android:textSize="@dimen/dimen_12" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:background="@drawable/backgroud_with_border">
+                        <TextView
+                            android:id="@+id/enddate"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="Debit"
+                            android:paddingLeft="@dimen/dimen_5"
+                            android:paddingTop="@dimen/dimen_8"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:paddingBottom="@dimen/dimen_8"
+                            android:text="DD/MM/YYYY"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_11" />
+
+                        <ImageView
+                            android:id="@+id/end_date_img"
+                            android:paddingEnd="@dimen/dimen_5"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_20"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/calender" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/apiKey_li"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:visibility="invisible"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_8"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_8"
+                        android:text="12"
+                        android:textColor="@color/color_545454"
+                        android:textSize="@dimen/dimen_12" />
+
+                    <LinearLayout
+                        android:id="@+id/refresh_lv"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:background="@drawable/backgroud_with_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_20"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/refresh_" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/search_btn"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:background="@drawable/background_button_shadow">
+
+                <TextView
+                    style="@style/SemiBoldFontType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="Debit"
+                    android:paddingLeft="@dimen/dimen_40"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_40"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/search_lbl"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_12" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

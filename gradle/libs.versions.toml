@@ -1,23 +1,34 @@
 [versions]
 agp = "8.3.1"
+checkout = "1.6.40"
+coilNetworkOkhttp = "3.0.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.12.0"
+materialSpinner = "1.3.1"
+paymentSdk = "6.6.13"
+roomTesting = "2.6.1"
 volley = "1.2.1"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
-kotlin = "1.9.0"  # Use your desired Kotlin version
+kotlin = "1.9.21"  # Use your desired Kotlin version
 googleServices = "4.4.2"
 crashlytics = "3.0.2"
 
 [libraries]
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
+checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material-spinner = { module = "com.jaredrummler:material-spinner", version.ref = "materialSpinner" }
+payment-sdk = { module = "com.paytabs:payment-sdk", version.ref = "paymentSdk" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }

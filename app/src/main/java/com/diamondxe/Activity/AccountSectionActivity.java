@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.diamondxe.Activity.APISolutions.ApiSolutionRequestActivity;
 import com.diamondxe.Activity.Buyer.BuyerKYCVerificationActivity;
 import com.diamondxe.Activity.Buyer.BuyerKYCVerificationDocUploadActivity;
 import com.diamondxe.Activity.Dealer.CustomPaymentScreenActivity;
@@ -124,7 +125,6 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
         img10 = findViewById(R.id.img10);
 
         my_account_sub_section = findViewById(R.id.my_account_sub_section);
-
         drop_down_my_account = findViewById(R.id.drop_down_my_account);
         drop_down_my_order = findViewById(R.id.drop_down_my_order);
         drop_down_wallet = findViewById(R.id.drop_down_wallet);
@@ -141,16 +141,18 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
             title_tv.setText(getResources().getString(R.string.dealer_account));
             dealer_mark_up_rel.setVisibility(View.VISIBLE);
             custom_payment_rel.setVisibility(View.VISIBLE);
-            /*custom_payment_rel.setVisibility(View.VISIBLE);
-            api_solution_rel.setVisibility(View.VISIBLE);*/
+            //wallet_rel.setVisibility(View.VISIBLE);
+            /*custom_payment_rel.setVisibility(View.VISIBLE);*/
+            api_solution_rel.setVisibility(View.VISIBLE);
         }
         else if(userRole.equalsIgnoreCase("BUYER")) {
             title_tv.setText(getResources().getString(R.string.buyer_account));
             dealer_mark_up_rel.setVisibility(View.GONE);
             custom_payment_rel.setVisibility(View.VISIBLE);
+            //wallet_rel.setVisibility(View.GONE);
             /*dealer_mark_up_rel.setVisibility(View.GONE);
-            custom_payment_rel.setVisibility(View.GONE);
-            api_solution_rel.setVisibility(View.GONE);*/
+            custom_payment_rel.setVisibility(View.GONE);*/
+            api_solution_rel.setVisibility(View.GONE);
         }
         else{
             title_tv.setText(getResources().getString(R.string.account));
@@ -361,6 +363,9 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
             Utils.hideKeyboard(activity);
             if(user_login.equalsIgnoreCase("yes"))
             {
+                intent = new Intent(activity, ApiSolutionRequestActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
             }
             else{
                 finish();
@@ -548,8 +553,6 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
         });
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
         alertDialog.setCancelable(true);
         alertDialog.show();
 
@@ -590,8 +593,6 @@ public class AccountSectionActivity extends SuperActivity implements RecyclerInt
         });
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
         alertDialog.setCancelable(true);
         alertDialog.show();
 

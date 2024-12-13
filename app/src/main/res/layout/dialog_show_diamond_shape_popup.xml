@@ -40,6 +40,8 @@
                     android:layout_marginRight="@dimen/dimen_5">
 
                     <TextView
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_5"
                         android:id="@+id/title_tv"
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
@@ -60,7 +62,7 @@
                         android:paddingRight="@dimen/dimen_10"
                         android:paddingBottom="@dimen/dimen_5"
                         android:src="@drawable/cross"
-                        android:tint="@color/black"
+                        android:tint="@color/purple_light"
                         tools:ignore="UseAppTint" />
                 </RelativeLayout>
 
@@ -139,12 +141,13 @@
                     android:id="@+id/recycler_shape_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_marginTop="@dimen/dimen_5"
                     android:layout_marginBottom="@dimen/dimen_10"
                     android:visibility="visible" />
 
                 <TextView
-                    style="@style/SemiBoldFontType"
+                    style="@style/RegularFontType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -154,7 +157,7 @@
                     android:layout_marginBottom="@dimen/dimen_10"
                     android:text="@string/reference_purpose_only"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_12" />
+                    android:textSize="@dimen/dimen_11" />
 
             </LinearLayout>
 

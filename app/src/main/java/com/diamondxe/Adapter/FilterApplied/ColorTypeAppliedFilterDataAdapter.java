@@ -176,10 +176,41 @@ public class ColorTypeAppliedFilterDataAdapter extends RecyclerView.Adapter<Recy
             else if(list.get(position).getFilterType().equalsIgnoreCase("Location")){
                 holder.type_tv.setText("Location: " + list.get(position).getDisplayAttr());
             }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("Origin")){
+                holder.type_tv.setText("Origin: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("Treatment")){
+                holder.type_tv.setText("Treatment: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("Item")){
+                holder.type_tv.setText("Item: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("CuttingStyle")){
+                holder.type_tv.setText("CuttingStyle: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("weightFirst")){
+                holder.type_tv.setText("weightTo: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("weightThird")){
+                holder.type_tv.setText("weightFrom: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("stockID")){
+                holder.type_tv.setText("stockID: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("GemShapes")){
+                holder.type_tv.setText("Shape: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("SelectPrice")){
+                holder.type_tv.setText("Price: " + list.get(position).getDisplayAttr());
+            }
+            else if(list.get(position).getFilterType().equalsIgnoreCase("SelectWeight")){
+                holder.type_tv.setText("Weight: " + list.get(position).getDisplayAttr());
+            }
 
-        }else{
+
+        }/*else{
             holder.type_tv.setText("");
-        }
+        }*/
 
         if(list.get(position).isSelected())
         {

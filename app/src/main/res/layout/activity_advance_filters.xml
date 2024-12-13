@@ -219,22 +219,35 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <!--android:background="@drawable/rounded_box"-->
+                        <!--<AutoCompleteTextView
+                            android:id="@+id/spinner_fancy_intensity_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select a country"
+                            android:dropDownHeight="@dimen/dimen_200"
+                            android:dropDownWidth="@dimen/dimen_200"
+                            android:padding="10dp"
+                            android:textSize="12sp"
+                            android:editable="false"
+                            android:background="@null"
+                            android:drawableEnd="@drawable/down_arrow_new"
+                            android:inputType="none" />-->
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:dropDownHeight="10dp"
+                        <Spinner
+                            android:visibility="visible"
                             android:spinnerMode="dropdown"
-                            android:popupTheme="@style/SpinnerPopupStyle"
                             android:id="@+id/spinner_fancy_intensity_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
                             android:layout_marginEnd="4dp"
-                            android:scrollbarTrackVertical="@color/teal_700"
                             android:layout_weight="4"
                             android:background="@null"
                             android:prompt="@string/select_intensity" />
 
                         <ImageView
+                            android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -289,6 +302,8 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            app:ms_dropdown_max_height="30dp"
+                            app:ms_dropdown_height="wrap_content"
                             android:id="@+id/spinner_fancy_over_tone_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -1355,7 +1370,7 @@
                 android:paddingTop="@dimen/dimen_10"
                 android:paddingRight="@dimen/dimen_5"
                 android:paddingBottom="@dimen/dimen_10"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/dimen_7"
                 app:cardElevation="@dimen/dimen_5">
 

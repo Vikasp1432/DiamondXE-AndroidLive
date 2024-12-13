@@ -29,6 +29,7 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     int last;
     public ArrayList<CountryListModel> arraylist;
     RecyclerInterface recyclerInterface;
+    private int selectedPosition = -1;
 
     public CurrencyListAdapter(ArrayList<CountryListModel> list, Context context, RecyclerInterface recyclerInterface) {
         this.list = list;
@@ -38,6 +39,7 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.arraylist.addAll(list);
         this.recyclerInterface = recyclerInterface;
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
@@ -54,7 +56,7 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         holder.currency_name_tv.setText(list.get(position).getCurrency());
         holder.description_tv.setText(list.get(position).getDesc());
-
+        holder.itemView.setSelected(position == selectedPosition);
         if (!list.get(position).getImage().equalsIgnoreCase(""))
         {
             Picasso.with(context)
@@ -95,12 +97,13 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.root_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                notifyDataSetChanged();
                 recyclerInterface.itemClick(position,"countryType");
             }
         });
 
     }
+
 
     @Override
     public int getItemCount() {

@@ -473,10 +473,10 @@ class JewelleryActivity : AppCompatActivity() {
                     isMetalCalculationActive = true
                     val input = s.toString()
 
-                    if (input != binding.labour.text.toString()) {
+                   /* if (input != binding.labour.text.toString()) {
                         binding.labour.setText(input)
                         Log.e("metalwt", "...." + input)
-                    }
+                    }*/
                     calculateMetalOutput()
                     isMetalCalculationActive = false
                 }
@@ -514,9 +514,9 @@ class JewelleryActivity : AppCompatActivity() {
                     isLabourCalculationActive = true
                     val input = s.toString()
 
-                    if (input != binding.metalwt.text.toString()) {
+                    /*if (input != binding.metalwt.text.toString()) {
                         binding.metalwt.setText(input)
-                    }
+                    }*/
                     calculateLabourOutput()
 
                     isLabourCalculationActive = false

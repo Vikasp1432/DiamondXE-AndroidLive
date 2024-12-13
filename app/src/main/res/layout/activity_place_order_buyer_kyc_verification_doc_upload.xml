@@ -1362,6 +1362,7 @@
                                         android:textSize="@dimen/dimen_14"
                                         android:visibility="visible" />
 
+                                    <!--android:background="@color/hint_text"-->
                                     <LinearLayout
                                         android:id="@+id/dob_lin"
                                         android:layout_width="wrap_content"
@@ -1371,7 +1372,6 @@
                                         android:layout_marginTop="@dimen/dimen_1"
                                         android:layout_marginRight="@dimen/dimen_1"
                                         android:layout_marginBottom="@dimen/dimen_1"
-                                        android:background="@color/hint_text"
                                         android:paddingLeft="@dimen/dimen_10">
 
                                         <ImageView
@@ -1381,9 +1381,9 @@
                                             android:layout_marginRight="@dimen/dimen_10"
                                             android:layout_weight="1"
                                             android:gravity="center"
-                                            android:paddingLeft="@dimen/dimen_20"
+                                            android:paddingLeft="@dimen/dimen_10"
                                             android:paddingTop="@dimen/dimen_2"
-                                            android:paddingRight="@dimen/dimen_20"
+                                            android:paddingRight="@dimen/dimen_10"
                                             android:paddingBottom="@dimen/dimen_2"
                                             android:src="@drawable/dob"
                                             android:text="@string/browse"

@@ -595,7 +595,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(window.getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = 1000; // Set your desired fixed height here, in pixels
+            lp.height = 1000;
 
             window.setAttributes(lp);
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);

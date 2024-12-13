@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.diamondxe.Activity.AccountSectionActivity;
 import com.diamondxe.Activity.HomeScreenActivity;
@@ -184,9 +185,15 @@ public class CategoryFragmentList extends Fragment implements RecyclerInterface,
             user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                /*intent = new Intent(context, AccountSectionActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(0,0);
+                getActivity().overridePendingTransition(0,0);*/
             }
             else
             {

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -112,6 +113,13 @@ public class AddToCartListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         }
 
+        if (list.get(position).getIsDxeLUXE()==1)
+        {
+            holder.luex_tag.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.luex_tag.setVisibility(View.GONE);
+        }
        /* if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
         {
             holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
@@ -202,7 +210,7 @@ public class AddToCartListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {
 
-
+        RelativeLayout luex_tag;
         CardView root_layout;
         TextView supplier_id_tv, name_tv, item_type_tv,cut_grade_tv, certificate_name_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv,table_perc_tv,
                 depth_perc,measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv,return_policy_tv, discount_tv, diamond_type;
@@ -222,6 +230,7 @@ public class AddToCartListAdapter extends RecyclerView.Adapter<RecyclerView.View
             supplier_id_tv = itemView.findViewById(R.id.supplier_id_tv);
             name_tv = itemView.findViewById(R.id.name_tv);
             item_type_tv = itemView.findViewById(R.id.item_type_tv);
+            luex_tag= itemView.findViewById(R.id.luex_tag);
 
             /*cut_grade_tv = itemView.findViewById(R.id.cut_grade_tv);
             certificate_name_tv = itemView.findViewById(R.id.certificate_name_tv);

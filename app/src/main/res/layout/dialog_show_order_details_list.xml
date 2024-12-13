@@ -73,7 +73,7 @@
             android:paddingBottom="@dimen/dimen_5"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_14" />
+            android:textSize="@dimen/dimen_12" />
     </RelativeLayout>
 
 

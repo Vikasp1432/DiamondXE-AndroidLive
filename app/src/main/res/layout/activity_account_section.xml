@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
         android:id="@+id/tool_bar_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +75,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginRight="@dimen/dimen_20"
-                    android:paddingTop="@dimen/dimen_5"
                     android:paddingBottom="@dimen/dimen_5">
 
                     <ImageView
@@ -280,6 +280,48 @@
 
                     </RelativeLayout>
 
+                    <!--Delete Account-->
+                    <RelativeLayout
+                        android:id="@+id/delete_account_rel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_5">
+
+                        <ImageView
+                            android:id="@+id/img10"
+                            android:layout_width="@dimen/dimen_30"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/delete_account" />
+
+                        <TextView
+                            android:id="@+id/my_delete_tv"
+                            style="@style/SemiBoldFontType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_15"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_toLeftOf="@+id/drop_down_delete"
+                            android:layout_toRightOf="@+id/img10"
+                            android:text="@string/delete_account"
+                            android:textColor="@color/purple_light"
+                            android:textSize="@dimen/dimen_16" />
+
+                        <ImageView
+                            android:id="@+id/drop_down_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="@dimen/dimen_10"
+                            android:paddingRight="@dimen/dimen_10"
+                            android:src="@drawable/drop_down"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <!--My Order-->
@@ -335,7 +377,7 @@
                     android:layout_marginRight="@dimen/dimen_20"
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingBottom="@dimen/dimen_5"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/img3"
@@ -599,7 +641,7 @@
                     android:layout_marginRight="@dimen/dimen_20"
                     android:paddingTop="@dimen/dimen_5"
                     android:paddingBottom="@dimen/dimen_5"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/img9"
@@ -634,7 +676,8 @@
                 </RelativeLayout>
 
                 <!--Delete Account-->
-                <RelativeLayout
+                <!--<RelativeLayout
+
                     android:id="@+id/delete_account_rel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -675,7 +718,7 @@
                         android:src="@drawable/drop_down"
                         android:visibility="gone" />
 
-                </RelativeLayout>
+                </RelativeLayout>-->
 
 
             </LinearLayout>
@@ -685,4 +728,17 @@
 
     </ScrollView>
 
+
+    <RelativeLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:visibility="visible">
+
+        <include android:id="@+id/bottom_bar_layout"
+            layout="@layout/bottom_bar" />
+
+    </RelativeLayout>
 </RelativeLayout>

@@ -42,8 +42,59 @@
         android:theme="@style/MyMaterialTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:label"
+        tools:replace="android:fullBackupContent"
         tools:targetApi="31">
+        <activity
+            android:name=".Activity.Gemstones.GemStoneDetails"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Gemstones.GemSearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Gemstones.AdvanceGemstoneFilterActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".Activity.DrawerWebViewActivity"
+            android:exported="false" />
+        <!--
+        <activity
+            android:name=".Activity.PaymentPages.PayTabActivity"
+            android:exported="false" />
+        -->
+        <!--
+        <activity
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            android:name=".Activity.PaymentPages.RazorpayPaymentActivity"
+            android:exported="false" />
+        -->
+        <activity
+            android:name=".Activity.Gemstones.GemstomeSearchActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".Activity.CreateDemand.CreateDemandHome"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".Activity.APISolutions.ApiSolutionRequestActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".Activity.NavWebViewActivity"
             android:exported="true"
@@ -52,7 +103,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            tools:node="replace"  />
+            tools:node="replace" />
         <activity
             android:name=".Activity.DXELuex.DXELuexRegisterActivity"
             android:exported="true"
@@ -541,9 +592,7 @@
         <activity
             android:name="com.dxe.calc.dashboard.GetQuotationActivity"
             android:exported="false"
-            android:hardwareAccelerated="true"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DXECalc.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
@@ -551,13 +600,10 @@
         <activity
             android:name="com.dxe.calc.dashboard.JewelleryActivity"
             android:exported="false"
-            android:hardwareAccelerated="true"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DXECalc.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            tools:node="replace" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <!--
 <activity
             android:name=".dashboard.RignSizeDummy"

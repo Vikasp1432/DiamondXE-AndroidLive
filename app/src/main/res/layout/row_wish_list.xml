@@ -33,27 +33,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/image_card_view"
-                    android:layout_width="@dimen/dimen_100"
-                    android:layout_height="@dimen/dimen_100"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:layout_marginRight="@dimen/dimen_8"
-                    app:cardCornerRadius="@dimen/dimen_5">
+            <RelativeLayout
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_8"
+                android:id="@+id/image_card_view_rv"
+                android:layout_width="@dimen/dimen_100"
+                android:layout_height="@dimen/dimen_100">
 
-                    <ImageView
-                        android:id="@+id/image_view"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/image_card_view"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/phl_diamond" />
-                </androidx.cardview.widget.CardView>
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        app:cardCornerRadius="@dimen/dimen_5">
+
+                        <ImageView
+                            android:id="@+id/image_view"
+                            android:layout_width="@dimen/dimen_100"
+                            android:layout_height="@dimen/dimen_100"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/phl_diamond" />
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/luex_tag"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/dimen_40"
+                    android:layout_height="@dimen/dimen_20">
+
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/dxetag2" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/image_card_view">
+                    android:layout_toRightOf="@+id/image_card_view_rv">
 
                     <LinearLayout
                         android:layout_width="match_parent"

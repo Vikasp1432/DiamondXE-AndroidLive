@@ -6,7 +6,7 @@
     android:id="@+id/activity_add_photo_public"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_purple">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -203,7 +203,8 @@
         android:background="@android:color/transparent"
         android:visibility="visible">
 
-        <include layout="@layout/bottom_bar" />
+        <include android:id="@+id/bottomBar"
+            layout="@layout/bottom_bar" />
 
     </RelativeLayout>
 

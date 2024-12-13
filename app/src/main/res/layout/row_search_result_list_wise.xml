@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
             android:layout_marginTop="@dimen/dimen_5"
-            android:layout_marginRight="@dimen/dimen_5"
             android:layout_marginBottom="@dimen/dimen_5"
             android:orientation="vertical">
 
@@ -52,7 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
-                    android:layout_marginRight="@dimen/dimen_5"
                     android:layout_toRightOf="@+id/image_card_view">
 
                     <LinearLayout
@@ -115,10 +113,26 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dimen_5"
-                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:layout_marginRight="@dimen/dimen_5"
                                     android:layout_toRightOf="@+id/status_img"
                                     android:src="@drawable/returnable" />
+
+                                <RelativeLayout
+                                    android:layout_toRightOf="@+id/returnable_img"
+                                    android:visibility="visible"
+                                    android:layout_centerHorizontal="true"
+                                    android:id="@+id/luex_tag"
+                                    android:layout_width="@dimen/dimen_40"
+                                    android:layout_height="@dimen/dimen_20">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/dimen_20"
+                                        android:src="@drawable/dxetag2" />
+                                </RelativeLayout>
                             </RelativeLayout>
+
+
 
                         </RelativeLayout>
 
@@ -412,6 +426,7 @@
 
 
                 <LinearLayout
+                    android:layout_marginRight="@dimen/dimen_5"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/allprice"
                     android:orientation="horizontal"

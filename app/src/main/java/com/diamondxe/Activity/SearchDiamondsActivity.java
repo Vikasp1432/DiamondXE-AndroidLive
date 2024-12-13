@@ -1,7 +1,9 @@
 package com.diamondxe.Activity;
 
+import static com.diamondxe.ApiCalling.ApiConstants.ACCOUNT_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CART_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.CATEGORY_FRAGMENT;
+import static com.diamondxe.ApiCalling.ApiConstants.DXE_CALC;
 import static com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_CODE;
 import static com.diamondxe.ApiCalling.ApiConstants.USER_BUYER;
 import static com.diamondxe.ApiCalling.ApiConstants.USER_DEALER;
@@ -29,6 +31,9 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,12 +49,14 @@ import com.diamondxe.ApiCalling.ApiConstants;
 import com.diamondxe.ApiCalling.VollyApiActivity;
 import com.diamondxe.Beans.AttributeDetailsModel;
 import com.diamondxe.Beans.ShapeImageModel;
+import com.diamondxe.Fragment.AccountSectionFragment;
 import com.diamondxe.Interface.RecyclerInterface;
 import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
+import com.dxe.calc.dashboard.CalculatorActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -62,11 +69,11 @@ import java.util.HashMap;
 
 public class SearchDiamondsActivity extends SuperActivity implements RecyclerInterface {
 
-    private ImageView back_img, bottom_search_icon;
+    private ImageView back_img, bottom_search_icon,clear_search;
     private TextView natural_tv, grown_tv, best_tv, medium_tv, low_tv, from_price_tv, to_price_tv, carat_from_tv, carat_to_tv,title_tv,yes_tv,
             no_tv,advance_filters_tv, search_diamond_error_tv,clear_all_filter;
 
-    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel;
+    private RelativeLayout home_rel, category_rel, wishlist_rel, dxe_calc_rev,cart_rel, account_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
 
@@ -95,7 +102,7 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
     String WHITE = "white";
     String FANCY = "fancy";
     MakeTypeListAdapter makeTypeListAdapter;
-
+    ArrayList<AttributeDetailsModel> attributeDetailsModels=new ArrayList<>();
     private RecyclerView recycler_color_view, recycler_clarity_view, recycler_certificate_view, recycler_fluorescence_view,recycler_make_view,
             recycler_shape_view;
     public ArrayList<ShapeImageModel> shapeImageArrayList;
@@ -111,12 +118,26 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
     private VollyApiActivity vollyApiActivity;
     private HashMap<String, String> urlParameter;
     String user_login = "";
-
+    String searchType="";
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_diamonds);
+
+        Intent intent = getIntent();
+        String intentValue = null;
+
+        if (intent != null) {
+            intentValue = intent.getStringExtra("intentvalue");
+        }
+        if (intentValue != null) {
+            searchType=intentValue;
+            Log.e("IntentValue", "Received intent value: " + intentValue);
+        } else {
+            Log.e("IntentValue", "No intent value received.");
+        }
+
 
         context = activity = this;
 
@@ -155,6 +176,12 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
         wishlist_rel = findViewById(R.id.wishlist_rel);
         wishlist_rel.setOnClickListener(this);
 
+        dxe_calc_rev = findViewById(R.id.dxe_calc_rev);
+        dxe_calc_rev.setOnClickListener(this);
+
+        clear_search =findViewById(R.id.clear_search);
+        clear_search.setOnClickListener(this);
+
         cart_rel = findViewById(R.id.cart_rel);
         cart_rel.setOnClickListener(this);
 
@@ -166,12 +193,14 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
         wish_img = findViewById(R.id.wish_img);
         cart_img = findViewById(R.id.cart_img);
         account_img = findViewById(R.id.account_img);
+        account_img.setOnClickListener(this);
 
         home_tv = findViewById(R.id.home_tv);
         categories_tv = findViewById(R.id.categories_tv);
         wish_tv = findViewById(R.id.wish_tv);
         cart_tv = findViewById(R.id.cart_tv);
         account_tv = findViewById(R.id.account_tv);
+        account_tv.setOnClickListener(this);
         cart_count_tv = findViewById(R.id.cart_count_tv);
         wish_list_count_tv = findViewById(R.id.wish_list_count_tv);
 
@@ -697,7 +726,9 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
                 retrievedEyeTypeArrayList!=null && retrievedEyeTypeArrayList.size()>0 &&
                 retrievedShadeTypeArrayList!=null && retrievedShadeTypeArrayList.size()>0 &&
                 retrievedLusterTypeArrayList!=null && retrievedLusterTypeArrayList.size()>0)
-        {}
+        {
+
+        }
         else
         {
             onBindDetails(false);
@@ -729,15 +760,35 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!search_et.getText().toString().equalsIgnoreCase("")){
+                /*if(!search_et.getText().toString().equalsIgnoreCase("")){
                     search_diamond_error_tv.setVisibility(View.GONE);
+                }*/
+                if (!search_et.getText().toString().trim().isEmpty()) {
+                    search_diamond_error_tv.setVisibility(View.GONE);
+                    clear_search.setVisibility(View.VISIBLE);
+                } else {
+                    clear_search.setVisibility(View.GONE);
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        Log.e("searchType","........754/.........."+searchType);
+        searchTypeIntent();
     }
 
+    public void searchTypeIntent()
+    {
+        if(searchType.equals("dxeluxe"))
+        {
+            card_view_grown.setAlpha(0.4F);
+            card_view_grown.setClickable(false);
+            grown_tv.setClickable(false);
+            grown_tv.setBackgroundResource(R.drawable.disable_bg);
+            grown_tv.setTextColor(ContextCompat.getColor(context, R.color.grey_light));
+        }
+    }
     private void performSearch() {
         String query = search_et.getText().toString().trim();
         if(query.equalsIgnoreCase(""))
@@ -1015,8 +1066,17 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
             startActivity(intent);
             overridePendingTransition(0,0);
         }
+        else if(id == R.id.dxe_calc_rev)
+        {
+            // Toast.makeText(context, "DXE is  search....1", Toast.LENGTH_SHORT).show();
+            Constant.manageFragmentCalling = DXE_CALC;
+            Intent intent1 = new Intent(context, CalculatorActivity.class);
+            startActivity(intent1);
+            overridePendingTransition(0,0);
+        }
         else if(id == R.id.wishlist_rel)
         {
+
             Constant.manageFragmentCalling = WISHLIST_FRAGMENT;
             intent = new Intent(activity, HomeScreenActivity.class);
             startActivity(intent);
@@ -1029,14 +1089,24 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
             startActivity(intent);
             overridePendingTransition(0,0);
         }
-        else if(id == R.id.account_rel)
-        {
+        else if (id == R.id.account_tv) {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
             if(user_login.equalsIgnoreCase("yes"))
             {
-                intent = new Intent(context, AccountSectionActivity.class);
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
             }
             else
             {
@@ -1044,6 +1114,64 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
                 startActivity(intent);
                 overridePendingTransition(0,0);
             }
+        }
+        else if (id == R.id.account_img) {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
+        else if(id == R.id.account_rel)
+        {
+            user_login = CommonUtility.getGlobalString(activity, "user_login");
+            if(user_login.equalsIgnoreCase("yes"))
+            {
+                /*intent = new Intent(context, AccountSectionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);*/
+
+                Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
+                intent = new Intent(activity, HomeScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+               /* Fragment fragment = new AccountSectionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+            }
+            else
+            {
+                intent = new Intent(context, LoginScreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+            }
+        }
+        else  if (id == R.id.clear_search)
+        {
+            search_et.setText("");
+            search_et.setHint(getString(R.string.search_diamond_hint));
         }
     }
 
@@ -2266,24 +2394,6 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
             Constant.colorTypeFilterApploedArrayList.add(model);
         }
 
-        /*Log.e("------Diamond------cutValue-------- : ", Constant.cutValue);
-        Log.e("------Diamond------polishValue-------- : ", Constant.polishValue);
-        Log.e("------Diamond------symmetryValue-------- : ", Constant.symmetryValue);
-        Log.e("------Diamond------technologyValue-------- : ", Constant.technologyValue);
-        Log.e("------Diamond------eyeCleanValue-------- : ", Constant.eyeCleanValue);
-        Log.e("------Diamond------shadeValue-------- : ", Constant.shadeValue);
-        Log.e("------Diamond------lusterValue-------- : ", Constant.lusterValue);
-        Log.e("------Diamond------fancyColorIntensity-------- : ", Constant.fancyColorIntensity);
-        Log.e("------Diamond------fancyColorOvertone-------- : ", Constant.fancyColorOvertone);
-        Log.e("------Diamond------tableFrm-------- : ", Constant.tableFrm);
-        Log.e("------Diamond------tableTo-------- : ", Constant.tableTo);
-        Log.e("------Diamond------depthFrmSpinner-------- : ", Constant.depthFrmSpinner);
-        Log.e("------Diamond------depthToSpinner-------- : ", Constant.depthToSpinner);
-        Log.e("------Diamond------crownFrm-------- : ", Constant.crownFrm);
-        Log.e("------Diamond------crownTo-------- : ", Constant.crownTo);
-        Log.e("------Diamond------pavillionFrm-------- : ", Constant.pavillionFrm);
-        Log.e("------Diamond------pavillionTo-------- : ", Constant.pavillionTo);*/
-
         Constant.searchKeyword = search_et.getText().toString().trim();
         Constant.sortingBy = "PriceLow";
 
@@ -2297,7 +2407,13 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
             Constant.searchType = ApiConstants.LAB_GROWN;
         }
         Log.e("----------shapeDiamondValue------ ; ", Constant.shapeDiamondValue);
+        Log.e("attributeDetailsModels","...2324.......#############,............."+attributeDetailsModels.size());
         Intent intent = new Intent(activity, SearchResultActivity.class);
+        if(searchType.equals("dxeluxe"))
+        {
+            intent.putExtra("intentvalue","dxeluxe");
+            intent.putExtra("attributeDetailsModels",attributeDetailsModels);
+        }
         startActivity(intent);
         overridePendingTransition(0,0);
     }
@@ -2323,6 +2439,7 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
         card_view_grown.setOutlineAmbientShadowColor(ContextCompat.getColor(context, R.color.bg_color));
         card_view_grown.setOutlineSpotShadowColor(ContextCompat.getColor(context, R.color.bg_color));
 
+        searchTypeIntent();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -3294,7 +3411,8 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
 
             // Notify the adapter that the data has changed, prompting a UI refresh
             makeTypeListAdapter.notifyDataSetChanged();
-        } else if (action.equalsIgnoreCase("shapeImage")) {
+        } else if (action.equalsIgnoreCase("shapeImage"))
+        {
             // Click First Position Select All and Again Click First Position Unselect all
             ShapeImageModel selectedItem = shapeImageArrayList.get(position);
 
@@ -3330,6 +3448,7 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
 
     public void onBindDetails(boolean showLoader)
     {
+        Log.e("onBindDetails","............CALL......................");
         String uuid = CommonUtility.getAndroidId(context);
 
         if (Utils.isNetworkAvailable(context))
@@ -3446,6 +3565,7 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
 
                         for (int i = 0; i < details.length(); i++)
                         {
+                            attributeDetailsModels.clear();
                             JSONObject objectCode = details.getJSONObject(i);
 
                             String AttribType = objectCode.getString("AttribType");
@@ -3470,6 +3590,8 @@ public class SearchDiamondsActivity extends SuperActivity implements RecyclerInt
                                 model.setSelected(false);
 
                                 setParsingData(model, AttribType);
+                                attributeDetailsModels.add(model);
+                                //Log.e("attributeDetailsModels",".3525....################........"+attributeDetailsModels.size());
 
                             }
                         }

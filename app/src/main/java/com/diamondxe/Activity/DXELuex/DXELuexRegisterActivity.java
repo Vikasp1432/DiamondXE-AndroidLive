@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -62,7 +63,7 @@ import java.util.Locale;
 public class DXELuexRegisterActivity extends SuperActivity implements DialogItemClickInterface, RecyclerInterface {
 
     ActivityDxeluexRegisterBinding binding;
-    String email,phoneno,firstname,lastname,countryCode,user_login;
+    String email="",phoneno,firstname,lastname,countryCode,user_login;
     private HashMap<String, String> urlParameter;
     private VollyApiActivity vollyApiActivity;
     private boolean isApiCalling = false;
@@ -97,13 +98,22 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
             lastname = CommonUtility.getGlobalString(this, "login_last_name");
             countryCode = CommonUtility.getGlobalString(this, "user_country_code");
 
+            /*binding.buyerMobileVerifyImg.setVisibility(View.VISIBLE);
+            binding.verifyMobileLin.setVisibility(View.GONE);*/
+            binding.verifyEmailLin.setVisibility(View.GONE);
+            binding.buyerEmailVerifyImg.setVisibility(View.VISIBLE);
             binding.firstNameEt.setText(firstname);
             binding.lastNameEt.setText(lastname);
             binding.emailEt.setText(email);
             binding.mobileNumberEt.setText(phoneno);
             binding.countryCode.setText(countryCode);
+            binding.submitFrom.setAlpha(1F);
             /*username_tv.setText(CommonUtility.getGlobalString(this, "login_first_name")+" "+CommonUtility.getGlobalString(context, "login_last_name"));
             login_type_role_tv.setText(""+CommonUtility.getGlobalString(this, "login_user_role"));*/
+        }
+        else {
+            binding.buyerEmailVerifyImg.setVisibility(View.GONE);
+            binding.verifyEmailLin.setVisibility(View.VISIBLE);
         }
 
 
@@ -192,18 +202,6 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
             }
         });
 
-        binding.mobileNumberEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.e("Mobile No","Change....111....");
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
         binding.emailEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -211,35 +209,16 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.e("emailEt No","Change....111....");
+                if (!s.toString().equals(email)) {
+                    Log.e("emailEt No", "Text has changed...");
+                    binding.verifyEmailLin.setVisibility(View.VISIBLE);
+                    binding.buyerEmailVerifyImg.setVisibility(View.GONE);
+                    email = s.toString();  // Update the previousText
+                }
             }
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        binding.firstNameEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        binding.lastNameEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
 
     }
 
@@ -254,9 +233,15 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
         alertDialog1 = dialogBuilder.create();
 
         final ImageView cross_img = dialogView.findViewById(R.id.cross_img);
-
+        CardView add_to_cart_card_view=dialogView.findViewById(R.id.add_to_cart_card_view);
         //alertDialog1.setView(webView);
 
+        add_to_cart_card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         cross_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,7 +263,9 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
         int id = view.getId();
         if(id==binding.submitFrom.getId())
         {
-            showThankyouDialog(DXELuexRegisterActivity.this);
+
+            onLuxeUserRegister(false);
+            //showThankyouDialog(DXELuexRegisterActivity.this);
         }
         else if(id==binding.backImg.getId())
         {
@@ -318,7 +305,10 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         resendOTP = "";
-
+                        binding.submitFrom.setAlpha(1F);
+                        binding.verifyEmailLin.setVisibility(View.GONE);
+                        binding.buyerEmailVerifyImg.setVisibility(View.VISIBLE);
+                        binding.emailErrorTv.setVisibility(View.GONE);
                         alertDialog.dismiss();
                         //JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
                     }
@@ -383,6 +373,27 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
                         Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case ApiConstants.LUXE_USER_REGISTRATION_ID:
+                    isApiCalling = false;
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
+                    {
+
+                        String msg = jsonObjectData.optString("msg");
+                        Log.e("msg","....405....."+msg);
+                        showThankyouDialog(DXELuexRegisterActivity.this);
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
+                    {
+                        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
 
         }
@@ -409,6 +420,32 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
             urlParameter.put("otp", ""+ otp);
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(this,this, urlParameter, ApiConstants.VERIFY_EMAIL, ApiConstants.VERIFY_EMAIL_ID,showLoader, "POST");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            //recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
+    }
+
+    // registration luxe user
+    public void onLuxeUserRegister(boolean showLoader)
+    {
+        if (Utils.isNetworkAvailable(this))
+        {
+
+            Log.e("mobile_auth_token","..."+CommonUtility.getGlobalString(this, "mobile_auth_token"));
+            Log.e("firstNameEt","..."+binding.firstNameEt.getText().toString());
+            Log.e("lastNameEt",".."+binding.lastNameEt.getText().toString());
+            Log.e("mobileNumberEt",".."+binding.mobileNumberEt.getText().toString());
+            Log.e("emailEt","..."+binding.emailEt.getText().toString());
+
+            urlParameter = new HashMap<String, String>();
+            urlParameter.put("firstName", ""+ binding.firstNameEt.getText().toString().trim());
+            urlParameter.put("lastName", ""+ binding.lastNameEt.getText().toString().trim());
+            urlParameter.put("mobileNo", ""+ binding.mobileNumberEt.getText().toString().trim());
+            urlParameter.put("emailId", ""+ binding.emailEt.getText().toString().trim());
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(this,this, urlParameter, ApiConstants.LUXE_USER_REGISTRATION, ApiConstants.LUXE_USER_REGISTRATION_ID,showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -530,6 +567,7 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
             @Override
             public void onClick(View view)
             {
+                Log.e("Cross","..604....");
                 stopOTPTimer();
                 alertDialog.dismiss();
             }
@@ -656,7 +694,7 @@ public class DXELuexRegisterActivity extends SuperActivity implements DialogItem
         String email = binding.emailEt.getText().toString().trim();
         if (email.length() == 0 || email == null|| email.equalsIgnoreCase("")) {
             binding.emailErrorTv.setVisibility(View.VISIBLE);
-            binding.emailEt.setBackgroundResource(R.drawable.border_red_line_view);
+          //  binding.emailEt.setBackgroundResource(R.drawable.border_red_line_view);
             binding.emailErrorTv.setText(getResources().getString(R.string.email_required));
             return false;
         }

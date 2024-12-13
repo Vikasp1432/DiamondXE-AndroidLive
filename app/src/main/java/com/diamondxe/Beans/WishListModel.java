@@ -10,6 +10,15 @@ public class WishListModel implements Serializable {
             naturalDiaPrice = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", totalGstPerc = "", pricePerCt = "", subtotal = "", totalPrice = "", isCart = "", onHold = "", shippingCharge = "", platformFeeAmt = "",
             dxeMarkup = "",stockNo="",showingSubTotal="",currencySymbol="";
     double coupondiscountperc=0,subtotalaftercoupondiscount=0;
+    int isDxeLUXE=0;
+
+    public int getIsDxeLUXE() {
+        return isDxeLUXE;
+    }
+
+    public void setIsDxeLUXE(int isDxeLUXE) {
+        this.isDxeLUXE = isDxeLUXE;
+    }
 
     public double getCoupondiscountperc() {
         return coupondiscountperc;
