@@ -59,6 +59,25 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/manufacture_tv"
+                        style="@style/MediumFontType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:layout_marginRight="@dimen/dimen_8"
+                        android:hint="customMenuBusin"
+                        android:paddingLeft="@dimen/dimen_4"
+                        android:paddingTop="@dimen/dimen_4"
+                        android:paddingRight="@dimen/dimen_4"
+                        android:paddingBottom="@dimen/dimen_4"
+                        android:text="@string/manufacture"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
                         android:id="@+id/rerailer_tv"
                         style="@style/MediumFontType"
                         android:layout_width="match_parent"

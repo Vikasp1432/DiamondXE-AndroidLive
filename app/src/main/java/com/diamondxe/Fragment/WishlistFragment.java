@@ -471,10 +471,12 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             WishListModel model = new WishListModel();
+
                             model.setCoupondiscountperc(CommonUtility.checkDouble(objectCodes.optString("coupon_discount_perc")));
                             model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStockId(CommonUtility.checkString(objectCodes.optString("stock_id")));
                             model.setItemName(CommonUtility.checkString(objectCodes.optString("item_name")));
+                            model.setItem_type(CommonUtility.checkString(objectCodes.optString("item_type")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));
                             model.setSupplierId(CommonUtility.checkString(objectCodes.optString("supplier_id")));
                             model.setCutGrade(CommonUtility.checkString(objectCodes.optString("cut_grade")));
@@ -511,8 +513,14 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
                         }
                         for (int i = 0; i <modelArrayList.size() ; i++)
                         {
+                            Log.e("selectedCurrencyValue","...."+selectedCurrencyValue);
+                            Log.e("selectedCurrencyCode","....."+selectedCurrencyCode);
+
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, modelArrayList.get(i).getSubtotal());
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+                            Log.e("subTotalFormat","...."+subTotalFormat);
+                            Log.e("getCurrencySymbol","....."+getCurrencySymbol);
 
                             modelArrayList.get(i).setShowingSubTotal(subTotalFormat);
                             modelArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
@@ -630,14 +638,22 @@ public class WishlistFragment extends SuperFragment implements RecyclerInterface
         }
         else if(action.equalsIgnoreCase("viewDetails"))
         {
+            Log.e("getItem_type",",,,,635...."+modelArrayList.get(position).getItem_type());
 
+            String getItemType=modelArrayList.get(position).getItem_type();
             Constant.manageClickEventForRedirection="";
             CommonUtility.setGlobalString(context, "certificate_number", modelArrayList.get(position).getCertificateNo());
             Intent intent = new Intent(activity, DiamondDetailsActivity.class);
             if (modelArrayList.get(position).getIsDxeLUXE()==1)
             {
                 intent.putExtra("intentvalue","dxeluxe");
+
             }
+            if (getItemType.equalsIgnoreCase("gemstone"))
+            {
+                intent.putExtra("activityvalue", "gemstone");
+            }
+
             startActivity(intent);
             getActivity().overridePendingTransition(0,0);
 

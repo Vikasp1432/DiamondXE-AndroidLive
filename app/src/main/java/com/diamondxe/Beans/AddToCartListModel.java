@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class AddToCartListModel implements Serializable {
 
-    String itemName = "", stockId = "", certificateNo = "", stockNo = "", supplierId = "", category = "", diamondImage = "",
+    String itemName = "", stockId = "", certificateNo = "", stockNo = "", item_type="",supplierId = "", category = "", diamondImage = "",
             shape = "", color = "", clarity = "", rapaportPricePerCt = "", carat = "", discount = "", totalGstPerc = "", pricePerCt = "", subtotal = "", cgstPer = "", cgstAmt = "",
             sgstPer = "", sgstAmt = "", igstPer = "", igstAmt = "", tax = "", totalPrice = "", labGrownDiaPrice = "", naturalDiaPrice = "", shippingCharge = "",
             platformFeeAmt = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", onHold = "", dxeMarkup = "", dealerMarkupCommission = "",
@@ -13,6 +13,14 @@ public class AddToCartListModel implements Serializable {
     int isDxeLUXE=0;
     double coupondiscountperc=0,subtotalaftercoupondiscount=0;
 
+
+    public String getItem_type() {
+        return item_type;
+    }
+
+    public void setItem_type(String item_type) {
+        this.item_type = item_type;
+    }
 
     public int getIsDxeLUXE() {
         return isDxeLUXE;

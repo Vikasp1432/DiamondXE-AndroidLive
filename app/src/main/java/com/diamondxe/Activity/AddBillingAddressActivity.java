@@ -78,7 +78,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
     String countryId = "", stateId = "", cityId = "",countryName="", stateName="", cityName="",countryCodeForNumber="", countryCode="+91",
             email;
     String setAsDefaultAddress = "0",sameAsShipping="0";
-
+    int checkEditAddressValue=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,6 +166,11 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
             title_tv.setText(getResources().getString(R.string.edit_billing_address));
             same_as_shipping_address_check.setVisibility(View.GONE);
             setData();
+            if (countryArrayList.isEmpty())
+            {
+                checkEditAddressValue=1;
+                getCountryListAPI(false);
+            }
         }else{
             same_as_shipping_address_check.setVisibility(View.VISIBLE);
             title_tv.setText(getResources().getString(R.string.add_billing_address));
@@ -349,6 +354,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
         }
         else if(id == R.id.country_code_lin)
         {
+            checkEditAddressValue=0;
             Utils.hideKeyboard(activity);
             countryCodeForNumber = "yes";
             getCountryListAPI(false);
@@ -357,6 +363,7 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
         {
             if(!isApiCalling) // Check if API is not already calling
             {
+
                 isApiCalling = true; // Set flag to true
                 Utils.hideKeyboard(activity);
                 countryCodeForNumber = "";
@@ -607,7 +614,35 @@ public class AddBillingAddressActivity extends SuperActivity implements Recycler
 
                         }
 
-                        showCountryCodeList();
+                        if(checkEditAddressValue!=1)
+                        {
+                            showCountryCodeList();
+                        }
+                        for (CountryListModel country : countryArrayList) {
+                            System.out.println("ID: " + country.getId());
+                            System.out.println("Title: " + country.getTitle());
+                            System.out.println("Country Code: " + country.getCountryCode());
+                            System.out.println(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "Flag: " + country.getImage());
+                            System.out.println("-------------------------");
+
+                            Log.e("countryID","..678...@@...."+Constant.countryID);
+                            Log.e("mobileCode","..678...@@...."+Constant.mobileCode);
+                            Log.e("countryID","..678...@@...."+Constant.country);
+
+
+
+                            if(Constant.mobileCode.equalsIgnoreCase(country.getPhoneCode()))
+                            {
+                                if (!country.getImage().equalsIgnoreCase(""))
+                                {
+                                    Picasso.with(context)
+                                            .load(country.getImage())
+                                            .into(country_img);
+                                }
+                            }
+
+                        }
+                        //showCountryCodeList();
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {

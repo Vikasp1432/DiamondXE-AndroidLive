@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +42,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
             need_assistance_tv, mobile_number_tv;
     private RelativeLayout bg_rel;
     private CardView card_view;
-    private LinearLayout shadow_bg_lin, retry_payment_lin, order_home_lin, order_back_home_lin, cheque_no_mode_lin,mobile_lin;
+    private LinearLayout shadow_bg_lin, retry_payment_lin, order_home_lin, order_back_home_lin, cheque_no_mode_lin,mobile_lin,my_order_lin;
 
     private Activity activity;
     private Context context;
@@ -51,7 +52,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
     private HashMap<String, String> urlParameter;
     String referenceNo = "", transactionId = "", currencyCode = "", currencySymbol = "", amount = "", bankCharge = "", finalAmount = "",
             paymentStatus = "",paymentMode="";
-
+    TextView payment_status_msg_tv_first;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
         payment_mode_tv = findViewById(R.id.payment_mode_tv);
         order_place_msg_tv = findViewById(R.id.order_place_msg_tv);
         availability_msg_tv = findViewById(R.id.availability_msg_tv);
+        payment_status_msg_tv_first=findViewById(R.id.payment_status_msg_tv_first);
 
         order_id_lbl_tv = findViewById(R.id.order_id_lbl_tv);
         amount_lbl_tv = findViewById(R.id.amount_lbl_tv);
@@ -86,7 +88,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
         retry_payment_lin = findViewById(R.id.retry_payment_lin);
         need_assistance_tv = findViewById(R.id.need_assistance_tv);
         order_home_lin = findViewById(R.id.order_home_lin);
-
+        my_order_lin = findViewById(R.id.my_order_lin);
         mobile_number_tv = findViewById(R.id.mobile_number_tv);
         mobile_lin = findViewById(R.id.mobile_lin);
         mobile_lin.setOnClickListener(this);
@@ -155,6 +157,15 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
         mobile_lin.setVisibility(View.GONE);
         order_home_lin.setVisibility(View.VISIBLE);
 
+        if(Constant.comeFrom.equalsIgnoreCase("APISOLUTION"))
+        {
+            my_order_lin.setVisibility(View.GONE);
+        }
+        if(Constant.comeFrom.equalsIgnoreCase("customPayment"))
+        {
+            my_order_lin.setVisibility(View.GONE);
+        }
+
         changeTextLbl();
     }
 
@@ -165,9 +176,11 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
         card_view.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
         card_view.setElevation(10f);
         card_view.setElevation(10f);
-
-        payment_status_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
-        payment_status_msg_tv.setTextColor(ContextCompat.getColor(context, R.color.purple));
+        //payment_status_msg_tv
+        //payment_status_tv
+        payment_status_msg_tv_first.setVisibility(View.VISIBLE);
+        payment_status_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
+        payment_status_msg_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         order_id_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         amount_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         cheque_no_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -178,22 +191,24 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
         amount_lbl_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         utr_no_lbl_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
         payment_mode_lbl_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+        payment_status_msg_tv_first.setTextColor(ContextCompat.getColor(context, R.color.black));
+        payment_status_msg_tv_first.setText(getResources().getString(R.string.payment_under_review_only));
 
         // Set Payment Status Image According to Status.
-        payment_status_img.setBackgroundResource(R.drawable.payment_processing);
+        payment_status_img.setBackgroundResource(R.drawable.payment_dialog_img);
 
-        payment_status_tv.setText(getResources().getString(R.string.payment_processing));
-        payment_status_msg_tv.setText(getResources().getString(R.string.payment_under_review));
-        order_place_msg_tv.setText(getResources().getString(R.string.order_placed_successfully));
-        availability_msg_tv.setText(getResources().getString(R.string.availability_of_diamond));
+        payment_status_tv.setText(getResources().getString(R.string.order_place_success));
+        payment_status_msg_tv.setText(getResources().getString(R.string.payment_under_review_details));
+        order_place_msg_tv.setText(getResources().getString(R.string.order_availability_diamond));
+        //availability_msg_tv.setText(getResources().getString(R.string.availability_of_diamond));
 
         setValueInTextView();
 
         order_back_home_lin.setVisibility(View.VISIBLE);
         cheque_no_mode_lin.setVisibility(View.VISIBLE);
-
+        order_place_msg_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
         order_place_msg_tv.setVisibility(View.VISIBLE);
-        availability_msg_tv.setVisibility(View.VISIBLE);
+        availability_msg_tv.setVisibility(View.GONE);
 
         retry_payment_lin.setVisibility(View.GONE);
         need_assistance_tv.setVisibility(View.GONE);
@@ -392,7 +407,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
     public void getSuccessResponce(JSONObject jsonObject, int service_ID)
     {
         try {
-            Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
+            Log.v("------Diamond----- : ", "-395..@@@-------JSONObject-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -459,6 +474,7 @@ public class PaymentStatusScreenActivity extends SuperActivity implements Recycl
                         paymentMode = CommonUtility.checkString(jObjDetails.optString("payment_mode"));
                         paymentStatus = CommonUtility.checkString(jObjDetails.optString("payment_status"));
 
+                        Log.e("paymentStatus",".."+paymentStatus);
                         if(paymentStatus.equalsIgnoreCase("Paid"))
                         {
                             paymentStatusSuccessfully();

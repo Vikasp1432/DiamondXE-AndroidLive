@@ -41,6 +41,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -241,6 +243,11 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
                             model.setPaymentReceivedDate(CommonUtility.checkString(objectCodes.optString("payment_received_date")));
                             model.setTimeLeftForCancel(CommonUtility.checkString(objectCodes.optString("time_left_for_cancel")));
 
+                            String getCurrencySymbol=CommonUtility.checkString(objectCodes.optString("currency_symbol"));
+                            String getexchange_rate=CommonUtility.checkString(objectCodes.optString("exchange_rate"));
+                            Log.e("getCurrencySymbol","270..@@..."+getCurrencySymbol);
+                            Log.e("getexchange_rate","270..@@..."+getexchange_rate);
+
                             if(!objectCodes.optString("created_at").equalsIgnoreCase(""))
                             {
                                 String convertData = CommonUtility.convertDateTimeIntoLocal(objectCodes.optString("created_at"), ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
@@ -289,10 +296,27 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
                             {
 
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, innerOrderArrayList.get(k).getSubTotal());
-                                String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-
+                                /*String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                                 innerOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                                innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                                innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);*/
+                                try {
+                                    double subTotal = Double.parseDouble(subTotalFormat);
+                                    double exchangeRate = Double.parseDouble(getexchange_rate);
+
+                                    double resultDouble = subTotal * exchangeRate;
+                                    int result = (int) resultDouble;
+
+                                    // Log.e("result", "..14000..." + result);
+                                    BigDecimal bd = new BigDecimal(resultDouble).setScale(2, RoundingMode.HALF_UP);
+                                    double resultWithTwoDecimals = bd.doubleValue();
+                                    Log.e("resultWithTwoDecimals","..333...."+resultWithTwoDecimals);
+                                    innerOrderArrayList.get(k).setShowingSubTotal(String.valueOf(resultWithTwoDecimals));
+                                    innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+
+
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
 
@@ -333,6 +357,10 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
 
                         detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
                         detailsCreatedAt = CommonUtility.checkString(jObjDetails.optString("order_created_at"));
+                        String  getCurrencySymbol=CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        String  getexchange_rate=CommonUtility.checkString(jObjDetails.optString("exchange_rate"));
+                        Log.e("getCurrencySymbol","270..@@..."+getCurrencySymbol);
+                        Log.e("getexchange_rate","270..@@..."+getexchange_rate);
 
                         if(!detailsCreatedAt.equalsIgnoreCase(""))
                         {
@@ -383,9 +411,27 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
                         for (int k = 0; k <recentOrderArrayList.size() ; k++)
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, recentOrderArrayList.get(k).getSubTotal());
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                            /*String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             recentOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                            recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                            recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);*/
+                            try {
+                                double subTotal = Double.parseDouble(subTotalFormat);
+                                double exchangeRate = Double.parseDouble(getexchange_rate);
+
+                                double resultDouble = subTotal * exchangeRate;
+                                int result = (int) resultDouble;
+
+                                // Log.e("result", "..14000..." + result);
+                                BigDecimal bd = new BigDecimal(resultDouble).setScale(2, RoundingMode.HALF_UP);
+                                double resultWithTwoDecimals = bd.doubleValue();
+                                Log.e("resultWithTwoDecimals","..333...."+resultWithTwoDecimals);
+                                recentOrderArrayList.get(k).setShowingSubTotal(String.valueOf(resultWithTwoDecimals));
+                                recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+
+
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         showOrderDetailsBottomDialog();
@@ -455,8 +501,8 @@ public class CancelledListOrderFragment extends SuperFragment implements TwoRecy
         TextView textView2 = dialog.findViewById(R.id.textView2);
         TextView order_number_tv = dialog.findViewById(R.id.order_number_tv);
         TextView date_time_tv = dialog.findViewById(R.id.date_time_tv);
-
-        textView2.setText(getResources().getString(R.string.diamond_details));
+        textView2.setText(getResources().getString(R.string.order_details));
+        //textView2.setText(getResources().getString(R.string.diamond_details));
 
         order_number_tv.setText("#"+detailsOrderId);
         date_time_tv.setText(detailsCreatedAt);

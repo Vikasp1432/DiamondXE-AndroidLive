@@ -14,6 +14,7 @@ import static com.diamondxe.ApiCalling.ApiConstants.INSTAGRAM_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.LINKDIN_URL;
 import static com.diamondxe.ApiCalling.ApiConstants.WISHLIST_FRAGMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.YOUTUBE_URL;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,6 +37,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -45,6 +47,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -62,10 +65,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.diamondxe.Activity.CreateDemand.CreateDemandHome;
-import com.diamondxe.Activity.DXELuex.DXELuexRegisterActivity;
+import com.diamondxe.Activity.DXELuex.DXELuxeRegisterActivity;
 import com.diamondxe.Activity.Gemstones.GemstomeSearchActivity;
-import com.diamondxe.Activity.Jewellery.JewelleryScreenActivity;
 import com.diamondxe.Activity.MyOrder.MyOrderListScreenActivity;
+import com.diamondxe.Activity.NovaaraFrom.NovaaraFromActivity;
+import com.diamondxe.Activity.PaymentPages.AppInfoManager;
+import com.diamondxe.Activity.SharedData.SharedPreferenceHelper;
 import com.diamondxe.Adapter.CurrencyListAdapter;
 import com.diamondxe.Adapter.DrawerItemCustomAdapter;
 import com.diamondxe.ApiCalling.ApiConstants;
@@ -91,15 +96,22 @@ import com.dxe.calc.dashboard.CalculatorActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -117,11 +129,11 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     public String title = "";
     RelativeLayout layout;
     public ImageView user_img;
-    public TextView username_tv,login_type_role_tv, version_code_tv;
+    public TextView username_tv, login_type_role_tv, version_code_tv;
     private ImageView menu_img;
     private LinearLayout container_toolbar, contentView1, lin_bottom_social_media;
-    String userPincode="", userCity="";
-    String selectedCurrencyCode = "", selectedCurrencyValue = "", selectedCurrencyDesc="", selectedCurrencyImage="",user_login = "";
+    String userPincode = "", userCity = "";
+    String selectedCurrencyCode = "", selectedCurrencyValue = "", selectedCurrencyDesc = "", selectedCurrencyImage = "", user_login = "";
     android.app.AlertDialog alertDialog;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient fusedLocationClient;
@@ -132,23 +144,27 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     DrawerLayout drawer_layout;
     public static Activity context;
     NetworkConsumer networkConsumer;
-    public String image="";
+    public String image = "";
     private ExpandableListView recyclerview;
-    private ImageView notification_img,pincode_img, instagram_img, facebook_img, linkdin_img, youtube_img;
+    private ImageView notification_img, pincode_img, instagram_img, facebook_img, linkdin_img, youtube_img;
     private CircleImageView flag_img;
     private DrawerItemCustomAdapter adapter;
     private ArrayList<DrawerMenuModel> menuList = new ArrayList<>();
-    String intnetOnPerticularFragment = "",versionName="";
-    private int selectedPosition =-1;
-    private int childSelectedPosition =-1;
+    String intnetOnPerticularFragment = "", versionName = "";
+    private int selectedPosition = -1;
+    private int childSelectedPosition = -1;
     private Parcelable state;
     public static boolean backFromHome = false;
     private long lastPress = 0;
+    int showDialog = 0;
+    private SharedPreferenceHelper sharedPrefHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        sharedPrefHelper = new SharedPreferenceHelper(this);
+        //sharedPrefHelper.resetAppUpdateDialogFlag();
 
         notification_img = findViewById(R.id.notification_img);
         pincode_img = findViewById(R.id.pincode_img);
@@ -185,10 +201,10 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
         version_code_tv = findViewById(R.id.version_code_tv);
 
-        if(!versionName.equalsIgnoreCase(""))
-        {
+        if (!versionName.equalsIgnoreCase("")) {
             version_code_tv.setText(getResources().getString(R.string.version_name) + " - " + versionName);
-        }else{}
+        } else {
+        }
 
         setDataToAdepter();
         setUserData();
@@ -209,8 +225,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View v) {
-                                                     if (drawer_layout.isDrawerOpen(GravityCompat.START))
-                                                     {
+                                                     if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
                                                          drawer_layout.closeDrawer(GravityCompat.START);
                                                      } else {
                                                          drawer_layout.openDrawer(GravityCompat.START);
@@ -226,88 +241,81 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
         // Drawer Half Animation.
         drawer_layout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                                           @RequiresApi(api = Build.VERSION_CODES.P) // Requires API level P or higher
-                                           @Override
-                                           public void onDrawerSlide(View drawerView, float slideOffset) {
-                                              // labelView.setVisibility(slideOffset > 0 ? View.VISIBLE : View.GONE);
+                                            @RequiresApi(api = Build.VERSION_CODES.P) // Requires API level P or higher
+                                            @Override
+                                            public void onDrawerSlide(View drawerView, float slideOffset) {
+                                                // labelView.setVisibility(slideOffset > 0 ? View.VISIBLE : View.GONE);
 
-                                               // Calculate the scaled offset for the content view based on the drawer's slide offset
-                                               final float diffScaledOffset = slideOffset * (1 - END_SCALE);
-                                               final float offsetScale = 1 - diffScaledOffset;
+                                                // Calculate the scaled offset for the content view based on the drawer's slide offset
+                                                final float diffScaledOffset = slideOffset * (1 - END_SCALE);
+                                                final float offsetScale = 1 - diffScaledOffset;
 
-                                               // Apply scaling transformation to the content view
-                                               contentView.setScaleX(offsetScale);
-                                               contentView.setScaleY(offsetScale);
+                                                // Apply scaling transformation to the content view
+                                                contentView.setScaleX(offsetScale);
+                                                contentView.setScaleY(offsetScale);
 
-                                               // Calculate translation for the content view based on the drawer's position
-                                               final float xOffset = drawerView.getWidth() * slideOffset;
-                                               final float xOffsetDiff = contentView.getWidth() * diffScaledOffset / 3;
-                                               final float xTranslation = xOffset - xOffsetDiff;
+                                                // Calculate translation for the content view based on the drawer's position
+                                                final float xOffset = drawerView.getWidth() * slideOffset;
+                                                final float xOffsetDiff = contentView.getWidth() * diffScaledOffset / 3;
+                                                final float xTranslation = xOffset - xOffsetDiff;
 
-                                               // Apply translation to the content view
-                                               contentView.setTranslationX(xTranslation); // Move content view based on drawer position
+                                                // Apply translation to the content view
+                                                contentView.setTranslationX(xTranslation); // Move content view based on drawer position
 
-                                               // Apply shadow effect
-                                               // Shadow effect for the drawer
-                                               if (slideOffset > 0) {
-                                                   // Optional: Add shadow effect when the drawer is open (code not shown)
-                                               } else {
-                                                   // Reset shadow for closing drawer or negative slide
-                                                   drawer_layout.setDrawerElevation(0);
-                                               }
-                                           }
+                                                // Apply shadow effect
+                                                // Shadow effect for the drawer
+                                                if (slideOffset > 0) {
+                                                    // Optional: Add shadow effect when the drawer is open (code not shown)
+                                                } else {
+                                                    // Reset shadow for closing drawer or negative slide
+                                                    drawer_layout.setDrawerElevation(0);
+                                                }
+                                            }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Reset shadow effect when the drawer is fully closed
-                drawer_layout.setDrawerElevation(0); // Ensure no shadow elevation when closed
-            }
-                                       }
+                                            @Override
+                                            public void onDrawerClosed(View drawerView) {
+                                                // Reset shadow effect when the drawer is fully closed
+                                                drawer_layout.setDrawerElevation(0); // Ensure no shadow elevation when closed
+                                            }
+                                        }
         );
         notification_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeScreenActivity.this,NotificationScreenActivity.class);
+                Intent intent = new Intent(HomeScreenActivity.this, NotificationScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
         });
 
         pincode_img.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 showEnterPinCodeDialog(context, context);
             }
         });
 
         flag_img.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 initiateCurrencyPopupWindow();
-              //  fragmentActionInterface.actionInterface("","PinCode");
+                // fragmentActionInterface.actionInterface("","PinCode");
             }
         });
 
         //for open particular Fragment inside Activity
-        if (intnetOnPerticularFragment!=null && intnetOnPerticularFragment.equalsIgnoreCase("Notification111"))
-        {
+        if (intnetOnPerticularFragment != null && intnetOnPerticularFragment.equalsIgnoreCase("Notification111")) {
             changeFragment(intnetOnPerticularFragment);
             //notification_img.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             Log.e("manageClickEventForRedirection", Constant.manageClickEventForRedirection);
-            if(Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrderAddToCardFragment"))
-            {
+            if (Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrderAddToCardFragment")) {
                 Constant.manageClickEventForRedirection = "";
                 Log.e("manageClickEventForRedirection1", Constant.manageClickEventForRedirection);
                 title = "DiamondXE";
                 Fragment fragment = new AddToCartListFragment();
                 changefrag(fragment);
-            }
-            else{
+            } else {
                 //title = "Home";
                 title = "DiamondXE";
                 Fragment fragment = new HomeFragment();
@@ -325,16 +333,112 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 handleBackPress();
             }
         });
+
+
     }
 
-    // Check Which Container Visible Currently.
+    void PlayStoreDialog(final Activity activity, Boolean ishown) {
+        android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        View dialogView = inflater.inflate(R.layout.playstore_update_layout, null);
+        dialogBuilder.setView(dialogView);
+        final android.app.AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        final ImageView cancel_dialog = dialogView.findViewById(R.id.cancel_dialog);
+        if (ishown) {
+            cancel_dialog.setVisibility(View.VISIBLE);
+        } else {
+            cancel_dialog.setVisibility(View.GONE);
+        }
+        cancel_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                showDialog = 0;
+                sharedPrefHelper.setAppUpdateDialogShown();
+            }
+        });
+        final Button update_now_button = dialogView.findViewById(R.id.update_now_button);
+        update_now_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                showDialog = 0;
+                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setCancelable(true);
+        //showDialog=0
+        Log.e("showDialog", "........@@@@@@@@........" + showDialog);
+        /*if(showDialog!=1)
+        {
+            alertDialog.show();
+        }*/
+        if (!alertDialog.isShowing()) {
+            alertDialog.dismiss();
+            if (showDialog == 0) {
+                showDialog = 1;
+                alertDialog.show();
+            }
+
+        }
+
+    }
+
+    public boolean isUpdateRequired(String currentVersion, String playStoreVersion) {
+        return compareVersions(currentVersion, playStoreVersion) < 0;
+    }
+
+    public int compareVersions(String version1, String version2) {
+        version1 = version1.replaceAll("^v", "");
+        version2 = version2.replaceAll("^v", "");
+
+        Log.e("version1", "..." + version1);
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
+        for (int i = 0; i < Math.min(v1.length, v2.length); i++) {
+            try {
+                int v1Part = Integer.parseInt(v1[i]);
+                int v2Part = Integer.parseInt(v2[i]);
+                if (v1Part > v2Part) {
+                    return 1;
+                } else if (v1Part < v2Part) {
+                    return -1;
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }
+        return Integer.compare(v1.length, v2.length);
+    }
+
+
+    /*public String getCurrentAppVersion(Context context) {
+        String versionName = "";
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }*/
+
+
     private void checkCurrentFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.container_body); // fragment_container container ka id hai
 
         if (currentFragment instanceof HomeFragment) {
             // Home visible hai
-            //Toast.makeText(this, "Home is visible", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new HomeFragment();
@@ -358,33 +462,30 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             changefrag(fragment);
         } else {
             // Default case
-          //  Toast.makeText(this, "No Fragment is visible", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(this, "No Fragment is visible", Toast.LENGTH_SHORT).show();
         }
     }
 
-    void getData()
-    {
+    void getData() {
         userPincode = CommonUtility.getGlobalString(context, "user_select_pincode");
         userCity = CommonUtility.getGlobalString(context, "user_select_pincode_city");
     }
+
     // Get Currency Value Code and Image
-    void getCurrencyData()
-    {
+    void getCurrencyData() {
         selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
         selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
         selectedCurrencyDesc = CommonUtility.getGlobalString(context, "selected_currency_desc");
         selectedCurrencyImage = CommonUtility.getGlobalString(context, "selected_currency_image");
 
-       // Log.e("-------country_image1------- : ", selectedCurrencyImage);
+        // Log.e("-------country_image1------- : ", selectedCurrencyImage);
 
         // Select Currency Image is not blank show select currency country flag otherwise show india flag
-        if(!selectedCurrencyImage.equalsIgnoreCase(""))
-        {
+        if (!selectedCurrencyImage.equalsIgnoreCase("")) {
             Picasso.with(context)
                     .load(selectedCurrencyImage)
                     .into(flag_img);
-        }
-        else{
+        } else {
             Picasso.with(context)
                     .load(INDIA_FLAG_URL)
                     .into(flag_img);
@@ -394,35 +495,30 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     }
 
     // Check Current Currency and Currency Value If Currency Not Select Set By Default India.
-    void getCurrencySelectCountryCurrencySymbolAndValue(String selectedCurrencyCode, String selectedCurrencyValue)
-    {
+    void getCurrencySelectCountryCurrencySymbolAndValue(String selectedCurrencyCode, String selectedCurrencyValue) {
         /*Log.e("-------selectedCurrencyCode---------- : ", selectedCurrencyCode);
         Log.e("-------selectedCurrencyCode1---------- : ", selectedCurrencyValue);*/
-        if(!Constant.getCurrencySymbol.equalsIgnoreCase(""))
-        {
+        if (!Constant.getCurrencySymbol.equalsIgnoreCase("")) {
             Constant.getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
             Constant.getCurrencyValue = selectedCurrencyValue;
 
-        }
-        else{
+        } else {
             Constant.getCurrencySymbol = CommonUtility.getCurrencySymbol(INDIA_CURRENCY_CODE);
             Constant.getCurrencyValue = INDIA_CURRENCY_VALUE;
         }
     }
 
-    public void getCurrencyListAPI(boolean showLoader)
-    {
+    public void getCurrencyListAPI(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
 
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CURRENCY_RATES,
-                    ApiConstants.GET_CURRENCY_RATES_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_CURRENCY_RATES,
+                    ApiConstants.GET_CURRENCY_RATES_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -431,8 +527,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     }
 
     // Get Version Name Here.
-    void getAppVersionName()
-    {
+    void getAppVersionName() {
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             versionName = pInfo.versionName;
@@ -464,106 +559,108 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             } else {
                 finish(); // Handle back press when backFromHome is true
             }
-        }
-        else{
+        } else {
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new HomeFragment();
             changefrag(fragment);
         }
 
+    }
+
+    public void getAppVersionCheck(boolean showLoader) {
+        String uuid = CommonUtility.getAndroidId(context);
+        if (Utils.isNetworkAvailable(context)) {
+            urlParameter = new HashMap<String, String>();
+
+            urlParameter.put("sessionId", "" + uuid);
+            vollyApiActivity = null;
+            vollyApiActivity = new VollyApiActivity(this, this, urlParameter, ApiConstants.GET_APP_CHECK_VERSION, ApiConstants.GET_APP_CHECK_VERSION_ID, showLoader, "GET");
+
+        } else {
+            showToast(ApiConstants.MSG_INTERNETERROR);
+            //recyclerNaturalGrownView.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        /////////////////////VERSION CHECK////////////////////////
+        getAppVersionCheck(true);
         // This is Use When User Come For Any Other Activity to Wish List Fragment and Call Fragment.
-        if(Constant.manageFragmentCalling.equalsIgnoreCase(DXE_CALC))
-        {
+        if (Constant.manageFragmentCalling.equalsIgnoreCase(DXE_CALC)) {
             // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = ""; // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new WishlistFragment();
             changefrag(fragment);
         }
-        if(Constant.manageFragmentCalling.equalsIgnoreCase(WISHLIST_FRAGMENT))
-        {
-           // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
+        if (Constant.manageFragmentCalling.equalsIgnoreCase(WISHLIST_FRAGMENT)) {
+            // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = ""; // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new WishlistFragment();
             changefrag(fragment);
-        }
-        else if(Constant.manageFragmentCalling.equalsIgnoreCase(CART_FRAGMENT))
-        {
+        } else if (Constant.manageFragmentCalling.equalsIgnoreCase(CART_FRAGMENT)) {
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new AddToCartListFragment();
             changefrag(fragment);
-        }
-        else if(Constant.manageFragmentCalling.equalsIgnoreCase(CATEGORY_FRAGMENT))
-        {
+        } else if (Constant.manageFragmentCalling.equalsIgnoreCase(CATEGORY_FRAGMENT)) {
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new CategoryFragmentList();
             changefrag(fragment);
-        }
-        else if(Constant.manageFragmentCalling.equalsIgnoreCase(HOME_FRAGMENT))
-        {
+        } else if (Constant.manageFragmentCalling.equalsIgnoreCase(HOME_FRAGMENT)) {
             Constant.manageFragmentCalling = "";  // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new HomeFragment();
             changefrag(fragment);
-        }
-        else if(Constant.manageFragmentCalling.equalsIgnoreCase(ACCOUNT_FRAGMENT))
-        {
+        } else if (Constant.manageFragmentCalling.equalsIgnoreCase(ACCOUNT_FRAGMENT)) {
             // Toast.makeText(this, "WishList is visible..8", Toast.LENGTH_SHORT).show();
             Constant.manageFragmentCalling = ""; // Blank After Call Fragment
             title = "DiamondXE";
             Fragment fragment = new AccountSectionFragment();
             changefrag(fragment);
+        } else {
         }
-        else {}
 
-        if(Constant.callHomeScreenOnResume.equalsIgnoreCase("yes"))
-        {
+        if (Constant.callHomeScreenOnResume.equalsIgnoreCase("yes")) {
             getCurrencyData();
             Constant.callHomeScreenOnResume = ""; // after Use blank.
-        }else{}
-      //  setNotificationCount();
+        } else {
+        }
+        //  setNotificationCount();
     }
 
-    public void setUserData()
-    {
-        if (!CommonUtility.getGlobalString(context, "profile_pic").equalsIgnoreCase(""))
-        {
+    public void setUserData() {
+        if (!CommonUtility.getGlobalString(context, "profile_pic").equalsIgnoreCase("")) {
             Picasso.with(context)
-                    .load(""+ CommonUtility.getGlobalString(context, "profile_pic").replaceAll(" ", "%20"))
-                   // .placeholder(R.mipmap.phl_circle_profile)
-                   // .error(R.mipmap.phl_circle_profile)
-                    .resize(150,150)
+                    .load("" + CommonUtility.getGlobalString(context, "profile_pic").replaceAll(" ", "%20"))
+                    // .placeholder(R.mipmap.phl_circle_profile)
+                    // .error(R.mipmap.phl_circle_profile)
+                    .resize(150, 150)
                     .centerCrop()
                     .into(user_img);
+        } else {
         }
-        else {}
 
         user_login = CommonUtility.getGlobalString(context, "user_login");
 
         // If User Login then show User Name and User Role
-        if(!user_login.equalsIgnoreCase(""))
-        {
-            username_tv.setText(CommonUtility.getGlobalString(context, "login_first_name")+" "+CommonUtility.getGlobalString(context, "login_last_name"));
-            login_type_role_tv.setText(""+CommonUtility.getGlobalString(context, "login_user_role"));
-        }
-        else{
+        if (!user_login.equalsIgnoreCase("")) {
+            username_tv.setText(CommonUtility.getGlobalString(context, "login_first_name") + " " + CommonUtility.getGlobalString(context, "login_last_name"));
+            login_type_role_tv.setText("" + CommonUtility.getGlobalString(context, "login_user_role"));
+        } else {
             username_tv.setText(getResources().getString(R.string.hello_guest));
             login_type_role_tv.setText("--");
         }
 
     }
 
-    private void setDataToAdepter()
-    {
+    private void setDataToAdepter() {
         user_login = CommonUtility.getGlobalString(context, "user_login");
 
         ArrayList<DrawerMenuModel> subMenu = new ArrayList<>();
@@ -638,6 +735,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         model2.setImageSelected(R.drawable.create_demand_nav);
         model2.setSelected(false);
         menuList.add(model2);
+
+
+        DrawerMenuModel modelNo1 = new DrawerMenuModel();
+        modelNo1.setName(getResources().getString(R.string.navigation_franchise_with_us));
+        modelNo1.setImage(R.drawable.franchise_with_nav);
+        modelNo1.setImageSelected(R.drawable.franchise_with_nav);
+        modelNo1.setSelected(false);
+        menuList.add(modelNo1);
 
         //-------------------------------------Start Jewellery-----------------------------------------------------
         /*DrawerMenuModel model3 = new DrawerMenuModel();
@@ -855,16 +960,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         modelRateUs.setSelected(false);
         menuList.add(modelRateUs);
 
-        if(user_login.equalsIgnoreCase("yes"))
-        {
+        if (user_login.equalsIgnoreCase("yes")) {
             DrawerMenuModel modelLogout = new DrawerMenuModel();
             modelLogout.setName(getResources().getString(R.string.navigation_logout));
             modelLogout.setImage(R.drawable.logout);
             modelLogout.setImageSelected(R.drawable.logout);
             modelLogout.setSelected(false);
             menuList.add(modelLogout);
-        }
-        else{
+        } else {
             DrawerMenuModel modelLogout = new DrawerMenuModel();
             modelLogout.setName(getResources().getString(R.string.navigation_login));
             modelLogout.setImage(R.drawable.logout);
@@ -873,80 +976,61 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             menuList.add(modelLogout);
         }
 
-        adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+        adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
         recyclerview.setAdapter(adapter);
     }
 
 
     //For Open Fragment from Other Screens.
-    public void changefrag(Fragment fragment)
-    {
-        if (title.equalsIgnoreCase("Home"))
-        {
-          //  Toast.makeText(context, "title : " + title, Toast.LENGTH_SHORT).show();
+    public void changefrag(Fragment fragment) {
+        if (title.equalsIgnoreCase("Home")) {
+            //  Toast.makeText(context, "title : " + title, Toast.LENGTH_SHORT).show();
             selectedPosition = 0;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
 
-        }
-        else if (title.equalsIgnoreCase("Diamond1"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond1")) {
             selectedPosition = 1;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Diamond2"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond2")) {
 
             selectedPosition = 2;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Diamond3"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond3")) {
             selectedPosition = 3;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Diamond4"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond4")) {
 
             selectedPosition = 4;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Diamond5"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond5")) {
 
             selectedPosition = 5;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Diamond6"))
-        {
+        } else if (title.equalsIgnoreCase("Diamond6")) {
 
             selectedPosition = 6;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Settings"))
-        {
+        } else if (title.equalsIgnoreCase("Settings")) {
 
             selectedPosition = 7;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
-        }
-        else if (title.equalsIgnoreCase("Log Out"))
-        {
+        } else if (title.equalsIgnoreCase("Log Out")) {
 
             selectedPosition = 8;
-            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview,this);
+            adapter = new DrawerItemCustomAdapter(context, menuList, recyclerview, this);
             recyclerview.setAdapter(adapter);
+        } else {
         }
-        else{}
 
-        if (fragment != null)
-        {
+        if (fragment != null) {
             // title_tv.setText(title);
             // fragment.setArguments(bundle);
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -960,17 +1044,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
 
     //For Edit Profile Fragments :
-    public void changeFragment(String type)
-    {
-        if (type.equalsIgnoreCase("account"))
-        {
+    public void changeFragment(String type) {
+        if (type.equalsIgnoreCase("account")) {
             title = "Edit Profile";
         }
     }
 
 
-    public void showEnterPinCodeDialog(final Activity activity,final Context context)
-    {
+    public void showEnterPinCodeDialog(final Activity activity, final Context context) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -987,18 +1068,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         getData();
 
         // Check Pincode is blank or not if blank show hint text.
-        if(userPincode.equalsIgnoreCase(""))
-        {
+        if (userPincode.equalsIgnoreCase("")) {
             enter_pincode_et.setHint(getResources().getString(R.string.enter_pin_code));
-        }
-        else{
+        } else {
             enter_pincode_et.setText("");
             // if City is blank sow only pincode
-            if(userCity.equalsIgnoreCase(""))
-            {
+            if (userCity.equalsIgnoreCase("")) {
                 enter_pincode_et.setText(userPincode);
-            }
-            else{
+            } else {
                 enter_pincode_et.setText(userCity + ", " + userPincode);
             }
         }
@@ -1022,15 +1099,13 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             @Override
             public void onClick(View v) {
 
-                if (enter_pincode_et.getText().toString().trim().equalsIgnoreCase(""))
-                {
+                if (enter_pincode_et.getText().toString().trim().equalsIgnoreCase("")) {
                     Toast.makeText(activity, getResources().getString(R.string.please_enter_pincode), Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(!enter_pincode_et.getText().toString().equalsIgnoreCase(""))
-                    {
+                } else {
+                    if (!enter_pincode_et.getText().toString().equalsIgnoreCase("")) {
                         //pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + enter_pincode_et.getText().toString().trim());
-                    }else{}
+                    } else {
+                    }
 
                     userPincode = enter_pincode_et.getText().toString().trim();
 
@@ -1049,8 +1124,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
     }
 
-    void  getCurrnetPinCode()
-    {
+    void getCurrnetPinCode() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -1067,11 +1141,9 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();
-            } else
-            {
+            } else {
                 Log.e("---------Diamond--------- : ", "grantResults : " + grantResults.toString());
                 // Permission denied
                 // Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
@@ -1142,67 +1214,52 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         Intent intent;
-        String url="";
+        String url = "";
         int id = view.getId();
 
-      if(id == R.id.instagram_img)
-        {
-        url = CommonUtility.getGlobalString(context, "cmsInstagramLink");
-        if(!url.equalsIgnoreCase(""))
-        {
-            intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-        }else{
-            intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(INSTAGRAM_URL));
-            startActivity(intent);
-        }
-        }
-        else if(id == R.id.facebook_img)
-        {
-            url = CommonUtility.getGlobalString(context, "cmsFacebookLink");
-            if(!url.equalsIgnoreCase(""))
-            {
+        if (id == R.id.instagram_img) {
+            url = CommonUtility.getGlobalString(context, "cmsInstagramLink");
+            if (!url.equalsIgnoreCase("")) {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
+            } else {
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(INSTAGRAM_URL));
+                startActivity(intent);
             }
-            else{
+        } else if (id == R.id.facebook_img) {
+            url = CommonUtility.getGlobalString(context, "cmsFacebookLink");
+            if (!url.equalsIgnoreCase("")) {
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            } else {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(FACEBOOK_URL));
                 startActivity(intent);
             }
-        }
-        else if(id == R.id.linkdin_img)
-        {
+        } else if (id == R.id.linkdin_img) {
             url = CommonUtility.getGlobalString(context, "cmsLinkedinLink");
-            if(!url.equalsIgnoreCase(""))
-            {
+            if (!url.equalsIgnoreCase("")) {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
-            }
-            else{
+            } else {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(LINKDIN_URL));
                 startActivity(intent);
             }
 
-        }
-        else if(id == R.id.youtube_img)
-        {
+        } else if (id == R.id.youtube_img) {
             url = CommonUtility.getGlobalString(context, "cmsYoutubeLink");
-            if(!url.equalsIgnoreCase(""))
-            {
+            if (!url.equalsIgnoreCase("")) {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
-            }
-            else{
+            } else {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(YOUTUBE_URL));
                 startActivity(intent);
@@ -1211,14 +1268,11 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         }
     }
 
-    public void toolbar()
-    {}
-
-    public void editClick(View view) {}
+    public void editClick(View view) {
+    }
 
     @Override
-    public void getSuccessResponce(JSONObject jsonObject, int service_ID)
-    {
+    public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
         try {
             Log.v("diamond", "JSONObject" + jsonObject);
 
@@ -1238,43 +1292,36 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                         CommonUtility.setGlobalString(HomeScreenActivity.this, "mobile_auth_token", "");
                         CommonUtility.setGlobalString(HomeScreenActivity.this, "user_login", "");
 
-                         Intent _login_intent = new Intent(HomeScreenActivity.this, HomeScreenActivity.class);
+                        Intent _login_intent = new Intent(HomeScreenActivity.this, HomeScreenActivity.class);
                         _login_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         _login_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(_login_intent);
                         overridePendingTransition(0, 0);
                         finish();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
-                        logoutFromApp(context,message);
-                    }
-
-                    else {
-                      //  Toast.makeText(HomeScreenActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
+                        logoutFromApp(context, message);
+                    } else {
+                        //  Toast.makeText(HomeScreenActivity.this, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.GET_CURRENCY_RATES_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Constant.cardCount = jsonObjectData.optString("cart_count");
                         Constant.wishListCount = jsonObjectData.optString("wishlist_count");
 
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
-                        if(Constant.currencyArrayList.size() > 0)
-                        {
+                        if (Constant.currencyArrayList.size() > 0) {
                             Constant.currencyArrayList.clear();
-                        } else{}
+                        } else {
+                        }
 
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             CountryListModel model = new CountryListModel();
-
                             model.setTitle(CommonUtility.checkString(objectCodes.optString("title")));
                             model.setDesc(CommonUtility.checkString(objectCodes.optString("desc")));
                             model.setCurrency(CommonUtility.checkString(objectCodes.optString("currency")));
@@ -1289,12 +1336,10 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
                         }
 
-                       // Log.e("getCountryCode : ", Constant.currencyArrayList.get(0).getCountryCode().toString());
-
+                        Log.e("getCountryCode  1339: ", ""+Constant.currencyArrayList.size());
                         // Loop through the list of currencies
-                        for (int i = 0; i <Constant.currencyArrayList.size() ; i++)
-                        {
-                            String timeZoneId = "", timeZoneCountryCode="";
+                        for (int i = 0; i < Constant.currencyArrayList.size(); i++) {
+                            String timeZoneId = "", timeZoneCountryCode = "";
 
                             // Get the default TimeZone ID
                             timeZoneId = TimeZone.getDefault().getID();
@@ -1303,8 +1348,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                             timeZoneCountryCode = TimeZoneCountryCodeMapper.getCountryCodeFromTimeZone(timeZoneId);
 
                             // Check if the country code from the timezone matches the country code in the currency list
-                            if(Constant.currencyArrayList.get(i).getCountryCode().equalsIgnoreCase(timeZoneCountryCode))
-                            {
+                            if (Constant.currencyArrayList.get(i).getCountryCode().equalsIgnoreCase(timeZoneCountryCode)) {
                                 // If a match is found, retrieve the currency details
                                 selectedCurrencyCode = Constant.currencyArrayList.get(i).getCurrency();
                                 selectedCurrencyValue = Constant.currencyArrayList.get(i).getValue();
@@ -1312,93 +1356,109 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                                 selectedCurrencyImage = Constant.currencyArrayList.get(i).getImage();
 
                                 // Store the selected currency details in global preferences
-                                CommonUtility.setGlobalString(context, "selected_currency_value",Constant.currencyArrayList.get(i).getValue());
+                                CommonUtility.setGlobalString(context, "selected_currency_value", Constant.currencyArrayList.get(i).getValue());
                                 CommonUtility.setGlobalString(context, "selected_currency_code", Constant.currencyArrayList.get(i).getCurrency());
                                 CommonUtility.setGlobalString(context, "selected_currency_desc", Constant.currencyArrayList.get(i).getDesc());
                                 CommonUtility.setGlobalString(context, "selected_currency_image", Constant.currencyArrayList.get(i).getImage());
 
                                 // Exit the loop once the currency has been found and stored
                                 break;
-                            }else{}
+                            } else {
+                            }
                         }
 
                         getCurrencyData();
 
-                        if(selectedCurrencyCode.equalsIgnoreCase(""))
-                        {
+                        if (selectedCurrencyCode.equalsIgnoreCase("")) {
                             CommonUtility.setGlobalString(context, "selected_currency_code", INDIA_CURRENCY_CODE);
-                        }else{}
+                        } else {
+                        }
 
-                        if(selectedCurrencyValue.equalsIgnoreCase(""))
-                        {
+                        if (selectedCurrencyValue.equalsIgnoreCase("")) {
                             CommonUtility.setGlobalString(context, "selected_currency_value", INDIA_CURRENCY_VALUE);
-                        }else{}
+                        } else {
+                        }
 
-                        if(selectedCurrencyDesc.equalsIgnoreCase(""))
-                        {
+                        if (selectedCurrencyDesc.equalsIgnoreCase("")) {
                             CommonUtility.setGlobalString(context, "selected_currency_desc", INDIA_CURRENCY_DESC);
-                        }else{}
+                        } else {
+                        }
 
-                        if(selectedCurrencyImage.equalsIgnoreCase(""))
-                        {
+                        if (selectedCurrencyImage.equalsIgnoreCase("")) {
                             CommonUtility.setGlobalString(context, "selected_currency_image", "https://buyer-uat.diamondxe.com/assets/img/flags/inr.png");
-                        }else{}
+                        } else {
+                        }
 
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         //Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.LUXE_USER_STATUS_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         JSONObject details = jsonObjectData.getJSONObject("details");
 
-                        Log.e("details","...1581...**************......"+details);
+                        Log.e("details", "...1581...**************......" + details);
                         int isLuxeMember = details.optInt("isLuxeMember");
                         Log.e("isLuxeMember", "...1581...**************......" + isLuxeMember);
 
                         // working comment for check
-                        if(isLuxeMember==0)
-                        {
-                            startActivity(new Intent(context, DXELuexRegisterActivity.class));
-                            overridePendingTransition(0,0);
-                        }
-                        else {
+                        if (isLuxeMember == 0) {
+                            startActivity(new Intent(context, DXELuxeRegisterActivity.class));
+                            overridePendingTransition(0, 0);
+                        } else {
                             Intent intent = new Intent(context, SearchDiamondsActivity.class);
-                            intent.putExtra("intentvalue","dxeluxe");
+                            intent.putExtra("intentvalue", "dxeluxe");
                             startActivity(intent);
-                            overridePendingTransition(0,0);
+                            overridePendingTransition(0, 0);
                             //start search activity
                         }
 
                          /*Intent intent = new Intent(context, SearchDiamondsActivity.class);
                         intent.putExtra("intentvalue","dxeluxe");
                         startActivity(intent);*/
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case ApiConstants.GET_APP_CHECK_VERSION_ID:
 
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
+                        JSONObject details = jsonObjectData.getJSONObject("details");
+                        Log.e("details", "..1519......" + details);
+                        String availableUpdate = details.optString("available_update");
+                        String forceUpdate = details.optString("force");
+                        Log.e("availableUpdate", "..1519......" + availableUpdate);
+                        Log.e("forceUpdate", "..1519......" + forceUpdate);
+                        if (availableUpdate.equalsIgnoreCase("1") && forceUpdate.equalsIgnoreCase("1")) {
+                            Log.e("forceUpdate", "CALL.......1522......");
+                            // Force available update
+                            ///showDialog=1;
+
+                            PlayStoreDialog(this, false);
+                        } else if (availableUpdate.equalsIgnoreCase("1") && forceUpdate.equalsIgnoreCase("0")) {
+                            Log.e("Update", "CALL.......1535......");
+                            //showDialog=1;
+                            //available update
+                            if (sharedPrefHelper.shouldShowAppUpdateDialog()) {
+                                PlayStoreDialog(this, true);
+                            }
+
+                        } else if (availableUpdate.equalsIgnoreCase("0") && forceUpdate.equalsIgnoreCase("0")) {
+                            // App is up-to-date
+                            Log.e("No Update", "CALL.......1549......");
+                        }
+                    }
+                    break;
 
             }
         } catch (Exception e) {
@@ -1413,20 +1473,17 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
 
     @Override
-    public void itemClick(int parantPosition, int chiledPosition, String action)
-    {
+    public void itemClick(int parantPosition, int chiledPosition, String action) {
         user_login = CommonUtility.getGlobalString(context, "user_login");
         selectedPosition = parantPosition;
 
-        for(int i=0; i<menuList.size(); i++)
-        {
+        for (int i = 0; i < menuList.size(); i++) {
             menuList.get(i).setSelected(false);
         }
         menuList.get(selectedPosition).setSelected(true);
 
         // Home
-        if (parantPosition==0)
-        {
+        if (parantPosition == 0) {
             title = menuList.get(parantPosition).getName();
             //fragment = new HomeFragment();
 
@@ -1436,60 +1493,53 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             changefrag(fragment);
         }
         // My Order
-        else if (parantPosition==1)
-        {
+        else if (parantPosition == 1) {
             title = menuList.get(parantPosition).getName();
             Constant.comeFrom = "";
-            Constant.afterCancelOrderManageScreenCall="";
-            Constant.afterReturnOrderManageScreenCall="";
+            Constant.afterCancelOrderManageScreenCall = "";
+            Constant.afterReturnOrderManageScreenCall = "";
             user_login = CommonUtility.getGlobalString(context, "user_login");
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 Intent intent = new Intent(context, MyOrderListScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
-            }
-            else{
+                overridePendingTransition(0, 0);
+            } else {
                 Intent intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
 
         }
         // Search Diamonds
-       else if (parantPosition==2)
-        {
-            if(chiledPosition==0)
-            {
+        else if (parantPosition == 2) {
+            if (chiledPosition == 0) {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
                 // fragment = new ContactsTenantFragment();
                 Constant.searchTitleName = title;
                 Constant.searchType = ApiConstants.NATURAL;
-                Constant.filterClear="";
+                Constant.filterClear = "";
                 Intent intent = new Intent(context, SearchDiamondsActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-            if(chiledPosition==1)
-            {
+            if (chiledPosition == 1) {
                 title = menuList.get(parantPosition).getSubMenu().get(1).getName();
                 Constant.searchTitleName = title;
                 Constant.searchType = ApiConstants.LAB_GROWN;
-                Constant.filterClear="";
+                Constant.filterClear = "";
                 Intent intent = new Intent(context, SearchDiamondsActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-            if(chiledPosition==2)
-            {
+            if (chiledPosition == 2) {
 
-                Constant.searchTitleName =ApiConstants.GEMESTONES;
-                Constant.searchType=ApiConstants.NATURAL;
-                Constant.filterClear="";
+                Constant.searchTitleName = ApiConstants.GEMESTONES;
+                Constant.searchType = ApiConstants.NATURAL;
+                Constant.filterClear = "";
 
                 Intent intent = new Intent(context, GemstomeSearchActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
 
                 /*Fragment fragment = new GemstoneFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -1503,45 +1553,56 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 overridePendingTransition(0,0);*/
             }
         }
-       //
-        else if (parantPosition==3)
-        {
+        //
+        else if (parantPosition == 3) {
             title = menuList.get(parantPosition).getName();
-            Log.e("User","Login h...**************...1498........."+title);
+            Log.e("User", "Login h...**************...1498........." + title);
             Constant.searchTitleName = title;
             Constant.searchType = ApiConstants.DXE_LUXE;
-            Constant.filterClear="";
-            if(!user_login.equalsIgnoreCase(""))
-            {
-                Log.e("User","Login h...**************");
+            Constant.filterClear = "";
+            if (!user_login.equalsIgnoreCase("")) {
+                Log.e("User", "Login h...**************");
                 /*Intent intent1 = new Intent(context, SearchDiamondsActivity.class);
                 intent1.putExtra("intentvalue","dxeluxe");
                 startActivity(intent1);*/
                 getLuxeUserStatus(false);
                 //startActivity(new Intent(context, DXELuexRegisterActivity.class));
-            }
-            else{
+            } else {
                 //startActivity(new Intent(context, LoginScreenActivity.class));
-                Intent intent= new Intent(context, DXELuexRegisterActivity.class);
+                Intent intent = new Intent(context, DXELuxeRegisterActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
 
             //fragment = new LandLoardDashboardFragment();
         }
 
         // Create Demand
-        else if (parantPosition==4)
-        {
+        else if (parantPosition == 4) {
             title = menuList.get(parantPosition).getName();
+            /*Intent intent = new Intent(context, NovaaraFromActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0,0);*/
+
             Intent intent = new Intent(context, CreateDemandHome.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
+            //fragment = new LandLoardDashboardFragment();
+        }
+        // Franchise with us
+        else if (parantPosition == 5) {
+            title = menuList.get(parantPosition).getName();
+            /*Intent intent = new Intent(context, NovaaraFromActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0,0);*/
+
+            Intent intent = new Intent(context, NovaaraFromActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
             //fragment = new LandLoardDashboardFragment();
         }
         // Diamonds Education
-        else if (parantPosition==5)
-        {
+        else if (parantPosition == 6) {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://diamondxe.com/diamond-education/5C-explained"));
@@ -1549,21 +1610,18 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //fragment = new LandLoardDashboardFragment();
         }
         // Explore Now
-        else if (parantPosition==6)
-        {
+        else if (parantPosition == 7) {
          /*   title = menuList.get(parantPosition).getName();
             // fragment = new MaintenanceRequestFragment();*/
 
-            if(chiledPosition==0)
-            {
+            if (chiledPosition == 0) {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/for-dealer"));
                 startActivity(intent);
                 //   fragment = new ContactsTenantFragment();
             }
-            if(chiledPosition==1)
-            {
+            if (chiledPosition == 1) {
                 title = menuList.get(parantPosition).getSubMenu().get(1).getName();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/for-supplier"));
@@ -1573,19 +1631,16 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
         }
         // Price Calculator
-        else if (parantPosition==7)
-        {
+        else if (parantPosition == 8) {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(context, CalculatorActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
             //  fragment = new SettingLandLoardFragment();
         }
         // More
-        else if (parantPosition==8)
-        {
-            if(chiledPosition==0)
-            {
+        else if (parantPosition == 9) {
+            if (chiledPosition == 0) {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/about"));
@@ -1597,8 +1652,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
-            if(chiledPosition==1)
-            {
+            if (chiledPosition == 1) {
                 title = menuList.get(parantPosition).getSubMenu().get(1).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/why-us"));
@@ -1610,8 +1664,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
-            if(chiledPosition==2)
-            {
+            if (chiledPosition == 2) {
                 title = menuList.get(parantPosition).getSubMenu().get(2).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/blogs"));
@@ -1623,8 +1676,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
-            if(chiledPosition==3)
-            {
+            if (chiledPosition == 3) {
                 title = menuList.get(parantPosition).getSubMenu().get(3).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/media-gallery"));
@@ -1635,8 +1687,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
-            if(chiledPosition==4)
-            {
+            if (chiledPosition == 4) {
                 title = menuList.get(parantPosition).getSubMenu().get(4).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/contact"));
@@ -1648,8 +1699,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //   fragment = new ContactsTenantFragment();
             }
-            if(chiledPosition==5)
-            {
+            if (chiledPosition == 5) {
                 title = menuList.get(parantPosition).getSubMenu().get(5).getName();
                /* Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/faq"));
@@ -1660,8 +1710,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
-            if(chiledPosition==6)
-            {
+            if (chiledPosition == 6) {
                 title = menuList.get(parantPosition).getSubMenu().get(6).getName();
                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://diamondxe.com/policy/terms-conditions"));
@@ -1672,8 +1721,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
                 startActivity(intent1);
                 //  fragment = new ContactsRealtorFragment();
             }
-            if(chiledPosition==7)
-            {
+            if (chiledPosition == 7) {
                 title = menuList.get(parantPosition).getSubMenu().get(7).getName();
                 Intent intent1 = new Intent(context, WebViewNewActivity.class);
                 intent1.putExtra("url", "https://diamondxe.com/policy/privacy-policy");
@@ -1685,22 +1733,18 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             }
         }
         // Contact US
-        else if (parantPosition==9)
-        {
-            if(chiledPosition==0)
-            {
+        else if (parantPosition == 10) {
+            if (chiledPosition == 0) {
                 title = menuList.get(parantPosition).getSubMenu().get(0).getName();
                 //   fragment = new ContactsTenantFragment();
             }
-            if(chiledPosition==1)
-            {
+            if (chiledPosition == 1) {
                 title = menuList.get(parantPosition).getSubMenu().get(1).getName();
                 //  fragment = new ContactsRealtorFragment();
             }
         }
         // Rate Us
-        else if (parantPosition==10)
-        {
+        else if (parantPosition == 11) {
             title = menuList.get(parantPosition).getName();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://maps.app.goo.gl/TSUh7AtAfrJSLV8u5"));
@@ -1708,17 +1752,14 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //  fragment = new SettingLandLoardFragment();
         }
         // Logout
-        else if (parantPosition==11)
-        {
+        else if (parantPosition == 12) {
 
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 logoutDialogPopup(context, context, getResources().getString(R.string.logout_message));
-            }
-            else{
+            } else {
                 Intent intent = new Intent(HomeScreenActivity.this, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
 
         }
@@ -1727,16 +1768,13 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
     }
 
-    public void setListener(FragmentActionInterface fragmentActionInterface)
-    {
+    public void setListener(FragmentActionInterface fragmentActionInterface) {
         this.fragmentActionInterface = fragmentActionInterface;
     }
 
-    public void getLuxeUserStatus(boolean showLoader)
-    {
+    public void getLuxeUserStatus(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("sessionId", "" + uuid);
@@ -1745,7 +1783,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
             //urlParameter.put("authToken", CommonUtility.getGlobalString(getActivity(),"mobile_auth_token"));
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(this,this, urlParameter, ApiConstants.LUXE_USER_Status, ApiConstants.LUXE_USER_STATUS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(this, this, urlParameter, ApiConstants.LUXE_USER_Status, ApiConstants.LUXE_USER_STATUS_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1753,8 +1791,7 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         }
     }
 
-    void logoutDialogPopup(final Activity activity,final Context context,String message)
-    {
+    void logoutDialogPopup(final Activity activity, final Context context, String message) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -1763,18 +1800,17 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
         final android.app.AlertDialog alertDialog = dialogBuilder.create();
 
         final TextView title = dialogView.findViewById(R.id.title);
-        final TextView message1 =  dialogView.findViewById(R.id.message);
-        final TextView yes_tv =  dialogView.findViewById(R.id.yes_tv);
-        final TextView no_tv =  dialogView.findViewById(R.id.no_tv);
+        final TextView message1 = dialogView.findViewById(R.id.message);
+        final TextView yes_tv = dialogView.findViewById(R.id.yes_tv);
+        final TextView no_tv = dialogView.findViewById(R.id.no_tv);
 
-        title.setText(""+context.getResources().getString(R.string.app_name));
+        title.setText("" + context.getResources().getString(R.string.app_name));
 
-        message1.setText(""+message);
+        message1.setText("" + message);
 
         yes_tv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 onLogoutAPI(false);
                 alertDialog.dismiss();
             }
@@ -1793,19 +1829,17 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
 
     }
 
-    public void onLogoutAPI(boolean showLoader)
-    {
+    public void onLogoutAPI(boolean showLoader) {
         //String uuid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         String uuid = CommonUtility.getAndroidId(context);
         Log.e("-----uuid------", uuid);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
-            urlParameter.put("deviceId", ""+ uuid);
+            urlParameter.put("deviceId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.LOGOUT, ApiConstants.LOGOUT_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.LOGOUT, ApiConstants.LOGOUT_ID, showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1911,21 +1945,21 @@ public class HomeScreenActivity extends SuperActivity implements TwoRecyclerInte
     }
 
     @Override
-    public void itemClick(int position, String action)
-    {
-        if(action.equalsIgnoreCase("countryType"))
-        {
+    public void itemClick(int position, String action) {
+        if (action.equalsIgnoreCase("countryType")) {
             CountryListModel model = Constant.currencyArrayList.get(position);
 
-            if(!model.getImage().equalsIgnoreCase(""))
-            {
+            if (!model.getImage().equalsIgnoreCase("")) {
                 Picasso.with(context)
                         .load(model.getImage())
                         .into(flag_img);
-            }else{}
+            }
 
-           // selected_country_name.setText(model.getCurrency());
-           // selected_country_desc.setText(model.getDesc());
+            Log.e("1958","**...."+model.getValue());
+            Log.e("1959","**....."+model.getCurrency());
+
+            // selected_country_name.setText(model.getCurrency());
+            // selected_country_desc.setText(model.getDesc());
 
             // Store the currently selected country as lastSelectedCountry
             //lastSelectedCountry = model;

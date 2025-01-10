@@ -76,6 +76,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
     String countryId = "", stateId = "", cityId = "",countryName="", stateName="", cityName="",countryCodeForNumber="", countryCode="+91",
             email;
     String setAsDefaultAddress = "0";
+    int checkEditAddressValue=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +163,11 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
         {
             title_tv.setText(getResources().getString(R.string.edit_shipping_address));
             setData();
+            if (countryArrayList.isEmpty())
+            {
+                checkEditAddressValue=1;
+                getCountryListAPI(false);
+            }
         }else{
             title_tv.setText(getResources().getString(R.string.add_shipping_address));
         }
@@ -192,6 +198,23 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
         cityId = Constant.cityID;
         countryCode = Constant.mobileCode;
         setAsDefaultAddress = Constant.setIsDefault;
+
+        Log.e("countryArrayList","..196...@@@...."+countryArrayList.size());
+
+        Log.e("countryID","196........"+Constant.countryID);
+        Log.e("stateID","......"+Constant.stateID);
+        Log.e("cityID","...."+Constant.cityID);
+        Log.e("mobileCode","..."+Constant.mobileCode);
+        Log.e("setIsDefault","...."+Constant.setIsDefault);
+
+        if(!countryArrayList.isEmpty())
+        {
+
+            countryArrayList.forEach(System.out::println);
+
+            Log.e("mobileCode","..."+Constant.mobileCode);
+            Log.e("setIsDefault","...."+Constant.setIsDefault);
+        }
 
         if(setAsDefaultAddress.equalsIgnoreCase("1"))
         {
@@ -361,6 +384,7 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
         {
             Utils.hideKeyboard(activity);
             countryCodeForNumber = "yes";
+            checkEditAddressValue=0;
             getCountryListAPI(false);
         }
         else if(id == R.id.country_lin || id == R.id.country_tv)
@@ -641,7 +665,35 @@ public class AddShippingAddressActivity extends SuperActivity implements Recycle
 
                         }
 
-                        showCountryCodeList();
+                        if(checkEditAddressValue!=1)
+                        {
+                            showCountryCodeList();
+                        }
+                        for (CountryListModel country : countryArrayList) {
+                            System.out.println("ID: " + country.getId());
+                            System.out.println("Title: " + country.getTitle());
+                            System.out.println("Country Code: " + country.getCountryCode());
+                            System.out.println("Phone Code: " + country.getPhoneCode());
+                            System.out.println("Flag: " + country.getImage());
+                            System.out.println("-------------------------");
+
+                            Log.e("countryID","..678...@@...."+Constant.countryID);
+                            Log.e("mobileCode","..678...@@...."+Constant.mobileCode);
+                            Log.e("countryID","..678...@@...."+Constant.country);
+
+
+
+                            if(Constant.mobileCode.equalsIgnoreCase(country.getPhoneCode()))
+                            {
+                                if (!country.getImage().equalsIgnoreCase(""))
+                                {
+                                    Picasso.with(context)
+                                            .load(country.getImage())
+                                            .into(country_img);
+                                }
+                            }
+
+                        }
                     }
                     else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
                     {

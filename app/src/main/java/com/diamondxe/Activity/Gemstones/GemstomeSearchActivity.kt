@@ -21,6 +21,7 @@ import com.diamondxe.Activity.LoginScreenActivity
 import com.diamondxe.Adapter.GemCertificateAdapter
 import com.diamondxe.Adapter.GemColorAdapter
 import com.diamondxe.Adapter.GemOriginAdapter
+import com.diamondxe.Adapter.GemstoneShapesAdapter
 import com.diamondxe.Adapter.GemstoneTypeListAdapter
 import com.diamondxe.ApiCalling.ApiConstants
 import com.diamondxe.ApiCalling.ApiConstants.INDIA_CURRENCY_CODE
@@ -28,6 +29,7 @@ import com.diamondxe.Beans.AttributeDetailsModel
 import com.diamondxe.Beans.GemstoneAttri.GemColorAttribute
 import com.diamondxe.Beans.GemstoneAttri.GemCretificateAttribute
 import com.diamondxe.Beans.GemstoneAttri.GemOriginAttribute
+import com.diamondxe.Beans.GemstoneAttri.GemShapeAttribute
 import com.diamondxe.Beans.GemstoneType
 import com.diamondxe.Interface.RecyclerInterface
 import com.diamondxe.Network.SuperActivity
@@ -42,31 +44,72 @@ import com.diamondxe.databinding.ActivityGemstomeSearchBinding
 import com.dxe.calc.dashboard.CalculatorActivity
 import org.json.JSONObject
 
-class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
-{
+class GemstomeSearchActivity : SuperActivity(), RecyclerInterface {
     lateinit var binding: ActivityGemstomeSearchBinding
-     val gemstoneshapeImageArrayList= ArrayList<GemstoneType>()
-    val gemOriginAttribute= ArrayList<GemOriginAttribute>()
-    val gemColorAttribute= ArrayList<GemColorAttribute>()
-    val gemCretificateAttribute= ArrayList<GemCretificateAttribute>()
-    lateinit  var gemstoneAdapter: GemstoneTypeListAdapter
+    val gemstoneshapeImageArrayList = ArrayList<GemstoneType>()
+    val gemOriginAttribute = ArrayList<GemOriginAttribute>()
+    val gemColorAttribute = ArrayList<GemColorAttribute>()
+    val gemCretificateAttribute = ArrayList<GemCretificateAttribute>()
+    lateinit var gemstoneAdapter: GemstoneTypeListAdapter
     val items = listOf("Total", "Price/CT")
-    val itemsOrigin = listOf("Myanmar (Burma)", "Sri Lanka (Ceylon)","Thailand", "India","Madagascar",
-        "Tanzania"
-    ,"Brazil", "Colombia","Zambia", "Afghanistan",  "Australia","United States", "Russia","Pakistan",
-        "Kenya"
-        ,"Nigeria", "Mozambique","Malawi","Ethiopia" ,"Others")
-    val itemsColor = listOf("Red", "Black","BI Color","Blue", "Brown","Green", "Yellow"
-        ,"Grey", "Purple","White","Pink" ,"Multicolor","Orange")
+    val itemsOrigin = listOf(
+        "Myanmar (Burma)",
+        "Sri Lanka (Ceylon)",
+        "Thailand",
+        "India",
+        "Madagascar",
+        "Tanzania",
+        "Brazil",
+        "Colombia",
+        "Zambia",
+        "Afghanistan",
+        "Australia",
+        "United States",
+        "Russia",
+        "Pakistan",
+        "Kenya",
+        "Nigeria",
+        "Mozambique",
+        "Malawi",
+        "Ethiopia",
+        "Others"
+    )
+    val itemsColor = listOf(
+        "Red",
+        "Black",
+        "BI Color",
+        "Blue",
+        "Brown",
+        "Green",
+        "Yellow",
+        "Grey",
+        "Purple",
+        "White",
+        "Pink",
+        "Multicolor",
+        "Orange"
+    )
     val itemsweight = listOf("Carat", "Ratti")
 
-    val itemsCertificate = listOf("ITLGR", "AGR","GRS Color","GIA", "IGI","JBN", "IIGJ"
-        ,"GSI", "IGTLJ","GUBELIN","C. DUNAIGRE" ,"OTHERS")
+    val itemsCertificate = listOf(
+        "ITLGR",
+        "AGR",
+        "GRS Color",
+        "GIA",
+        "IGI",
+        "JBN",
+        "IIGJ",
+        "GSI",
+        "IGTLJ",
+        "GUBELIN",
+        "C. DUNAIGRE",
+        "OTHERS"
+    )
     lateinit var activity: Activity
-    lateinit  var context: Context
+    lateinit var context: Context
     var searchType: String = ""
     var user_login: String = ""
-    private lateinit var gemOriginAdapter: GemOriginAdapter
+    private lateinit var gemOriginAdapter: GemstoneShapesAdapter
     private lateinit var gemShapeadapter: GemCertificateAdapter
     private lateinit var gemColorAdapter: GemColorAdapter
     var isReturnableNo: Boolean = false
@@ -75,16 +118,21 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
     var selectedCurrencyCode: String = ""
     var selectedCurrencyDesc: String = ""
     var selectedCurrencyImage: String = ""
-    var getCurrencySymbol:String=""
+    var getCurrencySymbol: String = ""
     var WHITE: String = "white"
+    val shapseItems = listOf("Oval", "Cushion",
+        "Octagonal","Pear","Round","Heart","Rectangle","Mixed Shapes",
+        "Fancy","Triangular","Hexagonal","Marquise","Sugarloaf")
+    val gemShapeAttribute= ArrayList<GemShapeAttribute>()
 
     @RequiresApi(Build.VERSION_CODES.P)
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityGemstomeSearchBinding.inflate(layoutInflater)
+        binding = ActivityGemstomeSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this.also { activity = it }
+
+
         binding.backImg.setOnClickListener(this)
         binding.recyclerTypeView.setOnClickListener(this)
         binding.dropdownPricetypeImg.setOnClickListener(this)
@@ -93,9 +141,11 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         binding.grownTv.setOnClickListener(this)
         binding.yesTv.setOnClickListener(this)
         binding.noTv.setOnClickListener(this)
+        binding.weightRv.setOnClickListener(this)
         binding.clearAllFilter.setOnClickListener(this)
         binding.weightTypeImg.setOnClickListener(this)
-
+        binding.priceRelative.setOnClickListener(this)
+        binding.bottomBatInclude.cartRel.setOnClickListener(this)
         binding.bottomBatInclude.wishlistRel.setOnClickListener(this)
         binding.bottomBatInclude.homeRel.setOnClickListener(this)
         binding.bottomBatInclude.accountTv.setOnClickListener(this)
@@ -110,9 +160,18 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         Constant.gemItemsAttributeArrayList = ArrayList()
         Constant.gemCuttingAttributeArrayList = ArrayList()
 
+        //////////////////////////////  SHAPES  //////////////////////////////
+        shapseItems.forEach { shape ->
+            gemShapeAttribute.add(GemShapeAttribute(shape, false))
+        }
+        Constant.shapsGemarraylist= ArrayList(gemShapeAttribute)
 
-
-        binding.bottomBatInclude.accountTv.setTextColor(ContextCompat.getColor(context, R.color.grey_light))
+        binding.bottomBatInclude.accountTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
 
         user_login = CommonUtility.getGlobalString(context, "user_login")
 
@@ -136,51 +195,63 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         itemsOrigin.forEach { shape ->
             gemOriginAttribute.add(GemOriginAttribute(shape, false))
         }
-        Constant.gemOriginAttributeArrayList= ArrayList(gemOriginAttribute)
+        Constant.gemOriginAttributeArrayList = ArrayList(gemOriginAttribute)
 
         itemsColor.forEach { shape ->
             gemColorAttribute.add(GemColorAttribute(shape, false))
         }
-        Constant.gemColorAttributeArrayList= ArrayList(gemColorAttribute)
+        Constant.gemColorAttributeArrayList = ArrayList(gemColorAttribute)
 
 
         itemsCertificate.forEach { shape ->
             gemCretificateAttribute.add(GemCretificateAttribute(shape, false))
         }
-        Constant.gemCretificateAttributeArrayList= ArrayList(gemCretificateAttribute)
+        Constant.gemCretificateAttributeArrayList = ArrayList(gemCretificateAttribute)
         ///////////////////////////////////////////////////////////////////////////////////////
 
         //Spinner setup
         val adapter = ArrayAdapter(this, R.layout.spinner_item, items)
-         binding.spinnerAttributesPrice.adapter = adapter
-        binding.spinnerAttributesPrice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = items[position]
-                Log.e("selectedItem","//..133...."+selectedItem.lowercase())
-                selectedPriceGem=selectedItem.lowercase()
-               // Toast.makeText(this@GemstomeSearchActivity, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
-            }
+        binding.spinnerAttributesPrice.adapter = adapter
+        binding.spinnerAttributesPrice.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedItem = items[position]
+                    Log.e("selectedItem", "//..133...." + selectedItem.lowercase())
+                    selectedPriceGem = selectedItem.lowercase()
+                    // Toast.makeText(this@GemstomeSearchActivity, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
             }
-        }
 
         val adapterweight = ArrayAdapter(this, R.layout.spinner_item, itemsweight)
         binding.weightSpinner.adapter = adapterweight
         binding.weightSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedItem = itemsweight[position]
-                Log.e("itemsweight","//..133...."+selectedItem.lowercase())
-                selectedWeightGem=selectedItem.lowercase()
-               // Toast.makeText(this@GemstomeSearchActivity, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
+                Log.e("itemsweight", "//..133...." + selectedItem.lowercase())
+                selectedWeightGem = selectedItem.lowercase()
+                // Toast.makeText(this@GemstomeSearchActivity, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
 
         ////////////////// Origin list //////////////////
-        gemOriginAdapter = GemOriginAdapter(
-            list = Constant.gemOriginAttributeArrayList,
+        gemOriginAdapter = GemstoneShapesAdapter(
+            list = Constant.shapsGemarraylist,
             context = this,
             recyclerInterface = this
         )
@@ -193,13 +264,13 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         binding.recyclerOrigin.isNestedScrollingEnabled = false
 
 
-       binding.searchEt.addTextChangedListener(object : TextWatcher {
+        binding.searchEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!binding.searchEt.text.toString().trim().isEmpty()) {
-                  binding.searchDiamondErrorTv.visibility = View.GONE
-                   binding.clearSearch.visibility = View.VISIBLE
+                    binding.searchDiamondErrorTv.visibility = View.GONE
+                    binding.clearSearch.visibility = View.VISIBLE
                 } else {
                     binding.clearSearch.visibility = View.GONE
                 }
@@ -208,22 +279,22 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             override fun afterTextChanged(s: Editable?) {}
         })
 
-       binding.searchEt.setOnEditorActionListener { _, actionId, _ ->
+        binding.searchEt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearch()
-                true // Indicates that you've handled the action
+                true
             } else {
-                false // Indicates that you haven't handled the action
+                false
             }
         }
 
-        selectedWeightGem="carat"
-        selectedPriceGem="total"
+        selectedWeightGem = "carat"
+        selectedPriceGem = "total"
 
-        Constant.colorType = WHITE // Default White
+        Constant.colorType = WHITE
         //Certificate
         gemShapeadapter = GemCertificateAdapter(
-            list =  Constant.gemCretificateAttributeArrayList,
+            list = Constant.gemCretificateAttributeArrayList,
             context = this,
             recyclerInterface = this
         )
@@ -254,7 +325,6 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         getTypesList()
         showCardCount()
 
-        // Search Zoom-In and Zoom-Out Animation
         binding.bottomBatInclude.bottomSearchIcon.setBackgroundResource(R.mipmap.bottom_search)
         CommonUtility.startZoomAnimation(binding.bottomBatInclude.bottomSearchIcon)
 
@@ -268,7 +338,7 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             binding.naturalTv.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.grownTv.setTextColor(ContextCompat.getColor(context, R.color.purple_light))
 
-          binding.cardViewNatural.setCardElevation(37f)
+            binding.cardViewNatural.setCardElevation(37f)
             binding.cardViewNatural.setCardElevation(18f)
             binding.cardViewNatural.setOutlineAmbientShadowColor(
                 ContextCompat.getColor(
@@ -291,7 +361,12 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                     R.color.bg_color
                 )
             )
-            binding.cardViewGrown.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color))
+            binding.cardViewGrown.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.bg_color
+                )
+            )
             binding.cardViewGrown.setOutlineAmbientShadowColor(
                 ContextCompat.getColor(
                     context,
@@ -315,7 +390,12 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
             binding.cardViewNatural.setCardElevation(0f)
             binding.cardViewNatural.setCardElevation(0f)
-            binding.cardViewNatural.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color))
+            binding.cardViewNatural.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.bg_color
+                )
+            )
             binding.cardViewNatural.setCardBackgroundColor(
                 ContextCompat.getColor(
                     context,
@@ -335,7 +415,7 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 )
             )
 
-          binding.cardViewGrown.setCardElevation(37f)
+            binding.cardViewGrown.setCardElevation(37f)
             binding.cardViewGrown.setCardElevation(18f)
             binding.cardViewGrown.setOutlineAmbientShadowColor(
                 ContextCompat.getColor(
@@ -350,6 +430,69 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 )
             )
         }
+
+        binding.bottomBatInclude.homeImg.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.categoriesImg.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.wishImg.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.cartImg.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.accountImg.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+
+        binding.bottomBatInclude.homeTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.categoriesTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.wishTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.cartTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.accountTv.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.grey_light
+            )
+        )
+
     }
 
 
@@ -376,115 +519,122 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             binding.bottomBatInclude.wishListCountTv.setVisibility(View.VISIBLE)
         }
     }
+
     override fun getSuccessResponce(jsonObject: JSONObject?, service_ID: Int) {
     }
 
     override fun getErrorResponce(error: String?, service_ID: Int) {
     }
+
     private fun performSearch() {
         val query = binding.searchEt.text.toString().trim()
         if (query.equals("", ignoreCase = true)) {
-           binding.searchDiamondErrorTv.visibility = View.VISIBLE
-            // Uncomment to show a toast if needed
-            // Toast.makeText(activity, "Please enter search diamond", Toast.LENGTH_SHORT).show()
+            binding.searchDiamondErrorTv.visibility = View.VISIBLE
         } else {
-            Constant.searchKeyword =binding.searchEt.text.toString().trim()
-            Constant.priceFrm= binding.priceFrom.text.toString().trim()
-            Constant.priceTo= binding.priceTo.text.toString().trim()
-            Constant.weightFirst= binding.weightFirst.text.toString().trim()
-            Constant.weightThird= binding.weightThird.text.toString().trim()
-            Constant.stockIdGemstone= binding.stockId.text.toString().trim()
-
-
+            Constant.searchKeyword = binding.searchEt.text.toString().trim()
+            Constant.priceFrm = binding.priceFrom.text.toString().trim()
+            Constant.priceTo = binding.priceTo.text.toString().trim()
+            Constant.weightFirst = binding.weightFirst.text.toString().trim()
+            Constant.weightThird = binding.weightThird.text.toString().trim()
+            Constant.stockIdGemstone = binding.stockId.text.toString().trim()
             sendFilterValue()
-
-           /* val intent = Intent(activity, GemSearchResultActivity::class.java)
-            *//*if (searchType == "dxeluxe") {
-                intent.putExtra("intentvalue", "dxeluxe")
-                intent.putExtra("attributeDetailsModels", attributeDetailsModels)
-            }*//*
-            startActivity(intent)
-            overridePendingTransition(0, 0)*/
         }
     }
 
 
-    private fun getTypesList()
-    {
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "All",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.all_gemstone
-        ))
+    private fun getTypesList() {
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "All",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.all_gemstone
+            )
+        )
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Yellow Sapphire",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.yellow_sapphire
-        ))
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Yellow Sapphire",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.yellow_sapphire
+            )
+        )
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Blue Sapphire",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.blue_sapphire
-        ))
-
-
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Emerald",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.emerald
-        ))
-
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Ruby",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.ruby
-        ))
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Blue Sapphire",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.blue_sapphire
+            )
+        )
 
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Red Coral",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.red_coral
-        ))
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Emerald",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.emerald
+            )
+        )
+
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Ruby",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.ruby
+            )
+        )
 
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Pearl",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.pearl
-        ))
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Red Coral",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.red_coral
+            )
+        )
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Cats Eye",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.cats_eye
-        ))
 
-        gemstoneshapeImageArrayList.add(GemstoneType(
-            image = "",
-            attributecode = "Hessonite",
-            isSelect = false,
-            isFirstPosition = true,
-            drawable = R.drawable.hessonite
-        ))
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Pearl",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.pearl
+            )
+        )
+
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Cats Eye",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.cats_eye
+            )
+        )
+
+        gemstoneshapeImageArrayList.add(
+            GemstoneType(
+                image = "",
+                attributecode = "Hessonite",
+                isSelect = false,
+                isFirstPosition = true,
+                drawable = R.drawable.hessonite
+            )
+        )
 
         val layoutManagerShapeView = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.HORIZONTAL
@@ -499,25 +649,34 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
     @SuppressLint("NewApi")
     override fun onClick(view: View?) {
-        when(view!!.id)
-        {
+        when (view!!.id) {
             R.id.back_img -> {
                 finish()
             }
+            R.id.price_relative ->{
+                binding.spinnerAttributesPrice.performClick()
+            }
+            R.id.weight_rv ->{
+                binding.weightSpinner.performClick()
+            }
+
             R.id.dropdown_pricetype -> {
                 binding.spinnerAttributesPrice.performClick()
             }
+
             R.id.advance_filters_tv -> {
                 intent = Intent(this, AdvanceGemstoneFilterActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }
-            R.id.natural_tv ->{
+
+            R.id.natural_tv -> {
                 Constant.searchType = ApiConstants.NATURAL
-               binding.titleTv.setText(resources.getString(R.string.naturalDiamond))
+                binding.titleTv.setText(resources.getString(R.string.naturalDiamond))
                 naturalCardTabColorSet()
             }
-            R.id.grown_tv ->{
+
+            R.id.grown_tv -> {
                 Constant.searchType = ApiConstants.LAB_GROWN
                 binding.titleTv.setText(resources.getString(R.string.labGrownDiamond))
                 labGrownCardTabColorSet()
@@ -529,7 +688,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 startActivity(intent1)
                 overridePendingTransition(0, 0)
             }
-            R.id.home_rel ->{
+
+            R.id.home_rel -> {
                 Constant.manageFragmentCalling = ApiConstants.HOME_FRAGMENT
                 intent = Intent(activity, HomeScreenActivity::class.java)
                 startActivity(intent)
@@ -542,13 +702,15 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }
-            R.id.cart_rel ->{
+
+            R.id.cart_rel -> {
                 Constant.manageFragmentCalling = ApiConstants.CART_FRAGMENT
                 intent = Intent(activity, HomeScreenActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }
-            R.id.account_tv ->{
+
+            R.id.account_tv -> {
                 user_login = CommonUtility.getGlobalString(activity, "user_login")
                 if (user_login.equals("yes", ignoreCase = true)) {
                     Constant.manageFragmentCalling = ApiConstants.ACCOUNT_FRAGMENT
@@ -561,7 +723,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                     overridePendingTransition(0, 0)
                 }
             }
-            R.id.account_img ->{
+
+            R.id.account_img -> {
                 user_login = CommonUtility.getGlobalString(activity, "user_login")
                 if (user_login.equals("yes", ignoreCase = true)) {
                     Constant.manageFragmentCalling = ApiConstants.ACCOUNT_FRAGMENT
@@ -574,7 +737,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                     overridePendingTransition(0, 0)
                 }
             }
-            R.id.account_rel ->{
+
+            R.id.account_rel -> {
                 user_login = CommonUtility.getGlobalString(activity, "user_login")
                 if (user_login.equals("yes", ignoreCase = true)) {
                     Constant.manageFragmentCalling = ApiConstants.ACCOUNT_FRAGMENT
@@ -587,7 +751,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                     overridePendingTransition(0, 0)
                 }
             }
-            R.id.yes_tv ->{
+
+            R.id.yes_tv -> {
                 isReturnableNo = false
                 if (!isReturnableYes) {
                     Constant.isReturnable = "1"
@@ -607,7 +772,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 }
                 isReturnableYes = !isReturnableYes
             }
-            R.id.no_tv ->{
+
+            R.id.no_tv -> {
                 isReturnableYes = false
                 if (!isReturnableNo) {
                     Constant.isReturnable = "0"
@@ -627,77 +793,82 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 }
                 isReturnableNo = !isReturnableNo
             }
+
             R.id.clear_all_filter -> {
                 Utils.hideKeyboard(activity)
                 //clearAllClick = "yes"
                 clearAllDetails()
             }
-            R.id.dropdown_pricetype_img ->{
+
+            R.id.dropdown_pricetype_img -> {
                 binding.spinnerAttributesPrice.performClick()
             }
-            R.id.weight_type_img ->{
+
+            R.id.weight_type_img -> {
                 binding.weightSpinner.performClick()
             }
-            R.id.search_circle_rel-> {
 
-                Constant.searchKeyword =binding.searchEt.text.toString().trim()
-                Constant.priceFrm= binding.priceFrom.text.toString().trim()
-                Constant.priceTo= binding.priceTo.text.toString().trim()
-                Constant.weightFirst= binding.weightFirst.text.toString().trim()
-                Constant.weightThird= binding.weightThird.text.toString().trim()
-                Constant.stockIdGemstone= binding.stockId.text.toString().trim()
+            R.id.search_circle_rel -> {
 
-                Log.e("searchKeyword","475......${Constant.searchKeyword}")
-                Log.e("priceFrm","476......${Constant.priceFrm}")
-                Log.e("priceTo","477......${Constant.priceTo}")
-                Log.e("weightFirst","478......${Constant.weightFirst}")
-                Log.e("weightThird","479......${Constant.weightThird}")
-                Log.e("stockIdGemstone","480......${Constant.stockIdGemstone}")
+                Constant.searchKeyword = binding.searchEt.text.toString().trim()
+                Constant.priceFrm = binding.priceFrom.text.toString().trim()
+                Constant.priceTo = binding.priceTo.text.toString().trim()
+                Constant.weightFirst = binding.weightFirst.text.toString().trim()
+                Constant.weightThird = binding.weightThird.text.toString().trim()
+                Constant.stockIdGemstone = binding.stockId.text.toString().trim()
+
+                /*Log.e("searchKeyword", "475......${Constant.searchKeyword}")
+                Log.e("priceFrm", "476......${Constant.priceFrm}")
+                Log.e("priceTo", "477......${Constant.priceTo}")
+                Log.e("weightFirst", "478......${Constant.weightFirst}")
+                Log.e("weightThird", "479......${Constant.weightThird}")
+                Log.e("stockIdGemstone", "480......${Constant.stockIdGemstone}")*/
 
 
+                val selectedOriginItems =
+                    gemOriginAttribute.filter { it.isSelected }.joinToString(",") { it.name }
+                Log.e("selectedOriginItems", "472......${selectedOriginItems}")
+                Constant.selectedOriginItems = selectedOriginItems
 
-                val selectedOriginItems = gemOriginAttribute.filter { it.isSelected }.joinToString(",") { it.name }
-                Log.e("selectedOriginItems","472......${selectedOriginItems}")
-                Constant.selectedOriginItems=selectedOriginItems
+                val selectedColorItems =
+                    gemColorAttribute.filter { it.isSelected }.joinToString(",") { it.name }
+                Log.e("selectedColorItems", "474......${selectedColorItems}")
+                Constant.selectedColorItems = selectedColorItems
 
-                val selectedColorItems = gemColorAttribute.filter { it.isSelected }.joinToString(",") { it.name }
-                Log.e("selectedColorItems","474......${selectedColorItems}")
-                Constant.selectedColorItems=selectedColorItems
+                val selectedCertificateItems =
+                    gemCretificateAttribute.filter { it.isSelected }.joinToString(",") { it.name }
+                Log.e("selectedCertificateItems", "477......${selectedCertificateItems}")
+                Constant.selectedCertificateItems = selectedCertificateItems
 
-                val selectedCertificateItems = gemCretificateAttribute.filter { it.isSelected }.joinToString(",") { it.name }
-                Log.e("selectedCertificateItems","477......${selectedCertificateItems}")
-                Constant.selectedCertificateItems=selectedCertificateItems
-
-                Log.e("GemstoneReturnValue","482......${Constant.GemstoneReturnValue}")
+                Log.e("GemstoneReturnValue", "482......${Constant.GemstoneReturnValue}")
 
                 val selectedItems = gemstoneshapeImageArrayList
                     .filter { it.isSelect }
                     .joinToString(",") { it.attributecode }
 
-               Log.e("selectedItems  Shape","...489.....${selectedItems}")
+                Log.e("selectedItems  Shape", "...489.....${selectedItems}")
 
-                Log.e("selectedPrice  ","...489.....${selectedPriceGem}")
-                Log.e("selectedWeight  ","...489.....${selectedWeightGem}")
-                selectedshapeTypesItems=selectedItems
+                Log.e("selectedPrice  ", "...489.....${selectedPriceGem}")
+                Log.e("selectedWeight  ", "...489.....${selectedWeightGem}")
+                selectedshapeTypesItems = selectedItems
 
-                Log.e("searchType","...499.....${Constant.searchType}")
+                Log.e("searchType", "...499.....${Constant.searchType}")
 
-                Log.e("isReturnable","...489.....${Constant.isReturnable}")
+                Log.e("isReturnable", "...489.....${Constant.isReturnable}")
 
                 //Advance search data
-                Log.e("selectedGemShapes","...495.....${Constant.selectedGemShapes}")
-                Log.e("selectedGemTreatment","...496.....${Constant.selectedGemTreatment}")
-                Log.e("selectedItemsAttribute","...497.....${Constant.selectedItemsAttribute}")
-                Log.e("selectedCuttingAttribute","...498.....${Constant.selectedCuttingAttribute}")
+                Log.e("selectedGemShapes", "...495.....${Constant.selectedGemShapes}")
+                Log.e("selectedGemTreatment", "...496.....${Constant.selectedGemTreatment}")
+                Log.e("selectedItemsAttribute", "...497.....${Constant.selectedItemsAttribute}")
+                Log.e("selectedCuttingAttribute", "...498.....${Constant.selectedCuttingAttribute}")
                 sendFilterValue()
 
             }
         }
     }
 
-    fun sendFilterValue(){
+    fun sendFilterValue() {
         Constant.colorTypeFilterApploedArrayList = java.util.ArrayList()
-        //Log.e("from_price_tv : ", from_price_tv.getText().toString());
 
         if (!binding.searchEt.getText().toString().equals("", ignoreCase = true)) {
             // Create a new instance of AttributeDetailsModel
@@ -712,29 +883,17 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             Constant.colorTypeFilterApploedArrayList.add(model)
         }
 
-
-        ////////////////////////////////////////////////////------------------------------------//////////////
-
-
-        // Check if the search input field is not empty
         if (!selectedPriceGem.toString().equals("", ignoreCase = true)) {
-            // Create a new instance of AttributeDetailsModel
             val model = AttributeDetailsModel()
-            // Set the display attribute using the constant search keyword
             model.displayAttr = selectedPriceGem
-            // Mark this model as selected
             model.isSelected = true
-            // Set the filter type to indicate it came from a search
             model.filterType = "SelectPrice"
-            // Add the model to the list of applied color type filters
             Constant.colorTypeFilterApploedArrayList.add(model)
         }
         if (!selectedWeightGem.toString().equals("", ignoreCase = true)) {
             val model = AttributeDetailsModel()
-            // Set the display attribute using the constant Price Frm keyword
             model.displayAttr = selectedWeightGem
             model.isSelected = true
-            // Set the filter type to indicate it came from a Price Frm
             model.filterType = "SelectWeight"
             Constant.colorTypeFilterApploedArrayList.add(model)
         }
@@ -802,10 +961,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
 
         //check this ======================
-        // Initialize the shapeDiamondValue as an empty string
         Constant.selectedshapeTypesItems = ""
 
-        // Loop through each item in the shapeImageArrayList
         for (i in gemstoneshapeImageArrayList.indices) {
             // Check if the current shape image is selected
             if (gemstoneshapeImageArrayList[i].isSelect) {
@@ -850,11 +1007,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             Log.e("colorSelectedValue :", Constant.colorValue.toString())
         }
 
-
-        // Initialize certificateValue as an empty string
         Constant.selectedCertificateItems = ""
 
-        // Loop through each item in certificateTypeArrayList
         for (i in gemCretificateAttribute.indices) {
             // Check if the current certificate type is selected
             if (gemCretificateAttribute.get(i).isSelected) {
@@ -945,20 +1099,18 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
         //////////////////////////--Treatment--/////////////////////////////////////////
 
-        // Initialize technologyValue as an empty string
         Constant.selectedGemTreatment = ""
 
-        // Iterate through the list of technology types
         for (i in Constant.gemTreatmentAttributeArrayList.indices) {
             // Check if the current technology type is selected
             if (Constant.gemTreatmentAttributeArrayList[i].isSelected) {
                 val model = AttributeDetailsModel()
                 model.displayAttr =
-                    Constant.gemTreatmentAttributeArrayList[i].name // Set display attribute
+                    Constant.gemTreatmentAttributeArrayList[i].name
                 model.attribCode =
-                    Constant.gemTreatmentAttributeArrayList[i].name // Set attribute code
-                model.filterType = "Treatment" // Set filter type to "Technology"
-                model.isSelected = true // Mark this model as selected
+                    Constant.gemTreatmentAttributeArrayList[i].name
+                model.filterType = "Treatment"
+                model.isSelected = true
 
                 // Check if technologyValue is empty
                 if (Constant.technologyValue.equals("", ignoreCase = true)) {
@@ -1012,17 +1164,15 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
         // Iterate through the list of technology types
         for (i in Constant.gemCuttingAttributeArrayList.indices) {
-            // Check if the current technology type is selected
             if (Constant.gemCuttingAttributeArrayList[i].isSelected) {
                 val model = AttributeDetailsModel()
                 model.displayAttr =
-                    Constant.gemCuttingAttributeArrayList[i].name // Set display attribute
+                    Constant.gemCuttingAttributeArrayList[i].name
                 model.attribCode =
-                    Constant.gemCuttingAttributeArrayList[i].name // Set attribute code
-                model.filterType = "CuttingStyle" // Set filter type to "Technology"
-                model.isSelected = true // Mark this model as selected
+                    Constant.gemCuttingAttributeArrayList[i].name
+                model.filterType = "CuttingStyle"
+                model.isSelected = true
 
-                // Check if technologyValue is empty
                 if (Constant.technologyValue.equals("", ignoreCase = true)) {
                     // If empty, initialize with the current attribute code
                     Constant.technologyValue = Constant.gemCuttingAttributeArrayList[i].name
@@ -1037,18 +1187,14 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             }
         }
 
-
-
-        Log.e("searchType","@@@@..........."+Constant.searchType)
-        Log.e("NATURAL","@@@@@@@@..........."+ApiConstants.NATURAL)
-        // If Diamond Type is Blank Or Diamond Type is Natural is Selected Then Goto If Condition Other Wise Else Condition.
-        if (Constant.searchType.equals("") || Constant.searchType.equals(ApiConstants.NATURAL))
-        {
+        Log.e("searchType", "@@@@..........." + Constant.searchType)
+        Log.e("NATURAL", "@@@@@@@@..........." + ApiConstants.NATURAL)
+        if (Constant.searchType.equals("") || Constant.searchType.equals(ApiConstants.NATURAL)) {
             Constant.searchType = ApiConstants.NATURAL
         } else {
             Constant.searchType = ApiConstants.LAB_GROWN
         }
-        Log.e("searchType","...634........"+Constant.searchType)
+        Log.e("searchType", "...634........" + Constant.searchType)
 
         val intent = Intent(activity, GemSearchResultActivity::class.java)
         startActivity(intent)
@@ -1069,13 +1215,13 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
             getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode)
             Constant.getCurrencySymbol = getCurrencySymbol
         }
-        binding.currencyTo.text= Constant.getCurrencySymbol
-        binding.currencyText.text= Constant.getCurrencySymbol
+        binding.currencyTo.text = Constant.getCurrencySymbol
+        binding.currencyText.text = Constant.getCurrencySymbol
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun  clearAllDetails(){
+    private fun clearAllDetails() {
 
         binding.spinnerAttributesPrice.setSelection(0)
         binding.weightSpinner.setSelection(0)
@@ -1104,8 +1250,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         gemColorAdapter.notifyDataSetChanged()
         gemstoneAdapter.notifyDataSetChanged()
 
-       binding.yesTv.setBackgroundResource(R.drawable.background_white)
-       binding.noTv.setBackgroundResource(R.drawable.background_white)
+        binding.yesTv.setBackgroundResource(R.drawable.background_white)
+        binding.noTv.setBackgroundResource(R.drawable.background_white)
         binding.noTv.elevation = 0f
         binding.yesTv.elevation = 0f
         binding.yesTv.setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -1166,7 +1312,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
         binding.cardViewGrown.apply {
             cardElevation = 37f
             cardElevation = 18f
-            outlineAmbientShadowColor = ContextCompat.getColor(context, R.color.purple_gradient_bottom)
+            outlineAmbientShadowColor =
+                ContextCompat.getColor(context, R.color.purple_gradient_bottom)
             outlineSpotShadowColor = ContextCompat.getColor(context, R.color.purple_gradient_bottom)
         }
     }
@@ -1174,16 +1321,26 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
     @RequiresApi(Build.VERSION_CODES.P)
     fun naturalCardTabColorSet() {
-       binding.naturalTv.setBackgroundResource(R.drawable.background_gradient)
-       binding.grownTv.setBackgroundResource(R.drawable.border_dark_purple)
+        binding.naturalTv.setBackgroundResource(R.drawable.background_gradient)
+        binding.grownTv.setBackgroundResource(R.drawable.border_dark_purple)
 
         binding.naturalTv.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.grownTv.setTextColor(ContextCompat.getColor(context, R.color.purple_light))
 
-       binding.cardViewNatural.apply {
+        binding.cardViewNatural.apply {
             cardElevation = 37f
-            setOutlineAmbientShadowColor(ContextCompat.getColor(context, R.color.purple_gradient_bottom))
-            setOutlineSpotShadowColor(ContextCompat.getColor(context, R.color.purple_gradient_bottom))
+            setOutlineAmbientShadowColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.purple_gradient_bottom
+                )
+            )
+            setOutlineSpotShadowColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.purple_gradient_bottom
+                )
+            )
         }
 
         binding.cardViewGrown.apply {
@@ -1199,11 +1356,11 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
 
     fun searchTypeIntent() {
         if (searchType == "dxeluxe") {
-        binding.cardViewGrown.apply {
+            binding.cardViewGrown.apply {
                 alpha = 0.4f
                 isClickable = false
             }
-           binding.grownTv.apply {
+            binding.grownTv.apply {
                 isClickable = false
                 setBackgroundResource(R.drawable.disable_bg)
                 setTextColor(ContextCompat.getColor(context, R.color.grey_light))
@@ -1212,10 +1369,8 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
     }
 
 
-
     @SuppressLint("NotifyDataSetChanged")
     override fun itemClick(position: Int, action: String?) {
-        Log.e("action", "..159..#######.....${action?.lowercase()}")
         when (action?.lowercase()) {
 
             "shapeimage" -> {
@@ -1224,11 +1379,13 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                 if (position == 0) {
                     val selectAll = !selectedItem.isSelect
                     for (i in gemstoneshapeImageArrayList.indices) {
-                        gemstoneshapeImageArrayList[i] = gemstoneshapeImageArrayList[i].copy(isSelect = selectAll)
+                        gemstoneshapeImageArrayList[i] =
+                            gemstoneshapeImageArrayList[i].copy(isSelect = selectAll)
                     }
                 } else {
                     val selectedItemSelected = selectedItem.isSelect
-                    gemstoneshapeImageArrayList[position] = selectedItem.copy(isSelect = !selectedItemSelected) // Toggle the state of the selected item
+                    gemstoneshapeImageArrayList[position] =
+                        selectedItem.copy(isSelect = !selectedItemSelected)
 
                     var allSelected = true
                     for (i in 1 until gemstoneshapeImageArrayList.size) {
@@ -1237,24 +1394,28 @@ class GemstomeSearchActivity : SuperActivity(), RecyclerInterface
                             break
                         }
                     }
-                    gemstoneshapeImageArrayList[0] = gemstoneshapeImageArrayList[0].copy(isSelect = allSelected) // Set "All" to selected if all are selected
+                    gemstoneshapeImageArrayList[0] =
+                        gemstoneshapeImageArrayList[0].copy(isSelect = allSelected)
                 }
-
                 gemstoneAdapter.notifyDataSetChanged()
 
+            }
 
-            }
-            "gemorigin" ->{
-                Constant.gemOriginAttributeArrayList[position].isSelected = !Constant.gemOriginAttributeArrayList[position].isSelected
-                gemOriginAdapter.notifyDataSetChanged()
-            }
             "gemcertificate" -> {
-                Constant.gemCretificateAttributeArrayList[position].isSelected = !Constant.gemCretificateAttributeArrayList[position].isSelected
+                Constant.gemCretificateAttributeArrayList[position].isSelected =
+                    !Constant.gemCretificateAttributeArrayList[position].isSelected
                 gemShapeadapter.notifyDataSetChanged()
             }
-            "gemcolor" ->{
-                Constant.gemColorAttributeArrayList[position].isSelected = !Constant.gemColorAttributeArrayList[position].isSelected
+
+            "gemcolor" -> {
+                Constant.gemColorAttributeArrayList[position].isSelected =
+                    !Constant.gemColorAttributeArrayList[position].isSelected
                 gemColorAdapter.notifyDataSetChanged()
+            }
+            "gemshape" -> {
+
+                Constant.shapsGemarraylist[position].isSelected = !Constant.shapsGemarraylist[position].isSelected
+                gemOriginAdapter.notifyDataSetChanged()
             }
         }
 

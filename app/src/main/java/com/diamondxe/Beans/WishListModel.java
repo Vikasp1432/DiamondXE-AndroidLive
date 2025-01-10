@@ -5,12 +5,20 @@ import java.io.Serializable;
 
 public class WishListModel implements Serializable {
 
-    String certificateNo = "", stockId = "", itemName = "", supplierId = "", category = "", cutGrade = "", certificateName = "", polish = "", symmetry = "", measurement = "", fluorescenceIntensity = "", carat = "", color = "", clarity = "", shape = "", shade = "", tablePerc = "", depthPerc = "",
+    String certificateNo = "", stockId = "", itemName = "", supplierId = "",item_type="", category = "", cutGrade = "", certificateName = "", polish = "", symmetry = "", measurement = "", fluorescenceIntensity = "", carat = "", color = "", clarity = "", shape = "", shade = "", tablePerc = "", depthPerc = "",
             luster = "", eyeClean = "", diamondImage = "", diamondVideo = "", discount = "", rapaportPricePerCt = "", labGrownDiaPrice = "",
             naturalDiaPrice = "", isAvailableForSale = "", isReturnable = "", dxePrefered = "", status = "", totalGstPerc = "", pricePerCt = "", subtotal = "", totalPrice = "", isCart = "", onHold = "", shippingCharge = "", platformFeeAmt = "",
             dxeMarkup = "",stockNo="",showingSubTotal="",currencySymbol="";
     double coupondiscountperc=0,subtotalaftercoupondiscount=0;
     int isDxeLUXE=0;
+
+    public String getItem_type() {
+        return item_type;
+    }
+
+    public void setItem_type(String item_type) {
+        this.item_type = item_type;
+    }
 
     public int getIsDxeLUXE() {
         return isDxeLUXE;

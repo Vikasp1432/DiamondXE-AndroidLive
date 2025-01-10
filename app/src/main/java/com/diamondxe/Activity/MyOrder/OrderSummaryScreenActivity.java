@@ -1,5 +1,6 @@
 package com.diamondxe.Activity.MyOrder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +29,14 @@ import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
+import com.diamondxe.Utils.CurrencyUtils;
 import com.diamondxe.Utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +52,7 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
             final_amount_tv1, update_final_amount_tv1, update_sub_total_price_tv,update_coupon_code_value_tv, update_shipping_and_handling_tv,
             update_platform_fees_tv,update_total_charges_tv, update_total_taxes_tv,update_total_amount_tv,update_wallet_apply_charges_tv,
             update_bank_charges_tv,update_final_amount_tv,order_number_tv, date_time_tv;
-    private LinearLayout  update_order_summery_main_lin, view_order_summary_details_main_lin, update_view_order_summary_details_main_lin;
+    private LinearLayout  tax_dialog_lv,update_order_summery_main_lin, view_order_summary_details_main_lin, update_view_order_summary_details_main_lin;
     private CardView order_summary_view_card_main, update_order_summary_view_card;
     private RecyclerView recycler_view;
     private ArrayList<MyOrderListModel> modelArrayList;
@@ -63,11 +67,13 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
     private boolean isArrowDownUpdate = false;
     String detailsOrderId = "", detailsCreatedAt="";
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
-
+    RelativeLayout gemstone_parice_rv,diamond_price_rv;
+    TextView gemstone_price_tv_lbl,gemstone_price_tv,gemstone_txt_gst_perc_tv,update_diamond_taxes_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary_screen);
+
 
         context = activity = this;
 
@@ -75,6 +81,14 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
 
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
+
+        gemstone_txt_gst_perc_tv=findViewById(R.id.gemstone_txt_gst_perc_tv);
+        tax_dialog_lv=findViewById(R.id.tax_dialog_lv);
+        diamond_price_rv=findViewById(R.id.diamond_price_rv);
+        gemstone_parice_rv=findViewById(R.id.gemstone_parice_rv);
+        gemstone_price_tv_lbl=findViewById(R.id.gemstone_price_tv_lbl);
+        gemstone_price_tv=findViewById(R.id.gemstone_price_tv);
+        update_diamond_taxes_tv=findViewById(R.id.update_diamond_taxes_tv);
 
         error_tv = findViewById(R.id.error_tv);
         order_number_tv = findViewById(R.id.order_number_tv);
@@ -222,11 +236,13 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
         else if(id == R.id.rel_diamond_tax)
         {
             Utils.hideKeyboard(activity);
-            diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+            //diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    //diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    tax_dialog_lv.setVisibility(View.GONE);
                 }
             }, 2000);
         }
@@ -239,6 +255,7 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("orderId", Constant.orderID);
+            //urlParameter.put("orderId", "172768804033");
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ORDER_SUMMARY, ApiConstants.ORDER_SUMMARY_ID,showLoader,
@@ -249,10 +266,11 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
         try {
-            Log.v("------Diamond----- : ", "--------JSONObjectSummary-------- : " + jsonObject);
+            Log.v("------Diamond----- : ", "--268****------JSONObjectSummary-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -263,6 +281,135 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+
+                        String currencySymbol = CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        Log.e("currencySymbol","....274...................."+currencySymbol);
+                        String  getexchange_rate=CommonUtility.checkString(jObjDetails.optString("exchange_rate"));
+                        Log.e("getCurrencySymbol","270..@@..."+currencySymbol);
+                        Log.e("getexchange_rate","270..@@..."+getexchange_rate);
+
+
+                        int iscrorder = CommonUtility.checkInt(jObjDetails.optString("is_cr_order"));
+                        Log.e("iscrorder","....284...................."+iscrorder);
+                        if (iscrorder==1)
+                        {
+                            JSONObject updatedpricebreakup = jObjDetails.optJSONObject("updated_price_breakup");
+                            if (updatedpricebreakup != null) {
+
+                                JSONObject subtotal = updatedpricebreakup.optJSONObject("subtotal");
+                                if (subtotal != null) {
+                                    if (subtotal.has("gemstone")) {
+                                        int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                        System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                        String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                        gemstone_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));
+                                        gemstone_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                    } else {
+                                        System.out.println("Gemstone Subtotal: Not Available");
+                                        gemstone_parice_rv.setVisibility(View.GONE);
+                                    }
+                                    if (subtotal.has("diamond"))
+                                    {
+                                        int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                        System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                        String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                        String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+                                        diamond_price_tv.setText(finalAmount);
+                                        /*diamond_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));*/
+                                        diamond_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                    }
+                                    else {
+                                        diamond_price_rv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Subtotal: Not Available");
+                                    }
+
+                                    JSONObject taxPerc = updatedpricebreakup.optJSONObject("tax_perc");
+                                    if (taxPerc != null) {
+                                        if (taxPerc.has("gemstone"))
+                                        {
+                                            double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                            System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                            gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                        } else {
+                                            gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                            System.out.println("Gemstone Tax Percentage: Not Available");
+                                        }
+
+                                        if (taxPerc.has("diamond"))
+                                        {
+                                            double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                            System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                            diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                        }
+                                        else {
+                                            diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
+                        else {
+                            JSONObject priceBreakup = jObjDetails.optJSONObject("price_breakup");
+                            if (priceBreakup != null) {
+
+                                JSONObject subtotal = priceBreakup.optJSONObject("subtotal");
+                                if (subtotal != null) {
+                                    if (subtotal.has("gemstone")) {
+                                        int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                        System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                        String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                        String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+
+                                        gemstone_price_tv.setText(finalAmount);
+                                        gemstone_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                    } else {
+                                        System.out.println("Gemstone Subtotal: Not Available");
+                                        gemstone_parice_rv.setVisibility(View.GONE);
+                                    }
+                                    if (subtotal.has("diamond"))
+                                    {
+                                        int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                        System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                        String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                        String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+                                        diamond_price_tv.setText(finalAmount);
+                                       // diamond_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));
+                                        diamond_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                    }
+                                    else {
+                                        diamond_price_rv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Subtotal: Not Available");
+                                    }
+
+                                    JSONObject taxPerc = priceBreakup.optJSONObject("tax_perc");
+                                    if (taxPerc != null) {
+                                        if (taxPerc.has("gemstone"))
+                                        {
+                                            double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                            System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                            gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                        } else {
+                                            gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                            System.out.println("Gemstone Tax Percentage: Not Available");
+                                        }
+
+                                        if (taxPerc.has("diamond"))
+                                        {
+                                            double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                            System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                            diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                        }
+                                        else {
+                                            diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
 
                         detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
                         detailsCreatedAt = CommonUtility.checkString(jObjDetails.optString("created_at"));
@@ -327,8 +474,11 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_sub_total);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                                update_sub_total_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_final_amount_tv1.setText(finalAmount);
+                                update_sub_total_price_tv.setText(finalAmount);
+                                /*update_final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
+                                /*update_sub_total_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_coupon_discount!=null && !cr_coupon_discount.equalsIgnoreCase("") && !cr_coupon_discount.equalsIgnoreCase("0"))
@@ -346,35 +496,45 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_shipping_charge);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_shipping_and_handling_tv.setText(finalAmount);
+                                /*update_shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_platform_fee!=null && !cr_platform_fee.equalsIgnoreCase(""))
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_platform_fee);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_platform_fees_tv.setText(finalAmount);
+                                /*update_platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_total_charges!=null && !cr_total_charges.equalsIgnoreCase(""))
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_total_charges);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_total_charges_tv.setText(finalAmount);
+                                /*update_total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_total_tax!=null && !cr_total_tax.equalsIgnoreCase(""))
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_total_tax);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_total_taxes_tv.setText(finalAmount);
+                                /*update_total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_total_amount!=null && !cr_total_amount.equalsIgnoreCase(""))
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_total_amount);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_total_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_total_amount_tv.setText(finalAmount);
+                                /*update_total_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_wallet_points!=null && !cr_wallet_points.equalsIgnoreCase("") && !cr_wallet_points.equalsIgnoreCase("0"))
@@ -392,14 +552,18 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_bank_charges);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_bank_charges_tv.setText(finalAmount);
+                                /*update_bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                             if(cr_final_amount!=null && !cr_final_amount.equalsIgnoreCase(""))
                             {
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cr_final_amount);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                                update_final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                                String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                                update_final_amount_tv.setText(finalAmount);
+                                /*update_final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                             } else{}
 
                         }else{
@@ -416,18 +580,22 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                         if(!sub_total.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, sub_total);
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                           /* String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);*/
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            amount_tv.setText(finalAmount);
+                            //diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            final_amount_tv1.setText(finalAmount);
 
-                            amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+
                         }else{}
 
                         if(!final_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, final_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            amount_tv.setText(finalAmount);
+                            /*amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
 
                         }else{}
 
@@ -465,63 +633,80 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, shipping_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            shipping_and_handling_tv.setText(finalAmount);
+                            /*shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(platform_fee!=null && !platform_fee.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, platform_fee);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            platform_fees_tv.setText(finalAmount);
+                            /*platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(total_charge!=null && !total_charge.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, total_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            total_charges_tv.setText(finalAmount);
+                            /*total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(other_tax!=null && !other_tax.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, other_tax);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            other_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            other_taxes_tv.setText(finalAmount);
                         } else{}
 
                         if(diamond_tax!=null && !diamond_tax.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, diamond_tax);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            diamond_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            diamond_taxes_tv.setText(finalAmount);
                         } else{}
 
                         if(total_taxes!=null && !total_taxes.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, total_taxes);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            total_taxes_tv.setText(finalAmount);
+                            /*total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(sub_total_amount!=null && !sub_total_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, sub_total_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            sub_total_tv.setText(finalAmount);
+                            /*sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(bank_charge!=null && !bank_charge.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, bank_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            bank_charges_tv.setText(finalAmount);
+                            /*bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(final_amount!=null && !final_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, final_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            final_amount_tv.setText(finalAmount);
+                            /*final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(wallet_points!=null && !wallet_points.equalsIgnoreCase("") && !wallet_points.equalsIgnoreCase("0"))
@@ -591,9 +776,12 @@ public class OrderSummaryScreenActivity extends SuperActivity implements TwoRecy
                         for (int k = 0; k <modelArrayList.size() ; k++)
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, modelArrayList.get(k).getSubTotal());
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                           /* String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             modelArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                            modelArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                            modelArrayList.get(k).setCurrencySymbol(getCurrencySymbol);*/
+                            String finalAmount = CurrencyUtils.calculateFinalAmountwithoutcurrency(subTotalFormat, getexchange_rate);
+                            modelArrayList.get(k).setShowingSubTotal(String.valueOf(finalAmount));
+                            modelArrayList.get(k).setCurrencySymbol(currencySymbol);
                         }
 
                         adapter = new OrderSummaryListAdapter(modelArrayList,context,this, "fullOrderCancel");

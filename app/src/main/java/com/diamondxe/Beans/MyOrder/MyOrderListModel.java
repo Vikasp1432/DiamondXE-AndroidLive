@@ -14,12 +14,20 @@ public class MyOrderListModel implements Serializable {
     cut="", polish="", symmetry="", fir="", lab="", table="", depth="",compareDateTime="", stockId="", certificateNo="",stockNo="", dxePrefered="",
     diamondImage="",growthType="",certificateName="", trackingStatusCode="", trackingStatus="", trackingNote="", trackingDateTime="",cancelReturnOrderId="",
             returnOrderId="",returnEligibleDate="", selectedReason="", writeMessage="", returnOrderImage="", returnOrderVideo="", returnOrderVideoUrl="",
-            returnPolicyUrl="";
+            returnPolicyUrl="", exchangerate="";
 
 
     private ArrayList<InnerOrderListModel> allItemsInSection;
 
     boolean isChecked = false;
+
+    public String getExchangerate() {
+        return exchangerate;
+    }
+
+    public void setExchangerate(String exchangerate) {
+        this.exchangerate = exchangerate;
+    }
 
     public String getOrderId() {
         return orderId;

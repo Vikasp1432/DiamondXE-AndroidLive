@@ -28,6 +28,7 @@ import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
+import com.diamondxe.Utils.CurrencyUtils;
 import com.diamondxe.Utils.Utils;
 
 import org.json.JSONArray;
@@ -66,6 +67,12 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
     String detailsOrderId = "", detailsCreatedAt="", detailsCancelledAt="",detailsOrderDateAt="";
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
 
+
+    TextView gemstone_price_tv,gemstone_txt_gst_perc_tv;
+    ImageView diamond_tax_info_img;
+    TextView gemstone_cancel_diamond_price_tv,cancel_diamond_txt_gst_perc_tv,cancel_gemstone_txt_gst_perc_tv;
+    LinearLayout cancel_tax_dialog_lv,tax_dialog_lv;
+    RelativeLayout diamond_cancel_rv,gemstone_cancel_rv,gemstone_parice_rv,diamond_price_rv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +81,20 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
         context = activity = this;
 
         modelArrayList = new ArrayList<>();
+
+        tax_dialog_lv=findViewById(R.id.tax_dialog_lv);
+        gemstone_txt_gst_perc_tv=findViewById(R.id.gemstone_txt_gst_perc_tv);
+        diamond_price_rv=findViewById(R.id.diamond_price_rv);
+        gemstone_price_tv=findViewById(R.id.gemstone_price_tv);
+        gemstone_parice_rv=findViewById(R.id.gemstone_parice_rv);
+        diamond_tax_info_img=findViewById(R.id.diamond_tax_info_img);
+        diamond_tax_info_img.setOnClickListener(this);
+        cancel_tax_dialog_lv=findViewById(R.id.cancel_tax_dialog_lv);
+        gemstone_cancel_rv=findViewById(R.id.gemstone_cancel_rv);
+        diamond_cancel_rv=findViewById(R.id.diamond_cancel_rv);
+        gemstone_cancel_diamond_price_tv=findViewById(R.id.gemstone_cancel_diamond_price_tv);
+        cancel_diamond_txt_gst_perc_tv=findViewById(R.id.cancel_diamond_txt_gst_perc_tv);
+        cancel_gemstone_txt_gst_perc_tv=findViewById(R.id.cancel_gemstone_txt_gst_perc_tv);
 
         back_img = findViewById(R.id.back_img);
         back_img.setOnClickListener(this);
@@ -105,7 +126,8 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
         cancel_rel_other_main_tax.setVisibility(View.GONE);
 
         cancel_rel_diamond_main_tax = findViewById(R.id.cancel_rel_diamond_main_tax);
-        cancel_rel_diamond_main_tax.setVisibility(View.GONE);
+        cancel_rel_diamond_main_tax.setVisibility(View.VISIBLE);
+        cancel_rel_diamond_main_tax.setOnClickListener(this);
 
         cancel_wallet_apply_point_rel = findViewById(R.id.cancel_wallet_apply_point_rel);
 
@@ -123,7 +145,8 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
         other_tax_main_rel = findViewById(R.id.other_tax_main_rel);
         other_tax_main_rel.setVisibility(View.GONE);
         diamond_tax_main_rel = findViewById(R.id.diamond_tax_main_rel);
-        diamond_tax_main_rel.setVisibility(View.GONE);
+        diamond_tax_main_rel.setVisibility(View.VISIBLE);
+        diamond_tax_main_rel.setOnClickListener(this);
 
         rel_other_tax = findViewById(R.id.rel_other_tax);
         rel_other_tax.setOnClickListener(this);
@@ -232,23 +255,55 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
         else if(id == R.id.rel_total_tax)
         {
             Utils.hideKeyboard(activity);
-            total_others_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    total_others_txt_gst_perc_tv.setVisibility(View.GONE);
+                    tax_dialog_lv.setVisibility(View.GONE);
                 }
             }, 2000);
         }
-
-        else if(id == R.id.cancel_rel_total_tax)
+        else if(id==R.id.cancel_rel_diamond_main_tax)
         {
             Utils.hideKeyboard(activity);
-            cancel_total_others_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            cancel_tax_dialog_lv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    cancel_total_others_txt_gst_perc_tv.setVisibility(View.GONE);
+                    cancel_tax_dialog_lv.setVisibility(View.GONE);
+                }
+            }, 2000);
+        }
+        else if(id==R.id.diamond_tax_main_rel)
+        {
+            Utils.hideKeyboard(activity);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tax_dialog_lv.setVisibility(View.GONE);
+                }
+            }, 2000);
+        }
+        else if(id ==R.id.rel_diamond_tax)
+        {
+            Utils.hideKeyboard(activity);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tax_dialog_lv.setVisibility(View.GONE);
+                }
+            }, 2000);
+        }
+        else if(id == R.id.cancel_rel_total_tax)
+        {
+            Utils.hideKeyboard(activity);
+            cancel_tax_dialog_lv.setVisibility(View.VISIBLE);
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    cancel_tax_dialog_lv.setVisibility(View.GONE);
                 }
             }, 2000);
         }
@@ -285,6 +340,75 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+                        String getexchange_rate=CommonUtility.checkString(jObjDetails.optString("exchange_rate"));
+
+                        JSONObject price_breakupDetails = jObjDetails.optJSONObject("price_breakup");
+                        Log.e("price breakupDetails","...270...."+price_breakupDetails);
+
+                        Log.e("priceBreakup","351..@@@.................."+price_breakupDetails);
+                        String currencySymbol = CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        Log.e("currencySymbol","274...................."+currencySymbol);
+                        if (price_breakupDetails != null) {
+
+                            JSONObject subtotal = price_breakupDetails.optJSONObject("subtotal");
+                            if (subtotal != null) {
+                                if (subtotal.has("gemstone")) {
+                                    int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                    System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                    String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+
+                                    gemstone_cancel_diamond_price_tv.setText(finalAmount);
+                                    /*gemstone_cancel_diamond_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));*/
+                                    gemstone_cancel_diamond_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                } else {
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                    gemstone_cancel_rv.setVisibility(View.GONE);
+                                }
+
+                                if (subtotal.has("diamond"))
+                                {
+                                    int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                    System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                    String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+
+                                    cancel_diamond_price_tv.setText(finalAmount);
+                                    /*cancel_diamond_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));*/
+                                    cancel_diamond_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                }
+                                else {
+                                    diamond_cancel_rv.setVisibility(View.GONE);
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                }
+
+                                JSONObject taxPerc = price_breakupDetails.optJSONObject("tax_perc");
+                                if (taxPerc != null) {
+                                    if (taxPerc.has("gemstone"))
+                                    {
+                                        double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                        System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                        cancel_gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                    } else {
+                                        cancel_gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Tax Percentage: Not Available");
+                                    }
+
+                                    if (taxPerc.has("diamond"))
+                                    {
+                                        double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                        System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                        cancel_diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                    }
+                                    else {
+                                        cancel_diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                            }
+                        }
+
 
                         //detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
                         detailsOrderId = CommonUtility.checkString(jObjDetails.optString("cancel_return_order_id"));
@@ -339,8 +463,10 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_sub_total);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            cancel_final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                           // cancel_diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            cancel_final_amount_tv1.setText(finalAmount);
+                            /*cancel_final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_coupon_discount!=null && !cancel_coupon_discount.equalsIgnoreCase("") && !cancel_coupon_discount.equalsIgnoreCase("0"))
@@ -357,35 +483,49 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_shipping_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            cancel_shipping_and_handling_tv.setText(finalAmount);
+                            /*cancel_shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_platform_fee!=null && !cancel_platform_fee.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_platform_fee);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            cancel_platform_fees_tv.setText(finalAmount);
+                            /*cancel_platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_total_charge!=null && !cancel_total_charge.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_total_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            cancel_total_charges_tv.setText(finalAmount);
+                            /*cancel_total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_total_tax!=null && !cancel_total_tax.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_total_tax);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            cancel_total_taxes_tv.setText(finalAmount);
+                            /*cancel_total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_total_amount!=null && !cancel_total_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_total_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            cancel_sub_total_tv.setText(finalAmount);
+                            /*cancel_sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_wallet_points!=null && !cancel_wallet_points.equalsIgnoreCase("") && !cancel_wallet_points.equalsIgnoreCase("0"))
@@ -402,14 +542,19 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_bank_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            cancel_bank_charges_tv.setText(finalAmount);
+                            /*cancel_bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
 
                         if(cancel_source_amount!=null && !cancel_source_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, cancel_source_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            cancel_final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            cancel_final_amount_tv.setText(finalAmount);
+                            /*cancel_final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         }else{}
                         //-----------------------------------------Cancel Order Summary Data End---------------------------------
 
@@ -423,6 +568,73 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
 
                         // Parent Order Summary Object Data Fetch
                         JSONObject jObjParentOrderSummary = jObjDetails.optJSONObject("parent_order_summery");
+
+
+                        JSONObject priceBreakup = jObjParentOrderSummary.optJSONObject("price_breakup");
+                        Log.e("priceBreakup","351..@@@.................."+priceBreakup);
+                        String currencySymbolreturn = CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        Log.e("currencySymbol","274...................."+currencySymbolreturn);
+                        if (priceBreakup != null) {
+
+                            JSONObject subtotal = priceBreakup.optJSONObject("subtotal");
+                            if (subtotal != null) {
+                                if (subtotal.has("gemstone")) {
+                                    int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                    System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                    String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+
+                                    gemstone_price_tv.setText(finalAmount);
+                                    /*gemstone_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));*/
+                                    gemstone_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                } else {
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                    gemstone_parice_rv.setVisibility(View.GONE);
+                                }
+                                if (subtotal.has("diamond"))
+                                {
+                                    int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                    System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                    String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat1, getexchange_rate, currencySymbol);
+
+                                    diamond_price_tv.setText(finalAmount);
+                                    /*diamond_price_tv.setText(currencySymbol + " " + CommonUtility.currencyFormat(subTotalFormat1));*/
+                                    diamond_price_tv.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                }
+                                else {
+                                    diamond_price_rv.setVisibility(View.GONE);
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                }
+
+                                JSONObject taxPerc = priceBreakup.optJSONObject("tax_perc");
+                                if (taxPerc != null) {
+                                    if (taxPerc.has("gemstone"))
+                                    {
+                                        double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                        System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                        gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                    } else {
+                                        gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Tax Percentage: Not Available");
+                                    }
+
+                                    if (taxPerc.has("diamond"))
+                                    {
+                                        double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                        System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                        diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                    }
+                                    else {
+                                        diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        /*============================================================================================*/
 
                         String payment_mode = CommonUtility.checkString(jObjParentOrderSummary.optString("payment_mode"));
                         String sub_total = CommonUtility.checkString(jObjParentOrderSummary.optString("sub_total"));
@@ -442,16 +654,21 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, sub_total);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
-                            amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            /*amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            amount_tv.setText(finalAmount);
+                            diamond_price_tv.setText(finalAmount);
+                            /*diamond_price_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
+                            /*final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
+                            final_amount_tv1.setText(finalAmount);
                         }else{}
 
                         if(!final_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, final_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            amount_tv.setText(finalAmount);
 
                         }else{}
 
@@ -484,21 +701,27 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, shipping_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            shipping_and_handling_tv.setText(finalAmount);
+                            /*shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(platform_fee!=null && !platform_fee.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, platform_fee);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            platform_fees_tv.setText(finalAmount);
+                            /*platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(total_charge!=null && !total_charge.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, total_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            total_charges_tv.setText(finalAmount);
+                            /*total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
 
@@ -506,28 +729,38 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, total_taxes);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            total_taxes_tv.setText(finalAmount);
+                            /*total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(total_amount!=null && !sub_total.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, total_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            sub_total_tv.setText(finalAmount);
+                            /*sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(bank_charge!=null && !bank_charge.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, bank_charge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+
+                            bank_charges_tv.setText(finalAmount);
+                            /*bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(final_amount!=null && !final_amount.equalsIgnoreCase(""))
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, final_amount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            String finalAmount = CurrencyUtils.calculateFinalAmount(subTotalFormat, getexchange_rate, currencySymbol);
+                            final_amount_tv.setText(finalAmount);
+                            /*final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));*/
                         } else{}
 
                         if(wallet_points!=null && !wallet_points.equalsIgnoreCase("") && !wallet_points.equalsIgnoreCase("0"))
@@ -598,9 +831,10 @@ public class CancelledOrderSummaryScreenActivity extends SuperActivity implement
                         for (int k = 0; k <modelArrayList.size() ; k++)
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, modelArrayList.get(k).getSubTotal());
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-                            modelArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                            modelArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                           // String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                            String finalAmount = CurrencyUtils.calculateFinalAmountwithoutcurrency(subTotalFormat, getexchange_rate);
+                            modelArrayList.get(k).setShowingSubTotal(finalAmount);
+                            modelArrayList.get(k).setCurrencySymbol(currencySymbol);
                         }
 
                         adapter = new OrderSummaryListAdapter(modelArrayList,context,this, "fullOrderCancel");

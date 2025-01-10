@@ -44,7 +44,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:layout_toRightOf="@+id/back_img"
-                android:text="@string/diamond_details"
+                android:text="@string/gemstone_details"
                 android:textColor="@color/purple_light"
                 android:textSize="@dimen/dimen_18" />
 
@@ -386,6 +386,7 @@
                                     android:textSize="@dimen/dimen_16" />
 
                                 <RelativeLayout
+                                    android:layout_marginTop="@dimen/dimen_13"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     >
@@ -400,7 +401,7 @@
                                         android:layout_toLeftOf="@+id/status_return_rel"
                                         android:text="1234567897894 | ID: 1234"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_11" />
+                                        android:textSize="@dimen/dimen_12" />
 
                                     <RelativeLayout
                                         android:id="@+id/status_return_rel"
@@ -495,6 +496,7 @@
 
 
                             <RelativeLayout
+                                android:layout_marginTop="@dimen/dimen_5"
                                 android:gravity="center"
                                 android:id="@+id/rounded"
                                 android:layout_width="match_parent"
@@ -506,6 +508,7 @@
                                     android:orientation="vertical">
 
                                     <TextView
+                                        android:visibility="gone"
                                         android:id="@+id/name_tv"
                                         style="@style/BoldFontType"
                                         android:layout_width="wrap_content"
@@ -517,6 +520,7 @@
 
                                     <!--Item Type Text-->
                                     <TextView
+                                        android:ellipsize="end"
                                         android:id="@+id/item_type_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
@@ -530,160 +534,213 @@
 
                             </RelativeLayout>
 
+
                             <LinearLayout
                                 android:layout_below="@id/rounded"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                >
+                                android:orientation="horizontal"
+                                android:layout_height="fill_parent"
+                                android:layout_width="fill_parent">
 
-                                <TextView
-                                    android:id="@+id/cut_grade_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:hint="GIA"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_11" />
+                                <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+                                    android:layout_marginTop="@dimen/dimen_12"
+                                    android:layout_weight="1.8"
+                                    android:layout_height="fill_parent"
+                                    android:layout_width="0dp">
+                                    <LinearLayout
+                                        android:layout_alignParentStart="true"
+                                        android:id="@+id/giz_linear"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        >
 
-                                <View
-                                    android:id="@+id/cut_grade_view"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="10dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/dimen_6"
-                                    android:layout_marginRight="@dimen/dimen_6"
-                                    android:background="@color/black" />
+                                        <TextView
+                                            android:paddingLeft="@dimen/dimen_5"
+                                            android:paddingTop="@dimen/dimen_5"
+                                            android:paddingRight="@dimen/dimen_5"
+                                            android:paddingBottom="@dimen/dimen_5"
+                                            android:background="@drawable/background_search_item_with_border"
+                                            android:id="@+id/cut_grade_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="GIA"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_11" />
 
-                                <TextView
-                                    android:id="@+id/polish_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:hint="GIA"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_11" />
+                                        <View
+                                            android:visibility="gone"
+                                            android:id="@+id/cut_grade_view"
+                                            android:layout_width="0.5dp"
+                                            android:layout_height="10dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:layout_marginRight="@dimen/dimen_6"
+                                            android:background="@color/black" />
 
-                                <View
-                                    android:id="@+id/polish_view"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="10dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/dimen_6"
-                                    android:layout_marginRight="@dimen/dimen_6"
-                                    android:background="@color/black" />
+                                        <TextView
+                                            android:visibility="gone"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:paddingLeft="@dimen/dimen_5"
+                                            android:paddingTop="@dimen/dimen_5"
+                                            android:paddingRight="@dimen/dimen_5"
+                                            android:paddingBottom="@dimen/dimen_5"
+                                            android:background="@drawable/background_search_item_with_border"
+                                            android:id="@+id/polish_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="GIA"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_11" />
 
-                                <TextView
-                                    android:id="@+id/symmetry_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:hint="GIA"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_11" />
+                                        <View
+                                            android:visibility="gone"
+                                            android:id="@+id/polish_view"
+                                            android:layout_width="0.5dp"
+                                            android:layout_height="10dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:layout_marginRight="@dimen/dimen_6"
+                                            android:background="@color/black" />
 
-                                <View
-                                    android:id="@+id/symmetry_view"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="10dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/dimen_6"
-                                    android:layout_marginRight="@dimen/dimen_6"
-                                    android:background="@color/black" />
+                                        <TextView
+                                            android:visibility="gone"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:paddingLeft="@dimen/dimen_5"
+                                            android:paddingTop="@dimen/dimen_5"
+                                            android:paddingRight="@dimen/dimen_5"
+                                            android:paddingBottom="@dimen/dimen_5"
+                                            android:background="@drawable/background_search_item_with_border"
+                                            android:id="@+id/symmetry_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="GIA"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_11" />
 
-                                <TextView
-                                    android:id="@+id/fluorescence_intensity_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:hint="GIA"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_11" />
+                                        <View
+                                            android:visibility="gone"
+                                            android:id="@+id/symmetry_view"
+                                            android:layout_width="0.5dp"
+                                            android:layout_height="10dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:layout_marginRight="@dimen/dimen_6"
+                                            android:background="@color/black" />
 
-                                <View
-                                    android:id="@+id/fluorescence_view"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="10dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/dimen_6"
-                                    android:layout_marginRight="@dimen/dimen_6"
-                                    android:background="@color/black" />
+                                        <TextView
+                                            android:visibility="gone"
+                                            android:id="@+id/fluorescence_intensity_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="GIA"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_11" />
 
-                                <TextView
-                                    android:id="@+id/certificate_name_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:hint="GIA"
-                                    android:paddingTop="@dimen/dimen_5"
-                                    android:paddingBottom="@dimen/dimen_5"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_11" />
+                                        <View
+                                            android:visibility="gone"
+                                            android:id="@+id/fluorescence_view"
+                                            android:layout_width="0.5dp"
+                                            android:layout_height="10dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/dimen_6"
+                                            android:layout_marginRight="@dimen/dimen_6"
+                                            android:background="@color/black" />
+
+                                        <TextView
+                                            android:visibility="gone"
+                                            android:id="@+id/certificate_name_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="GIA"
+                                            android:paddingTop="@dimen/dimen_5"
+                                            android:paddingBottom="@dimen/dimen_5"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_11" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_weight=".9"
+                                    android:layout_height="fill_parent"
+                                    android:layout_width="0dp">
+                                    <RelativeLayout
+                                        android:layout_toEndOf="@+id/giz_linear"
+                                        android:id="@+id/terms_layout"
+                                        android:layout_alignParentBottom="true"
+                                        android:paddingBottom="@dimen/dimen_5"
+                                        android:layout_gravity="right"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
+                                        <TextView
+                                            android:id="@+id/sub_total_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="right"
+                                            android:layout_marginLeft="@dimen/dimen_2"
+                                            android:layout_marginRight="@dimen/dimen_3"
+                                            android:gravity="bottom"
+                                            android:paddingLeft="@dimen/dimen_2"
+                                            android:paddingRight="@dimen/dimen_2"
+                                            android:text="0.00"
+                                            android:textColor="@color/purple_light"
+                                            android:textSize="@dimen/dimen_16" />
+
+                                        <TextView
+                                            android:visibility="gone"
+                                            android:layout_below="@+id/sub_total_tv"
+                                            android:id="@+id/dis_sub_total_tv"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="right"
+                                            android:layout_marginLeft="@dimen/dimen_2"
+                                            android:layout_marginRight="@dimen/dimen_3"
+                                            android:gravity="right"
+                                            android:paddingLeft="@dimen/dimen_2"
+                                            android:paddingRight="@dimen/dimen_2"
+                                            android:layout_marginBottom="@dimen/dimen_2"
+                                            android:textColor="@color/light_gray2"
+                                            android:textSize="@dimen/dimen_13" />
+
+                                        <TextView
+                                            android:layout_below="@+id/dis_sub_total_tv"
+                                            android:id="@+id/shipping_lbl"
+                                            style="@style/BoldFontType"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="@dimen/dimen_2"
+                                            android:layout_marginRight="@dimen/dimen_5"
+                                            android:paddingLeft="@dimen/dimen_2"
+                                            android:paddingRight="@dimen/dimen_2"
+                                            android:text="@string/shipping_taxes_extra"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_9"
+                                            android:textStyle="italic" />
+                                    </RelativeLayout>
+                                </LinearLayout>
+
                             </LinearLayout>
 
 
-                            <RelativeLayout
-                                android:layout_alignParentBottom="true"
-                                android:paddingBottom="@dimen/dimen_5"
-                                android:layout_gravity="right"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:id="@+id/sub_total_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_gravity="right"
-                                    android:layout_marginLeft="@dimen/dimen_2"
-                                    android:layout_marginRight="@dimen/dimen_3"
-                                    android:gravity="bottom"
-                                    android:paddingLeft="@dimen/dimen_2"
-                                    android:paddingRight="@dimen/dimen_2"
-                                    android:text="0.00"
-                                    android:textColor="@color/purple_light"
-                                    android:textSize="@dimen/dimen_16" />
 
-                                <TextView
-                                    android:visibility="gone"
-                                    android:layout_below="@+id/sub_total_tv"
-                                    android:id="@+id/dis_sub_total_tv"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_gravity="right"
-                                    android:layout_marginLeft="@dimen/dimen_2"
-                                    android:layout_marginRight="@dimen/dimen_3"
-                                    android:gravity="right"
-                                    android:paddingLeft="@dimen/dimen_2"
-                                    android:paddingRight="@dimen/dimen_2"
-                                    android:layout_marginBottom="@dimen/dimen_2"
-                                    android:textColor="@color/light_gray2"
-                                    android:textSize="@dimen/dimen_13" />
 
-                                <TextView
-                                    android:layout_below="@+id/dis_sub_total_tv"
-                                    android:id="@+id/shipping_lbl"
-                                    style="@style/BoldFontType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginLeft="@dimen/dimen_2"
-                                    android:layout_marginRight="@dimen/dimen_5"
-                                    android:paddingLeft="@dimen/dimen_2"
-                                    android:paddingRight="@dimen/dimen_2"
-                                    android:text="@string/shipping_taxes_extra"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_9"
-                                    android:textStyle="italic" />
-                            </RelativeLayout>
+
 
 
 
@@ -901,7 +958,7 @@
                                 style="@style/SemiBoldFontType"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/diamond_details"
+                                android:text="@string/details"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_16" />
 
@@ -929,98 +986,13 @@
                             android:orientation="vertical"
                             android:visibility="gone">
 
-                            <!--Depth, Table Details-->
-                            <LinearLayout
+                            <TextView
+                                style="@style/SemiBoldFontType"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingTop="@dimen/dimen_8"
-                                android:paddingBottom="@dimen/dimen_8"
-                                android:weightSum="3">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="0.8"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/measurerements"
-                                        android:textColor="@color/light_gray2"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        android:id="@+id/details_measurements_tv"
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_2"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/depth_string1"
-                                        android:textColor="@color/light_gray2"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        android:id="@+id/details_depth_tv"
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_2"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1.1"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/table_string1"
-                                        android:textColor="@color/light_gray2"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        android:id="@+id/details_table_tv"
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_2"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
+                                android:text="@string/measurement_details"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14" />
 
                             <!--Crown Details-->
                             <LinearLayout
@@ -1036,57 +1008,59 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="0.8"
+                                    android:layout_weight="1.8"
                                     android:orientation="vertical">
 
                                     <TextView
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/crown_height"
+                                        android:text="@string/exact_dimensions"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/details_crown_height_tv"
+                                        android:id="@+id/exact_dimensions_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:gravity="start"
+                                    android:layout_gravity="start"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="1.1"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/crown_angle"
+                                        android:text="@string/refractive_index"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/details_crown_angle_tv"
+                                        android:id="@+id/refractive_index_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
-                                <LinearLayout
+                                <!--<LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1.1"
@@ -1110,12 +1084,12 @@
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/dimen_12" />
 
-                                </LinearLayout>
+                                </LinearLayout>-->
 
 
                             </LinearLayout>
 
-                            <!--Pavilion Details-->
+                            <!--weight_Carat, weight_Ratti, Gravity Details-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1129,128 +1103,26 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="0.8"
+                                    android:layout_weight="0.9"
                                     android:orientation="vertical">
 
                                     <TextView
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/pavilion_depth"
+                                        android:text="@string/weight_Carat"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/details_pavilion_depth_tv"
+                                        android:id="@+id/weight_cart_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="1.1"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/pavilion_angle"
-                                        android:textColor="@color/light_gray2"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        android:id="@+id/details_pavilion_angle_tv"
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_2"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1.1"
-                                    android:orientation="vertical"
-                                    android:visibility="invisible">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/table_string1"
-                                        android:textColor="@color/light_gray1"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_5"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-                            <TextView
-                                style="@style/SemiBoldFontType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_10"
-                                android:text="@string/additional_details"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/dimen_14" />
-
-                            <!--Shade Details-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingTop="@dimen/dimen_9"
-                                android:paddingBottom="@dimen/dimen_8"
-                                android:weightSum="3">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="0.8"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/shade"
-                                        android:textColor="@color/light_gray2"
-                                        android:textSize="@dimen/dimen_12" />
-
-                                    <TextView
-                                        android:id="@+id/details_shade_tv"
-                                        style="@style/SemiBoldFontType"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dimen_2"
-                                        android:text="-"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
@@ -1265,19 +1137,19 @@
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/grille_condition_cult"
+                                        android:text="@string/weight_ratti"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/details_condition_cult_tv"
+                                        android:id="@+id/weight_ratti_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
@@ -1285,6 +1157,110 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1.1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/gravity"
+                                        android:textColor="@color/light_gray2"
+                                        android:textSize="@dimen/dimen_12" />
+
+                                    <TextView
+                                        android:id="@+id/gravity_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:text="-"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_13" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+
+                            <TextView
+                                style="@style/SemiBoldFontType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:text="@string/additional_details"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14" />
+
+                            <!--Item Treatment Composition text-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/dimen_9"
+                                android:paddingBottom="@dimen/dimen_8"
+                                android:weightSum="3">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_2"
+                                    android:layout_weight="0.9"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Item"
+                                        android:textColor="@color/light_gray2"
+                                        android:textSize="@dimen/dimen_12" />
+
+                                    <TextView
+                                        android:id="@+id/details_item_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:text="-"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_13" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_2"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/treatment"
+                                        android:textColor="@color/light_gray2"
+                                        android:textSize="@dimen/dimen_12" />
+
+                                    <TextView
+                                        android:id="@+id/treatment_tv"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:text="-"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_13" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:orientation="vertical"
                                     android:visibility="visible">
 
@@ -1292,26 +1268,26 @@
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/culet"
+                                        android:text="@string/composition"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/culet_id"
+                                        android:id="@+id/composition_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
 
                             </LinearLayout>
 
-                            <!--Growth Type Details-->
+                            <!--Location , StockNo-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1325,26 +1301,26 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
-                                    android:layout_weight="0.8"
+                                    android:layout_weight="0.9"
                                     android:orientation="vertical">
 
                                     <TextView
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/growth_type"
+                                        android:text="@string/location"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
                                     <TextView
-                                        android:id="@+id/details_growth_type_tv"
+                                        android:id="@+id/location_tv"
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
@@ -1359,7 +1335,7 @@
                                         style="@style/SemiBoldFontType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/inclusions"
+                                        android:text="@string/stock_no"
                                         android:textColor="@color/light_gray2"
                                         android:textSize="@dimen/dimen_12" />
 
@@ -1371,7 +1347,7 @@
                                         android:layout_marginTop="@dimen/dimen_2"
                                         android:text="-"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/dimen_12" />
+                                        android:textSize="@dimen/dimen_13" />
 
                                 </LinearLayout>
 
@@ -1406,6 +1382,7 @@
 
                             <!--Status Location Details-->
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -1499,6 +1476,7 @@
 
                             <!--Key Symbole-->
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -1525,6 +1503,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
@@ -1549,7 +1528,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                                android:orientation="vertical"
                                 android:paddingTop="@dimen/dimen_8"
                                 android:paddingBottom="@dimen/dimen_8"
                                 android:weightSum="3">
@@ -1573,6 +1552,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:layout_marginTop="@dimen/dimen_5"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"
@@ -1597,7 +1577,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                                android:orientation="vertical"
                                 android:paddingTop="@dimen/dimen_8"
                                 android:paddingBottom="@dimen/dimen_8"
                                 android:weightSum="3">
@@ -1621,6 +1601,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:layout_marginTop="@dimen/dimen_5"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/dimen_2"

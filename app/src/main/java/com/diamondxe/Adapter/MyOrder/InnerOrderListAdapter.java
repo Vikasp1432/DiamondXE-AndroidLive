@@ -47,6 +47,7 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return new RecycleViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
@@ -86,7 +87,7 @@ public class InnerOrderListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if(!list.get(position).getSubTotal().equalsIgnoreCase(""))
         {
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol()+CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
         }else {}
 
         if(list.get(position).getCategory().equalsIgnoreCase("Natural"))

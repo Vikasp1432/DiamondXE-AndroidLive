@@ -65,7 +65,7 @@
             android:textCursorDrawable="@null"
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
-            app:queryHint="@string/search"
+            app:queryHint="@string/search_"
             android:layout_marginEnd="5dp"/>
 
 

@@ -13,6 +13,8 @@
 
     <string name="navigation_create_diamond">Create Diamond</string>
 
+    <string name="navigation_franchise_with_us">Franchise with us</string>
+
     <string name="navigation_Jewellery">Jewellery</string>
     <string name="navigation_rings">Rings</string>
     <string name="navigation_earrings">Earrings</string>
@@ -171,6 +173,7 @@
     <string name="noofferavailable">No offer available</string>
     <string name="allofferforyou">All offers for you</string>
     <string name="diamond_details">Diamond Details</string>
+    <string name="gemstone_details">Gemstone Details</string>
     <string name="product_details">Product Details</string>
     <string name="shipping_taxes_extra">Shipping &amp; Taxes extra</string>
     <string name="reserve_diamond">Reserve Diamond</string>
@@ -399,6 +402,7 @@
     <string name="public_limited">Public Limited</string>
     <string name="others">Others</string>
 
+    <string name="manufacture">Manufacture</string>
     <string name="rerailer">Rerailer</string>
     <string name="wholesaler">Wholesaler</string>
     <string name="trader">Trader</string>
@@ -442,6 +446,7 @@
     <string name="custom_payment">Custom Payment</string>
     <string name="api_solutions">API Solution</string>
     <string name="delete_account">Delete Account</string>
+    <string name="franchise_with_us">Franchise with us</string>
 
     <string name="personal_profile">Personal Profile</string>
     <string name="select_company_type">Select Company Type*</string>
@@ -607,7 +612,9 @@
     <string name="date_required">Date is required</string>
 
     <string name="payment_processing">Payment processing!</string>
-    <string name="payment_under_review">Your Payment is under review,\ndetails of the transaction are\nmentioned below</string>
+    <string name="payment_under_review_only">Your payment is now under process,</string>
+    <string name="payment_under_review_details">details of the transactions are mentioned below</string>
+    <string name="payment_under_review">Your Payment is under review,\n\ndetails of the transaction are\nmentioned below</string>
     <string name="order_id">Order ID</string>
     <string name="payment_mode">Payment Mode</string>
     <string name="refund_payment_mode">Refund Payment Mode</string>
@@ -646,7 +653,8 @@
     <string name="platform_fees">Platform Fees</string>
     <string name="total_charges">Total Charges</string>
     <string name="other_taxes">Other Taxes</string>
-    <string name="diamonds_taxes">Diamond(s) Tax</string>
+    <!--<string name="diamonds_taxes">Diamond(s) Tax</string>-->
+    <string name="diamonds_taxes">Tax</string>
     <string name="total_taxes">Total Taxes</string>
     <string name="sub_total">Sub Total</string>
     <string name="bank_charges">Bank Charge</string>
@@ -696,6 +704,7 @@
     <string name="cancel_date">Cancel Date</string>
     <string name="return_date">Return Date</string>
     <string name="diamond_price">Diamond Price</string>
+    <string name="gemstone_price">Gemstone Price</string>
     <string name="order_tracking">Order Tracking</string>
     <string name="we_have_received_order">We have received your order</string>
     <string name="in_progress">In Progress</string>
@@ -1064,5 +1073,68 @@ the slider to measure ring size.</string>
 
     <string name="cuttingstyle">Cutting Style</string>
 
+    <string name="ok">OK</string>
+
+    <string name="important_update_required">Important Update Required!</string>
+    <string name="important_update_required_content">This update includes new features, \n improvements, and critical fixes for \n better performance.</string>
+    <string name="update_now">Update Now</string>
+
+
+    <string name="why_franchinse_with">Why Franchise with</string>
+    <string name="lab_grown_jewe">Extensive Lab-Grown Jewellery Collection</string>
+
+    <string name="attractive_revenue_potential">Attractive Revenue Potential</string>
+    <string name="operational_independence">Operational Independence</string>
+    <string name="end_backend_assistance">End-to-End Backend Assistance</string>
+
+    <string name="digital_and_marketing_support">Cutting-Edge Digital and Marketing Support</string>
+
+    <string name="franchise_inquiry_form">Franchise inquiry form</string>
+
+
+    <string name="thank_you_novaara">Thank you for your interest in becoming a \n
+    franchise partner with NOVAARA</string>
+
+
+    <string name="your_name_nova">Your name*</string>
+    <string name="mobile_no_nova">Mobile number*</string>
+    <string name="email_nova">Email*</string>
+    <string name="country_nova">Country*</string>
+    <string name="state_nova">State*</string>
+    <string name="city_nova">City*</string>
+    <string name="pincode_nova">Pin code*</string>
+    <string name="select_nature_nova">Select nature</string>
+    <string name="nature_of_bus_nova">Nature of business*</string>
+    <string name="nature_of_bus_requ_nova">Nature of business required</string>
+    <string name="book_your_appointment_nova">Book your appointment*</string>
+    <string name="book_your_appointment_required_nova">Book your appointment required</string>
+    <string name="email_dummy_hint">abc@diamondxe.com</string>
+
+
+    <string name="inquiry_submitted">Inquiry submitted!</string>
+
+    <string name="inquiry_submitted_thankyou">Thank you for your interest, our support team will\n
+    contact you soon!\n
+    For quick assistance kindly email on\n
+    franchise@diamondxe.com</string>
+
+    <string name="ct_gem">ct</string>
+    <string name="measurement_details">Measurement Details</string>
+
+    <string name="exact_dimensions">Exact Dimensions</string>
+    <string name="refractive_index">Refractive Index</string>
+    <string name="weight_Carat">Weight (Carat)</string>
+    <string name="weight_ratti">Weight (Ratti)</string>
+    <string name="gravity">Gravity</string>
+
+    <string name="stock_no">Stock No.</string>
+    <string name="composition">Composition</string>
+    <string name="search_">Search</string>
+    <string name="gemstone_type">Gemstone Type</string>
+
+    <string name="order_place_success">Order placed successfully</string>
+    <string name="order_availability_diamond">*Please note: Availability of diamond(s) is subject to confirmation.</string>
 
 </resources>
+
+

@@ -1,5 +1,6 @@
 package com.diamondxe.ApiCalling;
 
+import static com.diamondxe.ApiCalling.ApiConstants.ACCOUNT_STATEMENT;
 import static com.diamondxe.ApiCalling.ApiConstants.DEALER_SETTING;
 import static com.diamondxe.ApiCalling.ApiConstants.DIAMOND_SIZE_PREVIEW;
 import static com.diamondxe.ApiCalling.ApiConstants.GET_ADDRESS_BILLING;
@@ -44,6 +45,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.diamondxe.Activity.PaymentPages.AppInfoManager;
 import com.diamondxe.Activity.TransparentActivity;
 import com.diamondxe.Interface.JsonResponce;
 import com.diamondxe.MyApplication;
@@ -194,14 +196,16 @@ public class VollyApiActivity {
             _requestType.equalsIgnoreCase(GET_ADDRESS_SHIPPING) || _requestType.equalsIgnoreCase(GET_ADDRESS_BILLING) ||
             _requestType.equalsIgnoreCase(GET_KYC_DETAILS) || _requestType.equalsIgnoreCase(DEALER_SETTING) ||
             _requestType.equalsIgnoreCase(PHONE_PE_PAYMENT_OPTION) ||
-            _requestType.equalsIgnoreCase(GET_BANK_CHARGES) || _requestType.equalsIgnoreCase(ORDER_CANCEL_REASON)||_requestType.equalsIgnoreCase(GET_GEMSTONES) || _requestType.equalsIgnoreCase(GET_GEMSTONES_DETAILS))
+            _requestType.equalsIgnoreCase(GET_BANK_CHARGES) || _requestType.equalsIgnoreCase(ORDER_CANCEL_REASON)||
+                    _requestType.equalsIgnoreCase(GET_GEMSTONES)
+                    || _requestType.equalsIgnoreCase(GET_GEMSTONES_DETAILS) || _requestType.equalsIgnoreCase(ACCOUNT_STATEMENT))
             {
+
                 Uri.Builder builder = Uri.parse(ApiConstants.DOMAIN_NAME + _requestType).buildUpon();
                 for (Map.Entry<String, String> entry : _dataToPost.entrySet()) {
                     builder.appendQueryParameter(entry.getKey(), entry.getValue());
                 }
                 // _url = builder.build().toString();
-
                 _url = ApiConstants.DOMAIN_NAME + _requestType + constructUrlParameters(_dataToPost);
 
                 Log.e("------Diamond-----", "_url_final : " + _url);
@@ -290,7 +294,7 @@ public class VollyApiActivity {
                             // Now you can use any deserializer to make sense of data
 
                             Log.v("Diamond","Error : "+res);
-                            JSONObject obj = new JSONObject(res);
+                           // JSONObject obj = new JSONObject(res);
                         } catch (UnsupportedEncodingException e1) {
                             // Couldn't properly decode data to string
                             e1.printStackTrace();
@@ -358,6 +362,11 @@ public class VollyApiActivity {
                     }
                     _dataToPost.put("deviceId", uuid);
                     _dataToPost.put("sessionId", uuid);
+
+                    String appVersion = AppInfoManager.INSTANCE.getAppVersion(context);
+                    System.out.println("Current App Version api: " + appVersion);
+                    _dataToPost.put("deviceType", "Android");
+                    _dataToPost.put("appVersion", appVersion);
 
                     return _dataToPost;
                 }

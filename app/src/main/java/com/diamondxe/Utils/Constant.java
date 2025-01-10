@@ -37,6 +37,7 @@ import java.util.ArrayList;
     public static String country= "";
     public static String state= "";
     public static String city= "";
+    public static String countyImage= "";
     public static String countryID= "";
     public static String stateID= "";
     public static String cityID= "";

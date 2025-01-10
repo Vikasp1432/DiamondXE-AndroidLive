@@ -46,6 +46,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -71,7 +73,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
     private EndlessRecyclerViewScrollListener scrollListener;
     String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
     String detailsOrderId = "", detailsCreatedAt="", trackingNo = "", currentStatusCode = "", latestStatus = "", remark = "", date = "",trackingDateTeime="";
-
+    String getCurrecnyCode;
     public RecentOrderListFragment() {
         // Required empty public constructor
     }
@@ -88,7 +90,6 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         View view =  inflater.inflate(R.layout.fragment_recent_order_list, container, false);
 
         context = activity = getActivity();
-
         init(view);
 
         return view;
@@ -217,7 +218,7 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
             progressBar.setVisibility(View.GONE);
         }
         try {
-            Log.v("------Diamond----- : ", "--------JSONObjectRecent-------- : " + jsonObject);
+            Log.v("------Diamond----- : ", "-@@@@220-------JSONObjectRecent-------- : " + jsonObject);
 
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
@@ -265,7 +266,12 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                             model.setIsReserveOrder(CommonUtility.checkString(objectCodes.optString("is_reserve_order")));
                             model.setPaymentReceivedDate(CommonUtility.checkString(objectCodes.optString("payment_received_date")));
                             model.setTimeLeftForCancel(CommonUtility.checkString(objectCodes.optString("time_left_for_cancel")));
+                            model.setExchangerate(CommonUtility.checkString(objectCodes.optString("exchange_rate")));
 
+                            String getCurrencySymbol=CommonUtility.checkString(objectCodes.optString("currency_symbol"));
+                            String getexchange_rate=CommonUtility.checkString(objectCodes.optString("exchange_rate"));
+                            Log.e("getCurrencySymbol","270..@@..."+getCurrencySymbol);
+                            Log.e("getexchange_rate","270..@@..."+getexchange_rate);
                             if(!objectCodes.optString("created_at").equalsIgnoreCase(""))
                             {
                                 String convertData = CommonUtility.convertDateTimeIntoLocal(objectCodes.optString("created_at"), ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
@@ -312,10 +318,27 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                             {
 
                                 String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, innerOrderArrayList.get(k).getSubTotal());
-                                String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                               // String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
-                                innerOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                                innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                                try {
+                                    double subTotal = Double.parseDouble(subTotalFormat);
+                                    double exchangeRate = Double.parseDouble(getexchange_rate);
+
+                                    double resultDouble = subTotal * exchangeRate;
+                                    int result = (int) resultDouble;
+
+                                    // Log.e("result", "..14000..." + result);
+                                    BigDecimal bd = new BigDecimal(resultDouble).setScale(2, RoundingMode.HALF_UP);
+                                    double resultWithTwoDecimals = bd.doubleValue();
+                                    Log.e("resultWithTwoDecimals","..333...."+resultWithTwoDecimals);
+                                    innerOrderArrayList.get(k).setShowingSubTotal(String.valueOf(resultWithTwoDecimals));
+                                    innerOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+
+
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+
 
                             }
 
@@ -357,6 +380,12 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                         detailsOrderId = CommonUtility.checkString(jObjDetails.optString("order_id"));
                         detailsCreatedAt = CommonUtility.checkString(jObjDetails.optString("created_at"));
 
+                        String  currency_code=CommonUtility.checkString(jObjDetails.optString("currency_code"));
+                        String  getCurrencySymbol=CommonUtility.checkString(jObjDetails.optString("currency_symbol"));
+                        String  getexchange_rate=CommonUtility.checkString(jObjDetails.optString("exchange_rate"));
+                        getCurrecnyCode=currency_code;
+                        Log.e("getCurrencySymbol","270..@@..."+getCurrencySymbol);
+                        Log.e("getexchange_rate","270..@@..."+getexchange_rate);
                         if(!detailsCreatedAt.equalsIgnoreCase(""))
                         {
                             detailsCreatedAt = CommonUtility.convertDateTimeIntoLocal(detailsCreatedAt, ApiConstants.DATE_FORMAT, "dd/MM/yyyy, hh:mm:ss a");
@@ -399,16 +428,34 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
                             model.setTable(CommonUtility.checkString(jOBJNEW.optString("table_perc")));
                             model.setCertificateName(CommonUtility.checkString(jOBJNEW.optString("certificate_name")));
                             model.setCurrencySymbol(ApiConstants.rupeesIcon);
-
                             recentOrderArrayList.add(model);
                         }
 
                         for (int k = 0; k <recentOrderArrayList.size() ; k++)
                         {
                             String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, recentOrderArrayList.get(k).getSubTotal());
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                            /*String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             recentOrderArrayList.get(k).setShowingSubTotal(subTotalFormat);
-                            recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+                            recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);*/
+
+                            try {
+                                double subTotal = Double.parseDouble(subTotalFormat);
+                                double exchangeRate = Double.parseDouble(getexchange_rate);
+
+                                double resultDouble = subTotal * exchangeRate;
+                                int result = (int) resultDouble;
+
+                                // Log.e("result", "..14000..." + result);
+                                BigDecimal bd = new BigDecimal(resultDouble).setScale(2, RoundingMode.HALF_UP);
+                                double resultWithTwoDecimals = bd.doubleValue();
+                                Log.e("resultWithTwoDecimals","..333...."+resultWithTwoDecimals);
+                                recentOrderArrayList.get(k).setShowingSubTotal(String.valueOf(resultWithTwoDecimals));
+                                recentOrderArrayList.get(k).setCurrencySymbol(getCurrencySymbol);
+
+
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         showOrderDetailsBottomDialog();
@@ -566,8 +613,15 @@ public class RecentOrderListFragment extends SuperFragment implements TwoRecycle
         TextView order_number_tv = dialog.findViewById(R.id.order_number_tv);
         TextView date_time_tv = dialog.findViewById(R.id.date_time_tv);
 
-        textView2.setText(getResources().getString(R.string.diamond_details));
+        /*if(getCurrecnyCode.equalsIgnoreCase("IND"))
+        {
 
+        }
+        else {
+
+        }*/
+        /*textView2.setText(getResources().getString(R.string.diamond_details));*/
+        textView2.setText(getResources().getString(R.string.order_details));
         order_number_tv.setText("#"+detailsOrderId);
         date_time_tv.setText(detailsCreatedAt);
 

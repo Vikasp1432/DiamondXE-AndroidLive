@@ -105,6 +105,7 @@
 
                             <!--Diamond Price Layout-->
                             <RelativeLayout
+                                android:id="@+id/diamond_price_rv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/background_pink"
@@ -126,6 +127,39 @@
 
                                 <TextView
                                     android:id="@+id/diamond_price_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="₹0"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_16" />
+                            </RelativeLayout>
+
+                            <!--GemStone Price-->
+                            <RelativeLayout
+                                android:id="@+id/gemstone_parice_rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_pink"
+                                android:paddingBottom="@dimen/dimen_10"
+                                android:paddingTop="@dimen/dimen_10"
+                                android:paddingRight="@dimen/dimen_10"
+                                android:paddingLeft="@dimen/dimen_10">
+
+                                <TextView
+                                    android:id="@+id/gemstone_price_tv_lbl"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:layout_toLeftOf="@+id/gemstone_price_tv"
+                                    android:text="@string/gemstone_price"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_16" />
+
+                                <TextView
+                                    android:id="@+id/gemstone_price_tv"
                                     style="@style/BoldFontType"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -373,15 +407,54 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
-                                        android:text="₹0"
+                                        android:text="0"
                                         android:textColor="@color/grey"
                                         android:textSize="@dimen/dimen_16" />
 
                                 </RelativeLayout>
 
 
+
+                                <LinearLayout
+                                    android:id="@+id/tax_dialog_lv"
+                                    android:visibility="gone"
+                                    android:orientation="vertical"
+                                    android:layout_marginLeft="@dimen/dimen_60"
+                                    android:background="@drawable/background_black"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/diamond_txt_gst_perc_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_5"
+                                        android:paddingRight="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_5"
+                                        android:text="1.5% GST"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/dimen_11"
+                                        android:visibility="visible" />
+                                    <TextView
+                                        android:id="@+id/gemstone_txt_gst_perc_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_5"
+                                        android:paddingRight="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_5"
+                                        android:text="1.5% GST"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/dimen_11"
+                                        android:visibility="visible" />
+
+                                </LinearLayout>
+
                                 <TextView
-                                    android:id="@+id/diamond_txt_gst_perc_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"

@@ -1,15 +1,14 @@
 package com.diamondxe.Activity.PaymentPages
 
 import android.app.Activity
-import android.content.Context
+import android.util.Log
+import com.diamondxe.BuildConfig
 import com.diamondxe.R
 import com.razorpay.Checkout
 import org.json.JSONException
 import org.json.JSONObject
 
 object RazorpayUtility {
-
-    private const val RAZORPAY_KEY_ID = "rzp_test_rfy0AcVmf33RWF"
 
     fun initializePayment(
         activity: Activity,
@@ -18,10 +17,11 @@ object RazorpayUtility {
         email: String,
         paymentMethod: PaymentMethod,
         appName: String,
-        appIcon: Int
+        orderId: String,
     ) {
+        Log.e("orderId", "..22.payment start...$orderId")
         val checkout = Checkout()
-        checkout.setKeyID(RAZORPAY_KEY_ID)
+        checkout.setKeyID(BuildConfig.RAZORPAY_KEY_ID)
         checkout.setImage(R.drawable.appicon)
 
         val paymentObject = JSONObject()
@@ -32,6 +32,7 @@ object RazorpayUtility {
             paymentObject.put("amount", amount * 100)
             paymentObject.put("prefill.contact", contact)
             paymentObject.put("prefill.email", email)
+            paymentObject.put("order_id", orderId)
 
             val paymentMethods = JSONObject().apply {
                 put("netbanking", paymentMethod == PaymentMethod.NET_BANKING)

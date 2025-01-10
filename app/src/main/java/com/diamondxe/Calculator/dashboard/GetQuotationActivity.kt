@@ -10,7 +10,9 @@ import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +28,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.diamondxe.R
+import com.diamondxe.Utils.CommonUtility
 import com.diamondxe.databinding.ActivityGetQuotationBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -36,6 +39,12 @@ class GetQuotationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGetQuotationBinding
     private  var  getTaxAmountFinal:String =""
+    var FinalValueMetal:String=""
+    var FinalValueLabour:String=""
+    var FinalValueSolitaire:String=""
+    var FinalValueSideDIA:String=""
+    var FinalValueCol:String=""
+    var FinalValueCharger:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,9 +67,13 @@ class GetQuotationActivity : AppCompatActivity() {
 
         val date = intent.getStringExtra("date")?.takeIf { it.isNotBlank() } ?: "0.0"
         binding.currentdate.setText(date)
+        val currencyCode = intent.getStringExtra("currencyCode")?.takeIf { it.isNotBlank() } ?: "0.0"
+        val currencyValue = intent.getStringExtra("currencyValue")?.takeIf { it.isNotBlank() } ?: "0.0"
 
+
+        Log.e("currencyCode","..65.."+currencyCode)
         val metalwt = intent.getStringExtra("metalwt")?.takeIf { it.isNotBlank() } ?: "0.0"
-        val metalrategm = intent.getStringExtra("metalrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+        var metalrategm = intent.getStringExtra("metalrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
         val metalrateop = intent.getStringExtra("metalrateop")?.takeIf { it.isNotBlank() } ?: "0"
 
         val labour = intent.getStringExtra("labour")?.takeIf { it.isNotBlank() } ?: "0.0"
@@ -94,39 +107,41 @@ class GetQuotationActivity : AppCompatActivity() {
 
         val intentID = intent.getLongExtra("ID", -1L).takeIf { it != -1L }
 
-        binding.itemname.setText(itemName)
-        binding.itemcaert.setText(caret)
-        binding.diamondname.setText(radiobuttonName)
-        binding.othercharge.setText(chargeText)
-        binding.sideDIA.setText(sideDIAText)
-        binding.solitairetxt.setText(solitaireText)
+
+        binding.itemname.text = itemName
+        binding.itemcaert.text = caret
+        binding.diamondname.text = radiobuttonName
+        binding.othercharge.text = chargeText
+        binding.sideDIA.text = sideDIAText
+        binding.solitairetxt.text = solitaireText
 
 
 
         binding.editQuotation.setOnClickListener(){
+            Log.e("intentID","..115.........."+intentID)
             val intent = Intent(this, JewelleryActivity::class.java)
             intent.putExtra("ID", intentID)
             intent.putExtra("metalwt", metalwt)
-            intent.putExtra("metalrategm", metalrategm)
+            intent.putExtra("metalrategm", String.format("%.2f", metalrategm.toFloat()))
             intent.putExtra("metalrateop", metalrateop)
 
             intent.putExtra("labour", labour)
-            intent.putExtra("labourrategm", labourrategm)
+            intent.putExtra("labourrategm", String.format("%.2f", labourrategm.toFloat()))
             intent.putExtra("labourop", labourop)
 
             intent.putExtra("solitaire", solitaire)
-            intent.putExtra("solitairerategm", solitairerategm)
+            intent.putExtra("solitairerategm", String.format("%.2f", solitairerategm.toFloat()))
             intent.putExtra("solitaireop", solitaireop)
 
             intent.putExtra("sidedia", sidedia)
-            intent.putExtra("sidediarategm", sidediarategm)
+            intent.putExtra("sidediarategm", String.format("%.2f", sidediarategm.toFloat()))
             intent.putExtra("sidediaop", sidediaop)
 
             intent.putExtra("colstonewt", colstonewt)
-            intent.putExtra("colstonerategm", colstonerategm)
+            intent.putExtra("colstonerategm", String.format("%.2f", colstonerategm.toFloat()))
             intent.putExtra("colstoneop", colstoneop)
 
-            intent.putExtra("charges", charges)
+            intent.putExtra("charges", String.format("%.2f", charges.toFloat()) )
             intent.putExtra("tax", tax)
             intent.putExtra("totalPrice", totalPrice)
 
@@ -136,23 +151,23 @@ class GetQuotationActivity : AppCompatActivity() {
             intent.putExtra("chargeText", charges)
             intent.putExtra("solitaireText", solitaireText)
             intent.putExtra("sideDIAText", sideDIAText)
-
+            intent.putExtra("currencyCode", currencyCode)
+            intent.putExtra("currencyValue", currencyValue)
             startActivity(intent)
 
         }
-        val metalrateop1 = metalrateop!!.toDoubleOrNull() ?: 0.0
-        val labourop1 = labourop!!.toDoubleOrNull() ?: 0.0
-        val solitaireop1 = solitaireop!!.toDoubleOrNull() ?: 0.0
-        val sidediaop1 = sidediaop!!.toDoubleOrNull() ?: 0.0
-        val colstoneop1 = colstoneop!!.toDoubleOrNull() ?: 0.0
-        val charges1 = charges!!.toDoubleOrNull() ?: 0.0
-        val tax1 = tax!!.toDoubleOrNull() ?: 0.0
+        val metalrateop1 = metalrateop.toDoubleOrNull() ?: 0.0
+        val labourop1 = labourop.toDoubleOrNull() ?: 0.0
+        val solitaireop1 = solitaireop.toDoubleOrNull() ?: 0.0
+        val sidediaop1 = sidediaop.toDoubleOrNull() ?: 0.0
+        val colstoneop1 = colstoneop.toDoubleOrNull() ?: 0.0
+        val charges1 = charges.toDoubleOrNull() ?: 0.0
+        val tax1 = tax.toDoubleOrNull() ?: 0.0
         Log.e("tax", "Tax Amount: $tax")
         if (tax!="0" )
         {
             Log.e("totalPrice","..."+totalPrice)
             val totalPrice1 = totalPrice?.toDoubleOrNull() ?: 0.0
-           /* ye meko amount ni de raha h blank aa raha h correct code bejo*/
 
             val totalWithoutDiscount = metalrateop1 + labourop1 + solitaireop1 + sidediaop1 + colstoneop1 + charges1
 
@@ -177,28 +192,58 @@ class GetQuotationActivity : AppCompatActivity() {
         else{
             getTaxAmountFinal="0.0"
         }
+        //val subTotalFormat = formatSubTotal(totalPrice,currencyValue,currencyCode)
+        Log.e("subTotalFormat","..189.....@@@..."+totalPrice)
+        Log.e("charges","..189.....@@@..."+charges)
+        val otherCharges = formatSubTotal(charges,currencyValue,currencyCode)
+        Log.e("otherCharges","..189.....@@@..."+otherCharges)
+
+        try {
+            val metalrategmFloat = metalrategm.toFloat()
+             FinalValueMetal = String.format("%.2f", metalrategmFloat)
+
+            FinalValueLabour = String.format("%.2f", labourrategm.toFloat())
+            Log.e("labourrategm", "Final Value (Formatted): $FinalValueLabour")
+
+            FinalValueSolitaire = String.format("%.2f", solitairerategm.toFloat())
+            Log.e("labourrategm", "Final Value (Formatted): $FinalValueSolitaire")
+
+            FinalValueSideDIA = String.format("%.2f", sidediarategm.toFloat())
+            Log.e("sidediarategm", "Final Value (Formatted): $FinalValueSideDIA")
+
+            FinalValueCol = String.format("%.2f", colstonerategm.toFloat())
+            Log.e("sidediarategm", "Final Value (Formatted): $FinalValueSideDIA")
+
+            FinalValueCharger = String.format("%.2f", charges.toFloat())
+            Log.e("sidediarategm", "Final Value (Formatted): $FinalValueSideDIA")
+
+            Log.e("FinalValueMetal", "195........@@@..." + FinalValueMetal)
+        } catch (e: NumberFormatException) {
+            Log.e("Error", "Invalid number format: $metalrategm")
+        }
 
 
         val data = arrayOf(
             arrayOf("Details", "Weight", "Rate", "Total"),
-            arrayOf("Metal", metalwt +"gms", metalrategm, formatAmountWithCommas(metalrateop)),
-            arrayOf("Labour", labour+"gms", labourrategm, formatAmountWithCommas(labourop)),
-            arrayOf("Solitaire wt.", solitaire+"ct", solitairerategm, formatAmountWithCommas(solitaireop)),
-            arrayOf("Side DIA wt.", sidedia+"ct", sidediarategm, formatAmountWithCommas(sidediaop)),
-            arrayOf("Col. Stone wt.", colstonewt+"ct", colstonerategm, formatAmountWithCommas(colstoneop)),
-            arrayOf("Other charges", "--", "--", formatAmountWithCommas(charges)),
-            arrayOf("Tax", "--", tax,formatAmountWithCommas(getTaxAmountFinal)),
+            arrayOf("Metal", metalwt +"gms", FinalValueMetal, formatAmountWithCommas(metalrateop)),
+            arrayOf("Labour", labour+"gms", FinalValueLabour, formatAmountWithCommas(labourop)),
+            arrayOf("Solitaire wt.", solitaire+"ct", FinalValueSolitaire, formatAmountWithCommas(solitaireop)),
+            arrayOf("Side DIA wt.", sidedia+"ct", FinalValueSideDIA, formatAmountWithCommas(sidediaop)),
+            arrayOf("Col. Stone wt.", colstonewt+"ct", FinalValueCol, formatAmountWithCommas(colstoneop)),
+            arrayOf("Other charges", "--", "--", FinalValueCharger),
+            arrayOf("Tax", "--", tax,getTaxAmountFinal),
             //arrayOf("Total Price (INR)*", "", "", totalPrice)
-            arrayOf("Total Price (INR)*", "", "", formatAmountWithCommas(totalPrice))
+            arrayOf("Total Price (${currencyCode})*", "", "", formatAmountWithCommas(totalPrice))
+            /*arrayOf("Total Price (${currencyCode})*", "", "", subTotalFormat)*/
         )
-        binding.parentLinearLayout.setPadding(1, 2, 0, 1)
+        binding.parentLinearLayout.setPadding(1, 1, 0, 1)
         binding.parentLinearLayout.background = createOuterBorder()
 
         val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        layoutParams.setMargins(2, 2, 2, 2)
+        layoutParams.setMargins(1, 1, 1, 1)
         binding.tableLayout.layoutParams = layoutParams
         val latoFont = ResourcesCompat.getFont(this, R.font.lato_regular)
 
@@ -209,11 +254,81 @@ class GetQuotationActivity : AppCompatActivity() {
                 TableRow.LayoutParams.WRAP_CONTENT
             )
 
+            for (cell in row) {
+                val textView = TextView(this)
+                textView.text = cell
+
+                val horizontalPadding = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
+                ).toInt()
+                val verticalPadding = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 13f, resources.displayMetrics
+                ).toInt()
+                textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+
+                textView.gravity = android.view.Gravity.START
+
+                val layoutParams = if (cell == "Details") {
+                    TableRow.LayoutParams(
+                        0, TableRow.LayoutParams.WRAP_CONTENT, 1f
+                    )
+                } else {
+                    TableRow.LayoutParams(
+                        0, TableRow.LayoutParams.WRAP_CONTENT, 1f
+                    )
+                }
+                textView.layoutParams = layoutParams
+
+                when (index) {
+                    0 -> {
+                        textView.textSize = 12f
+                        textView.setTextColor(Color.BLACK)
+                        textView.typeface = Typeface.create(latoFont, Typeface.BOLD)
+                        textView.setBackgroundColor(Color.LTGRAY)
+                        textView.background = createCellHeaderBorder()
+                    }
+                    8 -> {
+                        textView.textSize = 14f
+                        textView.setTextColor(Color.BLACK)
+                        textView.typeface = Typeface.create(latoFont, Typeface.BOLD)
+                        textView.setBackgroundColor(Color.TRANSPARENT)
+                        textView.background = null
+
+                        textView.maxLines = 1
+                        textView.ellipsize = TextUtils.TruncateAt.END
+                        textView.layoutParams = TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                        )
+                    }
+                    else -> {
+                        textView.textSize = 11f
+                        textView.setTextColor(Color.BLACK)
+                        textView.typeface = Typeface.create(latoFont, Typeface.NORMAL)
+                        textView.setBackgroundColor(Color.WHITE)
+                        textView.background = createCellBorder()
+                    }
+                }
+
+                tableRow.addView(textView)
+            }
+
+            binding.tableLayout.addView(tableRow)
+        }
+
+
+        /*for ((index, row) in data.withIndex()) {
+            val tableRow = TableRow(this)
+            tableRow.layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+
 
             for (cell in row) {
                 val textView = TextView(this)
                 textView.text = cell
-                textView.setPadding(18, 25, 18, 25)
+                textView.setPadding(18, 25, 0, 25)
                 textView.gravity = android.view.Gravity.START
                 textView.layoutParams = TableRow.LayoutParams(
                     TableRow.LayoutParams.WRAP_CONTENT,
@@ -247,7 +362,7 @@ class GetQuotationActivity : AppCompatActivity() {
             }
 
             binding.tableLayout.addView(tableRow)
-        }
+        }*/
 
     }
 
@@ -313,6 +428,13 @@ class GetQuotationActivity : AppCompatActivity() {
         }
     }
 
+    fun formatSubTotal(outputValue: String, currencyValue: String, currencyCode: String): String {
+        return CommonUtility.currencyConverter(
+            currencyValue,
+            currencyCode,
+            outputValue.toString()
+        )
+    }
 
     private fun saveImageToInternalStorage(bitmap: Bitmap): Uri? {
         val file = File(getExternalFilesDir(null), "screenshot.png")

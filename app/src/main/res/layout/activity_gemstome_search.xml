@@ -64,7 +64,7 @@
                 android:cursorVisible="true"
                 android:drawableLeft="@mipmap/search_purple"
                 android:drawablePadding="@dimen/dimen_10"
-                android:hint="@string/search_diamond_hint"
+                android:hint="@string/search_gemestone_hint"
                 android:imeOptions="actionSearch"
                 android:inputType="textCapSentences"
                 android:paddingLeft="@dimen/dimen_10"
@@ -303,6 +303,7 @@
                             android:layout_height="wrap_content">
 
                             <RelativeLayout
+                                android:id="@+id/price_relative"
                                 android:gravity="center"
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
@@ -337,8 +338,6 @@
                     <com.dd.ShadowLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
                         android:layout_weight="1"
                         app:sl_cornerRadius="@dimen/dimen_8"
                         app:sl_dx="1dp"
@@ -388,10 +387,9 @@
 
 
                     <com.dd.ShadowLayout
+                        android:layout_marginRight="@dimen/dimen_6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
                         android:layout_weight="1"
                         app:sl_cornerRadius="@dimen/dimen_8"
                         app:sl_dx="1dp"
@@ -447,7 +445,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -477,14 +475,14 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:weightSum="3">
 
                     <com.dd.ShadowLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_14"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:layout_marginRight="@dimen/dimen_5"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1"
                         app:sl_cornerRadius="@dimen/dimen_8"
                         app:sl_dx="0.5dp"
                         app:sl_dy="0.5dp"
@@ -496,6 +494,7 @@
                             android:layout_height="wrap_content">
 
                             <RelativeLayout
+                                android:id="@+id/weight_rv"
                                 android:gravity="center"
                                 android:layout_gravity="center"
                                 android:layout_width="wrap_content"
@@ -527,7 +526,7 @@
                         </LinearLayout>
                     </com.dd.ShadowLayout>
 
-                    <com.dd.ShadowLayout
+                    <!--<com.dd.ShadowLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".8"
@@ -625,13 +624,129 @@
                                 android:visibility="visible" />
 
                         </LinearLayout>
-                    </com.dd.ShadowLayout>
+                    </com.dd.ShadowLayout>-->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+                            <com.dd.ShadowLayout
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:sl_cornerRadius="@dimen/dimen_8"
+                                app:sl_dx="1dp"
+                                app:sl_dy="1dp"
+                                app:sl_shadowColor="@color/dot_gray"
+                                app:sl_shadowRadius="@dimen/dimen_8">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:visibility="gone"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dimen_8"
+                                        android:paddingTop="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_10"
+                                        android:hint="1"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_13" />
+
+                                    <EditText
+                                        android:id="@+id/weight_first"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/background_search"
+                                        android:cursorVisible="true"
+                                        android:drawablePadding="@dimen/dimen_15"
+                                        android:hint="1"
+                                        android:inputType="numberDecimal"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_10"
+                                        android:paddingRight="@dimen/dimen_5"
+                                        android:paddingBottom="@dimen/dimen_10"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textColorHint="@color/hint_text"
+                                        android:textCursorDrawable="@drawable/purple_cursor"
+                                        android:textSize="@dimen/dimen_13"
+                                        android:visibility="visible" />
+
+                                </LinearLayout>
+                            </com.dd.ShadowLayout>
+
+                            <com.dd.ShadowLayout
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                app:sl_cornerRadius="@dimen/dimen_8"
+                                app:sl_dx="1dp"
+                                app:sl_dy="1dp"
+                                app:sl_shadowColor="@color/dot_gray"
+                                app:sl_shadowRadius="@dimen/dimen_8">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:visibility="gone"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dimen_8"
+                                        android:paddingTop="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_10"
+                                        android:text="@string/from_with_currency"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/dimen_13" />
+
+                                    <EditText
+                                        android:id="@+id/weight_third"
+                                        style="@style/SemiBoldFontType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/background_search"
+                                        android:cursorVisible="true"
+                                        android:drawablePadding="@dimen/dimen_15"
+                                        android:hint="3"
+                                        android:inputType="numberDecimal"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_10"
+                                        android:paddingRight="@dimen/dimen_5"
+                                        android:paddingBottom="@dimen/dimen_10"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textColorHint="@color/hint_text"
+                                        android:textCursorDrawable="@drawable/purple_cursor"
+                                        android:textSize="@dimen/dimen_13"
+                                        android:visibility="visible" />
+
+                                </LinearLayout>
+                            </com.dd.ShadowLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
 
                     <com.dd.ShadowLayout
                         android:layout_marginRight="@dimen/dimen_6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         app:sl_cornerRadius="@dimen/dimen_8"
                         app:sl_dx="1dp"
                         app:sl_dy="1dp"
@@ -700,7 +815,7 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/dimen_5"
                             android:paddingBottom="@dimen/dimen_5"
-                            android:text="@string/origin"
+                            android:text="@string/shape"
                             android:textColor="@color/purple_light"
                             android:textSize="@dimen/dimen_16" />
 

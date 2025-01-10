@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dxe_luxe_bg"
-    tools:context=".Activity.DXELuex.DXELuexRegisterActivity">
+    tools:context=".Activity.DXELuex.DXELuxeRegisterActivity">
 
     <RelativeLayout
         android:layout_marginTop="@dimen/dimen_18"

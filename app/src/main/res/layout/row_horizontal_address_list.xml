@@ -27,6 +27,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:padding="@dimen/dimen_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_8"
@@ -38,8 +39,25 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
+                    <RadioButton
+                        android:id="@+id/set_is_default_btn"
+                        style="@style/SemiBoldFontType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/purple_light"
+                        android:button="@drawable/radio_btn"
+                        android:buttonTint="@color/purple_light"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_5"
+                        android:paddingTop="@dimen/dimen_3"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_3"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14"
+                        android:visibility="visible" />
                     <TextView
+                        android:layout_toRightOf="@+id/set_is_default_btn"
                         android:id="@+id/name_tv"
                         style="@style/BoldFontType"
                         android:layout_width="match_parent"
@@ -77,28 +95,9 @@
                             android:paddingRight="@dimen/dimen_5"
                             android:paddingBottom="@dimen/dimen_3"
                             android:src="@drawable/edit"
-
                             android:visibility="visible" />
 
-                        <RadioButton
-                            android:id="@+id/set_is_default_btn"
-                            style="@style/SemiBoldFontType"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_10"
-                            android:layout_toRightOf="@+id/edit_img"
-                            android:backgroundTint="@color/purple_light"
-                            android:button="@drawable/radio_btn"
-                            android:buttonTint="@color/purple_light"
-                            android:checked="false"
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/dimen_5"
-                            android:paddingTop="@dimen/dimen_3"
-                            android:paddingRight="@dimen/dimen_5"
-                            android:paddingBottom="@dimen/dimen_3"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14"
-                            android:visibility="gone" />
+
 
                     </RelativeLayout>
 
@@ -147,7 +146,7 @@
                         style="@style/SemiBoldFontType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_3"
+                        android:layout_marginTop="@dimen/dimen_5"
                         android:text="Phone Number"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14" />
@@ -157,7 +156,7 @@
                         style="@style/SemiBoldFontType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_3"
+                        android:layout_marginTop="@dimen/dimen_5"
                         android:layout_marginBottom="@dimen/dimen_3"
                         android:text="Email"
                         android:textColor="@color/black"

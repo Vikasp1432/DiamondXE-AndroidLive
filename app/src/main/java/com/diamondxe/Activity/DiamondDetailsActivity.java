@@ -74,7 +74,9 @@ import com.diamondxe.Beans.DiamondShapeImageModel;
 import com.diamondxe.Beans.SearchResultTypeModel;
 import com.diamondxe.Fragment.AccountSectionFragment;
 import com.diamondxe.Interface.RecyclerInterface;
+
 import android.Manifest;
+
 import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
@@ -101,20 +103,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DiamondDetailsActivity extends SuperActivity implements RecyclerInterface {
-    private TextView supplier_id_tv, name_tv, item_type_tv,discount_tv,cut_grade_tv,polish_tv,symmetry_tv,fluorescence_intensity_tv,certificate_name_tv,sub_total_tv,dis_sub_total_tv,
-            pincode_tv, select_image_tv, select_360_tv, select_certificate_tv, select_size_tv, type_tv,current_return_policy_tv, details_measurements_tv,
+    private TextView supplier_id_tv, name_tv, item_type_tv, discount_tv, cut_grade_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv, certificate_name_tv, sub_total_tv, dis_sub_total_tv,
+            pincode_tv, select_image_tv, select_360_tv, select_certificate_tv, select_size_tv, type_tv, current_return_policy_tv, details_measurements_tv,
             details_depth_tv, details_table_tv, details_crown_height_tv, details_crown_angle_tv, details_pavilion_depth_tv, details_pavilion_angle_tv, details_shade_tv,
-            details_condition_cult_tv, details_growth_type_tv,details_inclusion_tv, details_status_tv, details_location_tv, details_key_tv,
+            details_condition_cult_tv, details_growth_type_tv, details_inclusion_tv, details_status_tv, details_location_tv, details_key_tv,
             details_remark_tv, details_report_tv, current_add_to_cart_tv, buy_now_tv, select_lbl, culet_id, recommanded_tv_lbl;
-    private ImageView bottom_search_icon, back_img, drop_arrow_img, select_image_img,select_360_img,select_certificate_img,select_size_img,
+    private ImageView bottom_search_icon, back_img, drop_arrow_img, select_image_img, select_360_img, select_certificate_img, select_size_img,
             diamond_img, current_status_img, current_returnable_img, bottom_search_icon_cross;
-    private CardView select_pin_code_card, add_to_cart_card_view,buy_now_card_view, top_img_card, search_circle_card, search_circle_card1_cross;
+    private CardView select_pin_code_card, add_to_cart_card_view, buy_now_card_view, top_img_card, search_circle_card, search_circle_card1_cross;
     private ScrollView scrollView;
-    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel,curve_rel;
+    private RelativeLayout home_rel, category_rel, wishlist_rel, cart_rel, account_rel, curve_rel;
     private ImageView home_img, categories_img, wish_img, cart_img, account_img;
     private TextView home_tv, categories_tv, wish_tv, cart_tv, account_tv, cart_count_tv, wish_list_count_tv;
     private RelativeLayout diamond_details_rel, viewpager_layout, show_popup_rel, viewpager_buyer_layout;
-    private LinearLayout call_for_enquiry,show_diamond_details_lin, select_img_lin, select_360_view_lin, select_certificate_lin, select_size_lin;
+    private LinearLayout call_for_enquiry, show_diamond_details_lin, select_img_lin, select_360_view_lin, select_certificate_lin, select_size_lin;
     public ArrayList<SearchResultTypeModel> recommandDiamondArrayList;
     DiamondCaratTypeListAdapter diamondCaratTypeListAdapter;
     DiamondShapeImageListAdapter shapeImageListAdapter;
@@ -143,10 +145,10 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final int REQUEST_CALL_PHONE = 2;
     private FusedLocationProviderClient fusedLocationClient;
-    String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
+    String selectedCurrencyValue = "", selectedCurrencyCode = "", selectedCurrencyDesc = "", selectedCurrencyImage = "";
     int lastPosition = 0;
     Handler handler1 = new Handler(Looper.getMainLooper());
-    String certificate_number="", addToCartWhereToCall="",user_login="",userRole="";
+    String certificate_number = "", addToCartWhereToCall = "", user_login = "", userRole = "";
     String ROUND = "Round";
     String PRINCESS = "Princess";
     String EMERALD = "Emerald";
@@ -157,24 +159,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     String RADIANT = "Radiant";
     String ASSCHER = "Asscher";
     String CUSHION = "Cushion";
-    String shapeTypeSelected="Round";
+    String shapeTypeSelected = "Round";
     String stock_id = "", item_name = "", supplier_id = "", certificate_no = "", category = "", certificate_name = "", cut_grade = "", shape = "",
-     clarity = "", carat = "", color = "", growth_type = "", fluorescence_intensity = "", polish = "", symmetry = "", depth_perc = "", table_perc = "",
-     discount_amout = "", length = "", width = "", depth = "", measurement = "", shade = "", luster = "",eye_clean = "", crown_angle = "", pavillion_angle = "", diamond_image = "", diamond_video = "", is_returnable = "",
+            clarity = "", carat = "", color = "", growth_type = "", fluorescence_intensity = "", polish = "", symmetry = "", depth_perc = "", table_perc = "",
+            discount_amout = "", length = "", width = "", depth = "", measurement = "", shade = "", luster = "", eye_clean = "", crown_angle = "", pavillion_angle = "", diamond_image = "", diamond_video = "", is_returnable = "",
             certificate_file = "", girdle_condition = "", culet = "", location = "", crown_height = "", pavillion_depth = "", inscription = "", key_to_symbols = "", report_comments = "", subtotal = "", is_cart = "", is_wishlist = "",
-            avaliable_status = "", r_discount="",supplier_comment="",userPincode="", userCity="",stock_no="";
+            avaliable_status = "", r_discount = "", supplier_comment = "", userPincode = "", userCity = "", stock_no = "";
     double coupondiscountperc, subtotalaftercoupondiscount;
     android.app.AlertDialog alertDialog;
     private RelativeLayout card_popup1;
-    View translucent_background,size_view;
-    String searchType="";
+    View translucent_background, size_view;
+    String searchType = "";
     String activityValue = "";
-    View cut_grade_view,polish_view,symmetry_view,fluorescence_view;
+    View cut_grade_view, polish_view, symmetry_view, fluorescence_view;
+
+    TextView gravity_tv, weight_ratti_tv, weight_cart_tv, refractive_index_tv, exact_dimensions_tv,
+            details_item_tv, treatment_tv, composition_tv,location_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         context = activity = this;
         Intent intent = getIntent();
@@ -184,18 +188,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             intentValue = intent.getStringExtra("intentvalue");
             activityValue = intent.getStringExtra("activityvalue");
         }
-        if (activityValue!=null && !activityValue.isEmpty())
-        {
-            if(activityValue.equalsIgnoreCase("gemstone")){
+        Log.e("activityValue","..191..."+activityValue);
+        if (activityValue != null && !activityValue.isEmpty()) {
+            if (activityValue.equalsIgnoreCase("gemstone")) {
                 setContentView(R.layout.gemstone_details_layout);
             }
-            cut_grade_view=findViewById(R.id.cut_grade_view);
-            symmetry_view=findViewById(R.id.symmetry_view);
-            polish_view=findViewById(R.id.polish_view);
-            fluorescence_view=findViewById(R.id.fluorescence_view);
-
-        }
-        else {
+            cut_grade_view = findViewById(R.id.cut_grade_view);
+            symmetry_view = findViewById(R.id.symmetry_view);
+            polish_view = findViewById(R.id.polish_view);
+            fluorescence_view = findViewById(R.id.fluorescence_view);
+            gravity_tv = findViewById(R.id.gravity_tv);
+            weight_ratti_tv = findViewById(R.id.weight_ratti_tv);
+            weight_cart_tv = findViewById(R.id.weight_cart_tv);
+            refractive_index_tv = findViewById(R.id.refractive_index_tv);
+            exact_dimensions_tv = findViewById(R.id.exact_dimensions_tv);
+            details_item_tv = findViewById(R.id.details_item_tv);
+            treatment_tv = findViewById(R.id.treatment_tv);
+            composition_tv = findViewById(R.id.composition_tv);
+            location_tv=findViewById(R.id.location_tv);
+            /*================================================================*/
+        } else {
             setContentView(R.layout.activity_diamond_details);
 
             select_size_lin = findViewById(R.id.select_size_lin);
@@ -207,7 +219,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
 
         if (intentValue != null) {
-            searchType=intentValue;
+            searchType = intentValue;
             Log.e("Search result", "Received intent value: " + intentValue);
         } else {
             Log.e("IntentValue", "No intent value received.");
@@ -234,7 +246,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         back_img.setOnClickListener(this);
 
         scrollView = findViewById(R.id.scrollView);
-        size_view=findViewById(R.id.size_view);
+        size_view = findViewById(R.id.size_view);
 
         diamond_img = findViewById(R.id.diamond_img);
         top_img_card = findViewById(R.id.top_img_card);
@@ -285,8 +297,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_certificate_lin = findViewById(R.id.select_certificate_lin);
         select_certificate_lin.setOnClickListener(this);
 
-
-
         translucent_background = findViewById(R.id.translucent_background);
         translucent_background.setOnClickListener(this);
 
@@ -305,7 +315,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         account_rel = findViewById(R.id.account_rel);
         account_rel.setOnClickListener(this);
 
-        call_for_enquiry=findViewById(R.id.call_for_enquiry);
+        call_for_enquiry = findViewById(R.id.call_for_enquiry);
         call_for_enquiry.setOnClickListener(this);
 
         home_img = findViewById(R.id.home_img);
@@ -337,28 +347,24 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         user_login = CommonUtility.getGlobalString(context, "user_login");
         // If User Login then  User Role Name
-        if(!user_login.equalsIgnoreCase(""))
-        {
+        if (!user_login.equalsIgnoreCase("")) {
             String role = CommonUtility.getGlobalString(context, "login_user_role");
-            if(role.equalsIgnoreCase("BUYER"))
-            {
+            if (role.equalsIgnoreCase("BUYER")) {
                 account_tv.setText(USER_BUYER);
-            }
-            else if(role.equalsIgnoreCase("DEALER"))
-            {
+            } else if (role.equalsIgnoreCase("DEALER")) {
                 account_tv.setText(USER_DEALER);
-            }else{}
-        }
-        else{
+            } else {
+            }
+        } else {
             account_tv.setText(getResources().getString(R.string.login));
         }
 
-        viewPager = findViewById (R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);
         tabLayout = findViewById(R.id.tab_layout);
         viewpager_layout = findViewById(R.id.viewpager_layout);
 
-        viewPagerBuyer = findViewById (R.id.viewPagerBuyer);
+        viewPagerBuyer = findViewById(R.id.viewPagerBuyer);
         viewPagerBuyer.setOffscreenPageLimit(2);
         tabLayoutBuyer = findViewById(R.id.tab_layout_buyer);
         viewpager_buyer_layout = findViewById(R.id.viewpager_buyer_layout);
@@ -366,12 +372,10 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         pincode_tv = findViewById(R.id.pincode_tv);
         select_lbl = findViewById(R.id.select_lbl);
 
-        if(userRole.equalsIgnoreCase("BUYER"))
-        {
+        if (userRole.equalsIgnoreCase("BUYER")) {
             viewpager_buyer_layout.setVisibility(View.VISIBLE);
             viewpager_layout.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             viewpager_buyer_layout.setVisibility(View.GONE);
             viewpager_layout.setVisibility(View.VISIBLE);
         }
@@ -379,25 +383,19 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         Log.e("----userPincode----- : ", userPincode.toString());
         Log.e("----userPincode1----- : ", userCity.toString());
         // Check City Blank then show only PinCode Otherwise show City and PinCode.
-        if(userCity.equalsIgnoreCase(""))
-        {
-            if(!userPincode.equalsIgnoreCase(""))
-            {
-                pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " +userPincode);
-            }else{}
+        if (userCity.equalsIgnoreCase("")) {
+            if (!userPincode.equalsIgnoreCase("")) {
+                pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + userPincode);
+            } else {
+            }
 
-        }
-        else if(!userPincode.equalsIgnoreCase(""))
-        {
+        } else if (!userPincode.equalsIgnoreCase("")) {
             pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + userCity + ", " + userPincode);
         }
 
-        if(pincode_tv.getText().toString().equalsIgnoreCase(""))
-        {
+        if (pincode_tv.getText().toString().equalsIgnoreCase("")) {
             select_lbl.setText(getResources().getString(R.string.select));
-        }
-        else
-        {
+        } else {
             select_lbl.setText(getResources().getString(R.string.change));
         }
 
@@ -411,7 +409,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         fluorescence_intensity_tv = findViewById(R.id.fluorescence_intensity_tv);
         certificate_name_tv = findViewById(R.id.certificate_name_tv);
         sub_total_tv = findViewById(R.id.sub_total_tv);
-        dis_sub_total_tv=findViewById(R.id.dis_sub_total_tv);
+        dis_sub_total_tv = findViewById(R.id.dis_sub_total_tv);
         details_measurements_tv = findViewById(R.id.details_measurements_tv);
         details_depth_tv = findViewById(R.id.details_depth_tv);
         details_table_tv = findViewById(R.id.details_table_tv);
@@ -458,7 +456,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.light_gray1));
 
 
-
         type_tv.setText("Natural");
 
         CommonUtility.startZoomAnimation(bottom_search_icon);
@@ -466,35 +463,30 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         getCurrencyData();
 
         //gemstone
-        Log.e("activityValue","..443..."+activityValue);
-        if (activityValue!=null && !activityValue.isEmpty())
-        {
-            if(activityValue.equalsIgnoreCase("gemstone")){
+        Log.e("activityValue", "..443..." + activityValue);
+        if (activityValue != null && !activityValue.isEmpty()) {
+            if (activityValue.equalsIgnoreCase("gemstone")) {
                 onBindDetailsGemStone(false);
             }
 
 
-        }
-        else {
+        } else {
             onBindDetails(false);
         }
 
-       // diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
+        // diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
         onBindSizePreviewAPI(true);
 
         manageDeviceBackButton();
-        if(searchType.equals("dxeluxe"))
-        {
+        if (searchType.equals("dxeluxe")) {
             luex_tag.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             luex_tag.setVisibility(View.GONE);
         }
     }
 
     // Diamond Shape Image Data set Using Model.
-    void shapeImageModelData()
-    {
+    void shapeImageModelData() {
         DiamondShapeImageModel shapeImageModel1 = new DiamondShapeImageModel();
         shapeImageModel1.setDrawable(R.mipmap.round);
         shapeImageModel1.setAttribCode(ROUND);
@@ -566,17 +558,16 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         shapeImageMode10.setFirstPosition(false);
         shapeImageArrayList.add(shapeImageMode10);
     }
+
     // Get Currency Value Code and Image
-    void getCurrencyData()
-    {
+    void getCurrencyData() {
         selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
         selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
         selectedCurrencyDesc = CommonUtility.getGlobalString(context, "selected_currency_desc");
         selectedCurrencyImage = CommonUtility.getGlobalString(context, "selected_currency_image");
     }
 
-    void getData()
-    {
+    void getData() {
         certificate_number = CommonUtility.getGlobalString(context, "certificate_number");
 
         userPincode = CommonUtility.getGlobalString(context, "user_select_pincode");
@@ -586,8 +577,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         Log.e("----getCertificate_no111--- : ", certificate_number);
     }
 
-    void  getCurrnetPinCode()
-    {
+    void getCurrnetPinCode() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -608,22 +598,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         showCardCount();
     }
 
-    void showCardCount()
-    {
-        if(Constant.cardCount.equalsIgnoreCase("") || Constant.cardCount.equalsIgnoreCase("0"))
-        {
+    void showCardCount() {
+        if (Constant.cardCount.equalsIgnoreCase("") || Constant.cardCount.equalsIgnoreCase("0")) {
             cart_count_tv.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             cart_count_tv.setText(Constant.cardCount);
             cart_count_tv.setVisibility(View.VISIBLE);
         }
 
-        if(Constant.wishListCount.equalsIgnoreCase("") || Constant.wishListCount.equalsIgnoreCase("0"))
-        {
+        if (Constant.wishListCount.equalsIgnoreCase("") || Constant.wishListCount.equalsIgnoreCase("0")) {
             wish_list_count_tv.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             wish_list_count_tv.setText(Constant.wishListCount);
             wish_list_count_tv.setVisibility(View.VISIBLE);
         }
@@ -636,11 +621,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         switch (requestCode) {
             case REQUEST_LOCATION_PERMISSION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getLocation();
-                } else
-                {
+                } else {
                     //Log.e("---------Diamond--------- : ", "grantResults : " + grantResults.toString());
                     // Permission denied
                     // Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
@@ -710,17 +693,14 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && !addresses.isEmpty()) {
-                 userPincode = addresses.get(0).getPostalCode();
-                 userCity = addresses.get(0).getLocality();
+                userPincode = addresses.get(0).getPostalCode();
+                userCity = addresses.get(0).getLocality();
 
-                 pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + userCity + ", " + userPincode);
+                pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + userCity + ", " + userPincode);
 
-                if(pincode_tv.getText().toString().equalsIgnoreCase(""))
-                {
+                if (pincode_tv.getText().toString().equalsIgnoreCase("")) {
                     select_lbl.setText(getResources().getString(R.string.select));
-                }
-                else
-                {
+                } else {
                     select_lbl.setText(getResources().getString(R.string.change));
                 }
 
@@ -736,37 +716,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         Intent intent;
         int id = view.getId();
         user_login = CommonUtility.getGlobalString(activity, "user_login");
-        if(id == R.id.back_img)
-        {
+        if (id == R.id.back_img) {
             Utils.hideKeyboard(activity);
-            if(Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder"))
-            {
+            if (Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder")) {
                 gotoHomeRedirection();
-            }
-            else{
+            } else {
                 finish();
             }
-        }
-        else if(id == R.id.top_img_card)
-        {
+        } else if (id == R.id.top_img_card) {
             Utils.hideKeyboard(activity);
-            if(!diamond_image.equalsIgnoreCase(""))
-            {
+            if (!diamond_image.equalsIgnoreCase("")) {
                 showDiamondImageWebViewPopup(activity, context, diamond_image);
             }
-        }
-        else if(id == R.id.select_pin_code_card)
-        {
+        } else if (id == R.id.select_pin_code_card) {
             Utils.hideKeyboard(activity);
             showEnterPinCodeDialog(activity, context);
-        }
-        else if(id == R.id.diamond_details_rel)
-        {
+        } else if (id == R.id.diamond_details_rel) {
             if (isArrowDown) {
                 drop_arrow_img.setImageResource(R.drawable.down);
                 show_diamond_details_lin.setVisibility(View.GONE);
@@ -776,45 +745,35 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             }
             isArrowDown = !isArrowDown;
 
-        }
-        else if(id == R.id.buy_now_card_view)
-        {
-            if(!user_login.equalsIgnoreCase(""))
-            {
+        } else if (id == R.id.buy_now_card_view) {
+            if (!user_login.equalsIgnoreCase("")) {
                 Constant.showRadioButtonForSelectAddress = "yes";// Under Address List Radio Button Visible
                 Constant.orderType = BUY_NOW; // Order Type
                 Constant.certificateNumber = certificate_number; // certificate Number
-                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageShippingBillingAddressSelection = "";
                 Constant.manageBillingByAddressAddUpdate = "";
                 Constant.manageShippingByAddressAddUpdate = "";
                 intent = new Intent(activity, PlaceOrderScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
 
-            }
-            else{
+            } else {
                 Constant.manageClickEventForRedirection = "placeOrder";
                 intent = new Intent(activity, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-        }
-        else if(id == R.id.add_to_cart_card_view)
-        {
-            if(!is_cart.equalsIgnoreCase("1"))
-            {
+        } else if (id == R.id.add_to_cart_card_view) {
+            if (!is_cart.equalsIgnoreCase("1")) {
                 addToCartWhereToCall = "detailsScreen";
                 onAddToCartAPI(false, certificate_number);
-            }
-            else{
+            } else {
                 Constant.manageClickEventForRedirection = "";
                 intent = new Intent(activity, MyCardListScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-        }
-        else if(id == R.id.current_returnable_img)
-        {
+        } else if (id == R.id.current_returnable_img) {
             current_return_policy_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
@@ -822,9 +781,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     current_return_policy_tv.setVisibility(View.GONE);
                 }
             }, 2000);
-        }
-        else if(id == R.id.select_img_lin)
-        {
+        } else if (id == R.id.select_img_lin) {
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
@@ -835,24 +792,21 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             }
 
 
-
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
 
-            Log.e("diamond_image","...838..............."+diamond_image);
-         //   diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
+            Log.e("diamond_image", "...838..............." + diamond_image);
+            //   diamondImage = "https://thnk18.azureedge.net/img/images/imaged/J429-230135/still.jpg";
             showDiamondImageWebViewPopup(activity, context, diamond_image);
 
-        }
-        else if(id == R.id.select_360_view_lin)
-        {
+        } else if (id == R.id.select_360_view_lin) {
 
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
-          //  select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
+            //  select_size_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             if (activityValue == null || activityValue.isEmpty()) {
                 int grayColor = ContextCompat.getColor(context, R.color.dot_gray);
                 select_size_img.setColorFilter(grayColor);
@@ -862,13 +816,11 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_image_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
-          //  select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
+            //  select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
-          //  diamondImage = "https://thnk18.azureedge.net/img/images/Vision360.html?d=J429-230135";
+            //  diamondImage = "https://thnk18.azureedge.net/img/images/Vision360.html?d=J429-230135";
             showDiamondVideoWebViewPopup(activity, context, diamond_video);
-        }
-        else if(id == R.id.select_certificate_lin)
-        {
+        } else if (id == R.id.select_certificate_lin) {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
 
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
@@ -887,33 +839,27 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
             //select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
 
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 CommonUtility.setGlobalString(activity, "certificate_file_url", certificate_file);
-                if(!certificate_file.equalsIgnoreCase(""))
-                {
+                if (!certificate_file.equalsIgnoreCase("")) {
                     intent = new Intent(context, CertificateWebViewActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     //showDiamondCertificateWebViewPopup(activity, context, certificate_file);
                     //showDiamondCertificateWebViewPopup(activity, context, "https://www.igi.org/verify-your-report/?r=464120312");
-                }
-                else{
+                } else {
                     intent = new Intent(context, CertificateWebViewActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     //showDiamondCertificateWebViewPopup(activity, context, "");
                 }
-            }
-            else{
+            } else {
                 intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
 
-        }
-        else if(id == R.id.select_size_lin)
-        {
+        } else if (id == R.id.select_size_lin) {
             select_image_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_360_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
             select_certificate_img.setColorFilter(ContextCompat.getColor(context, R.color.dot_gray));
@@ -930,19 +876,15 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             select_certificate_tv.setTextColor(ContextCompat.getColor(context, R.color.dot_gray));
             //select_size_tv.setTextColor(ContextCompat.getColor(context, R.color.purple_light));
 
-            if(shape.equalsIgnoreCase(""))
-            {
-                shapeTypeSelected="Round";
-            }
-            else{
+            if (shape.equalsIgnoreCase("")) {
+                shapeTypeSelected = "Round";
+            } else {
                 shapeTypeSelected = shape;
             }
 
             //shapeTypeSelected="Round";
             showDiamondShapePopup(activity, context);
-        }
-        else if(id == R.id.search_circle_card)
-        {
+        } else if (id == R.id.search_circle_card) {
             translucent_background.setVisibility(View.VISIBLE); // Activity Transparency Visible
             bottomBarClickableFalse();// When Transparency Show Click False
 
@@ -958,9 +900,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             Animation popup1Animation = createPopupAnimation();
             card_popup1.startAnimation(popup1Animation);
-        }
-        else if(id == R.id.search_circle_card1_cross)
-        {
+        } else if (id == R.id.search_circle_card1_cross) {
             bottom_search_icon.setImageResource(R.drawable.plus);
             translucent_background.setVisibility(View.GONE); // Activity Transparency Gone
             bottomBarClickableTrue();// When Transparency Hide Click True
@@ -973,115 +913,90 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             search_circle_card1_cross.setVisibility(View.GONE); // Bottom Cross Icon Hide
             search_circle_card.setVisibility(View.VISIBLE); // Bottom Plus Icon Show
             show_popup_rel.setVisibility(View.GONE); // Bottom Plus Icon Show
-        }
-        else if(id == R.id.home_rel)
-        {
+        } else if (id == R.id.home_rel) {
             Constant.manageFragmentCalling = HOME_FRAGMENT;
             intent = new Intent(activity, HomeScreenActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.category_rel)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.category_rel) {
             Constant.manageFragmentCalling = CATEGORY_FRAGMENT;
             intent = new Intent(activity, HomeScreenActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.wishlist_rel)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.wishlist_rel) {
             Constant.manageFragmentCalling = WISHLIST_FRAGMENT;
             intent = new Intent(activity, HomeScreenActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.cart_rel)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.cart_rel) {
             Constant.manageFragmentCalling = CART_FRAGMENT;
             intent = new Intent(activity, HomeScreenActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.account_rel)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.account_rel) {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 /*intent = new Intent(context, AccountSectionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);*/
                 Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
                 intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
               /* Fragment fragment = new AccountSectionFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container_body, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
-            }
-            else
-            {
+            } else {
                 intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-        }
-        else if(id == R.id.account_img)
-        {
+        } else if (id == R.id.account_img) {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 /*intent = new Intent(context, AccountSectionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);*/
                 Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
                 intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
               /* Fragment fragment = new AccountSectionFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container_body, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
-            }
-            else
-            {
+            } else {
                 intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-        }
-        else if(id == R.id.account_tv)
-        {
+        } else if (id == R.id.account_tv) {
             user_login = CommonUtility.getGlobalString(activity, "user_login");
-            if(user_login.equalsIgnoreCase("yes"))
-            {
+            if (user_login.equalsIgnoreCase("yes")) {
                 /*intent = new Intent(context, AccountSectionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);*/
                 Constant.manageFragmentCalling = ACCOUNT_FRAGMENT;
                 intent = new Intent(activity, HomeScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
               /* Fragment fragment = new AccountSectionFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container_body, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
-            }
-            else
-            {
+            } else {
                 intent = new Intent(context, LoginScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
-        }
-        else if(id == R.id.translucent_background)
-        {
+        } else if (id == R.id.translucent_background) {
 
             translucent_background.setVisibility(View.GONE); // Activity Transparency Gone
             bottomBarClickableTrue();// When Transparency Hide Click True
@@ -1095,9 +1010,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             search_circle_card1_cross.setVisibility(View.GONE); // Bottom Cross Icon Hide
             search_circle_card.setVisibility(View.VISIBLE); // Bottom Plus Icon Show
             show_popup_rel.setVisibility(View.GONE); // Bottom Plus Icon Show
-        }
-        else if(id==R.id.call_for_enquiry)
-        {
+        } else if (id == R.id.call_for_enquiry) {
             Intent intentcall = new Intent(Intent.ACTION_DIAL);
             intentcall.setData(Uri.parse("tel:9892003399"));
             startActivity(intentcall);
@@ -1106,8 +1019,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     // This function ensures that all bottom bar elements (home, category, wishlist, cart, account) are both
     // disabled and non-clickable, preventing users from interacting with these elements.
-    void bottomBarClickableFalse()
-    {
+    void bottomBarClickableFalse() {
         home_rel.setEnabled(false);
         category_rel.setEnabled(false);
         wishlist_rel.setEnabled(false);
@@ -1122,8 +1034,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     // This function ensures that all bottom bar elements (home, category, wishlist, cart, account) are both
     // enabled and clickable, allowing users to interact with these elements.
-    void bottomBarClickableTrue()
-    {
+    void bottomBarClickableTrue() {
         home_rel.setEnabled(true);
         category_rel.setEnabled(true);
         wishlist_rel.setEnabled(true);
@@ -1136,18 +1047,14 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         account_rel.setClickable(true);
     }
 
-    void manageDeviceBackButton()
-    {
+    void manageDeviceBackButton() {
         // Handle Device Back Button code.
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
-            public void handleOnBackPressed()
-            {
-                if(Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder"))
-                {
+            public void handleOnBackPressed() {
+                if (Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder")) {
                     gotoHomeRedirection();
-                }
-                else{
+                } else {
                     finish();
                 }
             }
@@ -1157,19 +1064,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     }
 
     // User Come For Login Screen to Redirection Diamond Screen Then Work This Condition.
-    void gotoHomeRedirection()
-    {
-        if(Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder"))
-        {
+    void gotoHomeRedirection() {
+        if (Constant.manageClickEventForRedirection.equalsIgnoreCase("placeOrder")) {
             Constant.manageClickEventForRedirection = "";
             Log.e("manageClickEventForRedirection : ", Constant.manageClickEventForRedirection);
             Intent intent = new Intent(context, HomeScreenActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
+        } else {
         }
-        else{}
     }
 
     private Animation createPopupAnimation() {
@@ -1199,24 +1104,20 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     public void setpager() {
         // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
-        if(userRole.equalsIgnoreCase("BUYER"))
-        {
+        if (userRole.equalsIgnoreCase("BUYER")) {
             viewPagerBuyer.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
             tabLayoutBuyer.setupWithViewPager(viewPagerBuyer, true);
             final float density = getResources().getDisplayMetrics().density;
             // Check Banner Image View Visible and Gone Condition Using Array List Size.
-            if(recommandDiamondArrayList!=null && recommandDiamondArrayList.size()>=1)
-            {
+            if (recommandDiamondArrayList != null && recommandDiamondArrayList.size() >= 1) {
                 viewpager_buyer_layout.setVisibility(View.VISIBLE);
 
-                if(recommandDiamondArrayList.size()>1){
+                if (recommandDiamondArrayList.size() > 1) {
                     tabLayoutBuyer.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tabLayoutBuyer.setVisibility(View.VISIBLE);
                 }
-            }
-            else
-            {
+            } else {
                 viewpager_buyer_layout.setVisibility(View.GONE);
                 tabLayoutBuyer.setVisibility(View.VISIBLE);
             }
@@ -1270,25 +1171,21 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 }
             });
 
-        }
-        else{
+        } else {
 
             viewPager.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
             tabLayout.setupWithViewPager(viewPager, true);
             final float density = getResources().getDisplayMetrics().density;
             // Check Banner Image View Visible and Gone Condition Using Array List Size.
-            if(recommandDiamondArrayList!=null && recommandDiamondArrayList.size()>=1)
-            {
+            if (recommandDiamondArrayList != null && recommandDiamondArrayList.size() >= 1) {
                 viewpager_layout.setVisibility(View.VISIBLE);
 
-                if(recommandDiamondArrayList.size()>1){
+                if (recommandDiamondArrayList.size() > 1) {
                     tabLayout.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tabLayout.setVisibility(View.VISIBLE);
                 }
-            }
-            else
-            {
+            } else {
                 viewpager_layout.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.VISIBLE);
             }
@@ -1502,6 +1399,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         ArrayList<SearchResultTypeModel> list;
         LayoutInflater inflater;
+
         public MyPagerAdapter(Context context, ArrayList<SearchResultTypeModel> list) {
             this.list = list;
         }
@@ -1530,26 +1428,22 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             ImageView pagerImg, status_img, returnable_img, add_to_favt_img;
             CardView root_layout;
             TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv, cut_grade_tv, polish_tv, symmetry_tv, fluorescence_intensity_tv, certificate_name_tv, discount_tv, return_policy_tv,
-                    table_perc_tv, depth_perc, measurement_tv, add_to_cart_tv, sub_total_tv,dis_sub_total_tv,diamond_type;
+                    table_perc_tv, depth_perc, measurement_tv, add_to_cart_tv, sub_total_tv, dis_sub_total_tv, diamond_type;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View itemView;
 
             // Check Login USer Type Like Buyer and Dealer and Set Condition and Layout.
-            Log.e("userRole",".....userRole......56......"+userRole);
-            if(userRole.equalsIgnoreCase("DEALER"))
-            {
+            Log.e("userRole", ".....userRole......56......" + userRole);
+            if (userRole.equalsIgnoreCase("DEALER")) {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list, container, false);
 
-            }
-            else if(userRole.equalsIgnoreCase("BUYER"))
-            {
+            } else if (userRole.equalsIgnoreCase("BUYER")) {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list_for_buyer, container, false);
-            }
-            else {
+            } else {
                 itemView = inflater.inflate(R.layout.row_recommand_diamond_list, container, false);
             }
-            luex_tag= (RelativeLayout) itemView.findViewById(R.id.luex_tag);
+            luex_tag = (RelativeLayout) itemView.findViewById(R.id.luex_tag);
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
             status_img = (ImageView) itemView.findViewById(R.id.status_img);
             returnable_img = (ImageView) itemView.findViewById(R.id.returnable_img);
@@ -1573,18 +1467,16 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             measurement_tv = itemView.findViewById(R.id.measurement_tv);
             add_to_cart_tv = itemView.findViewById(R.id.add_to_cart_tv);
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
-            dis_sub_total_tv=itemView.findViewById(R.id.dis_sub_total_tv);
+            dis_sub_total_tv = itemView.findViewById(R.id.dis_sub_total_tv);
             diamond_type = itemView.findViewById(R.id.diamond_type);
 
-            if(!list.get(position).getDiamond_image().equalsIgnoreCase(""))
-            {
+            if (!list.get(position).getDiamond_image().equalsIgnoreCase("")) {
                 Picasso.with(context)
                         .load(list.get(position).getDiamond_image())
                         .placeholder(R.mipmap.phl_diamond)
                         .error(R.mipmap.phl_diamond)
                         .into(pagerImg);
-            }
-            else{
+            } else {
                 Picasso.with(context)
                         .load(R.mipmap.phl_diamond)
                         .placeholder(R.mipmap.phl_diamond)
@@ -1592,140 +1484,118 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         .into(pagerImg);
             }
 
-            Log.e("getIsDxeLUXE","1460**,............."+list.get(position).getIsDxeLUXE());
+            Log.e("getIsDxeLUXE", "1460**,............." + list.get(position).getIsDxeLUXE());
 
-            if (list.get(position).getIsDxeLUXE()==1)
-            {
+            if (list.get(position).getIsDxeLUXE() == 1) {
                 luex_tag.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 luex_tag.setVisibility(View.GONE);
             }
 
 
-            supplier_id_tv_pager.setText("#"+list.get(position).getStock_no() + " | " + list.get(position).getSupplier_id());
+            supplier_id_tv_pager.setText("#" + list.get(position).getStock_no() + " | " + list.get(position).getSupplier_id());
             name_tv_Pager.setText(list.get(position).getShape());
-            item_type_tv.setText(list.get(position).getCarat() + getResources().getString(R.string.ct) + " " + list.get(position).getColor() + " " + list.get(position).getClarity());
+
+            String getOriginalTxt = list.get(position).getCarat() + getResources().getString(R.string.ct_gem) + " " + list.get(position).getColor() + " " + list.get(position).getClarity();
+            if (getOriginalTxt.length() > 25) {
+                String truncatedText = getOriginalTxt.substring(0, 25) + "...";
+                item_type_tv.setText(truncatedText);
+            } else {
+                item_type_tv.setText(getOriginalTxt);
+            }
+
+            // item_type_tv.setText(list.get(position).getCarat() + getResources().getString(R.string.ct) + " " + list.get(position).getColor() + " " + list.get(position).getClarity());
 
 
-            Log.e("activityValue","..1605....."+activityValue);
-            if (activityValue!=null && !activityValue.isEmpty())
-            {
-                if(activityValue.equalsIgnoreCase("gemstone")){
-                    if(list.get(position).getCut_grade().equalsIgnoreCase(""))
-                    {
+            Log.e("activityValue", "..1605....." + activityValue);
+            if (activityValue != null && !activityValue.isEmpty()) {
+                if (activityValue.equalsIgnoreCase("gemstone")) {
+                    if (list.get(position).getCut_grade().equalsIgnoreCase("")) {
                         cut_grade_tv.setVisibility(View.GONE);
                         cut_grade_tv.setText("-");
-                    }
-                    else{
+                    } else {
                         cut_grade_tv.setText(list.get(position).getCut_grade());
                     }
 
-                    if(list.get(position).getPolish().equalsIgnoreCase(""))
-                    {
+                    if (list.get(position).getPolish().equalsIgnoreCase("")) {
                         polish_tv.setVisibility(View.GONE);
                         polish_tv.setText("-");
-                    }
-                    else{
+                    } else {
                         polish_tv.setText(list.get(position).getPolish());
                     }
 
-                    if(list.get(position).getSymmetry().equalsIgnoreCase(""))
-                    {
+                    if (list.get(position).getSymmetry().equalsIgnoreCase("")) {
                         symmetry_tv.setVisibility(View.GONE);
                         symmetry_tv.setText("-");
-                    }
-                    else{
+                    } else {
                         symmetry_tv.setText(list.get(position).getSymmetry());
                     }
 
-                    if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-                    {
+                    if (list.get(position).getFluorescence_intensity().equalsIgnoreCase("")) {
                         fluorescence_intensity_tv.setVisibility(View.GONE);
                         fluorescence_intensity_tv.setText("-");
-                    }
-                    else{
+                    } else {
                         fluorescence_intensity_tv.setText(list.get(position).getFluorescence_intensity());
                     }
 
-                    if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-                    {
+                    if (list.get(position).getFluorescence_intensity().equalsIgnoreCase("")) {
                         certificate_name_tv.setVisibility(View.GONE);
                         certificate_name_tv.setText("-");
-                    }
-                    else{
+                    } else {
                         certificate_name_tv.setText(list.get(position).getCertificate_name());
                     }
                 }
 
 
-            }
-
-            else
-            {
-                if(list.get(position).getCut_grade().equalsIgnoreCase(""))
-                {
+            } else {
+                if (list.get(position).getCut_grade().equalsIgnoreCase("")) {
                     cut_grade_tv.setText("-");
-                }
-                else{
+                } else {
                     cut_grade_tv.setText(list.get(position).getCut_grade());
                 }
 
-                if(list.get(position).getPolish().equalsIgnoreCase(""))
-                {
+                if (list.get(position).getPolish().equalsIgnoreCase("")) {
                     polish_tv.setText("-");
-                }
-                else{
+                } else {
                     polish_tv.setText(list.get(position).getPolish());
                 }
 
-                if(list.get(position).getSymmetry().equalsIgnoreCase(""))
-                {
+                if (list.get(position).getSymmetry().equalsIgnoreCase("")) {
                     symmetry_tv.setText("-");
-                }
-                else{
+                } else {
                     symmetry_tv.setText(list.get(position).getSymmetry());
                 }
 
-                if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-                {
+                if (list.get(position).getFluorescence_intensity().equalsIgnoreCase("")) {
                     fluorescence_intensity_tv.setText("-");
-                }
-                else{
+                } else {
                     fluorescence_intensity_tv.setText(list.get(position).getFluorescence_intensity());
                 }
 
-                if(list.get(position).getFluorescence_intensity().equalsIgnoreCase(""))
-                {
+                if (list.get(position).getFluorescence_intensity().equalsIgnoreCase("")) {
                     certificate_name_tv.setText("-");
-                }
-                else{
+                } else {
                     certificate_name_tv.setText(list.get(position).getCertificate_name());
                 }
             }
-
 
 
             table_perc_tv.setText("T: " + list.get(position).getTable_perc());
             depth_perc.setText("D: " + list.get(position).getDepth_perc());
             measurement_tv.setText("M: " + list.get(position).getMeasurement());
 
-            if(!list.get(position).getR_discount().equalsIgnoreCase("") && !list.get(position).getR_discount().equalsIgnoreCase("-"))
-            {
+            if (!list.get(position).getR_discount().equalsIgnoreCase("") && !list.get(position).getR_discount().equalsIgnoreCase("-")) {
                 discount_tv.setText(list.get(position).getR_discount());
                 discount_tv.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 discount_tv.setVisibility(View.GONE);
             }
 
 
-            if(list.get(position).getCategory().equalsIgnoreCase("Natural"))
-            {
+            if (list.get(position).getCategory().equalsIgnoreCase("Natural")) {
                 diamond_type.setBackgroundResource(R.drawable.background_yellow);
                 diamond_type.setText("NATURAL");
-            }
-            else{
+            } else {
                 diamond_type.setBackgroundResource(R.drawable.background_green_light_small_round_cornor);
                 diamond_type.setText("LAB");
             }
@@ -1733,7 +1603,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             DecimalFormat formatter = new DecimalFormat("#,###,###");
 
-           // Log.e("getCoupondiscountperc","..1134..."+list.get(position).getCoupondiscountperc());
+            // Log.e("getCoupondiscountperc","..1134..."+list.get(position).getCoupondiscountperc());
             /*if (list.get(position).getCoupondiscountperc() > 0.0) {
                 Log.e("In IF","..1356*******...");
                 String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
@@ -1757,31 +1627,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                     list.get(position).getShowingSubTotal());*/
             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
-            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode,
+            String subTotalDiscountFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode,
                     String.valueOf(list.get(position).getSubtotalaftercoupondiscount()));
-            Log.e("In IF","subTotalDiscountFormat......1356*******.1...."+subTotalDiscountFormat+".....Original..."+list.get(position).getSubtotalaftercoupondiscount());
-            Log.e("In IF","subTotalFormat......1356*******..2..."+"...Original..."+list.get(position).getShowingSubTotal());
-            Log.e("In IF","getCurrencySymbol......1356*******..3..."+getCurrencySymbol);
-            if (list.get(position).getCoupondiscountperc()>0)
-            {
+            Log.e("In IF", "subTotalDiscountFormat......1356*******.1...." + subTotalDiscountFormat + ".....Original..." + list.get(position).getSubtotalaftercoupondiscount());
+            Log.e("In IF", "subTotalFormat......1356*******..2..." + "...Original..." + list.get(position).getShowingSubTotal());
+            Log.e("In IF", "getCurrencySymbol......1356*******..3..." + getCurrencySymbol);
+            if (list.get(position).getCoupondiscountperc() > 0) {
                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
                 dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 dis_sub_total_tv.setText(getCurrencySymbol + "" +
                         CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-            }
-            else
-            {
-                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
+            } else {
+                Log.e("Here ", "Call........@@@@@@@@@@@@@@@........");
                 dis_sub_total_tv.setVisibility(View.GONE);
                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
             }
 
 
-            if(list.get(position).getIs_returnable().equalsIgnoreCase("1"))
-            {
+            if (list.get(position).getIs_returnable().equalsIgnoreCase("1")) {
                 returnable_img.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 returnable_img.setVisibility(View.GONE);
             }
 
@@ -1800,34 +1665,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 }
             });
 
-            if(list.get(position).getStatus().equalsIgnoreCase("Available"))
-            {
+            if (list.get(position).getStatus().equalsIgnoreCase("Available")) {
                 status_img.setVisibility(View.VISIBLE);
 
                 status_img.setBackgroundResource(R.drawable.available);
-            }
-            else if(list.get(position).getStatus().equalsIgnoreCase("On Hold")){
+            } else if (list.get(position).getStatus().equalsIgnoreCase("On Hold")) {
                 status_img.setVisibility(View.VISIBLE);
                 status_img.setBackgroundResource(R.drawable.onhold);
-            }
-            else
-            {
+            } else {
                 status_img.setVisibility(View.GONE);
             }
 
-            if(list.get(position).getIs_cart().equalsIgnoreCase("1"))
-            {
+            if (list.get(position).getIs_cart().equalsIgnoreCase("1")) {
                 add_to_cart_tv.setText(context.getResources().getString(R.string.go_to_cart));
-            }
-            else{
+            } else {
                 add_to_cart_tv.setText(context.getResources().getString(R.string.add_to_cart));
             }
 
-            if(list.get(position).getIs_wishlist().equalsIgnoreCase("1"))
-            {
+            if (list.get(position).getIs_wishlist().equalsIgnoreCase("1")) {
                 add_to_favt_img.setBackgroundResource(R.drawable.wishlist_filled);
-            }
-            else{
+            } else {
                 add_to_favt_img.setBackgroundResource(R.drawable.wishlist);
             }
 
@@ -1835,16 +1692,14 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 @Override
                 public void onClick(View view) {
                     lastPosition = position;
-                    if(list.get(position).getIs_cart().equalsIgnoreCase("") || list.get(position).getIs_cart().equalsIgnoreCase("0"))
-                    {
+                    if (list.get(position).getIs_cart().equalsIgnoreCase("") || list.get(position).getIs_cart().equalsIgnoreCase("0")) {
                         addToCartWhereToCall = "recommendedDiamondList";
                         onAddToCartAPI(false, list.get(position).getCertificate_no());
-                    }
-                    else{
+                    } else {
                         Constant.manageClickEventForRedirection = "";
                         Intent intent = new Intent(activity, MyCardListScreenActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                     }
                 }
             });
@@ -1854,12 +1709,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 public void onClick(View view) {
 
                     lastPosition = position;
-                    if(list.get(position).getIs_wishlist().equalsIgnoreCase("1"))
-                    {
+                    if (list.get(position).getIs_wishlist().equalsIgnoreCase("1")) {
                         onRemoveFromWishlistAPI(false, list.get(position).getCertificate_no());
-                    }
-                    else
-                    {
+                    } else {
                         onAddToWishlistAPI(false, list.get(position).getCertificate_no());
                     }
 
@@ -1908,11 +1760,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    public void onBindDetails(boolean showLoader)
-    {
+    public void onBindDetails(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
 
@@ -1921,7 +1771,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_DIAMONDS_DETAILS, ApiConstants.GET_DIAMONDS_DETAILS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_DIAMONDS_DETAILS, ApiConstants.GET_DIAMONDS_DETAILS_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1929,19 +1779,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    public void onBindDetailsGemStone(boolean showLoader)
-    {
+    public void onBindDetailsGemStone(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
-            Log.e("certificate_number","....."+certificate_number);
+            Log.e("certificate_number", "....." + certificate_number);
             urlParameter.put("certificateNo", certificate_number);
             urlParameter.put("sessionId", "" + uuid);
             //GRS2021-080408
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_GEMSTONES_DETAILS, ApiConstants.GET_GEMSTONES_DETAILS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_GEMSTONES_DETAILS, ApiConstants.GET_GEMSTONES_DETAILS_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1950,18 +1798,16 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     }
 
 
-    public void onBindSizePreviewAPI(boolean showLoader)
-    {
+    public void onBindSizePreviewAPI(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("deviceType", "Android");
             urlParameter.put("sessionId", "" + uuid);
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.DIAMOND_SIZE_PREVIEW, ApiConstants.DIAMOND_SIZE_PREVIEW_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.DIAMOND_SIZE_PREVIEW, ApiConstants.DIAMOND_SIZE_PREVIEW_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1969,12 +1815,10 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    public void onBindRecommendedDiamondList(boolean showLoader)
-    {
+    public void onBindRecommendedDiamondList(boolean showLoader) {
         String uuid = CommonUtility.getAndroidId(context);
 
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             //Log.e("----------Diamond------ : ", Constant.shapeDiamondValue.toString());
             urlParameter = new HashMap<String, String>();
 
@@ -1982,7 +1826,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_RECOMMENDED_DIAMONDS, ApiConstants.GET_RECOMMENDED_DIAMONDS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_RECOMMENDED_DIAMONDS, ApiConstants.GET_RECOMMENDED_DIAMONDS_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
@@ -1990,29 +1834,25 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    public void onAddToCartAPI(boolean showLoader, String certificateNo)
-    {
+    public void onAddToCartAPI(boolean showLoader, String certificateNo) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("certificateNo", "" + certificateNo);
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ADD_TO_CART, ApiConstants.ADD_TO_CART_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.ADD_TO_CART, ApiConstants.ADD_TO_CART_ID, showLoader, "POST");
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
             //recyclerNaturalGrownView.setVisibility(View.GONE);
         }
     }
 
-    public void onAddToWishlistAPI(boolean showLoader, String certificateNo)
-    {
+    public void onAddToWishlistAPI(boolean showLoader, String certificateNo) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("certificateNo", "" + certificateNo);
@@ -2020,18 +1860,16 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.ADD_TO_WISHLIST, ApiConstants.ADD_TO_WISHLIST_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.ADD_TO_WISHLIST, ApiConstants.ADD_TO_WISHLIST_ID, showLoader, "POST");
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
             //recyclerNaturalGrownView.setVisibility(View.GONE);
         }
     }
 
-    public void onRemoveFromWishlistAPI(boolean showLoader, String certificateNo)
-    {
+    public void onRemoveFromWishlistAPI(boolean showLoader, String certificateNo) {
         String uuid = CommonUtility.getAndroidId(context);
-        if (Utils.isNetworkAvailable(context))
-        {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             urlParameter.put("certificateNo", "" + certificateNo);
@@ -2039,7 +1877,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             urlParameter.put("sessionId", "" + uuid);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.REMOVE_FROM_WISHLIST, ApiConstants.REMOVE_FROM_WISHLIST_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.REMOVE_FROM_WISHLIST, ApiConstants.REMOVE_FROM_WISHLIST_ID, showLoader, "POST");
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
             //recyclerNaturalGrownView.setVisibility(View.GONE);
@@ -2060,373 +1898,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
                     Log.v("------Diamond----- : ", "--------JSONObject-------- : " + jsonObject);
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
-                        JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
-
-                         stock_id = CommonUtility.checkString(jObjDetails.optString("stock_id"));
-                         item_name = CommonUtility.checkString(jObjDetails.optString("item_name"));
-                         supplier_id = CommonUtility.checkString(jObjDetails.optString("supplier_id"));
-                         certificate_no = CommonUtility.checkString(jObjDetails.optString("certificate_no"));
-                         category = CommonUtility.checkString(jObjDetails.optString("category"));
-                         certificate_name = CommonUtility.checkString(jObjDetails.optString("certificate_name"));
-                         cut_grade = CommonUtility.checkString(jObjDetails.optString("cut_grade"));
-                         shape = CommonUtility.checkString(jObjDetails.optString("shape"));
-                         clarity = CommonUtility.checkString(jObjDetails.optString("clarity"));
-                         carat = CommonUtility.checkString(jObjDetails.optString("carat"));
-                         color = CommonUtility.checkString(jObjDetails.optString("color"));
-                         growth_type = CommonUtility.checkString(jObjDetails.optString("growth_type"));
-                         fluorescence_intensity = CommonUtility.checkString(jObjDetails.optString("fluorescence_intensity"));
-                         polish = CommonUtility.checkString(jObjDetails.optString("polish"));
-                         symmetry = CommonUtility.checkString(jObjDetails.optString("symmetry"));
-                         depth_perc = CommonUtility.checkString(jObjDetails.optString("depth_perc"));
-                         table_perc = CommonUtility.checkString(jObjDetails.optString("table_perc"));
-                         discount_amout = CommonUtility.checkString(jObjDetails.optString("discount_amout"));
-                         length = CommonUtility.checkString(jObjDetails.optString("length"));
-                         width = CommonUtility.checkString(jObjDetails.optString("width"));
-                         depth = CommonUtility.checkString(jObjDetails.optString("depth"));
-                         measurement = CommonUtility.checkString(jObjDetails.optString("measurement"));
-                         shade = CommonUtility.checkString(jObjDetails.optString("shade"));
-                         luster = CommonUtility.checkString(jObjDetails.optString("luster"));
-                         eye_clean = CommonUtility.checkString(jObjDetails.optString("eye_clean"));
-                         crown_angle = CommonUtility.checkString(jObjDetails.optString("crown_angle"));
-                         pavillion_angle = CommonUtility.checkString(jObjDetails.optString("pavillion_angle"));
-                         diamond_image = CommonUtility.checkString(jObjDetails.optString("diamond_image"));
-                         diamond_video = CommonUtility.checkString(jObjDetails.optString("diamond_video"));
-                         is_returnable = CommonUtility.checkString(jObjDetails.optString("is_returnable"));
-                         certificate_file = CommonUtility.checkString(jObjDetails.optString("certificate_file"));
-                         girdle_condition = CommonUtility.checkString(jObjDetails.optString("girdle_condition"));
-                         culet = CommonUtility.checkString(jObjDetails.optString("culet"));
-                         location = CommonUtility.checkString(jObjDetails.optString("location"));
-                         crown_height = CommonUtility.checkString(jObjDetails.optString("crown_height"));
-                         pavillion_depth = CommonUtility.checkString(jObjDetails.optString("pavillion_depth"));
-                         inscription = CommonUtility.checkString(jObjDetails.optString("inscription"));
-                         key_to_symbols = CommonUtility.checkString(jObjDetails.optString("key_to_symbols"));
-                         report_comments = CommonUtility.checkString(jObjDetails.optString("report_comments"));
-                         subtotal = CommonUtility.checkString(jObjDetails.optString("subtotal"));
-                        coupondiscountperc=CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
-                        subtotalaftercoupondiscount=CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
-                         is_cart = CommonUtility.checkString(jObjDetails.optString("is_cart"));
-                         is_wishlist = CommonUtility.checkString(jObjDetails.optString("is_wishlist"));
-                         avaliable_status = CommonUtility.checkString(jObjDetails.optString("status"));
-                         r_discount = CommonUtility.checkString(jObjDetails.optString("r_discount"));
-                        supplier_comment = CommonUtility.checkString(jObjDetails.optString("supplier_comment"));
-                        stock_no = CommonUtility.checkString(jObjDetails.optString("stock_no"));
-
-                        /*stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
-                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));*/
-
-                         if(!diamond_image.equalsIgnoreCase(""))
-                         {
-                             Picasso.with(context)
-                                     .load(diamond_image)
-                                     .placeholder(R.mipmap.phl_diamond)
-                                     .error(R.mipmap.phl_diamond)
-                                     .into(diamond_img);
-                         }
-                         else{
-                             Picasso.with(context)
-                                     .load(R.mipmap.phl_diamond)
-                                     .placeholder(R.mipmap.phl_diamond)
-                                     .error(R.mipmap.phl_diamond)
-                                     .into(diamond_img);
-                         }
-
-                        supplier_id_tv.setText("#" +stock_no + "  |  " + "ID: " + supplier_id);
-                        name_tv.setText(shape);
-                        item_type_tv.setText("- " +  carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
-
-                        if(category.equalsIgnoreCase("Natural"))
-                        {
-                            type_tv.setBackgroundResource(R.drawable.background_yellow);
-                        }
-                        else{
-                            type_tv.setBackgroundResource(R.drawable.background_green_light);
-                        }
-                        type_tv.setText(category);
-
-                        if(is_returnable.equalsIgnoreCase("1"))
-                        {
-                            current_returnable_img.setVisibility(View.VISIBLE);
-                        }
-                        else{
-                            current_returnable_img.setVisibility(View.GONE);
-                        }
-
-                        if(cut_grade.equalsIgnoreCase(""))
-                        {
-                            cut_grade_tv.setText("-");
-                        }
-                        else{
-                            cut_grade_tv.setText(cut_grade);
-                        }
-                        if(polish.equalsIgnoreCase(""))
-                        {
-                            polish_tv.setText("-");
-                        }
-                        else{
-                            polish_tv.setText(polish);
-                        }
-
-                        if(symmetry.equalsIgnoreCase(""))
-                        {
-                            symmetry_tv.setText("-");
-                        }
-                        else{
-                            symmetry_tv.setText(symmetry);
-                        }
-
-                        if(fluorescence_intensity.equalsIgnoreCase(""))
-                        {
-                            fluorescence_intensity_tv.setText("-");
-                        }
-                        else{
-                            fluorescence_intensity_tv.setText(fluorescence_intensity);
-                        }
-
-                        if(certificate_name.equalsIgnoreCase(""))
-                        {
-                            certificate_name_tv.setText("-");
-                        }
-                        else{
-                            certificate_name_tv.setText(certificate_name);
-                        }
-
-
-                        if(subtotal!=null && !subtotal.equalsIgnoreCase(""))
-                        {
-                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
-                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
-
-                            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
-                            /*Log.e("In IF","subTotalDiscountFormat......1946*******..."+subTotalDiscountFormat+"..original..."+subtotalaftercoupondiscount);
-                            Log.e("In IF","subTotalDiscountFormat......1947*******..."+subTotalFormat+"...subtotal.."+subtotal);
-                            Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);*/
-                            if (coupondiscountperc>0)
-                            {
-                                dis_sub_total_tv.setVisibility(View.VISIBLE);
-                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
-                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                                dis_sub_total_tv.setText(getCurrencySymbol + "" +
-                                        CommonUtility.currencyFormat(subTotalFormat));
-                            }
-                            else
-                            {
-                                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
-                                dis_sub_total_tv.setVisibility(View.GONE);
-                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            }
-                            /*if (list.get(position).getCoupondiscountperc() > 0.0) {
-                                Log.e("In IF","..1356*******...");
-                                String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
-                                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
-                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                                dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-
-                                //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-                            }
-                            else
-                            {
-
-                            }*/
-
-
-
-
-                        }
-                        else{}
-
-                        if(is_cart.equalsIgnoreCase("1"))
-                        {
-                            current_add_to_cart_tv.setText(getResources().getString(R.string.go_to_cart));
-                        }
-                        else{
-                            current_add_to_cart_tv.setText(getResources().getString(R.string.add_to_cart));
-                        }
-
-                        if(measurement.equalsIgnoreCase(""))
-                        {
-                            details_measurements_tv.setText("-");
-                        }
-                        else{
-                            details_measurements_tv.setText(measurement);
-                        }
-
-                        if(depth_perc.equalsIgnoreCase(""))
-                        {
-                            details_depth_tv.setText("-");
-                        }
-                        else{
-                            details_depth_tv.setText(depth_perc + "%");
-                        }
-
-                        if(table_perc.equalsIgnoreCase(""))
-                        {
-                            details_table_tv.setText("-");
-                        }
-                        else{
-                            details_table_tv.setText(table_perc + "%");
-                        }
-
-                        if(crown_height.equalsIgnoreCase(""))
-                        {
-                            details_crown_height_tv.setText("-");
-                        }
-                        else{
-                            details_crown_height_tv.setText(crown_height + "%");
-                        }
-
-                        if(crown_angle.equalsIgnoreCase(""))
-                        {
-                            details_crown_angle_tv.setText("-");
-                        }
-                        else{
-                            details_crown_angle_tv.setText(crown_angle);
-                        }
-
-                        if(pavillion_depth.equalsIgnoreCase(""))
-                        {
-                            details_pavilion_depth_tv.setText("-");
-                        }
-                        else{
-                            details_pavilion_depth_tv.setText(pavillion_depth + "%");
-                        }
-
-                        if(pavillion_angle.equalsIgnoreCase(""))
-                        {
-                            details_pavilion_angle_tv.setText("-");
-                        }
-                        else{
-                            details_pavilion_angle_tv.setText(pavillion_angle);
-                        }
-
-                        if(shade.equalsIgnoreCase(""))
-                        {
-                            details_shade_tv.setText("-");
-                        }
-                        else{
-                            details_shade_tv.setText(shade);
-                        }
-
-                        if(girdle_condition.equalsIgnoreCase(""))
-                        {
-                            details_condition_cult_tv.setText("-");
-                        }
-                        else{
-                            details_condition_cult_tv.setText(girdle_condition);
-                        }
-
-                        if(growth_type.equalsIgnoreCase(""))
-                        {
-                            details_growth_type_tv.setText("-");
-                        }
-                        else{
-                            details_growth_type_tv.setText(growth_type);
-                        }
-
-                        if(eye_clean.equalsIgnoreCase(""))
-                        {
-                            details_inclusion_tv.setText("-");
-                        }
-                        else{
-                            details_inclusion_tv.setText(eye_clean);
-                        }
-
-
-                        if(avaliable_status.equalsIgnoreCase(""))
-                        {
-                            details_status_tv.setText("-");
-                        }
-                        else{
-                            details_status_tv.setText(avaliable_status);
-                        }
-
-                        Log.e("details_location_tv : ", location);
-                        if(location.equalsIgnoreCase(""))
-                        {
-                            details_location_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_location_tv.setText(location);
-                        }
-
-
-                        details_key_tv.setText(key_to_symbols);
-
-                        if(supplier_comment.equalsIgnoreCase(""))
-                        {
-                            details_remark_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_remark_tv.setText(supplier_comment);
-                        }
-
-                        if(report_comments.equalsIgnoreCase(""))
-                        {
-                            details_report_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_report_tv.setText(report_comments);
-                        }
-
-                        if(culet.equalsIgnoreCase(""))
-                        {
-                            culet_id.setText("-");
-                        }
-                        else{
-                            culet_id.setText(culet);
-                        }
-
-
-                        discount_tv.setText(r_discount);
-
-                        if(!r_discount.equalsIgnoreCase("") && !r_discount.equalsIgnoreCase("-"))
-                        {
-                            discount_tv.setVisibility(View.VISIBLE);
-                        }
-                        else{
-                            discount_tv.setVisibility(View.GONE);
-                        }
-
-                        if(avaliable_status.equalsIgnoreCase("Available"))
-                        {
-                            current_status_img.setVisibility(View.VISIBLE);
-                            current_status_img.setBackgroundResource(R.drawable.available);
-                        }
-                        else if(avaliable_status.equalsIgnoreCase("On Hold")){
-                            current_status_img.setVisibility(View.VISIBLE);
-                            current_status_img.setBackgroundResource(R.drawable.onhold);
-                        }
-                        else
-                        {
-                            current_status_img.setVisibility(View.GONE);
-                        }
-                        onBindRecommendedDiamondList(true);
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
-                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                        onBindRecommendedDiamondList(true);
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
-                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-
-
-                case ApiConstants.GET_GEMSTONES_DETAILS_ID:
-
-                    Log.v("------Diamond----- : ", "--------JSONObject-#$#$#$#$#$$#$------- : " + jsonObject);
-
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
                         stock_id = CommonUtility.checkString(jObjDetails.optString("stock_id"));
@@ -2469,8 +1941,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         key_to_symbols = CommonUtility.checkString(jObjDetails.optString("key_to_symbols"));
                         report_comments = CommonUtility.checkString(jObjDetails.optString("report_comments"));
                         subtotal = CommonUtility.checkString(jObjDetails.optString("subtotal"));
-                        coupondiscountperc=CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
-                        subtotalaftercoupondiscount=CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
+                        coupondiscountperc = CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
+                        subtotalaftercoupondiscount = CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
                         is_cart = CommonUtility.checkString(jObjDetails.optString("is_cart"));
                         is_wishlist = CommonUtility.checkString(jObjDetails.optString("is_wishlist"));
                         avaliable_status = CommonUtility.checkString(jObjDetails.optString("status"));
@@ -2481,16 +1953,13 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         /*stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
                         stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));*/
 
-                        Log.e("diamond_image","..GemStone....2414..."+diamond_image);
-                        if(!diamond_image.equalsIgnoreCase(""))
-                        {
+                        if (!diamond_image.equalsIgnoreCase("")) {
                             Picasso.with(context)
                                     .load(diamond_image)
                                     .placeholder(R.mipmap.phl_diamond)
                                     .error(R.mipmap.phl_diamond)
                                     .into(diamond_img);
-                        }
-                        else{
+                        } else {
                             Picasso.with(context)
                                     .load(R.mipmap.phl_diamond)
                                     .placeholder(R.mipmap.phl_diamond)
@@ -2498,69 +1967,382 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                                     .into(diamond_img);
                         }
 
-                        supplier_id_tv.setText("#" +stock_no + "  |  " + "ID: " + supplier_id);
-
-                        Log.e("shape","..2501/........."+shape);
-                        Log.e("shape","..2501/........."+shape);
-                       // item_type_tv
+                        supplier_id_tv.setText("#" + stock_no + "  |  " + "ID: " + supplier_id);
                         name_tv.setText(shape);
-                        item_type_tv.setText(carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
 
-                        //  item_type_tv.setText("- " +  carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
-
-                        if(category.equalsIgnoreCase("Natural"))
-                        {
-                            type_tv.setBackgroundResource(R.drawable.background_yellow);
+                        String getOriginalTxt = "- " + carat + getResources().getString(R.string.ct) + " " + color + " " + clarity;
+                        if (getOriginalTxt.length() > 25) {
+                            String truncatedText = getOriginalTxt.substring(0, 25) + "...";
+                            item_type_tv.setText(truncatedText);
+                        } else {
+                            item_type_tv.setText(getOriginalTxt);
                         }
-                        else{
+
+                        // item_type_tv.setText("- " +  carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
+
+                        if (category.equalsIgnoreCase("Natural")) {
+                            type_tv.setBackgroundResource(R.drawable.background_yellow);
+                        } else {
                             type_tv.setBackgroundResource(R.drawable.background_green_light);
                         }
                         type_tv.setText(category);
 
-                        if(is_returnable.equalsIgnoreCase("1"))
-                        {
+                        if (is_returnable.equalsIgnoreCase("1")) {
                             current_returnable_img.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             current_returnable_img.setVisibility(View.GONE);
                         }
 
-                        if(cut_grade.equalsIgnoreCase(""))
-                        {
-                            cut_grade_tv.setVisibility(View.GONE);
+                        if (cut_grade.equalsIgnoreCase("")) {
                             cut_grade_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             cut_grade_tv.setText(cut_grade);
                         }
-                        if(polish.equalsIgnoreCase(""))
+                        if (polish.equalsIgnoreCase("")) {
+                            polish_tv.setText("-");
+                        } else {
+                            polish_tv.setText(polish);
+                        }
+
+                        if (symmetry.equalsIgnoreCase("")) {
+                            symmetry_tv.setText("-");
+                        } else {
+                            symmetry_tv.setText(symmetry);
+                        }
+
+                        if (fluorescence_intensity.equalsIgnoreCase("")) {
+                            fluorescence_intensity_tv.setText("-");
+                        } else {
+                            fluorescence_intensity_tv.setText(fluorescence_intensity);
+                        }
+
+                        if (certificate_name.equalsIgnoreCase("")) {
+                            certificate_name_tv.setText("-");
+                        } else {
+                            certificate_name_tv.setText(certificate_name);
+                        }
+
+
+                        if (subtotal != null && !subtotal.equalsIgnoreCase("")) {
+                            String subTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
+                            String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+                            String subTotalDiscountFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
+                            /*Log.e("In IF","subTotalDiscountFormat......1946*******..."+subTotalDiscountFormat+"..original..."+subtotalaftercoupondiscount);
+                            Log.e("In IF","subTotalDiscountFormat......1947*******..."+subTotalFormat+"...subtotal.."+subtotal);
+                            Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);*/
+                            if (coupondiscountperc > 0) {
+                                dis_sub_total_tv.setVisibility(View.VISIBLE);
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(getCurrencySymbol + "" +
+                                        CommonUtility.currencyFormat(subTotalFormat));
+                            } else {
+                                Log.e("Here ", "Call........@@@@@@@@@@@@@@@........");
+                                dis_sub_total_tv.setVisibility(View.GONE);
+                                sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
+                            }
+                            /*if (list.get(position).getCoupondiscountperc() > 0.0) {
+                                Log.e("In IF","..1356*******...");
+                                String getsubtotalPrice= String.valueOf(list.get(position).getSubtotalaftercoupondiscount());
+                                sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(getsubtotalPrice));
+                                dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                dis_sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+                                //   holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+                            }
+                            else
+                            {
+                            }*/
+
+
+                        } else {
+                        }
+
+                        if (is_cart.equalsIgnoreCase("1")) {
+                            current_add_to_cart_tv.setText(getResources().getString(R.string.go_to_cart));
+                        } else {
+                            current_add_to_cart_tv.setText(getResources().getString(R.string.add_to_cart));
+                        }
+
+                        if (measurement.equalsIgnoreCase("")) {
+                            details_measurements_tv.setText("-");
+                        } else {
+                            details_measurements_tv.setText(measurement);
+                        }
+
+                        if (depth_perc.equalsIgnoreCase("")) {
+                            details_depth_tv.setText("-");
+                        } else {
+                            details_depth_tv.setText(depth_perc + "%");
+                        }
+
+                        if (table_perc.equalsIgnoreCase("")) {
+                            details_table_tv.setText("-");
+                        } else {
+                            details_table_tv.setText(table_perc + "%");
+                        }
+
+                        if (crown_height.equalsIgnoreCase("")) {
+                            details_crown_height_tv.setText("-");
+                        } else {
+                            details_crown_height_tv.setText(crown_height + "%");
+                        }
+
+                        if (crown_angle.equalsIgnoreCase("")) {
+                            details_crown_angle_tv.setText("-");
+                        } else {
+                            details_crown_angle_tv.setText(crown_angle);
+                        }
+
+                        if (pavillion_depth.equalsIgnoreCase("")) {
+                            details_pavilion_depth_tv.setText("-");
+                        } else {
+                            details_pavilion_depth_tv.setText(pavillion_depth + "%");
+                        }
+
+                        if (pavillion_angle.equalsIgnoreCase("")) {
+                            details_pavilion_angle_tv.setText("-");
+                        } else {
+                            details_pavilion_angle_tv.setText(pavillion_angle);
+                        }
+
+                        if (shade.equalsIgnoreCase("")) {
+                            details_shade_tv.setText("-");
+                        } else {
+                            details_shade_tv.setText(shade);
+                        }
+
+                        if (girdle_condition.equalsIgnoreCase("")) {
+                            details_condition_cult_tv.setText("-");
+                        } else {
+                            details_condition_cult_tv.setText(girdle_condition);
+                        }
+
+                        if (growth_type.equalsIgnoreCase("")) {
+                            details_growth_type_tv.setText("-");
+                        } else {
+                            details_growth_type_tv.setText(growth_type);
+                        }
+
+                        if (eye_clean.equalsIgnoreCase("")) {
+                            details_inclusion_tv.setText("-");
+                        } else {
+                            details_inclusion_tv.setText(eye_clean);
+                        }
+
+
+                        if (avaliable_status.equalsIgnoreCase("")) {
+                            details_status_tv.setText("-");
+                        } else {
+                            details_status_tv.setText(avaliable_status);
+                        }
+
+                        Log.e("details_location_tv : ", location);
+                        if (location.equalsIgnoreCase("")) {
+                            details_location_tv.setText("-");
+                        } else {
+                            details_location_tv.setText(location);
+                        }
+
+                        details_key_tv.setText(key_to_symbols);
+
+                        if (supplier_comment.equalsIgnoreCase("")) {
+                            details_remark_tv.setText("-");
+                        } else {
+                            details_remark_tv.setText(supplier_comment);
+                        }
+
+                        if (report_comments.equalsIgnoreCase("")) {
+                            details_report_tv.setText("-");
+                        } else {
+                            details_report_tv.setText(report_comments);
+                        }
+
+                        if (culet.equalsIgnoreCase("")) {
+                            culet_id.setText("-");
+                        } else {
+                            culet_id.setText(culet);
+                        }
+
+                        discount_tv.setText(r_discount);
+
+                        if (!r_discount.equalsIgnoreCase("") && !r_discount.equalsIgnoreCase("-")) {
+                            discount_tv.setVisibility(View.VISIBLE);
+                        } else {
+                            discount_tv.setVisibility(View.GONE);
+                        }
+
+                        if (avaliable_status.equalsIgnoreCase("Available")) {
+                            current_status_img.setVisibility(View.VISIBLE);
+                            current_status_img.setBackgroundResource(R.drawable.available);
+                        } else if (avaliable_status.equalsIgnoreCase("On Hold")) {
+                            current_status_img.setVisibility(View.VISIBLE);
+                            current_status_img.setBackgroundResource(R.drawable.onhold);
+                        } else {
+                            current_status_img.setVisibility(View.GONE);
+                        }
+                        onBindRecommendedDiamondList(true);
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                        onBindRecommendedDiamondList(true);
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+
+                case ApiConstants.GET_GEMSTONES_DETAILS_ID:
+
+                    Log.v("------Diamond----- : ", "--------JSONObject------#$#$#$#$#$$#$------- : " + jsonObject);
+
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
+                        JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
+
+                        stock_id = CommonUtility.checkString(jObjDetails.optString("stock_id"));
+                        item_name = CommonUtility.checkString(jObjDetails.optString("item_name"));
+                        supplier_id = CommonUtility.checkString(jObjDetails.optString("supplier_id"));
+                        certificate_no = CommonUtility.checkString(jObjDetails.optString("certificate_no"));
+                        category = CommonUtility.checkString(jObjDetails.optString("category"));
+                        certificate_name = CommonUtility.checkString(jObjDetails.optString("certificate_name"));
+                        cut_grade = CommonUtility.checkString(jObjDetails.optString("cut_grade"));
+                        shape = CommonUtility.checkString(jObjDetails.optString("shape"));
+                        clarity = CommonUtility.checkString(jObjDetails.optString("clarity"));
+                        carat = CommonUtility.checkString(jObjDetails.optString("carat"));
+                        color = CommonUtility.checkString(jObjDetails.optString("color"));
+                        growth_type = CommonUtility.checkString(jObjDetails.optString("growth_type"));
+                        fluorescence_intensity = CommonUtility.checkString(jObjDetails.optString("fluorescence_intensity"));
+                        polish = CommonUtility.checkString(jObjDetails.optString("polish"));
+                        symmetry = CommonUtility.checkString(jObjDetails.optString("symmetry"));
+                        depth_perc = CommonUtility.checkString(jObjDetails.optString("depth_perc"));
+                        table_perc = CommonUtility.checkString(jObjDetails.optString("table_perc"));
+                        discount_amout = CommonUtility.checkString(jObjDetails.optString("discount_amout"));
+                        length = CommonUtility.checkString(jObjDetails.optString("length"));
+                        width = CommonUtility.checkString(jObjDetails.optString("width"));
+                        depth = CommonUtility.checkString(jObjDetails.optString("depth"));
+                        measurement = CommonUtility.checkString(jObjDetails.optString("measurement"));
+                        shade = CommonUtility.checkString(jObjDetails.optString("shade"));
+                        luster = CommonUtility.checkString(jObjDetails.optString("luster"));
+                        eye_clean = CommonUtility.checkString(jObjDetails.optString("eye_clean"));
+                        crown_angle = CommonUtility.checkString(jObjDetails.optString("crown_angle"));
+                        pavillion_angle = CommonUtility.checkString(jObjDetails.optString("pavillion_angle"));
+                        diamond_image = CommonUtility.checkString(jObjDetails.optString("diamond_image"));
+                        diamond_video = CommonUtility.checkString(jObjDetails.optString("diamond_video"));
+                        is_returnable = CommonUtility.checkString(jObjDetails.optString("is_returnable"));
+                        certificate_file = CommonUtility.checkString(jObjDetails.optString("certificate_file"));
+                        girdle_condition = CommonUtility.checkString(jObjDetails.optString("girdle_condition"));
+                        culet = CommonUtility.checkString(jObjDetails.optString("culet"));
+                        location = CommonUtility.checkString(jObjDetails.optString("location"));
+                        crown_height = CommonUtility.checkString(jObjDetails.optString("crown_height"));
+                        pavillion_depth = CommonUtility.checkString(jObjDetails.optString("pavillion_depth"));
+                        inscription = CommonUtility.checkString(jObjDetails.optString("inscription"));
+                        key_to_symbols = CommonUtility.checkString(jObjDetails.optString("key_to_symbols"));
+                        report_comments = CommonUtility.checkString(jObjDetails.optString("report_comments"));
+                        subtotal = CommonUtility.checkString(jObjDetails.optString("subtotal"));
+                        coupondiscountperc = CommonUtility.checkDouble(jObjDetails.optString("coupon_discount_perc"));
+                        subtotalaftercoupondiscount = CommonUtility.checkDouble(jObjDetails.optString("subtotal_after_coupon_discount"));
+                        is_cart = CommonUtility.checkString(jObjDetails.optString("is_cart"));
+                        is_wishlist = CommonUtility.checkString(jObjDetails.optString("is_wishlist"));
+                        avaliable_status = CommonUtility.checkString(jObjDetails.optString("status"));
+                        r_discount = CommonUtility.checkString(jObjDetails.optString("r_discount"));
+                        supplier_comment = CommonUtility.checkString(jObjDetails.optString("supplier_comment"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("stock_no"));
+                       String stone_range = CommonUtility.checkString(jObjDetails.optString("stone_range"));
+                        String dia_wt = CommonUtility.checkString(jObjDetails.optString("dia_wt"));
+                        String treatment = CommonUtility.checkString(jObjDetails.optString("treatment"));
+                        String fancy_color = CommonUtility.checkString(jObjDetails.optString("fancy_color"));
+
+                        /*stock_no = CommonUtility.checkString(jObjDetails.optString("coupon_discount_perc"));
+                        stock_no = CommonUtility.checkString(jObjDetails.optString("subtotal_after_coupon_discount"));*/
+
+                        Log.e("diamond_image", "..GemStone....2414..." + diamond_image);
+                        if (!diamond_image.equalsIgnoreCase("")) {
+                            Picasso.with(context)
+                                    .load(diamond_image)
+                                    .placeholder(R.mipmap.phl_diamond)
+                                    .error(R.mipmap.phl_diamond)
+                                    .into(diamond_img);
+                        } else {
+                            Picasso.with(context)
+                                    .load(R.mipmap.phl_diamond)
+                                    .placeholder(R.mipmap.phl_diamond)
+                                    .error(R.mipmap.phl_diamond)
+                                    .into(diamond_img);
+                        }
+
+                        supplier_id_tv.setText("#" + stock_no + "  |  " + "ID: " + supplier_id);
+
+                        Log.e("shape", "..2501/........." + shape);
+                        Log.e("shape", "..2501/........." + shape);
+                        // item_type_tv
+                        //  name_tv.setText(shape);
+
+                        String getOriginalTxt = shape + " " + carat + getResources().getString(R.string.ct) + " | " + clarity;
+                        if (getOriginalTxt.length() > 40) {
+                            String truncatedText = getOriginalTxt.substring(0, 40) + "...";
+                            item_type_tv.setText(truncatedText);
+                        } else {
+                            item_type_tv.setText(getOriginalTxt);
+                        }
+
+                        //  item_type_tv.setText(carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
+                        //  item_type_tv.setText("- " +  carat + getResources().getString(R.string.ct) + " " + color + " " + clarity);
+
+                        if (category.equalsIgnoreCase("Natural")) {
+                            type_tv.setBackgroundResource(R.drawable.background_yellow);
+                        } else {
+                            type_tv.setBackgroundResource(R.drawable.background_green_light);
+                        }
+                        type_tv.setText(category);
+
+                        if (is_returnable.equalsIgnoreCase("1")) {
+                            current_returnable_img.setVisibility(View.VISIBLE);
+                        } else {
+                            current_returnable_img.setVisibility(View.GONE);
+                        }
+
+                        if (cut_grade.equalsIgnoreCase("")) {
+                            cut_grade_tv.setVisibility(View.VISIBLE);
+                            cut_grade_tv.setText("-");
+                        } else {
+                            /*cut_grade_tv.setText(limitCharacters(cut_grade,5));*/
+                            cut_grade_tv.setVisibility(View.VISIBLE);
+                            cut_grade_tv.setText(certificate_name);
+                        }
+
+                        /*if(polish.equalsIgnoreCase(""))
                         {
-                            cut_grade_view.setVisibility(View.GONE);
+                            //cut_grade_view.setVisibility(View.GONE);
                             polish_tv.setVisibility(View.GONE);
                             polish_tv.setText("-");
                         }
                         else{
-                            polish_tv.setText(polish);
-                        }
+                           *//* polish_tv.setText(limitCharacters(polish,5));*//*
+                            polish_tv.setText(limitCharacters(polish,5));
+                        }*/
 
-                        if(symmetry.equalsIgnoreCase(""))
-                        {
-                            polish_view.setVisibility(View.GONE);
-                            symmetry_tv.setVisibility(View.GONE);
+
+                        if (inscription.equalsIgnoreCase("")) {
+                            // polish_view.setVisibility(View.GONE);
+                            // symmetry_tv.setVisibility(View.GONE);
+                            symmetry_tv.setVisibility(View.VISIBLE);
                             symmetry_tv.setText("-");
-                        }
-                        else{
-                            symmetry_tv.setText(symmetry);
+                        } else {
+                            symmetry_tv.setVisibility(View.VISIBLE);
+                            symmetry_tv.setText(inscription);
+                            //  inscription
+                            //symmetry_tv.setText(limitCharacters(symmetry,5));
                         }
 
-                        if(fluorescence_intensity.equalsIgnoreCase(""))
+                        /*if(fluorescence_intensity.equalsIgnoreCase(""))
                         {
                             symmetry_view.setVisibility(View.GONE);
                             fluorescence_intensity_tv.setVisibility(View.GONE);
                             fluorescence_intensity_tv.setText("-");
                         }
                         else{
-                            fluorescence_intensity_tv.setText(fluorescence_intensity);
+                            fluorescence_intensity_tv.setText(limitCharacters(fluorescence_intensity,5));
                         }
 
                         if(certificate_name.equalsIgnoreCase(""))
@@ -2570,32 +2352,101 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             certificate_name_tv.setText("-");
                         }
                         else{
-                            certificate_name_tv.setText(certificate_name);
+                            certificate_name_tv.setText(limitCharacters(certificate_name,5));
+                        }*/
+
+
+
+                        Log.e("fancy_color","2360,,,"+fancy_color);
+                        exact_dimensions_tv.setText(measurement);
+                        // wait for confirmation
+                        refractive_index_tv.setText(stone_range);
+                        weight_cart_tv.setText(carat);
+                        weight_ratti_tv.setText(fancy_color);
+                        if (key_to_symbols.equalsIgnoreCase(""))
+                        {
+                            gravity_tv.setText("-");
+                        }
+                        else {
+                            gravity_tv.setText(key_to_symbols);
                         }
 
-                        Log.e("subtotal","..2567....."+subtotal);
-                        if(subtotal!=null && !subtotal.equalsIgnoreCase(""))
+                        if (growth_type.equalsIgnoreCase(""))
                         {
-                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
+                            details_item_tv.setText("-");
+                        }
+                        else {
+                            details_item_tv.setText(growth_type);
+                        }
+
+                        if(treatment.equalsIgnoreCase(""))
+                        {
+                            treatment_tv.setText("-");
+                        }
+                        else {
+                            treatment_tv.setText(treatment);
+                        }
+
+                        if(category.equalsIgnoreCase(""))
+                        {
+                            composition_tv.setText("-");
+                        }
+                        else {
+                            composition_tv.setText(category);
+                        }
+
+                        if(location.equalsIgnoreCase(""))
+                        {
+                            location_tv.setText("-");
+                        }
+                        else {
+                            location_tv.setText(location);
+                        }
+                        if(stock_no.equalsIgnoreCase(""))
+                        {
+                            details_inclusion_tv.setText("-");
+                        }
+                        else {
+                           /* details_inclusion_tv.setText(certificate_no);*/
+                            details_inclusion_tv.setText(stock_no);
+                        }
+
+                        if (supplier_comment.equalsIgnoreCase("")) {
+                            details_remark_tv.setText("-");
+                        } else {
+                            details_remark_tv.setText(supplier_comment);
+                        }
+
+                        if (report_comments.equalsIgnoreCase("")) {
+                            details_report_tv.setText("-");
+                        } else {
+                            details_report_tv.setText(report_comments);
+                        }
+
+
+
+                        /*  gravity_tv, weight_ratti_tv, weight_cart_tv, refractive_index_tv, exact_dimensions_tv,
+                                details_item_tv, treatment_tv, composition_tv*/
+
+                        Log.e("subtotal", "..2567....." + subtotal);
+                        if (subtotal != null && !subtotal.equalsIgnoreCase("")) {
+                            String subTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, subtotal);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
-                            String subTotalDiscountFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
-                            Log.e("In IF","subTotalDiscountFormat......1946*******..."+subTotalDiscountFormat+"..original..."+subtotalaftercoupondiscount);
-                            Log.e("In IF","subTotalDiscountFormat......1947*******..."+subTotalFormat+"...subtotal.."+subtotal);
-                            Log.e("In IF","subTotalDiscountFormat......1948*******..."+subTotalDiscountFormat);
-                            Log.e("In IF","coupondiscountperc......2577*******..."+coupondiscountperc);
+                            String subTotalDiscountFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(subtotalaftercoupondiscount));
+                            Log.e("In IF", "subTotalDiscountFormat......1946*******..." + subTotalDiscountFormat + "..original..." + subtotalaftercoupondiscount);
+                            Log.e("In IF", "subTotalDiscountFormat......1947*******..." + subTotalFormat + "...subtotal.." + subtotal);
+                            Log.e("In IF", "subTotalDiscountFormat......1948*******..." + subTotalDiscountFormat);
+                            Log.e("In IF", "coupondiscountperc......2577*******..." + coupondiscountperc);
 
-                            if (coupondiscountperc>0)
-                            {
+                            if (coupondiscountperc > 0) {
                                 dis_sub_total_tv.setVisibility(View.VISIBLE);
                                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalDiscountFormat));
                                 dis_sub_total_tv.setPaintFlags(dis_sub_total_tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                                 dis_sub_total_tv.setText(getCurrencySymbol + "" +
                                         CommonUtility.currencyFormat(subTotalFormat));
-                            }
-                            else
-                            {
-                                Log.e("Here ","Call........@@@@@@@@@@@@@@@........");
+                            } else {
+                                Log.e("Here ", "Call........@@@@@@@@@@@@@@@........");
                                 dis_sub_total_tv.setVisibility(View.GONE);
                                 sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
                             }
@@ -2612,208 +2463,133 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             {
 
                             }*/
+                        } else {
                         }
-                        else{}
 
-                        if(is_cart.equalsIgnoreCase("1"))
-                        {
+                        if (is_cart.equalsIgnoreCase("1")) {
                             current_add_to_cart_tv.setText(getResources().getString(R.string.go_to_cart));
-                        }
-                        else{
+                        } else {
                             current_add_to_cart_tv.setText(getResources().getString(R.string.add_to_cart));
                         }
 
-                        if(measurement.equalsIgnoreCase(""))
-                        {
+                        /*if (measurement.equalsIgnoreCase("")) {
                             details_measurements_tv.setVisibility(View.GONE);
                             details_measurements_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_measurements_tv.setText(measurement);
-                        }
+                        }*/
 
-                        if(depth_perc.equalsIgnoreCase(""))
-                        {
+                        if (depth_perc.equalsIgnoreCase("")) {
                             details_depth_tv.setVisibility(View.GONE);
                             details_depth_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_depth_tv.setText(depth_perc + "%");
                         }
 
-                        if(table_perc.equalsIgnoreCase(""))
-                        {
+                        if (table_perc.equalsIgnoreCase("")) {
                             details_table_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_table_tv.setText(table_perc + "%");
                         }
 
-                        if(crown_height.equalsIgnoreCase(""))
-                        {
+                        if (crown_height.equalsIgnoreCase("")) {
                             details_crown_height_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_crown_height_tv.setText(crown_height + "%");
                         }
 
-                        if(crown_angle.equalsIgnoreCase(""))
-                        {
+                        if (crown_angle.equalsIgnoreCase("")) {
                             details_crown_angle_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_crown_angle_tv.setText(crown_angle);
                         }
 
-                        if(pavillion_depth.equalsIgnoreCase(""))
-                        {
+                       /* if (pavillion_depth.equalsIgnoreCase("")) {
                             details_pavilion_depth_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_pavilion_depth_tv.setText(pavillion_depth + "%");
                         }
 
-                        if(pavillion_angle.equalsIgnoreCase(""))
-                        {
+                        if (pavillion_angle.equalsIgnoreCase("")) {
                             details_pavilion_angle_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_pavilion_angle_tv.setText(pavillion_angle);
-                        }
+                        }*/
 
-                        if(shade.equalsIgnoreCase(""))
-                        {
+                        /*if (shade.equalsIgnoreCase("")) {
                             details_shade_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_shade_tv.setText(shade);
-                        }
+                        }*/
 
-                        if(girdle_condition.equalsIgnoreCase(""))
-                        {
+                       /* if (girdle_condition.equalsIgnoreCase("")) {
                             details_condition_cult_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_condition_cult_tv.setText(girdle_condition);
-                        }
+                        }*/
 
-                        if(growth_type.equalsIgnoreCase(""))
-                        {
+                        /*if (growth_type.equalsIgnoreCase("")) {
                             details_growth_type_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_growth_type_tv.setText(growth_type);
-                        }
+                        }*/
 
-                        if(eye_clean.equalsIgnoreCase(""))
-                        {
-                            details_inclusion_tv.setText("-");
-                        }
-                        else{
-                            details_inclusion_tv.setText(eye_clean);
-                        }
-
-
-                        if(avaliable_status.equalsIgnoreCase(""))
-                        {
+                        if (avaliable_status.equalsIgnoreCase("")) {
                             details_status_tv.setText("-");
-                        }
-                        else{
+                        } else {
                             details_status_tv.setText(avaliable_status);
-                        }
-
-                        Log.e("details_location_tv : ", location);
-                        if(location.equalsIgnoreCase(""))
-                        {
-                            details_location_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_location_tv.setText(location);
                         }
 
 
                         details_key_tv.setText(key_to_symbols);
 
-                        if(supplier_comment.equalsIgnoreCase(""))
-                        {
-                            details_remark_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_remark_tv.setText(supplier_comment);
-                        }
 
-                        if(report_comments.equalsIgnoreCase(""))
-                        {
-                            details_report_tv.setText("-");
-                        }
-                        else
-                        {
-                            details_report_tv.setText(report_comments);
-                        }
 
-                        if(culet.equalsIgnoreCase(""))
-                        {
+                        /*if (culet.equalsIgnoreCase("")) {
                             culet_id.setText("-");
-                        }
-                        else{
+                        } else {
                             culet_id.setText(culet);
-                        }
+                        }*/
 
 
                         discount_tv.setText(r_discount);
 
-                        if(!r_discount.equalsIgnoreCase("") && !r_discount.equalsIgnoreCase("-"))
-                        {
+                        if (!r_discount.equalsIgnoreCase("") && !r_discount.equalsIgnoreCase("-")) {
                             discount_tv.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             discount_tv.setVisibility(View.GONE);
                         }
 
-                        if(avaliable_status.equalsIgnoreCase("Available"))
-                        {
+                        if (avaliable_status.equalsIgnoreCase("Available")) {
                             current_status_img.setVisibility(View.VISIBLE);
                             current_status_img.setBackgroundResource(R.drawable.available);
-                        }
-                        else if(avaliable_status.equalsIgnoreCase("On Hold")){
+                        } else if (avaliable_status.equalsIgnoreCase("On Hold")) {
                             current_status_img.setVisibility(View.VISIBLE);
                             current_status_img.setBackgroundResource(R.drawable.onhold);
-                        }
-                        else
-                        {
+                        } else {
                             current_status_img.setVisibility(View.GONE);
                         }
                         onBindRecommendedDiamondList(true);
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                         onBindRecommendedDiamondList(true);
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.GET_RECOMMENDED_DIAMONDS_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Log.v("------Diamond----- : ", "GET_RECOMMENDED_DIAMONDS_ID--------JSONObject----Recomm---- : " + jsonObject);
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
-                        if(recommandDiamondArrayList.size() > 0)
-                        {
+                        if (recommandDiamondArrayList.size() > 0) {
                             recommandDiamondArrayList.clear();
                         }
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             SearchResultTypeModel model = new SearchResultTypeModel();
@@ -2857,7 +2633,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
                             model.setCurrencySymbol(ApiConstants.rupeesIcon);
 
-                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
+                            String subTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             model.setShowingSubTotal(subTotalFormat);
@@ -2867,13 +2643,11 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         }
 
                         //Log.e("recommandDiamondArrayList", "" + recommandDiamondArrayList.size());
-                        if(recommandDiamondArrayList!=null && recommandDiamondArrayList.size()>0)
-                        {
+                        if (recommandDiamondArrayList != null && recommandDiamondArrayList.size() > 0) {
                             viewpager_layout.setVisibility(View.VISIBLE);
                             recommanded_tv_lbl.setVisibility(View.VISIBLE);
                             setpager();
-                        }
-                        else{
+                        } else {
                             viewpager_layout.setVisibility(View.GONE);
                             recommanded_tv_lbl.setVisibility(View.GONE);
                         }
@@ -2892,34 +2666,25 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             recommandDiamondArrayList.get(i).setCurrencySymbol(getCurrencySymbol);
 
                         }*/
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.ADD_TO_CART_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         //Toast.makeText(activity, ""+ message, Toast.LENGTH_SHORT).show();
 
                         // Check If User Add to Cart By Details Screen Single Button If Condition Work, Otherwise User Come Recommended Diamond List
-                        if(addToCartWhereToCall.equalsIgnoreCase("detailsScreen"))
-                        {
+                        if (addToCartWhereToCall.equalsIgnoreCase("detailsScreen")) {
                             is_cart = "1";
                             current_add_to_cart_tv.setText(getResources().getString(R.string.go_to_cart));
-                        }
-                        else
-                        {
+                        } else {
                             recommandDiamondArrayList.get(lastPosition).setIs_cart("1");
                             viewPager.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
                         }
@@ -2928,24 +2693,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         Constant.cardCount = CommonUtility.checkString(jObjDetails.optString("cart_count"));
                         Constant.wishListCount = CommonUtility.checkString(jObjDetails.optString("wishlist_count"));
                         showCardCount();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.ADD_TO_WISHLIST_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         /*if(modelArrayList.get(lastPosition).getIs_wishlist().equalsIgnoreCase("1"))
                         {
                             modelArrayList.get(lastPosition).setIs_wishlist("0");
@@ -2967,24 +2726,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         viewPager.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
                         //Toast.makeText(activity, ""+ message, Toast.LENGTH_SHORT).show();
 
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.REMOVE_FROM_WISHLIST_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         recommandDiamondArrayList.get(lastPosition).setIs_wishlist("0");
 
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
@@ -2994,24 +2747,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
                         viewPager.setAdapter(new MyPagerAdapter(activity, recommandDiamondArrayList));
                         //Toast.makeText(activity, ""+ message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.DIAMOND_SIZE_PREVIEW_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Log.e("jsonObjectData : ", "Diamond Size : " + jsonObjectData.toString());
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
@@ -3036,15 +2783,13 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                             diamondShapeImageModelArrayList.add(diamondShape);
                         }*/
 
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCode = details.getJSONObject(i);
                             String shape = objectCode.getString("shape");
 
                             JSONArray shapeDetails = objectCode.getJSONArray("details");
 
-                            for (int j = 0; j < shapeDetails.length(); j++)
-                            {
+                            for (int j = 0; j < shapeDetails.length(); j++) {
                                 JSONObject shapeObjectCodes = shapeDetails.getJSONObject(j);
 
                                 DiamondShapeImageModel model = new DiamondShapeImageModel();
@@ -3059,17 +2804,12 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
                             }
                         }
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
@@ -3085,46 +2825,26 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     }
 
-    void setParsingData(DiamondShapeImageModel model, String type)
-    {
-        if(type.equalsIgnoreCase(ROUND))
-        {
+    void setParsingData(DiamondShapeImageModel model, String type) {
+        if (type.equalsIgnoreCase(ROUND)) {
             diamondShapeImageModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(PRINCESS))
-        {
+        } else if (type.equalsIgnoreCase(PRINCESS)) {
             princessModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(EMERALD))
-        {
+        } else if (type.equalsIgnoreCase(EMERALD)) {
             emeraldModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(PEAR))
-        {
+        } else if (type.equalsIgnoreCase(PEAR)) {
             pearModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(HEART))
-        {
+        } else if (type.equalsIgnoreCase(HEART)) {
             heartModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(OVAL))
-        {
+        } else if (type.equalsIgnoreCase(OVAL)) {
             ovalModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(MARQUISE))
-        {
+        } else if (type.equalsIgnoreCase(MARQUISE)) {
             marquiseModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(RADIANT))
-        {
+        } else if (type.equalsIgnoreCase(RADIANT)) {
             radiantModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(ASSCHER))
-        {
+        } else if (type.equalsIgnoreCase(ASSCHER)) {
             asscherModelArrayList.add(model);
-        }
-        else if(type.equalsIgnoreCase(CUSHION))
-        {
+        } else if (type.equalsIgnoreCase(CUSHION)) {
             cushionModelArrayList.add(model);
         }
     }
@@ -3133,8 +2853,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     WebView webViewImage, webViewVideo;
 
     android.app.AlertDialog alertDialog1;
-    void showDiamondImageWebViewPopup(final Activity activity,final Context context, String diamondUrl)
-    {
+
+    void showDiamondImageWebViewPopup(final Activity activity, final Context context, String diamondUrl) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -3147,15 +2867,12 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         final TextView not_found_tv = dialogView.findViewById(R.id.not_found_tv);
         webViewImage = dialogView.findViewById(R.id.webView);
 
-        if(diamondUrl.equalsIgnoreCase(""))
-        {
+        if (diamondUrl.equalsIgnoreCase("")) {
             not_found_tv.setText(getResources().getString(R.string.image_not_found));
             not_found_tv.setVisibility(View.VISIBLE);
             share_img.setVisibility(View.GONE);
             webViewImage.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+        } else {
             not_found_tv.setVisibility(View.GONE);
             share_img.setVisibility(View.VISIBLE);
             webViewImage.setVisibility(View.VISIBLE);
@@ -3192,7 +2909,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             // Set WebView background color to transparent
             webViewImage.setBackgroundResource(R.drawable.background_gradient);
             webViewImage.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
-            Log.e("diamondUrl","..3112...."+diamondUrl);
+            Log.e("diamondUrl", "..3112...." + diamondUrl);
             webViewImage.loadUrl(diamondUrl);
         }
 
@@ -3235,14 +2952,11 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         // Create a Bitmap of the WebView content
         Bitmap bitmap;
         // Check Video Type image share or Image Share and Pass WebView Object
-        if(shareType.equalsIgnoreCase("Image"))
-        {
+        if (shareType.equalsIgnoreCase("Image")) {
             bitmap = Bitmap.createBitmap(webViewImage.getWidth(), webViewImage.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             webViewImage.draw(canvas);
-        }
-        else
-        {
+        } else {
             bitmap = Bitmap.createBitmap(webViewVideo.getWidth(), webViewVideo.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             webViewVideo.draw(canvas);
@@ -3288,8 +3002,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     //----------------------------------------------------End-------------------------------------------------------
 
-    void showDiamondVideoWebViewPopup(final Activity activity,final Context context, String diamondUrl)
-    {
+    void showDiamondVideoWebViewPopup(final Activity activity, final Context context, String diamondUrl) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -3305,15 +3018,13 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         share_img.setVisibility(View.GONE);
 
-        Log.e("-------diamondUrlvideo------- : " , diamondUrl.toString());
+        Log.e("-------diamondUrlvideo------- : ", diamondUrl.toString());
 
-        if(diamondUrl.equalsIgnoreCase(""))
-        {
+        if (diamondUrl.equalsIgnoreCase("")) {
             not_found_tv.setText(getResources().getString(R.string.video_not_found));
             not_found_tv.setVisibility(View.VISIBLE);
             webViewVideo.setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             not_found_tv.setVisibility(View.GONE);
             webViewVideo.setVisibility(View.VISIBLE);
 
@@ -3377,8 +3088,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
     }
 
     // Not Use
-    void showDiamondCertificateWebViewPopup(final Activity activity,final Context context, String diamondUrl)
-    {
+    void showDiamondCertificateWebViewPopup(final Activity activity, final Context context, String diamondUrl) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -3396,17 +3106,14 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         title_tv.setText(getResources().getString(R.string.certificate));
 
-        Log.e("-------diamondUrlvideo1------- : " , diamondUrl.toString());
+        Log.e("-------diamondUrlvideo1------- : ", diamondUrl.toString());
 
         // Check URL Available or Not
-        if(diamondUrl.equalsIgnoreCase(""))
-        {
+        if (diamondUrl.equalsIgnoreCase("")) {
             not_found_tv.setText(getResources().getString(R.string.certificate_not_found));
             not_found_tv.setVisibility(View.VISIBLE);
             webView.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+        } else {
             not_found_tv.setVisibility(View.GONE);
             webView.setVisibility(View.VISIBLE);
 
@@ -3446,20 +3153,18 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             String pdf = diamondUrl;
             // webView.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);;
 
-            String extension =  CommonUtility.getFileExtension(diamondUrl);
+            String extension = CommonUtility.getFileExtension(diamondUrl);
             webView.getSettings().setSupportZoom(true);
             //Log.e("------extension------ : ", extension.toString());
-            if(extension.equalsIgnoreCase(".pdf"))
-            {
+            if (extension.equalsIgnoreCase(".pdf")) {
                 webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + diamondUrl);
-            }
-            else
-            {
+            } else {
                 webView.loadUrl(diamondUrl);
             }
 
             webView.setWebViewClient(new WebViewClient() {
                 boolean checkOnPageStartedCalled = false;
+
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     checkOnPageStartedCalled = true;
@@ -3470,7 +3175,6 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 }
             });
         }
-
 
 
         cross_img.setOnClickListener(new View.OnClickListener() {
@@ -3492,8 +3196,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     RecyclerView recycler_carat_view, recycler_shape_view;
     ImageView hand_img;
-    void showDiamondShapePopup(final Activity activity,final Context context)
-    {
+
+    void showDiamondShapePopup(final Activity activity, final Context context) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -3504,10 +3208,10 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
         final ImageView cross_img = dialogView.findViewById(R.id.cross_img);
         final TextView title_tv = dialogView.findViewById(R.id.title_tv);
-         hand_img = dialogView.findViewById(R.id.hand_img);
-         recycler_carat_view = dialogView.findViewById(R.id.recycler_carat_view);
-         recycler_shape_view = dialogView.findViewById(R.id.recycler_shape_view);
-         title_tv.setText(getResources().getString(R.string.diamond_size_preview));
+        hand_img = dialogView.findViewById(R.id.hand_img);
+        recycler_carat_view = dialogView.findViewById(R.id.recycler_carat_view);
+        recycler_shape_view = dialogView.findViewById(R.id.recycler_shape_view);
+        title_tv.setText(getResources().getString(R.string.diamond_size_preview));
 
         recycler_carat_view.setHasFixedSize(true);
         recycler_shape_view.setHasFixedSize(true);
@@ -3523,145 +3227,104 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         recycler_shape_view.setNestedScrollingEnabled(false);
 
         // Default First Position Selected Here.
-        if(diamondShapeImageModelArrayList.size()>0)
-        {
+        if (diamondShapeImageModelArrayList.size() > 0) {
 
             Log.e("-------ShapeType----- : ", diamondShapeImageModelArrayList.get(0).getShapeType().toString());
 
             // Round, Princess, Emerald, Heart, Radiant, Oval, Pear, Marquise, Asscher, Cushion
-            if(shapeTypeSelected.equalsIgnoreCase(ROUND))
-            {
+            if (shapeTypeSelected.equalsIgnoreCase(ROUND)) {
                 setSelectedCaratDiamondImage(diamondShapeImageModelArrayList.get(0).getImage());
 
                 diamondShapeImageModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(0).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PRINCESS))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PRINCESS)) {
                 setSelectedCaratDiamondImage(princessModelArrayList.get(0).getImage());
 
                 princessModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(1).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(EMERALD))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(EMERALD)) {
                 setSelectedCaratDiamondImage(emeraldModelArrayList.get(0).getImage());
 
                 emeraldModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(2).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
                 setSelectedCaratDiamondImage(heartModelArrayList.get(0).getImage());
 
                 heartModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(3).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
                 setSelectedCaratDiamondImage(radiantModelArrayList.get(0).getImage());
 
                 radiantModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(4).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(OVAL))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(OVAL)) {
                 setSelectedCaratDiamondImage(ovalModelArrayList.get(0).getImage());
 
                 ovalModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(5).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PEAR))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PEAR)) {
                 setSelectedCaratDiamondImage(pearModelArrayList.get(0).getImage());
 
                 pearModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(6).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(MARQUISE))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(MARQUISE)) {
                 setSelectedCaratDiamondImage(marquiseModelArrayList.get(0).getImage());
 
                 marquiseModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(7).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(ASSCHER))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(ASSCHER)) {
                 setSelectedCaratDiamondImage(asscherModelArrayList.get(0).getImage());
 
                 asscherModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(8).setSelected(true);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(CUSHION))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(CUSHION)) {
                 setSelectedCaratDiamondImage(cushionModelArrayList.get(0).getImage());
 
                 cushionModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(9).setSelected(true);
-            }
-            else{
+            } else {
                 // Default
                 setSelectedCaratDiamondImage(diamondShapeImageModelArrayList.get(0).getImage());
 
                 diamondShapeImageModelArrayList.get(0).setSelected(true);
                 shapeImageArrayList.get(0).setSelected(true);
             }
-        }
-        else{
+        } else {
             //setSelectedCaratDiamondImage(diamondShapeImageModelArrayList.get(0).getImage());
         }
 
-        if(shapeTypeSelected.equalsIgnoreCase(ROUND))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(diamondShapeImageModelArrayList,context,this);
+        if (shapeTypeSelected.equalsIgnoreCase(ROUND)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(diamondShapeImageModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(PRINCESS)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(princessModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(EMERALD)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(emeraldModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(heartModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(RADIANT)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(radiantModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(OVAL)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(ovalModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(PEAR)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(pearModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(MARQUISE)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(marquiseModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(ASSCHER)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(asscherModelArrayList, context, this);
+            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
+        } else if (shapeTypeSelected.equalsIgnoreCase(CUSHION)) {
+            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(cushionModelArrayList, context, this);
             recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
         }
-        else if(shapeTypeSelected.equalsIgnoreCase(PRINCESS))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(princessModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(EMERALD))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(emeraldModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(heartModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(RADIANT))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(radiantModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(OVAL))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(ovalModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(PEAR))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(pearModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(MARQUISE))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(marquiseModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(ASSCHER))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(asscherModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        else if(shapeTypeSelected.equalsIgnoreCase(CUSHION))
-        {
-            diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(cushionModelArrayList,context,this);
-            recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-        }
-        shapeImageListAdapter = new DiamondShapeImageListAdapter(shapeImageArrayList,context,this);
+        shapeImageListAdapter = new DiamondShapeImageListAdapter(shapeImageArrayList, context, this);
         recycler_shape_view.setAdapter(shapeImageListAdapter);
 
         cross_img.setOnClickListener(new View.OnClickListener() {
@@ -3678,21 +3341,17 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     }
 
-    void setSelectedCaratDiamondImage(String imageURL)
-    {
+    void setSelectedCaratDiamondImage(String imageURL) {
         Picasso.with(context)
                 .load(imageURL)
                 .into(hand_img);
     }
 
     @Override
-    public void itemClick(int position, String action)
-    {
-        if(action.equalsIgnoreCase("shapeImage"))
-        {
+    public void itemClick(int position, String action) {
+        if (action.equalsIgnoreCase("shapeImage")) {
             boolean shouldSelect = !shapeImageArrayList.get(position).isSelected();
-            for (int i = 0; i < shapeImageArrayList.size(); i++)
-            {
+            for (int i = 0; i < shapeImageArrayList.size(); i++) {
                 shapeImageArrayList.get(i).setSelected(false);
             }
             shapeImageArrayList.get(position).setSelected(shouldSelect);
@@ -3703,8 +3362,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
             shapeTypeSelected = shapeImageArrayList.get(position).getAttribCode();
             Log.e("---------shapeTypeSelected--------- : ", shapeTypeSelected);
-            if(selectedShape.equalsIgnoreCase(ROUND))
-            {
+            if (selectedShape.equalsIgnoreCase(ROUND)) {
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3720,9 +3378,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
                 diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(diamondShapeImageModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(selectedShape.equalsIgnoreCase(PRINCESS))
-            {
+            } else if (selectedShape.equalsIgnoreCase(PRINCESS)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3739,9 +3395,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 //diamondCaratTypeListAdapter.notifyDataSetChanged();
                 diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(princessModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(EMERALD))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(EMERALD)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3755,11 +3409,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(emeraldModelArrayList.get(0).getImage());
                 emeraldModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(emeraldModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(emeraldModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3773,11 +3425,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(heartModelArrayList.get(0).getImage());
                 heartModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(heartModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(heartModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(RADIANT))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(RADIANT)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3791,11 +3441,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(radiantModelArrayList.get(0).getImage());
                 radiantModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(radiantModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(radiantModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(OVAL))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(OVAL)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(pearModelArrayList);
@@ -3809,11 +3457,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(ovalModelArrayList.get(0).getImage());
                 ovalModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(ovalModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(ovalModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PEAR))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PEAR)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
@@ -3827,11 +3473,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(pearModelArrayList.get(0).getImage());
                 pearModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(pearModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(pearModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(MARQUISE))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(MARQUISE)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
@@ -3845,11 +3489,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(marquiseModelArrayList.get(0).getImage());
                 marquiseModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(marquiseModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(marquiseModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(ASSCHER))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(ASSCHER)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
@@ -3863,11 +3505,9 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(asscherModelArrayList.get(0).getImage());
                 asscherModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(asscherModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(asscherModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(CUSHION))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(CUSHION)) {
                 setAllItemsToNotSelected(diamondShapeImageModelArrayList);
                 setAllItemsToNotSelected(princessModelArrayList);
                 setAllItemsToNotSelected(emeraldModelArrayList);
@@ -3881,100 +3521,60 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 setSelectedCaratDiamondImage(cushionModelArrayList.get(0).getImage());
                 cushionModelArrayList.get(0).setSelected(true);
 
-                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(cushionModelArrayList,context,this);
+                diamondCaratTypeListAdapter = new DiamondCaratTypeListAdapter(cushionModelArrayList, context, this);
                 recycler_carat_view.setAdapter(diamondCaratTypeListAdapter);
             }
 
             shapeImageListAdapter.notifyDataSetChanged();
-        }
-        else if(action.equalsIgnoreCase("caratType"))
-        {
+        } else if (action.equalsIgnoreCase("caratType")) {
             //String selectedShape = shapeImageArrayList.get(position).getAttribCode(); // Assuming you have a method to get shape name
             //shapeTypeSelected = shapeImageArrayList.get(position).getAttribCode();
 
-           // Log.e("----diamondShapeImageModelArrayList--- : ", "Click Carart : " + diamondShapeImageModelArrayList.get(position).getCarat());
+            // Log.e("----diamondShapeImageModelArrayList--- : ", "Click Carart : " + diamondShapeImageModelArrayList.get(position).getCarat());
 
 
-            if(shapeTypeSelected.equalsIgnoreCase(ROUND))
-            {
+            if (shapeTypeSelected.equalsIgnoreCase(ROUND)) {
                 setArrayListData(position, diamondShapeImageModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PRINCESS))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PRINCESS)) {
                 setArrayListData(position, princessModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(EMERALD))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(EMERALD)) {
                 setArrayListData(position, emeraldModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PEAR))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PEAR)) {
                 setArrayListData(position, pearModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
                 setArrayListData(position, heartModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(OVAL))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(OVAL)) {
                 setArrayListData(position, ovalModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(MARQUISE))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(MARQUISE)) {
                 setArrayListData(position, marquiseModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(RADIANT))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(RADIANT)) {
                 setArrayListData(position, radiantModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(ASSCHER))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(ASSCHER)) {
                 setArrayListData(position, asscherModelArrayList);
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(CUSHION))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(CUSHION)) {
                 setArrayListData(position, cushionModelArrayList);
             }
 
             // Set Image Using Carat.
-            if(shapeTypeSelected.equalsIgnoreCase(ROUND))
-            {
+            if (shapeTypeSelected.equalsIgnoreCase(ROUND)) {
                 setSelectedCaratDiamondImage(diamondShapeImageModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PRINCESS))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PRINCESS)) {
                 setSelectedCaratDiamondImage(princessModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(EMERALD))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(EMERALD)) {
                 setSelectedCaratDiamondImage(emeraldModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(PEAR))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(PEAR)) {
                 setSelectedCaratDiamondImage(pearModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(HEART))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(HEART)) {
                 setSelectedCaratDiamondImage(heartModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(OVAL))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(OVAL)) {
                 setSelectedCaratDiamondImage(ovalModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(MARQUISE))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(MARQUISE)) {
                 setSelectedCaratDiamondImage(marquiseModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(RADIANT))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(RADIANT)) {
                 setSelectedCaratDiamondImage(radiantModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(ASSCHER))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(ASSCHER)) {
                 setSelectedCaratDiamondImage(asscherModelArrayList.get(position).getImage());
-            }
-            else if(shapeTypeSelected.equalsIgnoreCase(CUSHION))
-            {
+            } else if (shapeTypeSelected.equalsIgnoreCase(CUSHION)) {
                 setSelectedCaratDiamondImage(cushionModelArrayList.get(position).getImage());
             }
 
@@ -3988,8 +3588,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         }
     }
 
-    void setArrayListData(int position, ArrayList<DiamondShapeImageModel> arrayList)
-    {
+    void setArrayListData(int position, ArrayList<DiamondShapeImageModel> arrayList) {
         boolean shouldSelect = !arrayList.get(position).isSelected();
         for (int i = 0; i < arrayList.size(); i++) {
             arrayList.get(i).setSelected(false);
@@ -3997,8 +3596,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         arrayList.get(position).setSelected(shouldSelect);
     }
 
-    public void showEnterPinCodeDialog(final Activity activity,final Context context)
-    {
+    public void showEnterPinCodeDialog(final Activity activity, final Context context) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -4012,19 +3610,14 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         final EditText enter_pincode_et = dialogView.findViewById(R.id.enter_pincode_et);
         final LinearLayout locate_me_lin = dialogView.findViewById(R.id.locate_me_lin);
 
-        if(userPincode.equalsIgnoreCase(""))
-        {
+        if (userPincode.equalsIgnoreCase("")) {
             enter_pincode_et.setHint(getResources().getString(R.string.enter_pin_code));
-        }
-        else
-        {
+        } else {
             enter_pincode_et.setText("");
             // if City is blank sow only pin-code
-            if(userCity.equalsIgnoreCase(""))
-            {
+            if (userCity.equalsIgnoreCase("")) {
                 enter_pincode_et.setText(userPincode);
-            }
-            else{
+            } else {
                 enter_pincode_et.setText(userCity + ", " + userPincode);
             }
         }
@@ -4049,20 +3642,13 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
             @Override
             public void onClick(View v) {
 
-                if(enter_pincode_et.getText().toString().trim().equalsIgnoreCase(""))
-                {
+                if (enter_pincode_et.getText().toString().trim().equalsIgnoreCase("")) {
                     Toast.makeText(activity, "Please Enter PinCode", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    if(!enter_pincode_et.getText().toString().equalsIgnoreCase(""))
-                    {
-                        if(enter_pincode_et.getText().toString().equalsIgnoreCase(""))
-                        {
+                } else {
+                    if (!enter_pincode_et.getText().toString().equalsIgnoreCase("")) {
+                        if (enter_pincode_et.getText().toString().equalsIgnoreCase("")) {
                             select_lbl.setText(getResources().getString(R.string.select));
-                        }
-                        else
-                        {
+                        } else {
                             select_lbl.setText(getResources().getString(R.string.change));
                         }
                         pincode_tv.setText(getResources().getString(R.string.delivering_to) + " " + enter_pincode_et.getText().toString().trim());
@@ -4070,7 +3656,8 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                         CommonUtility.setGlobalString(context, "user_select_pincode", enter_pincode_et.getText().toString());
                         CommonUtility.setGlobalString(context, "user_select_pincode_city", "");
 
-                    }else{}
+                    } else {
+                    }
 
                     alertDialog.dismiss();
                 }
@@ -4085,10 +3672,16 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
 
     }
 
+    public String limitCharacters(String text, int maxChars) {
+        if (text.length() > maxChars) {
+            return text.substring(0, maxChars) + "..";
+        } else {
+            return text;
+        }
+    }
 
     // Not Use
-    void orderSuccessfullyPopup(final Activity activity,final Context context)
-    {
+    void orderSuccessfullyPopup(final Activity activity, final Context context) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -4106,7 +3699,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
         message.setText(getResources().getString(R.string.thanks_you));
         message1.setText(getResources().getString(R.string.thanks_you_msg));
 
-        title.setText(""+context.getResources().getString(R.string.app_name));
+        title.setText("" + context.getResources().getString(R.string.app_name));
 
         email_id_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -4143,7 +3736,7 @@ public class DiamondDetailsActivity extends SuperActivity implements RecyclerInt
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 alertDialog.dismiss();
             }
         });

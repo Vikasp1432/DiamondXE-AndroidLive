@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -1709,8 +1710,55 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         }
         return names;
     }
-
     private void showCustomDropdown(View anchor, List<AttributeDetailsModel> data) {
+        PopupWindow popupWindow = new PopupWindow(this);
+        ListView listView = new ListView(this);
+
+        List<String> displayNames = new ArrayList<>();
+        for (AttributeDetailsModel model : data) {
+            displayNames.add(model.getDisplayAttr());
+        }
+
+        Paint paint = new Paint();
+        paint.setTextSize(getResources().getDimensionPixelSize(android.R.dimen.app_icon_size)); // Adjust text size as needed
+        int maxWidth = 0;
+        for (String name : displayNames) {
+            maxWidth = Math.max(maxWidth, (int) paint.measureText(name));
+        }
+        int calculatedWidth = Math.min(maxWidth, 550);
+
+        popupWindow.setOnDismissListener(() -> dim_overlay.setVisibility(View.GONE));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                displayNames
+        );
+        listView.setAdapter(adapter);
+
+        popupWindow.setContentView(listView);
+        popupWindow.setWidth(calculatedWidth);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.showAsDropDown(anchor);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            AttributeDetailsModel selectedModel = data.get(position);
+
+            Log.e("Dropdown", "Selected item details: " + selectedModel.getDisplayAttr());
+            Log.e("Dropdown", "Selected item details: " + selectedModel.getAttribCode());
+            spinnerAttributes.setSelection(position);
+            stocklocation = selectedModel.getAttribCode();
+            onBindDetails(false);
+            dim_overlay.setVisibility(View.GONE);
+            // Dismiss the popup
+            popupWindow.dismiss();
+        });
+    }
+
+
+    /*private void showCustomDropdown(View anchor, List<AttributeDetailsModel> data) {
         PopupWindow popupWindow = new PopupWindow(this);
         ListView listView = new ListView(this);
         List<String> displayNames = new ArrayList<>();
@@ -1748,7 +1796,7 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
             // Dismiss the popup
             popupWindow.dismiss();
         });
-    }
+    }*/
 
 
     void setSubTotalAccordingCurrencyWise(String value, String currencyCode)
@@ -1860,8 +1908,6 @@ public class SearchResultActivity extends SuperActivity implements RecyclerInter
         }
         else if(action.equalsIgnoreCase("countryType"))
         {
-
-
             //LinearLayout linearLayout = findViewById(R.id.lin_enquiry);
             /*ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) linearLayout.getLayoutParams();
             int bottomMarginInPx = (int) (60 * getResources().getDisplayMetrics().density);

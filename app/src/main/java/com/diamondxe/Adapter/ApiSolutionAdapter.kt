@@ -50,6 +50,7 @@ class ApiSolutionAdapter(private val list: ArrayList<Transaction>,
         holder.closing_balance.text = if (item.closing_balance.isNotEmpty())
             "${item.currency_symbol} ${item.closing_balance}" else "-"
 
+        holder.date_time_tv.text = item.created_at
     }
 
     override fun getItemCount(): Int = list.size
@@ -64,5 +65,6 @@ class ApiSolutionAdapter(private val list: ArrayList<Transaction>,
         val closing_balance: TextView = itemView.findViewById(R.id.closing_balance)
         val paymentModeTv: TextView = itemView.findViewById(R.id.payment_mode_tv)
         val remark: TextView = itemView.findViewById(R.id.remark)
+        val date_time_tv: TextView = itemView.findViewById(R.id.date_time_tv)
     }
 }

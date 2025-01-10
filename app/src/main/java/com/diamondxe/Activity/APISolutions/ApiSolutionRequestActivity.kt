@@ -45,7 +45,6 @@ import com.diamondxe.Network.SuperActivity
 import com.diamondxe.R
 import com.diamondxe.Utils.CommonUtility
 import com.diamondxe.Utils.Constant
-import com.diamondxe.Utils.PaymentUtils
 import com.diamondxe.Utils.Utils
 import com.diamondxe.databinding.ActivityApiSolutionRequest2Binding
 import com.diamondxe.databinding.ApiSolutionRequestDialogBinding
@@ -54,7 +53,6 @@ import com.diamondxe.databinding.ApisolutionFilterLayoutBinding
 import com.payment.paymentsdk.integrationmodels.PaymentSdkError
 import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionDetails
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface
-import com.phonepe.intent.sdk.api.B2BPGRequest
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import org.json.JSONObject
@@ -81,7 +79,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
     var isSelectNetBankingBank: Boolean = false
     lateinit var upiAppsArrayList: ArrayList<UPIAppInfoListModel?>
     var upiOptionListAdapter: UPIOptionListAdapter? = null
-    var b2BPGRequest: B2BPGRequest? = null
     var payloadBase64 = ""
     var checksum = ""
     var amountInPaisaString = ""
@@ -150,7 +147,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
         scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                if (accountStatementResponse!!.size >= Constant.lazyLoadingLimit) {
+                if (accountStatementResponse.size >= Constant.lazyLoadingLimit) {
                     binding.progressBar.visibility = View.VISIBLE
                     pageNo += 1
                     getAccountStatement(true,startDate,endDate)
@@ -162,17 +159,15 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
         UploadAmountFiled()
 
-        //logic according to new ui //////////////////////////////////////////////////////////////////////////////////////////////////////
-
         binding.paymentOption.paymentImage.visibility=View.VISIBLE
         binding.paymentOption.paymentButtonSelect.visibility=View.VISIBLE
         binding.paymentOption.indiaLayout.setOnClickListener(this)
         binding.paymentOption.internationalLayout.setOnClickListener(this)
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         binding.amountEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            @SuppressLint("SetTextI18n")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val amountText = binding.amountEt.text.toString()
 
@@ -199,7 +194,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                         binding.paymentOption.upiMainLin.visibility = View.GONE
                         paymentModeType = ""
                         selectedUPIPackage = ""
-                        upiAppsArrayList?.let { apps ->
+                        upiAppsArrayList.let { apps ->
                             if (apps.isNotEmpty()) {
                                 for (app in apps) {
                                     app!!.isSelected = false
@@ -208,8 +203,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                             }
                         }
                     } else {
-                        /*binding.paymentOption.upiMainLin.visibility = View.VISIBLE
-                        binding.paymentOption.upiOptionLin.visibility = View.GONE */
                         Log.e("RegionType","....208..........."+RegionType)
                         if (RegionType.equals("IND", ignoreCase = true)) {
                             binding.paymentOption.upiMainLin.visibility = View.VISIBLE
@@ -227,11 +220,10 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         getApiKEY(true)
 
         // Initialize PhonePe
-        PaymentUtils.initializePhonePe(this)
+       // PaymentUtils.initializePhonePe(this)
         upiAppsArrayList = getInstalledUPIApps()
         //hide the UPI option
         //  showUPIAppsOption(upiAppsArrayList)
-        ////////////////
         getDXEBankDetailsAPI(true,"IND")
         getPaymentOptionAPI(true)
         getBankChargesAPI(true)
@@ -240,7 +232,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
             byDefaultNEFTSelected()
         }
     }
-    fun byDefaultNEFTSelected() {
+    private fun byDefaultNEFTSelected() {
         binding.paymentOption.rtgsRel.setBackgroundResource(R.drawable.background_select_payment_option)
         binding.paymentOption.cardTypeRel.setBackgroundResource(R.drawable.background_payment_option)
         binding.paymentOption.netBankingRel.setBackgroundResource(R.drawable.background_payment_option)
@@ -288,7 +280,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         }
     }
 
-    fun netBankingSelected() {
+    private fun netBankingSelected() {
         binding.paymentOption.rtgsRel.setBackgroundResource(R.drawable.background_payment_option)
         binding.paymentOption.cardTypeRel.setBackgroundResource(R.drawable.background_payment_option)
         binding.paymentOption.netBankingRel.setBackgroundResource(R.drawable.background_select_payment_option)
@@ -300,8 +292,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         binding.paymentOption.upiTv.setTextColor(ContextCompat.getColor(context!!, R.color.black))
         // If Payment Option Selected After that Error Gone
         binding.paymentOption.paymentOptionErrorTv.visibility = View.GONE
-
-        // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
         editTextAndTextViewValueBlank()
 
         // binding.paymentOption.recyclerView.visibility = View.VISIBLE // Bank List Layout Show
@@ -320,7 +310,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
         // All Position Unselected.
         for (i in popularBankArrayList.indices) {
-            popularBankArrayList[i].setSelected(false)
+            popularBankArrayList[i].isSelected=false
         }
 
         binding.paymentOption.selectBankTv.text = "" // Bank Name TextView Blank
@@ -329,9 +319,9 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         //netbancking list comment
         /*popularBankListAdapter = PopularBankListAdapter(popularBankArrayList, context, this)
         binding.paymentOption.recyclerView.adapter = popularBankListAdapter*/
-        binding.paymentOption.showUpiList.setVisibility(View.GONE)
-        binding.paymentOption.showAllBankLin.setVisibility(View.GONE)
-        binding.paymentOption.showBankNameLin.setVisibility(View.GONE)
+        binding.paymentOption.showUpiList.visibility=View.GONE
+        binding.paymentOption.showAllBankLin.visibility=View.GONE
+        binding.paymentOption.showBankNameLin.visibility=View.GONE
         //  binding.paymentOption.showBankNameLin.visibility = View.VISIBLE // Bank List Layout
         // binding.paymentOption.bankAccountDetailsLin.visibility = View.GONE // Bank Account Details Layout
         // binding.paymentOption.showAllBankLin.visibility = View.VISIBLE
@@ -371,7 +361,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         binding.paymentOption.showAllBankLin.visibility = View.GONE // Select Bank DropDown Layout Gone
     }
 
-    fun selectPaymentOptionClearUPIOption(paymentOptionSelectionType: String) {
+    private fun selectPaymentOptionClearUPIOption(paymentOptionSelectionType: String) {
         if (paymentOptionSelectionType.equals(UPI, ignoreCase = true)) {
         } else {
             if (upiAppsArrayList != null && upiAppsArrayList.size > 0) {
@@ -470,7 +460,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         }
     }
 
-    fun getPaymentOptionAPI(showLoader: Boolean) {
+    private fun getPaymentOptionAPI(showLoader: Boolean) {
         val uuid = CommonUtility.getAndroidId(context)
         if (Utils.isNetworkAvailable(context)) {
             val urlParameter = HashMap<String, String>().apply {
@@ -491,29 +481,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         }
     }
 
-    private fun showUPIAppsOption(upiApps: ArrayList<UPIAppInfoListModel?>) {
-        Log.e("upiApps", "...2521....${upiApps.isEmpty()}")
-
-        if (upiApps.isEmpty()) {
-            binding.paymentOption.noupifoundTv.visibility = View.VISIBLE
-            binding.paymentOption.recyclerViewUpi.visibility = View.GONE
-        } else {
-            binding.paymentOption.noupifoundTv.visibility = View.GONE
-            binding.paymentOption.noupifoundTv.text = "Found"
-            binding.paymentOption.recyclerViewUpi.visibility = View.VISIBLE
-        }
-
-        if (upiApps.isEmpty()) {
-            Toast.makeText(this, R.string.noupifound, Toast.LENGTH_SHORT).show()
-            binding.paymentOption.upiOptionLin.visibility = View.GONE
-            return
-        }
-
-        Log.e("upiApps", "...2521..**..Size..${upiApps.size}")
-        upiOptionListAdapter = UPIOptionListAdapter(upiApps, this, this)
-        binding.paymentOption.recyclerViewUpi.adapter = upiOptionListAdapter
-    }
-
     private fun getInstalledUPIApps(): ArrayList<UPIAppInfoListModel?> {
         val upiAppsList = ArrayList<UPIAppInfoListModel?>()
         val uri = Uri.parse("upi://pay")
@@ -525,7 +492,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         val packageManager = application.packageManager
         val resolveInfoList = packageManager.queryIntentActivities(upiUriIntent, PackageManager.MATCH_DEFAULT_ONLY)
 
-        resolveInfoList?.forEach { resolveInfo ->
+        resolveInfoList.forEach { resolveInfo ->
             val packageName = resolveInfo.activityInfo.packageName
             val appName = resolveInfo.loadLabel(packageManager).toString()
             val appIcon = resolveInfo.loadIcon(packageManager)
@@ -535,7 +502,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         return upiAppsList
     }
 
-    fun getCheckAPiAccess(showLoader:Boolean)
+    private fun getCheckAPiAccess(showLoader:Boolean)
     {
         val uuid = CommonUtility.getAndroidId(this)
         urlParameter = java.util.HashMap()
@@ -571,7 +538,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         )
     }
 
-    fun getGenerateAPIKey(showLoader:Boolean)
+    private fun getGenerateAPIKey(showLoader:Boolean)
     {
         val uuid = CommonUtility.getAndroidId(this)
         urlParameter = java.util.HashMap()
@@ -589,18 +556,16 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
     override fun getSuccessResponce(jsonObject: JSONObject?, service_ID: Int) {
         binding.progressBar.setVisibility(View.GONE)
-        Log.e("service_ID","...49..."+service_ID);
         Log.e("jsonObject","...49..."+jsonObject);
         val jsonObjectData = jsonObject!!
         val message = jsonObjectData.optString("msg")
         when (service_ID) {
             ApiConstants.SOLUTION_ACCOUNT_RECHARGE_ID -> {
                 if (jsonObjectData.optString("status").equals("1", ignoreCase = true)) {
-                    // Log.e("-------Diamond : ", "RTGS/NEFT : $jsonObjectData")
+                     Log.e("-------Diamond : ", "RTGS/NEFT : $jsonObjectData")
                     val jObjDetails = jsonObjectData.optJSONObject("details")
 
                     if (finalSubmitValue.equals("yes", ignoreCase = true)) {
-
 
                         Constant.paymentOrderID = CommonUtility.checkString(jObjDetails?.optString("order_id"))
                         Constant.paymentUserID = CommonUtility.checkString(jObjDetails?.optString("user_id"))
@@ -621,16 +586,22 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                             val userEmail = CommonUtility.checkString(jObjUserDetails?.optString("email"))
                             val userMobile = CommonUtility.checkString(jObjUserDetails?.optString("mobile"))
 
-                            Log.e("paymentModeType", "1266.......$paymentModeType")
+                            //Log.e("razorpay_id", "615..(1)..*****************.....${jObjDetails.optString("razorpay_order_id")}")
 
-                            println("First Name: $firstname")
+                            val razorpay_id = CommonUtility.checkString(jObjDetails.optString("razorpay_order_id"))
+                            //Log.e("razorpay_id", "615....*****************.....$razorpay_id")
+
+
+                           // Log.e("paymentModeType", "1266.......$paymentModeType")
+                            /*println("First Name: $firstname")
                             println("Last Name: $lastname")
                             println("Email: $userEmail")
-                            println("Mobile: $userMobile")
+                            println("Mobile: $userMobile")*/
 
-                            Log.e("amount_et", "..1239...****************.....${binding.amountEt.text.toString()}")
+                            /*Log.e("amount_et", "..1239...****************.....${binding.amountEt.text.toString()}")
                             Log.e("Amount In INT", "..1240.....${binding.amountEt.text.toString().toInt()}")
-                            Log.e("RegionType", "..1307....$RegionType")
+                            Log.e("RegionType", "..1307....$RegionType")*/
+
 
                             if (RegionType.equals("IND", ignoreCase = true)) {
                                 when {
@@ -642,7 +613,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                                             userEmail,
                                             PaymentMethod.UPI,
                                             resources.getString(R.string.app_name),
-                                            R.drawable.dxeluxtag
+                                            razorpay_id
                                         )
                                     }
                                     paymentModeType.equals(NET_BANKING, ignoreCase = true) -> {
@@ -653,7 +624,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                                             userEmail,
                                             PaymentMethod.NET_BANKING,
                                             resources.getString(R.string.app_name),
-                                            R.drawable.dxeluxtag
+                                            razorpay_id
                                         )
                                     }
                                     paymentModeType.equals(CREDIT_CARD, ignoreCase = true) -> {
@@ -664,7 +635,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                                             userEmail,
                                             PaymentMethod.CARD,
                                             resources.getString(R.string.app_name),
-                                            R.drawable.dxeluxtag
+                                            razorpay_id
                                         )
                                     }
                                 }
@@ -686,16 +657,16 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                                     getZip = it.optString("zip", "")
                                     getIp = it.optString("ip", "")
 
-                                    Log.e("Billing Address", "Address: $getAddress")
+                                    /*Log.e("Billing Address", "Address: $getAddress")
                                     Log.e("Billing Address", "City: $getCity")
                                     Log.e("Billing Address", "State: $getState")
                                     Log.e("Billing Address", "Country: $getCountry")
-                                    Log.e("Billing Address", "Zip: $getZip")
+                                    Log.e("Billing Address", "Zip: $getZip")*/
                                     // Log.e("Billing Address", "IP: $getIp")
                                 }
 
-                                val exchangeRate = CommonUtility.checkDouble(jObjDetails.optString("exchange_rate")) // Ensure it's a double
-                                val amount = CommonUtility.checkInt(jObjDetails.optString("total_amount")) // Ensure it's an integer
+                                val exchangeRate = CommonUtility.checkDouble(jObjDetails.optString("exchange_rate"))
+                                val amount = CommonUtility.checkInt(jObjDetails.optString("total_amount"))
 
                                 val resultDouble = amount * exchangeRate
                                 val result = resultDouble.toInt()
@@ -706,14 +677,21 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
                                 println("Result: $resultWithTwoDecimals")
 
-                                val currencySymbol = jObjDetails.optString("currency_symbol")
-                                val orderID = jObjDetails.optString("order_id")
+                                val currencySymbol = jObjDetails?.optString("currency_symbol")
+                                val orderID = jObjDetails?.optString("order_id")
 
-                                Log.e("currencySymbol", "..1424....$currencySymbol....orderID....$orderID")
-
+                                Log.e("currency Symbol", "..1424....$currencySymbol....orderID....$orderID")
+                                //  String callbackurl=jObjDetails.optString("callback_url");
+                                val callbackurl =
+                                    CommonUtility.checkString(jObjDetails.optString("callback_url"))
+                                Log.e(
+                                    "callbackurl",
+                                    "#####..1403....$callbackurl"
+                                )
                                 PayTabsPaymentManager.setCurrencyAndCartId(
-                                    currencySymbol,
-                                    orderID
+                                    currencySymbol!!,
+                                    orderID!!,
+                                    callbackurl
                                 )
 
                                 PayTabsPaymentManager.setBillingDetails(
@@ -743,7 +721,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                         totalAmount = CommonUtility.checkString(jObjDetails?.optString("total_amount"))
                     }
                 } else if (jsonObjectData.optString("status").equals("0", ignoreCase = true)) {
-                    // Handle status 0 case if needed
                 } else if (jsonObjectData.optString("status").equals("4", ignoreCase = true)) {
                     Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
                 } else {
@@ -840,12 +817,12 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                     }
                     if (accountStatementResponse.isEmpty())
                     {
-                        binding.errorTv.setVisibility(View.VISIBLE);
-                        binding.errorTv.setText(ApiConstants.NO_RESULT_FOUND);
-                        binding.amountBalanceRv.setVisibility(View.GONE);
+                        binding.errorTv.visibility=View.VISIBLE
+                        binding.errorTv.text=ApiConstants.NO_RESULT_FOUND
+                        binding.amountBalanceRv.visibility=View.GONE
                     } else {
-                        binding.errorTv.setVisibility(View.GONE);
-                        binding.amountBalanceRv.setVisibility(View.VISIBLE);
+                        binding.errorTv.visibility=View.GONE
+                        binding.amountBalanceRv.visibility=View.VISIBLE
                     }
 
                 } else if (jsonObjectData.optString("status").equals("0", ignoreCase = true)) {
@@ -894,7 +871,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
             ApiConstants.GET_DXE_BANK_DETAILS_ID -> {
 
-                if (!modelArrayList.isEmpty()) {
+                if (modelArrayList.isNotEmpty()) {
                     modelArrayList.clear()
                 }
                 if (jsonObjectData.optString("status").equals("1", ignoreCase = true)) {
@@ -1017,7 +994,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
     }
 
     @SuppressLint("SetTextI18n")
-    fun UploadAmountFiled()
+    private fun UploadAmountFiled()
     {
         val firstName = CommonUtility.getGlobalString(this, "login_first_name")
         val lastName = CommonUtility.getGlobalString(this, "login_last_name")
@@ -1029,7 +1006,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         binding.companyNameEt.isEnabled = false
     }
 
-    fun getApiRequest(showLoader:Boolean)
+    private fun getApiRequest(showLoader:Boolean)
     {
         val uuid = CommonUtility.getAndroidId(this)
         urlParameter = java.util.HashMap()
@@ -1135,7 +1112,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
             }
             R.id.select_date_rel -> {
                 Utils.hideKeyboard(this)
-                dob = binding.paymentOption.selectDateTv.getText().toString().trim { it <= ' ' }
+                dob = binding.paymentOption.selectDateTv.text.toString().trim { it <= ' ' }
                 //CommonUtility.datePicker(context, CustomPaymentScreenActivity.this, dob, "dob", 0, System.currentTimeMillis());
                 CommonUtility.datePicker(
                     context,
@@ -1194,8 +1171,8 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                 binding.paymentOption.netBankingMainLin.visibility =(View.VISIBLE)
 
                 getDXEBankDetailsAPI(true,"IND")
-                if (!binding.amountEt.getText().toString().equals("", ignoreCase = true)) {
-                    val enterAmount: Int = binding.amountEt.getText().toString().trim { it <= ' ' }.toInt()
+                if (!binding.amountEt.text.toString().equals("", ignoreCase = true)) {
+                    val enterAmount: Int = binding.amountEt.text.toString().trim { it <= ' ' }.toInt()
                     if (enterAmount > 500000) {
                         binding.paymentOption.upiMainLin.visibility = View.GONE
                     } else
@@ -1250,8 +1227,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
         //  showUPIAppsOption(upiAppsArrayList)
 
-        ///////////
-
         editTextAndTextViewValueBlank()
         paymentModeType = UPI
         binding.paymentOption.recyclerView.visibility = View.GONE
@@ -1260,6 +1235,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         isSelectNetBankingBank = false
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
+
         calculateAmountWithCharges()
 
         binding.paymentOption.showBankNameLin.visibility = View.GONE
@@ -1297,9 +1273,6 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
                 mDropdown.showAsDropDown(it, 5, -50)
             } ?: Log.e("PopupWindow", "mode_payment_rel is null")
 
-            selectModeLbl.setOnClickListener {
-                // Handle click if needed
-            }
 
             chequeModeTv.setOnClickListener {
                 binding.paymentOption.modePaymentTv.text = chequeModeTv.text.toString().trim()
@@ -1337,8 +1310,8 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         return mDropdown
     }
 
-    fun removeModePaymentError() {
-        binding.paymentOption.paymentModeErrorTv.setVisibility(View.GONE)
+    private fun removeModePaymentError() {
+        binding.paymentOption.paymentModeErrorTv.visibility=View.GONE
         binding.paymentOption.modePaymentRel.setBackgroundResource(R.drawable.border_line_view)
     }
 
@@ -1397,9 +1370,10 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         if (Utils.isNetworkAvailable(context)) {
 
 
+            Log.e("selectedUPIPackage",",1385...."+selectedUPIPackage)
             //this both use
-            // "region" : "IND", // IND, GCC                                                         <---
-            //  "paymentGateway" : "RAZORPAY", // PHONEPE,RAZORPAY,PAYTABS                            <---
+            // "region" : "IND", // IND, GCC
+            //  "paymentGateway" : "RAZORPAY", // PHONEPE,RAZORPAY,PAYTABS
             if (RegionType.equals("IND", ignoreCase = true)) {
                 paymentGetwayType = "RAZORPAY"
             } else if (RegionType.equals("GCC", ignoreCase = true)) {
@@ -1420,11 +1394,11 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
             }
             else if (paymentModeType.equals(UPI))
             {
-                urlParameter["UPI"] = selectedUPIPackage
+                urlParameter["UPI"] = "RAZORPAY"
             }
-            Log.e("paymentModeType","...1426...."+paymentModeType)
+            /*Log.e("paymentModeType","...1426...."+paymentModeType)
             Log.e("RegionType","...1357...."+RegionType)
-            Log.e("paymentGetwayType","...1357...."+paymentGetwayType)
+            Log.e("paymentGetwayType","...1357...."+paymentGetwayType)*/
             urlParameter["region"] = RegionType
             urlParameter["paymentGateway"] = paymentGetwayType
 
@@ -1436,8 +1410,9 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
             urlParameter["remark"] = remark
             urlParameter["submit"] = "true"
-            //urlParameter["deviceId"] = uuid
-            // urlParameter["deviceType"] = "Android"
+
+            val jsonObject = JSONObject(urlParameter as Map<*, *>)
+            Log.e("URL Parameter JSON 1429..", jsonObject.toString())
 
             vollyApiActivity = VollyApiActivity(context, this, urlParameter, ApiConstants.SOLUTION_ACCOUNT_RECHARGE,
                 ApiConstants.SOLUTION_ACCOUNT_RECHARGE_ID, showLoader, "POST")
@@ -1640,7 +1615,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         }
     }
 
-    fun ApiSolutionRegisterDialog(activity: Activity) {
+    private fun ApiSolutionRegisterDialog(activity: Activity) {
         val dialogBuilder = AlertDialog.Builder(activity)
         val binding = ApiSolutionRequestDialogBinding.inflate(LayoutInflater.from(activity))
         dialogBuilder.setView(binding.root)
@@ -1656,7 +1631,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
     }
 
-    fun ApiSolutionRequestSendDialog(activity: Activity,msg:String) {
+    private fun ApiSolutionRequestSendDialog(activity: Activity, msg:String) {
         val dialogBuilder = AlertDialog.Builder(activity)
         val binding =ApirequestSendDialogBinding.inflate(LayoutInflater.from(activity))
         dialogBuilder.setView(binding.root)
@@ -1676,86 +1651,9 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
 
     }
 
-   /* fun createCheckSumPaymentInitiatedAndOpenPhonePe() {
-
-        val data = JSONObject()
-        try {
-            val amountInPaisa = totalAmount.toInt()
-            data.put("merchantTransactionId", Constant.paymentOrderID)
-            data.put("merchantId", MERCHANT_ID)
-            data.put("merchantUserId", Constant.paymentUserID)
-            data.put("amount", amountInPaisa * 100)
-            data.put("mobileNumber", CommonUtility.getGlobalString(this, "login_mobile_no"))
-            data.put("callbackUrl", callbackUrl)
-
-            Log.d("AmountConversion", "Amount in Paisa: $amountInPaisa")
-
-            val paymentInstrument = JSONObject()
-
-            when {
-                paymentModeType.equals(UPI, ignoreCase = true) -> {
-                    paymentInstrument.put("type", PAYMENT_BY_UPI)
-                    paymentInstrument.put("targetApp", selectedUPIPackage)
-                }
-                paymentModeType.equals(NET_BANKING, ignoreCase = true) -> {
-                    paymentInstrument.put("type", PAYMENT_BY_NET_BANKING)
-                    Log.e("SEnd_bankID : ", bankID.toString())
-                    paymentInstrument.put("bankId", bankID)
-                }
-                paymentModeType.equals(CREDIT_CARD, ignoreCase = true) -> {
-                    paymentInstrument.put("type", PAYMENT_BY_CARD)
-                }
-            }
-
-            //paymentInstrument.put("targetApp", TARGET_URL)
-            data.put("paymentInstrument", paymentInstrument)
-
-            val deviceContext = JSONObject()
-            deviceContext.put("deviceOS", "ANDROID")
-            data.put("deviceContext", deviceContext)
-
-            payloadBase64 = Base64.encodeToString(data.toString().toByteArray(StandardCharsets.UTF_8), Base64.NO_WRAP)
-            checksum = CommonUtility.sha256(payloadBase64 + API_END_POINT + SALT) + "###" + SALT_INDEX
-
-            b2BPGRequest = B2BPGRequestBuilder()
-                .setData(payloadBase64)
-                .setChecksum(checksum)
-                .setUrl(API_END_POINT)
-                .build()
-
-            Log.d("PAPAYACODERS", "onCreate: ${data.toString()}")
-            Log.d("PAPAYACODERS", "onCreate: $payloadBase64")
-            Log.d("PAPAYACODERS", "onCreate: $checksum")
-            Log.d("PAPAYACODERS", "onCreate: $b2BPGRequest")
-
-            // Open Phone Pe Here
-            try {
-                val intent1: Intent?
-                // Intent intent1 = PhonePe.getImplicitIntent(context, b2BPGRequest, TARGET_URL)
-                intent1 = if (selectedUPIPackage.isEmpty()) {
-                    PhonePe.getImplicitIntent(context, b2BPGRequest!!, TARGET_URL)
-                } else {
-                    PhonePe.getImplicitIntent(context, b2BPGRequest!!, selectedUPIPackage)
-                }
-                if (intent1 != null) {
-                    Log.d("phonepe", "Intent created successfully")
-                    startActivityForResult(intent1, 1)
-                } else {
-                    Log.e("phonepe", "Intent is null")
-                }
-            } catch (e: PhonePeInitException) {
-                Log.e("phonepe", "PhonePe initialization error", e)
-            }
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-            Log.e("AmountConversion", "Invalid amount format")
-        }
-    }*/
-
     private lateinit var filterDialogBinding: ApisolutionFilterLayoutBinding
 
-    fun FilterSearch(activity: Activity, msg: String) {
+    private fun FilterSearch(activity: Activity, msg: String) {
         val dialogBuilder = AlertDialog.Builder(activity)
 
         filterDialogBinding = ApisolutionFilterLayoutBinding.inflate(LayoutInflater.from(activity))
@@ -1880,7 +1778,7 @@ class ApiSolutionRequestActivity : SuperActivity(), RecyclerInterface, DialogIte
         getPaymentCancel(false)
 
     }
-    fun getPaymentCancel(showLoader:Boolean)
+    private fun getPaymentCancel(showLoader:Boolean)
     {
         Log.e("paymentOrderID","...1871......"+ Constant.paymentOrderID)
         val uuid = CommonUtility.getAndroidId(this)

@@ -11,6 +11,7 @@
 
 
     <RelativeLayout
+        android:gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +39,23 @@
         android:text="@string/jewellery"
         android:textColor="@color/color_title"
         android:textFontWeight="700"
-        android:textSize="17sp"
+        android:textSize="@dimen/dimen_16"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/back_button"
         app:layout_constraintStart_toEndOf="@id/back_button"
         app:layout_constraintTop_toTopOf="@id/back_button" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/flag_img"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:src="@mipmap/flag"
+        android:visibility="visible"
+        android:layout_marginEnd="@dimen/dimen_15"
+        app:layout_constraintTop_toTopOf="@+id/dataclear"
+        app:layout_constraintRight_toLeftOf="@+id/dataclear"
+        app:civ_border_color="@color/hint_text"
+        app:civ_border_width="0.1dp" />
 
     <ImageView
         app:layout_constraintTop_toTopOf="@+id/menu"
@@ -1081,6 +1093,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/totalPriceINR" />
                             <TextView
+                                android:id="@+id/currency_price_value"
                                 android:layout_marginStart="2dp"
                                 android:textColor="@color/color_black_transparent"
                                 android:visibility="visible"
@@ -1094,15 +1107,15 @@
 
 
                         <TextView
-                            android:textColor="@color/color_7E3080"
                             android:id="@+id/total_price"
-                            android:visibility="visible"
-                            android:textFontWeight="700"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/lato_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:fontFamily="@font/lato_regular"
+                            android:text="0"
+                            android:textColor="@color/color_7E3080"
+                            android:textFontWeight="700"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
 
 
                     </LinearLayout>
@@ -1137,6 +1150,9 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:textSize="@dimen/dimen_13"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginRight="@dimen/dimen_10"
                             android:id="@+id/savetext"
                             style="@style/InfoLabelTextView"
                             android:layout_centerInParent="true"

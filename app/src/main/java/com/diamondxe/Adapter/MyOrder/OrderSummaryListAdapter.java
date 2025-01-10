@@ -3,6 +3,7 @@ package com.diamondxe.Adapter.MyOrder;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +83,10 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         if(!list.get(position).getSubTotal().equalsIgnoreCase(""))
         {
-            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
+            Log.e("ShowingSubTotal",".86..."+list.get(position).getShowingSubTotal());
+            holder.sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + list.get(position).getShowingSubTotal());
         }else {}
+
 
         if(list.get(position).getCategory().equalsIgnoreCase("Natural"))
         {

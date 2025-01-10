@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.diamondxe.Adapter.GemOriginAdapter
 import com.diamondxe.Adapter.GemTreatmentAdapter
 import com.diamondxe.Adapter.GemstoneCuttingAdapter
 import com.diamondxe.Adapter.GemstoneItemAdapter
@@ -37,7 +38,7 @@ class AdvanceGemstoneFilterActivity : SuperActivity() , RecyclerInterface{
     val Items = listOf("Precious Gemstone", "Semi Precious Gemstone")
     val cuttingStyleItems = listOf("Faceted", "Cabochon")
     private lateinit var adapterTre: GemTreatmentAdapter
-    private lateinit var adapter: GemstoneShapesAdapter
+    private lateinit var adapter: GemOriginAdapter
     private lateinit var adapterCutting: GemstoneCuttingAdapter
     private lateinit var adapterItem: GemstoneItemAdapter
 
@@ -75,22 +76,21 @@ class AdvanceGemstoneFilterActivity : SuperActivity() , RecyclerInterface{
         Constant.gemCuttingAttributeArrayList= ArrayList(gemCuttingAttribute)
         ///////////////////////////////////////////////////////////////////////////////
 
-
-        // Shapes
-        adapter = GemstoneShapesAdapter(
-            list = Constant.shapsGemarraylist,
+        // Origin
+        adapter = GemOriginAdapter(
+            list = Constant.gemOriginAttributeArrayList,
             context = this,
             recyclerInterface = this
         )
-        binding.recyclerShapes.adapter = adapter
+        binding.recyclerOrigin.adapter = adapter
         val flexboxLayoutManagerShaes = FlexboxLayoutManager(this).apply {
             flexDirection = FlexDirection.ROW
             flexWrap = FlexWrap.WRAP
             justifyContent = JustifyContent.FLEX_START
         }
-        binding.recyclerShapes.layoutManager = flexboxLayoutManagerShaes
-        binding.recyclerShapes.itemAnimator = DefaultItemAnimator()
-        binding.recyclerShapes.isNestedScrollingEnabled = false
+        binding.recyclerOrigin.layoutManager = flexboxLayoutManagerShaes
+        binding.recyclerOrigin.itemAnimator = DefaultItemAnimator()
+        binding.recyclerOrigin.isNestedScrollingEnabled = false
 
 
         // Treatment
@@ -187,9 +187,9 @@ class AdvanceGemstoneFilterActivity : SuperActivity() , RecyclerInterface{
     override fun itemClick(position: Int, action: String?) {
         Log.e("action", "191.......${action?.lowercase()}")
         when (action?.lowercase()) {
-            "gemshape" -> {
-
-                Constant.shapsGemarraylist[position].isSelected = !Constant.shapsGemarraylist[position].isSelected
+            "gemorigin" -> {
+                Constant.gemOriginAttributeArrayList[position].isSelected =
+                    !Constant.gemOriginAttributeArrayList[position].isSelected
                 adapter.notifyDataSetChanged()
             }
             "gemtreatment" -> {

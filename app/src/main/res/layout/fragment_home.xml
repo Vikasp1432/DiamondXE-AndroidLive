@@ -80,13 +80,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="@dimen/dimen_5">
+                            android:layout_margin="@dimen/dimen_5"
+                            android:background="@color/transparent">
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:elevation="@dimen/dimen_5"
-                                android:src="@drawable/gemstoneshdpi" />
+                                android:src="@drawable/gemstonelive" />
                         </LinearLayout>
 
                         <LinearLayout

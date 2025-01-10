@@ -6,7 +6,7 @@ import android.util.Log
 class QuotationModelManager(private val dao: QuotationModelDao) {
     private val maxSize = 10
 
-    suspend fun addDataModel(dataModel: QuotationModelEntity) {
+    /*suspend fun addDataModel(dataModel: QuotationModelEntity) {
         val currentCount = dao.getCount()
         Log.e("dataModelCount", "Total count before insert: $currentCount")
 
@@ -27,6 +27,32 @@ class QuotationModelManager(private val dao: QuotationModelDao) {
                 Log.e("dataModelCount", "Total count after deletion: $updatedCount")
             }
         }
+    }*/
+    suspend fun addDataModel(dataModel: QuotationModelEntity): Long {
+        val currentCount = dao.getCount()
+        //Log.e("dataModelCount", "Total count before insert: $currentCount")
+
+        // Insert the data model and get the inserted ID
+        val insertedId = dao.insertAndLimit(dataModel, maxSize)
+       // Log.e("dataModel", "Inserted new data with ID: $insertedId")
+
+        val dataModelCount = dao.getCount()
+       // Log.e("dataModelCount", "Total count after insert: $dataModelCount")
+
+        if (dataModelCount > maxSize) {
+            val oldestDataModel = dao.getOldestDataModel()
+
+            if (oldestDataModel != null) {
+                //Log.e("dataModel", "Deleting oldest entry with ID: ${oldestDataModel.id}")
+                dao.delete(oldestDataModel)
+
+                val updatedCount = dao.getCount()
+               // Log.e("dataModelCount", "Total count after deletion: $updatedCount")
+            }
+        }
+
+        // Return the auto-generated ID of the inserted entity
+        return insertedId
     }
 
 

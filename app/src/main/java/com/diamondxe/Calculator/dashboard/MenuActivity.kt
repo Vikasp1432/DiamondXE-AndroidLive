@@ -106,20 +106,19 @@ class MenuActivity : AppCompatActivity() {
             val fourth9kOutput = calculateOutputUsingStandardFormula(metalRate, Purity9k)
 
             val purityList = listOf(
-                PurityEntity(purityType = "22k", purityValue = String.format("%.2f", first22kOutput.toDouble())),
                 PurityEntity(purityType = "18k", purityValue = String.format("%.2f", second18kOutput.toDouble())),
+                PurityEntity(purityType = "22k", purityValue = String.format("%.2f", first22kOutput.toDouble())),
                 PurityEntity(purityType = "14k", purityValue = String.format("%.2f", third14kOutput.toDouble())),
                 PurityEntity(purityType = "9k", purityValue = String.format("%.2f", fourth9kOutput.toDouble())),
                 PurityEntity(purityType = "Other", purityValue = binding.editMaterialEV.text.toString())
             )
 
             val purityPerList = listOf(
-                PurityPercentageEntry(purityPerType = "22k", purityPerValue = binding.purity22kPer.text.toString()),
                 PurityPercentageEntry(purityPerType = "18k", purityPerValue = binding.purity18kPer.text.toString()),
+                PurityPercentageEntry(purityPerType = "22k", purityPerValue = binding.purity22kPer.text.toString()),
                 PurityPercentageEntry(purityPerType = "14k", purityPerValue = binding.purity14kPer.text.toString()),
                 PurityPercentageEntry(purityPerType = "9k", purityPerValue = binding.purity9kPer.text.toString()),
-
-            )
+                )
 
             val laborValue = ValueEntity(type = "labor", value = binding.laborEdt.text.toString())
             val chargesValue = ValueEntity(type = "charges", value = binding.chargesEdt.text.toString())

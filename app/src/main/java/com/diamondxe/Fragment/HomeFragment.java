@@ -37,10 +37,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.diamondxe.Activity.AccountSectionActivity;
-import com.diamondxe.Activity.DXELuex.DXELuexRegisterActivity;
+import com.diamondxe.Activity.DXELuex.DXELuxeRegisterActivity;
 import com.diamondxe.Activity.DiamondDetailsActivity;
 import com.diamondxe.Activity.Gemstones.GemstomeSearchActivity;
 import com.diamondxe.Activity.HomeScreenActivity;
@@ -74,7 +71,6 @@ import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
 import com.diamondxe.Utils.Utils;
-import com.dxe.calc.WebViewActivity;
 import com.dxe.calc.dashboard.CalculatorActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -766,7 +762,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             }
             else{
                 //startActivity(new Intent(context, LoginScreenActivity.class));
-                intent = new Intent(activity, DXELuexRegisterActivity.class);
+                intent = new Intent(activity, DXELuxeRegisterActivity.class);
                 startActivity(intent);
             }
         }
@@ -833,7 +829,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
             }
             else{
                 //startActivity(new Intent(context, LoginScreenActivity.class));
-                intent = new Intent(activity, DXELuexRegisterActivity.class);
+                intent = new Intent(activity, DXELuxeRegisterActivity.class);
                 startActivity(intent);
             }
 
@@ -1688,7 +1684,7 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
                         // working comment for check
                         if(isLuxeMember==0)
                         {
-                            startActivity(new Intent(context, DXELuexRegisterActivity.class));
+                            startActivity(new Intent(context, DXELuxeRegisterActivity.class));
                         }
                         else {
                             Constant.searchTitleName = ApiConstants.DXE_LUXE;
@@ -1805,18 +1801,13 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
     {
         if(image!=null && !image.equalsIgnoreCase(""))
         {
-            /*Picasso.with(context)
+            Picasso.with(context)
                     .load(image)
                     .placeholder(R.mipmap.register_now)
                     .error(R.mipmap.register_now)
-                    .into(registerImg);*/
-
-            Glide.with(context)
-                    .load(image) // Image URL or resource ID
-                    .apply(new RequestOptions()
-                            .placeholder(R.mipmap.register_now) // Placeholder image while loading
-                            .error(R.mipmap.register_now)) // Error image if loading fails
                     .into(registerImg);
+
+
         }
         else{
             Picasso.with(context)
@@ -1834,18 +1825,18 @@ public class HomeFragment extends SuperFragment implements RecyclerInterface,Vie
         Log.e("----LUXimage-------- : ", image.toString());
         if(image!=null && !image.equalsIgnoreCase(""))
         {
-            /*Picasso.with(context)
+            Picasso.with(context)
                     .load(image)
                     .placeholder(R.mipmap.dxe_luxe)
                     .error(R.mipmap.dxe_luxe)
-                    .into(dxeLuxeImg);*/
+                    .into(dxeLuxeImg);
 
-            Glide.with(context)
+            /*Glide.with(context)
                     .load(image) // Image URL or resource ID
                     .apply(new RequestOptions()
                             .placeholder(R.mipmap.dxe_luxe) // Placeholder image while loading
                             .error(R.mipmap.dxe_luxe)) // Error image if loading fails
-                    .into(dxeLuxeImg);
+                    .into(dxeLuxeImg);*/
         }
         else{
             Picasso.with(context)

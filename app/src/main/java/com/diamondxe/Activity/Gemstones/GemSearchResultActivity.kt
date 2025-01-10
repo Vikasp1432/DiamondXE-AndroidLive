@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -81,7 +82,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
     lateinit var scrollListener: EndlessRecyclerViewScrollListener
     lateinit var colorTypeAppliedFilterDataAdapter: ColorTypeAppliedFilterDataAdapter
     var modelArrayList: ArrayList<SearchGemstoneTypeModel>? = null
-    var localCurrencyArrayList: java.util.ArrayList<CountryListModel> = java.util.ArrayList()
+    var localCurrencyArrayList: ArrayList<CountryListModel> = ArrayList()
     var selectedCurrencyValue = ""
     var selectedCurrencyCode = ""
     var selectedCurrencyDesc = ""
@@ -89,7 +90,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
     private var isArrowDown = false
     var manageAPICall = ""
     private lateinit var attributeNames: List<AttributeDetailsModel>
-
     var lastPosition: Int = 0
     lateinit var urlParameter: java.util.HashMap<String, String>
     var attributeDetailsModels: java.util.ArrayList<AttributeDetailsModel> = java.util.ArrayList()
@@ -97,11 +97,13 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //binding = ActivitySearchResultBinding.inflate(layoutInflater)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.backImg.setOnClickListener(this)
         context = this.also { activity = it }
 
+        binding.diamondtypeText.text=getText(R.string.gemstone_type)
         binding.cardViewImg.setOnClickListener(this)
         binding.listViewImg.setOnClickListener(this)
         binding.bottomBatInclude.wishlistRel.setOnClickListener(this)
@@ -117,6 +119,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.bottomBatInclude.searchCircleCard1CrossCountry.setOnClickListener(this)
         binding.bottomBatInclude.bottomSearchIcon.setBackgroundResource(R.drawable.plus)
         binding.naturalTv.setOnClickListener(this)
+        binding.stockLv.setOnClickListener(this)
         binding.grownTv.setOnClickListener(this)
         binding.sortImg.setOnClickListener(this)
         binding.dropdown.setOnClickListener(this)
@@ -129,28 +132,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.recyclerViewApplyFilter.setLayoutManager(layoutManagerAppliedFilter)
         binding.recyclerViewApplyFilter.setNestedScrollingEnabled(false)
 
-        if (Constant.colorTypeFilterApploedArrayList != null && !Constant.colorTypeFilterApploedArrayList.isEmpty()) {
-            for (model in Constant.colorTypeFilterApploedArrayList) {
-                Log.e("Model Data", "ParentAttribTypeId: " + model.parentAttribTypeId)
-                Log.e("Model Data", "ParentAttribType: " + model.parentAttribType)
-                Log.e("Model Data", "AttribId: " + model.attribId)
-                Log.e("Model Data", "AttribTypeId: " + model.attribTypeId)
-                Log.e("Model Data", "AttribType: " + model.attribType)
-                Log.e("Model Data", "AttribCode: " + model.attribCode)
-                Log.e("Model Data", "SortOrder: " + model.sortOrder)
-                Log.e("Model Data", "DisplayAttr: " + model.displayAttr)
-                Log.e("Model Data", "FancyColorCode: " + model.fancyColorCode)
-                Log.e("Model Data", "FilterType: " + model.filterType)
-                Log.e("Model Data", "FilterTypeTo: " + model.filterTypeTo)
-                Log.e("Model Data", "PriceFrom: " + model.priceFrm)
-                Log.e("Model Data", "PriceTo: " + model.priceTo)
-                Log.e("Model Data", "IsSelected: " + model.isSelected)
-                Log.e("Model Data", "IsFirstPosition: " + model.isFirstPosition)
-            }
-        } else {
-            Log.e("Model Data", "The list is either null or empty.")
-        }
-
         // Log.e("colorType","FilterApploedArrayList.....336....."+Constant.colorTypeFilterApploedArrayList.size);
         colorTypeAppliedFilterDataAdapter = ColorTypeAppliedFilterDataAdapter(
             Constant.colorTypeFilterApploedArrayList, context,
@@ -158,7 +139,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         )
 
         binding.recyclerViewApplyFilter.setAdapter(colorTypeAppliedFilterDataAdapter)
-       binding.nestedView.setVisibility(View.GONE)
+        binding.nestedView.setVisibility(View.GONE)
         binding.arrowImg.setImageResource(R.drawable.drop_up)
         isArrowDown = true
         layoutManager = LinearLayoutManager(activity)
@@ -166,14 +147,14 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.recyclerView.setLayoutManager(layoutManager)
         binding.recyclerView.isNestedScrollingEnabled = false
 
-        gemstoneSearchResultAdapter = GemstoneSearchResultAdapter(context!!, "userRole", modelArrayList!!, this)
+        gemstoneSearchResultAdapter =
+            GemstoneSearchResultAdapter(context!!, "userRole", modelArrayList!!, this)
         binding.recyclerView.adapter = gemstoneSearchResultAdapter
 
         val layoutManagerCountryList = LinearLayoutManager(activity)
 
         //layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.bottomBatInclude.recyclerViewCountryList.setLayoutManager(layoutManagerCountryList)
-        // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
@@ -224,8 +205,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.listViewImg.setColorFilter(ContextCompat.getColor(context!!, R.color.black))
         CommonUtility.startZoomAnimation(binding.bottomBatInclude.bottomSearchIcon)
 
-        Log.e("searchType", "195...###########............${Constant.searchType}")
-        if (Constant.searchType.equals(ApiConstants.NATURAL)) {
+        if (searchType.equals(ApiConstants.NATURAL)) {
             naturalCardTabColorSet()
         } else {
             labGrownCardTabColorSet()
@@ -234,6 +214,68 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         setFirstPositionCountry()
         showCardCount()
         updateLocalCurrencyList()
+
+        binding.bottomBatInclude.homeImg.setColorFilter(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.categoriesImg.setColorFilter(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.wishImg.setColorFilter(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.cartImg.setColorFilter(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.accountImg.setColorFilter(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+
+        binding.bottomBatInclude.homeTv.setTextColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.categoriesTv.setTextColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.wishTv.setTextColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.cartTv.setTextColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
+        binding.bottomBatInclude.accountTv.setTextColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.grey_light
+            )
+        )
     }
 
     fun getCurrencyData() {
@@ -275,7 +317,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             pageNo = 1
             onBindDetails(false)
         } else {
-            manageAPICall = "" // Blank Here
+            manageAPICall = ""
         }
     }
 
@@ -366,77 +408,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
 
 
 
-    fun onBindDetails1(showLoader: Boolean) {
-        val uuid = CommonUtility.getAndroidId(context)
-
-        Log.e("stocklocation", "295...######.....$stocklocation")
-        if (Utils.isNetworkAvailable(context))
-        {
-            val urlParameter = mutableMapOf<String, String>()
-            urlParameter["sessionId"] = uuid
-            urlParameter["limit"] = Constant.lazyLoadingLimit.toString()
-            urlParameter["page"] = pageNo.toString()
-            urlParameter["isLuxe"] = "0"
-            urlParameter["stockNo"] = Constant.stockIdGemstone
-            urlParameter["keyWord"] = Constant.searchKeyword
-            urlParameter["category"] = searchType
-            urlParameter["stone"] = selectedshapeTypesItems
-            urlParameter["shape"] = Constant.selectedGemShapes
-            urlParameter["cuttingStyle"] = Constant.selectedCuttingAttribute
-            urlParameter["treatment"] = Constant.selectedGemTreatment
-            urlParameter["dimensions"] = ""
-            urlParameter["certificate"] = Constant.selectedCertificateItems
-            urlParameter["returnable"] = Constant.isReturnable
-            urlParameter["color"] = Constant.selectedColorItems
-            urlParameter["origin"] = Constant.selectedOriginItems
-            urlParameter["weight"] = selectedWeightGem
-            urlParameter["weightFrom"] = Constant.weightFirst
-            urlParameter["weightTo"] = Constant.weightThird
-            urlParameter["price"] = selectedPriceGem
-            urlParameter["priceFrom"] = Constant.priceFrm
-            urlParameter["priceTo"] = Constant.priceTo
-            urlParameter["searchLocation"] = stocklocation
-
-            urlParameter["currValue"] = when {
-                Constant.priceFrm.isEmpty() && Constant.priceTo.isEmpty() -> ""
-                Constant.getCurrencyValue.isNotEmpty() -> Constant.getCurrencyValue
-                else -> "1"
-            }
-            urlParameter["sortBy"] = Constant.sortingBy
-
-            Log.e("Constant Value..sortingBy22...263....", "${Constant.sortingBy}")
-
-
-            /*for ((key, value) in urlParameter) {
-                Log.e("Constant Value..Search...263....", "$key : $value")
-            }*/
-            val urlParameterHashMap = HashMap(urlParameter)
-
-            for ((key, value) in urlParameterHashMap) {
-                Log.d("UrlParameters", "Key: $key, Value: $value")
-            }
-
-
-            vollyApiActivity = VollyApiActivity(
-                context,
-                this,
-                urlParameterHashMap,
-                ApiConstants.GET_GEMSTONES,
-                ApiConstants.GET_GEMSTONES_ID,
-                showLoader,
-                "GET"
-            )
-
-
-            if (pageNo == 1) {
-                binding.errorTv.visibility = View.GONE
-                shimmerShow()
-            }
-        } else {
-            showToast(ApiConstants.MSG_INTERNETERROR)
-        }
-    }
-
     fun onAttributeCall(showLoader: Boolean) {
         Log.e("BindDetails", "............CALL......................")
         val uuid = CommonUtility.getAndroidId(context)
@@ -445,10 +416,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             urlParameter = java.util.HashMap<String, String>()
 
             urlParameter["sessionId"] = "" + uuid
-
-            //urlParameter.put("user_id", CommonUtility.getGlobalString(getActivity(),"user_id"));
-            //urlParameter.put("authToken", CommonUtility.getGlobalString(context,"mobile_auth_token"));
-            //  vollyApiActivity = null
             vollyApiActivity = VollyApiActivity(
                 context,
                 this,
@@ -460,7 +427,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             )
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR)
-            //recyclerNaturalGrownView.setVisibility(View.GONE);
         }
     }
 
@@ -469,12 +435,11 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         if (pageNo == 1) {
             shimmerStop()
         } else {
-            //showLoadingIndicator(false);
             shimmerStop()
         }
 
         try {
-            Log.e("------Diamond----- : ", "--------JSONObject-----**--- : $jsonObject")
+            Log.e("------Diamond----- : ", "-Gem Search result..-------JSONObject-----**--- : $jsonObject")
             val jsonObjectData = jsonObject!!
             val message = jsonObjectData.optString("msg")
             when (service_ID) {
@@ -492,12 +457,9 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                                 modelArrayList!!.clear()
                             }
                         }
-
-                        // Lazy Loading: Disable or Enable
                         scrollListener.loading =
                             !(details == null || details.length() < Constant.lazyLoadingLimit)
 
-                        // Check if the page number is greater than 1
                         if (pageNo > 1) {
                             if (modelArrayList!!.isNotEmpty()) {
 
@@ -516,9 +478,13 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                         details?.let {
                             for (i in 0 until it.length()) {
                                 val objectCodes = it.getJSONObject(i)
-                                Log.e("certificate_no","...........${objectCodes.optString(
-                                    "certificate_no"
-                                )}")
+                                Log.e(
+                                    "certificate_no", "...........${
+                                        objectCodes.optString(
+                                            "certificate_no"
+                                        )
+                                    }"
+                                )
                                 val model = SearchGemstoneTypeModel(
                                     stock_id = CommonUtility.checkString(objectCodes.optString("stock_id")),
                                     item_name = CommonUtility.checkString(objectCodes.optString("item_name")),
@@ -619,7 +585,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                                     ),
                                     setVisible = (details.length() - 1 == i)
                                 )
-
                                 /*if (details.length() - 1 == i) {
                                     model.setVisible(true)
                                 } else {
@@ -641,8 +606,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                             model.currencySymbol = getCurrencySymbol
                         }
 
-
-                        //For Lazzy Loading : Disable or Enable
                         if (details != null) {
                             if (details == null && details.length() < Constant.lazyLoadingLimit) {
                                 Log.e("lazyLoadingLimit", ".False....." + details.length())
@@ -653,7 +616,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                             }
                         }
 
-                        // If Page No 1 Then set Data Otherwise only Refresh NotifyDataSet Changed Adapter
                         if (pageNo == 1) {
                             if (cardViewAndListViewParttenShow.equals(
                                     "CardView",
@@ -707,7 +669,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                             for (j in 0 until attribDetails.length()) {
                                 val innerObjectCodes = attribDetails.getJSONObject(j)
 
-                                // String ss = innerObjectCodes.optString("DisplayAttr");
                                 val model = AttributeDetailsModel()
 
                                 model.attribId =
@@ -738,16 +699,14 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                             convertAttributeListToNames(attributeNames)
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        binding.spinnerAttributes.setAdapter(adapter)
-
-                        binding.spinnerAttributes.setOnClickListener {
+                        binding.spinnerAttributes.adapter=adapter
+                        /*binding.spinnerAttributes.setOnClickListener {
                             Log.e("Click...","745..####....33323232......###########........")
                             binding.dimOverlay.visibility = View.VISIBLE
                             showCustomDropdown(it, attributeNames)
-                        }
-
+                        }*/
                         binding.spinnerAttributes.setOnTouchListener { v, event ->
-                            Log.e("Click...","745..####..........###########........")
+                            Log.e("Click...", "745..####..........###########........")
                             if (event.action == MotionEvent.ACTION_UP) {
                                 binding.dimOverlay.visibility = View.VISIBLE
                                 showCustomDropdown(v, attributeNames)
@@ -836,7 +795,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 binding.recyclerView.setVisibility(View.GONE);
             } else {
                 if (dialogBuilder != null) {
-                    if (alertDialog!!.isShowing()) {
+                    if (alertDialog!!.isShowing) {
                         alertDialog!!.dismiss();
                         isDialogVisible = false;
                     }
@@ -863,12 +822,20 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         dialogBuilder!!.setView(dialogView)
         alertDialog = dialogBuilder!!.create()
 
-        if (alertDialog!!.getWindow() != null) {
+        if (alertDialog!!.window != null) {
             alertDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
         alertDialog!!.setCancelable(true)
         alertDialog!!.setCanceledOnTouchOutside(false)
-        alertDialog!!.show()
+        if(alertDialog!=null )
+        {
+            if (!alertDialog!!.isShowing)
+            {
+                alertDialog!!.show()
+            }
+
+        }
+
         isDialogVisible = true
 
         val okbutton = dialogView.findViewById<LinearLayout>(R.id.ok_button)
@@ -907,6 +874,51 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
     private fun showCustomDropdown(anchor: View, data: List<AttributeDetailsModel>) {
         val popupWindow = PopupWindow(this)
         val listView = ListView(this)
+        val displayNames: MutableList<String> = data.map { it.displayAttr }.toMutableList()
+
+        val paint = Paint().apply {
+            textSize = resources.getDimensionPixelSize(android.R.dimen.app_icon_size).toFloat()
+        }
+        val maxWidth = displayNames.maxOfOrNull { paint.measureText(it).toInt() } ?: 0
+        val calculatedWidth = maxWidth.coerceAtMost(550)
+
+        popupWindow.setOnDismissListener {
+            binding.dimOverlay.visibility = View.GONE
+        }
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            displayNames
+        )
+        listView.adapter = adapter
+
+        popupWindow.contentView = listView
+        popupWindow.width = calculatedWidth
+        popupWindow.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        popupWindow.isFocusable = true
+        popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        popupWindow.showAsDropDown(anchor)
+
+        listView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val selectedModel = data[position]
+                Log.e("Dropdown", "Selected item details: ${selectedModel.displayAttr}")
+                Log.e("Dropdown", "Selected item details: ${selectedModel.attribCode}")
+                binding.spinnerAttributes.setSelection(position)
+                selectedPriceGem = ""
+                selectedWeightGem = ""
+                stocklocation = selectedModel.attribCode
+                Log.e("stocklocation", "834...####...$stocklocation")
+                onBindDetails(false)
+                binding.dimOverlay.visibility = View.GONE
+                popupWindow.dismiss()
+            }
+    }
+
+    /*private fun showCustomDropdown(anchor: View, data: List<AttributeDetailsModel>) {
+        val popupWindow = PopupWindow(this)
+        val listView = ListView(this)
         val displayNames: MutableList<String> = java.util.ArrayList()
         for (model in data) {
             displayNames.add(model.displayAttr)
@@ -915,7 +927,6 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             // Hide the overlay when the popup is dismissed
             binding.dimOverlay.setVisibility(View.GONE)
         }
-        // Set the adapter for the ListView
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
@@ -933,23 +944,24 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             AdapterView.OnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
                 val selectedModel =
                     data[position]
-                // Log the selected item's details
                 Log.e("Dropdown", "Selected item details: " + selectedModel.displayAttr)
                 Log.e("Dropdown", "Selected item details: " + selectedModel.attribCode)
                 binding.spinnerAttributes.setSelection(position)
-                selectedPriceGem=""
-                selectedWeightGem=""
+                selectedPriceGem = ""
+                selectedWeightGem = ""
                 stocklocation = selectedModel.attribCode
                 Log.e("stocklocation", "834...####...$stocklocation")
                 onBindDetails(false)
                 binding.dimOverlay.setVisibility(View.GONE)
-                // Dismiss the popup
                 popupWindow.dismiss()
             }
-    }
+    }*/
 
     override fun getErrorResponce(error: String?, service_ID: Int) {
-        TODO("Not yet implemented")
+        if (pageNo == 1) {
+            shimmerStop()
+        } else {
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -1060,16 +1072,22 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             R.id.grown_tv -> {
                 labGrownCardTabColorSet()
             }
+
             R.id.dxe_calc_rev -> {
                 Constant.manageFragmentCalling = ApiConstants.DXE_CALC
                 val intent1 = Intent(context, CalculatorActivity::class.java)
                 startActivity(intent1)
                 overridePendingTransition(0, 0)
             }
-
+            R.id.stock_lv -> {
+                // binding.dimOverlay.visibility = View.VISIBLE
+                // binding.spinnerAttributes.performClick()
+                binding.dimOverlay.visibility = View.VISIBLE
+                showCustomDropdown(binding.spinnerAttributes, attributeNames)
+            }
             R.id.dropdown_ -> {
-               // binding.dimOverlay.visibility = View.VISIBLE
-               // binding.spinnerAttributes.performClick()
+                // binding.dimOverlay.visibility = View.VISIBLE
+                // binding.spinnerAttributes.performClick()
                 binding.dimOverlay.visibility = View.VISIBLE
                 showCustomDropdown(binding.spinnerAttributes, attributeNames)
             }
@@ -1089,12 +1107,12 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 binding.bottomBatInclude.bottomSearchIcon.animate().rotation(45f).setDuration(300)
                     .start()
 
-                binding.bottomBatInclude.cardPopup1Country.setVisibility(View.VISIBLE) // Option Popup Show
-                binding.bottomBatInclude.curveRelCountry.setVisibility(View.VISIBLE) // Bottom Cut Center Position Layout show
-                binding.bottomBatInclude.searchCircleCard.setVisibility(View.GONE) // Bottom Plus Icon Hide
-                binding.bottomBatInclude.searchCircleCard1CrossCountry.setVisibility(View.VISIBLE) // Bottom Cross Icon show
-                binding.bottomBatInclude.showPopupRelCountry.setVisibility(View.VISIBLE) // Bottom Cross Icon show
-                binding.bottomBatInclude.cardPopup1Country.setVisibility(View.VISIBLE) // Selected Country View Layout
+                binding.bottomBatInclude.cardPopup1Country.visibility=View.VISIBLE // Option Popup Show
+                binding.bottomBatInclude.curveRelCountry.visibility=View.VISIBLE // Bottom Cut Center Position Layout show
+                binding.bottomBatInclude.searchCircleCard.visibility=View.GONE // Bottom Plus Icon Hide
+                binding.bottomBatInclude.searchCircleCard1CrossCountry.visibility=View.VISIBLE // Bottom Cross Icon show
+                binding.bottomBatInclude.showPopupRelCountry.visibility=View.VISIBLE // Bottom Cross Icon show
+                binding.bottomBatInclude.cardPopup1Country.visibility=View.VISIBLE // Selected Country View Layout
                 val popup1Animation: Animation = createPopupAnimation()
                 binding.bottomBatInclude.cardPopup1Country.startAnimation(popup1Animation)
 
@@ -1109,13 +1127,13 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             R.id.country_layout_rel -> {
 
                 //card_popup_list_country.setVisibility(View.GONE);
-                if (binding.bottomBatInclude.recyclerViewCountryList.getVisibility() == View.VISIBLE) {
-                    binding.bottomBatInclude.recyclerViewCountryList.setVisibility(View.GONE)
+                if (binding.bottomBatInclude.recyclerViewCountryList.visibility == View.VISIBLE) {
+                    binding.bottomBatInclude.recyclerViewCountryList.visibility=View.GONE
                     binding.bottomBatInclude.countryDropImg.setImageResource(R.drawable.down)
                     setBottomCountryPopupMargin()
                 } else {
                     binding.bottomBatInclude.countryDropImg.setImageResource(R.drawable.up)
-                    binding.bottomBatInclude.recyclerViewCountryList.setVisibility(View.VISIBLE)
+                    binding.bottomBatInclude.recyclerViewCountryList.visibility=View.VISIBLE
                     setBottomCountryPopupListMargin()
                 }
             }
@@ -1128,10 +1146,10 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             R.id.filter_type_lin -> {
                 if (isArrowDown) {
                     binding.arrowImg.setImageResource(R.drawable.drop_down)
-                    binding.nestedView.setVisibility(View.VISIBLE)
+                    binding.nestedView.visibility=View.VISIBLE
                 } else {
                     binding.arrowImg.setImageResource(R.drawable.drop_up)
-                    binding.nestedView.setVisibility(View.GONE)
+                    binding.nestedView.visibility=View.GONE
                 }
                 isArrowDown = !isArrowDown
             }
@@ -1170,30 +1188,30 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
 
         setBottomCountryPopupMargin()
 
-        binding.translucentBackground.setVisibility(View.GONE) // Activity Transparency Gone
-        binding.bottomBatInclude.recyclerViewCountryList.setVisibility(View.GONE)
+        binding.translucentBackground.visibility=View.GONE
+        binding.bottomBatInclude.recyclerViewCountryList.visibility=View.GONE
 
-        bottomBarClickableTrue() // When Transparency Hide Click True
+        bottomBarClickableTrue()
 
         // Hide popups
-        binding.bottomBatInclude.cardPopup1Country.setVisibility(View.GONE) // Option Popup Hide
-        binding.bottomBatInclude.curveRelCountry.setVisibility(View.GONE) // Bottom Cut Center Position Layout Hide
-        binding.bottomBatInclude.searchCircleCard1CrossCountry.setVisibility(View.GONE) // Bottom Cross Icon Hide
-        binding.bottomBatInclude.searchCircleCard.setVisibility(View.VISIBLE) // Bottom Plus Icon Show
-        binding.bottomBatInclude.showPopupRelCountry.setVisibility(View.GONE) // Bottom Plus Icon Show
+        binding.bottomBatInclude.cardPopup1Country.visibility=View.GONE
+        binding.bottomBatInclude.curveRelCountry.visibility=View.GONE
+        binding.bottomBatInclude.searchCircleCard1CrossCountry.visibility=View.GONE
+        binding.bottomBatInclude.searchCircleCard.visibility=View.VISIBLE
+        binding.bottomBatInclude.showPopupRelCountry.visibility=View.GONE
     }
 
-    fun bottomBarClickableTrue() {
-        binding.bottomBatInclude.homeRel.setEnabled(true)
-        binding.bottomBatInclude.categoryRel.setEnabled(true)
-        binding.bottomBatInclude.wishlistRel.setEnabled(true)
-        binding.bottomBatInclude.wishlistRel.setEnabled(true)
-        binding.bottomBatInclude.accountRel.setEnabled(true)
-        binding.bottomBatInclude.homeRel.setClickable(true)
-        binding.bottomBatInclude.categoryRel.setClickable(true)
-        binding.bottomBatInclude.wishlistRel.setClickable(true)
-        binding.bottomBatInclude.wishlistRel.setClickable(true)
-        binding.bottomBatInclude.accountRel.setClickable(true)
+    private fun bottomBarClickableTrue() {
+        binding.bottomBatInclude.homeRel.isEnabled=true
+        binding.bottomBatInclude.categoryRel.isEnabled=true
+        binding.bottomBatInclude.wishlistRel.isEnabled=true
+        binding.bottomBatInclude.cartRel.isEnabled=true
+        binding.bottomBatInclude.accountRel.isEnabled=true
+        binding.bottomBatInclude.homeRel.isClickable = true
+        binding.bottomBatInclude.categoryRel.isClickable = true
+        binding.bottomBatInclude.wishlistRel.isClickable = true
+        binding.bottomBatInclude.cartRel.isClickable = true
+        binding.bottomBatInclude.accountRel.isClickable = true
     }
 
     private fun setBottomCountryPopupMargin() {
@@ -1201,28 +1219,28 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         val layoutParams =
             binding.bottomBatInclude.searchCircleCard1CrossCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx =
-            resources.getDimensionPixelSize(R.dimen.dimen_8) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_8)
         layoutParams.bottomMargin = marginBottomInPx
 
         // curve_rel_country Layout
         val layoutParams1 =
             binding.bottomBatInclude.curveRelCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx1 =
-            resources.getDimensionPixelSize(R.dimen.dimen_3) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_3)
         layoutParams1.bottomMargin = marginBottomInPx1
 
         // show_popup_rel_country Layout
         val layoutParams2 =
             binding.bottomBatInclude.showPopupRelCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx2 =
-            resources.getDimensionPixelSize(R.dimen.dimen_5) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_5)
         layoutParams2.bottomMargin = marginBottomInPx2
 
         // lin_enquiry Layout
         val layoutParams4 =
             binding.bottomBatInclude.linEnquiry.layoutParams as RelativeLayout.LayoutParams
         val marginTopInPx3 =
-            resources.getDimensionPixelSize(R.dimen.dimen_1) // margin_top dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_1)
         layoutParams4.topMargin = marginTopInPx3
 
         // Set updated layout parameters
@@ -1240,34 +1258,32 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         val layoutParams =
             binding.bottomBatInclude.searchCircleCard1CrossCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx =
-            resources.getDimensionPixelSize(R.dimen.dimen_8) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_8)
         layoutParams.bottomMargin = marginBottomInPx
 
         // curve_rel_country Layout
         val layoutParams1 =
             binding.bottomBatInclude.curveRelCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx1 =
-            resources.getDimensionPixelSize(R.dimen.dimen_3) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_3)
         layoutParams1.bottomMargin = marginBottomInPx1
 
         // show_popup_rel_country Layout
         val layoutParams2 =
             binding.bottomBatInclude.showPopupRelCountry.layoutParams as RelativeLayout.LayoutParams
         val marginBottomInPx2 =
-            resources.getDimensionPixelSize(R.dimen.dimen_5) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_5)
         layoutParams2.bottomMargin = marginBottomInPx2
 
         // lin_enquiry Layout
         val layoutParams4 =
             binding.bottomBatInclude.linEnquiry.layoutParams as RelativeLayout.LayoutParams
         val marginTopInPx3 =
-            resources.getDimensionPixelSize(R.dimen.dimen_8) // margin_bottom dimen resource
+            resources.getDimensionPixelSize(R.dimen.dimen_8)
         layoutParams4.topMargin = marginTopInPx3
 
-        // Apply layout params
         binding.bottomBatInclude.searchCircleCard1CrossCountry.layoutParams = layoutParams
         binding.bottomBatInclude.curveRelCountry.layoutParams = layoutParams1
-        // Uncomment if needed: show_popup_rel_country.layoutParams = layoutParams2
 
         expand(binding.bottomBatInclude.showPopupRelCountry, 1350)
     }
@@ -1288,7 +1304,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             }
         }
 
-        animation.duration = 300L // 300 milliseconds duration
+        animation.duration = 300L
         v.startAnimation(animation)
     }
 
@@ -1312,17 +1328,17 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         return animationSet
     }
 
-    fun bottomBarClickableFalse() {
-        binding.bottomBatInclude.homeRel.setEnabled(false)
-        binding.bottomBatInclude.categoryRel.setEnabled(false)
-        binding.bottomBatInclude.wishlistRel.setEnabled(false)
-        binding.bottomBatInclude.cartRel.setEnabled(false)
-        binding.bottomBatInclude.accountRel.setEnabled(false)
-        binding.bottomBatInclude.homeRel.setClickable(false)
-        binding.bottomBatInclude.categoryRel.setClickable(false)
-        binding.bottomBatInclude.wishlistRel.setClickable(false)
-        binding.bottomBatInclude.cartRel.setClickable(false)
-        binding.bottomBatInclude.accountRel.setClickable(false)
+    private fun bottomBarClickableFalse() {
+        binding.bottomBatInclude.homeRel.isEnabled=false
+        binding.bottomBatInclude.categoryRel.isEnabled = false
+        binding.bottomBatInclude.wishlistRel.isEnabled = false
+        binding.bottomBatInclude.cartRel.isEnabled = false
+        binding.bottomBatInclude.accountRel.isEnabled = false
+        binding.bottomBatInclude.homeRel.isClickable = false
+        binding.bottomBatInclude.categoryRel.isClickable = false
+        binding.bottomBatInclude.wishlistRel.isClickable = false
+        binding.bottomBatInclude.cartRel.isClickable = false
+        binding.bottomBatInclude.accountRel.isClickable = false
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -1333,8 +1349,8 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.naturalTv.setTextColor(ContextCompat.getColor(context!!, R.color.purple_light))
         binding.grownTv.setTextColor(ContextCompat.getColor(context!!, R.color.white))
 
-        binding.cardViewNatural.setCardElevation(0f)
-        binding.cardViewNatural.setCardElevation(0f)
+        binding.cardViewNatural.cardElevation=0f
+        binding.cardViewNatural.cardElevation=0f
         binding.cardViewNatural.setBackgroundColor(
             ContextCompat.getColor(
                 context!!,
@@ -1347,32 +1363,24 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 R.color.bg_color
             )
         )
-        binding.cardViewNatural.setOutlineAmbientShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.bg_color
-            )
+        binding.cardViewNatural.outlineAmbientShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.bg_color
         )
-        binding.cardViewNatural.setOutlineSpotShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.bg_color
-            )
+        binding.cardViewNatural.outlineSpotShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.bg_color
         )
 
-        binding.cardViewGrown.setCardElevation(37f)
-        binding.cardViewGrown.setCardElevation(18f)
-        binding.cardViewGrown.setOutlineAmbientShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.purple_gradient_bottom
-            )
+        binding.cardViewGrown.cardElevation = 37f
+        binding.cardViewGrown.cardElevation = 18f
+        binding.cardViewGrown.outlineAmbientShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.purple_gradient_bottom
         )
-        binding.cardViewGrown.setOutlineSpotShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.purple_gradient_bottom
-            )
+        binding.cardViewGrown.outlineSpotShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.purple_gradient_bottom
         )
 
         getCurrencyData()
@@ -1389,23 +1397,19 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         binding.naturalTv.setTextColor(ContextCompat.getColor(context!!, R.color.white))
         binding.grownTv.setTextColor(ContextCompat.getColor(context!!, R.color.purple_light))
 
-        binding.cardViewNatural.setCardElevation(37f)
-        binding.cardViewNatural.setCardElevation(18f)
-        binding.cardViewNatural.setOutlineAmbientShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.purple_gradient_bottom
-            )
+        binding.cardViewNatural.cardElevation = 37f
+        binding.cardViewNatural.cardElevation = 18f
+        binding.cardViewNatural.outlineAmbientShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.purple_gradient_bottom
         )
-        binding.cardViewNatural.setOutlineSpotShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.purple_gradient_bottom
-            )
+        binding.cardViewNatural.outlineSpotShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.purple_gradient_bottom
         )
 
-        binding.cardViewGrown.setCardElevation(0f)
-        binding.cardViewGrown.setCardElevation(0f)
+        binding.cardViewGrown.cardElevation = 0f
+        binding.cardViewGrown.cardElevation = 0f
         binding.cardViewGrown.setCardBackgroundColor(
             ContextCompat.getColor(
                 context!!,
@@ -1418,21 +1422,17 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 R.color.bg_color
             )
         )
-        binding.cardViewGrown.setOutlineAmbientShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.bg_color
-            )
+        binding.cardViewGrown.outlineAmbientShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.bg_color
         )
-        binding.cardViewGrown.setOutlineSpotShadowColor(
-            ContextCompat.getColor(
-                context!!,
-                R.color.bg_color
-            )
+        binding.cardViewGrown.outlineSpotShadowColor = ContextCompat.getColor(
+            context!!,
+            R.color.bg_color
         )
 
         getCurrencyData()
-        Constant.searchType = ApiConstants.NATURAL
+        searchType = ApiConstants.NATURAL
         pageNo = 1
         onBindDetails(true)
     }
@@ -1447,7 +1447,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 }
             }
 
-            val inflater = getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout = inflater.inflate(R.layout.custom_menu_sorting, null)
 
             val recentlyAdded = layout.findViewById<TextView>(R.id.recently_added)
@@ -1467,18 +1467,22 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                     recentlyAdded.setBackgroundResource(R.drawable.background_sorting_selected)
                     recentlyAdded.setTextColor(ContextCompat.getColor(context!!, R.color.black))
                 }
+
                 "PriceLow" -> {
                     priceLowHigh.setBackgroundResource(R.drawable.background_sorting_selected)
                     priceLowHigh.setTextColor(ContextCompat.getColor(context!!, R.color.black))
                 }
+
                 "PriceHigh" -> {
                     priceHighLow.setBackgroundResource(R.drawable.background_sorting_selected)
                     priceHighLow.setTextColor(ContextCompat.getColor(context!!, R.color.black))
                 }
+
                 "SizeLow" -> {
                     sizeLowHigh.setBackgroundResource(R.drawable.background_sorting_selected)
                     sizeLowHigh.setTextColor(ContextCompat.getColor(context!!, R.color.black))
                 }
+
                 "SizeHigh" -> {
                     sizeHighLow.setBackgroundResource(R.drawable.background_sorting_selected)
                     sizeHighLow.setTextColor(ContextCompat.getColor(context!!, R.color.black))
@@ -1486,9 +1490,14 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             }
 
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            mDropdown = PopupWindow(layout, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true)
+            mDropdown = PopupWindow(
+                layout,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                true
+            )
 
-           binding.sortImg.let {
+            binding.sortImg.let {
                 mDropdown?.showAsDropDown(it, 5, -100)
             } ?: run {
                 Log.e("PopupWindow", "sortImg is null")
@@ -1537,54 +1546,45 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
     }
 
 
-    private fun dismissPopup() {
-        if (mDropdown != null && mDropdown!!.isShowing) {
-            mDropdown!!.dismiss()
-        } else {
-            Log.e("PopupWindow", "mDropdown is null or not showing")
-        }
-    }
-
-
-
-    fun listViewFormatAdapterSet() {
+    private fun listViewFormatAdapterSet() {
         gemstoneSearchResultListAdapter =
             GemStoneSearchResultListAdapter(context!!, "userRole", modelArrayList!!, this)
         binding.recyclerView.setAdapter(gemstoneSearchResultListAdapter)
     }
 
-    fun cardViewFormatAdapterSet() {
+    private  fun cardViewFormatAdapterSet() {
         gemstoneSearchResultAdapter =
             GemstoneSearchResultAdapter(context!!, "userRole", modelArrayList!!, this)
         binding.recyclerView.adapter = gemstoneSearchResultAdapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun itemClick(position: Int, action: String?) {
         Log.e("action", ".333..........$action")
 
         when (action?.lowercase()) {
 
 
-            "searchdiamonddetails" ->{
-               binding.bottomBatInclude.bottomSearchIcon.setImageResource(R.drawable.plus)
-                binding.bottomBatInclude.bottomSearchIcon.animate().rotation(0f).setDuration(300).start()
+            "searchdiamonddetails" -> {
+                binding.bottomBatInclude.bottomSearchIcon.setImageResource(R.drawable.plus)
+                binding.bottomBatInclude.bottomSearchIcon.animate().rotation(0f).setDuration(300)
+                    .start()
 
-               binding.bottomBatInclude.showPopupRelCountry.setVisibility(View.GONE) // Country Popup Layout Gone
-                binding.bottomBatInclude.searchCircleCard1CrossCountry.setVisibility(View.GONE) // Bottom Cross Icon Hide
-                binding.bottomBatInclude.searchCircleRel.setVisibility(View.VISIBLE) // Bottom Plus Icon Show
-                binding.bottomBatInclude.recyclerViewCountryList.setVisibility(View.GONE)
-                binding.bottomBatInclude.cardPopup1Country.setVisibility(View.GONE) // Selected Country View Layout
+                binding.bottomBatInclude.showPopupRelCountry.visibility=View.GONE
+                binding.bottomBatInclude.searchCircleCard1CrossCountry.visibility=View.GONE
+                binding.bottomBatInclude.searchCircleRel.visibility=View.VISIBLE
+                binding.bottomBatInclude.recyclerViewCountryList.visibility=View.GONE
+                binding.bottomBatInclude.cardPopup1Country.visibility=View.GONE
 
                 setBottomCountryPopupMargin()
 
                 val model: SearchGemstoneTypeModel = modelArrayList!![position]
 
-                Log.e("----getCertificate_no--#################------- : ", model.certificate_no);
-                val firstCertificate = model.certificate_no.split(", ").firstOrNull()
-
-                Log.e("firstCertificate : ",""+ firstCertificate);
+                Log.e("----getCertificate_no--#################------- : ", model.certificate_no)
+                /*val firstCertificate = model.certificate_no.split(", ").firstOrNull()
+                Log.e("firstCertificate : ",""+ firstCertificate);*/
                 Constant.manageClickEventForRedirection = ""
-                CommonUtility.setGlobalString(context, "certificate_number", firstCertificate)
+                CommonUtility.setGlobalString(context, "certificate_number", model.certificate_no)
                 val intent = Intent(activity, DiamondDetailsActivity::class.java)
                 if (searchType == "dxeluxe") {
                     intent.putExtra("intentvalue", "dxeluxe")
@@ -1593,6 +1593,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 startActivity(intent)
                 overridePendingTransition(0, 0)
             }
+
             "countrytype" -> {
 
                 val model = localCurrencyArrayList[position]
@@ -1608,17 +1609,17 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                 binding.bottomBatInclude.selectedCountryDesc.text = model.desc
 
                 Constant.callHomeScreenOnResume =
-                    "yes" // This is used to call Home Screen OnResume Method to update Currency Flag and Current Rate, Symbol
+                    "yes"
                 Constant.callForBackScreenForUpdateCurrencySymbol =
-                    "yes" // This is used to call Back Screen OnResume Method to update Currency Flag and Current Rate, Symbol
+                    "yes"
 
                 CommonUtility.setGlobalString(context, "selected_currency_value", model.value)
                 CommonUtility.setGlobalString(context, "selected_currency_code", model.currency)
                 CommonUtility.setGlobalString(context, "selected_currency_desc", model.desc)
                 CommonUtility.setGlobalString(context, "selected_currency_image", model.image)
 
-                binding.translucentBackground.visibility = View.GONE // Hide Transparency
-                bottomBarClickableTrue() // When Transparency is hidden, enable clickability
+                binding.translucentBackground.visibility = View.GONE
+                bottomBarClickableTrue()
 
                 getCurrencyData()
                 Log.e("-------country_image------- :", model.image)
@@ -1688,16 +1689,16 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
 
                     Constant.priceFrm = ""
                     Constant.weightFirst = ""
-                    Constant.weightThird= ""
+                    Constant.weightThird = ""
                     Constant.stockIdGemstone = ""
-                    Constant.selectedshapeTypesItems= ""
+                    Constant.selectedshapeTypesItems = ""
                     Constant.selectedColorItems = ""
-                    Constant.selectedCertificateItems= ""
+                    Constant.selectedCertificateItems = ""
                     Constant.selectedOriginItems = ""
                     Constant.selectedGemShapes = ""
                     Constant.selectedGemTreatment = ""
                     Constant.selectedItemsAttribute = ""
-                    Constant.selectedCuttingAttribute= ""
+                    Constant.selectedCuttingAttribute = ""
                     Constant.searchKeyword = ""
                     Constant.priceTo = ""
 
@@ -1726,11 +1727,11 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
                         for (item in Constant.colorTypeFilterApploedArrayList) {
                             when {
                                 item.filterType.equals("SelectPrice", ignoreCase = true) -> {
-                                    Constant.selectedPriceGem = ""
+                                    selectedPriceGem = ""
                                 }
 
                                 item.filterType.equals("SelectWeight", ignoreCase = true) -> {
-                                    Constant.selectedWeightGem = ""
+                                    selectedWeightGem = ""
                                 }
 
 
@@ -1900,16 +1901,16 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
 
                         Constant.priceFrm = ""
                         Constant.weightFirst = ""
-                        Constant.weightThird= ""
+                        Constant.weightThird = ""
                         Constant.stockIdGemstone = ""
-                        Constant.selectedshapeTypesItems= ""
+                        selectedshapeTypesItems = ""
                         Constant.selectedColorItems = ""
-                        Constant.selectedCertificateItems= ""
+                        Constant.selectedCertificateItems = ""
                         Constant.selectedOriginItems = ""
                         Constant.selectedGemShapes = ""
                         Constant.selectedGemTreatment = ""
                         Constant.selectedItemsAttribute = ""
-                        Constant.selectedCuttingAttribute= ""
+                        Constant.selectedCuttingAttribute = ""
                         Constant.searchKeyword = ""
                         Constant.priceTo = ""
                     }
@@ -1948,7 +1949,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         }
     }
 
-    fun onRemoveFromWishlistAPI(showLoader: Boolean, certificateNo: String) {
+    private fun onRemoveFromWishlistAPI(showLoader: Boolean, certificateNo: String) {
         val uuid = CommonUtility.getAndroidId(context)
         if (Utils.isNetworkAvailable(context)) {
             urlParameter = java.util.HashMap()
@@ -1968,11 +1969,10 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
             )
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR)
-            //recyclerNaturalGrownView.setVisibility(View.GONE);
         }
     }
 
-    fun onAddToCartAPI(showLoader: Boolean, certificateNo: String) {
+    private fun onAddToCartAPI(showLoader: Boolean, certificateNo: String) {
         val uuid = CommonUtility.getAndroidId(context)
         if (Utils.isNetworkAvailable(context)) {
             urlParameter = java.util.HashMap()
@@ -1996,6 +1996,7 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setSubTotalAccordingCurrencyWise(value: String, currencyCode: String) {
         for (i in modelArrayList!!.indices) {
             val subTotalFormat =
@@ -2014,16 +2015,14 @@ class GemSearchResultActivity : SuperActivity(), RecyclerInterface {
         currencyListCloseAfterCurrencySelect()
     }
 
-    fun currencyListCloseAfterCurrencySelect() {
+    private fun currencyListCloseAfterCurrencySelect() {
         binding.bottomBatInclude.bottomSearchIcon.setImageResource(R.drawable.plus)
         binding.bottomBatInclude.bottomSearchIcon.animate().rotation(0f).setDuration(300).start()
-
-        binding.bottomBatInclude.showPopupRelCountry.setVisibility(View.GONE) // Country Popup Layout Gone
-        binding.bottomBatInclude.searchCircleCard.setVisibility(View.VISIBLE) // Bottom Plus Icon Show
-        binding.bottomBatInclude.searchCircleCard1CrossCountry.setVisibility(View.GONE) // Bottom Cross Icon Hide
-        binding.bottomBatInclude.recyclerViewCountryList.setVisibility(View.GONE)
-        binding.bottomBatInclude.cardPopup1Country.setVisibility(View.GONE) // Selected Country View Layout
-
+        binding.bottomBatInclude.showPopupRelCountry.visibility = View.GONE
+        binding.bottomBatInclude.searchCircleCard.visibility = View.VISIBLE
+        binding.bottomBatInclude.searchCircleCard1CrossCountry.visibility = View.GONE
+        binding.bottomBatInclude.recyclerViewCountryList.visibility = View.GONE
+        binding.bottomBatInclude.cardPopup1Country.visibility = View.GONE
         setBottomCountryPopupMargin()
     }
 

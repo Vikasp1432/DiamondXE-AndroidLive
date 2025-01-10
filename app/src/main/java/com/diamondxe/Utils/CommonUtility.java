@@ -1,10 +1,10 @@
 package com.diamondxe.Utils;
 
-import static com.diamondxe.Utils.PaymentUtils.API_END_POINT;
+/*import static com.diamondxe.Utils.PaymentUtils.API_END_POINT;
 import static com.diamondxe.Utils.PaymentUtils.MERCHANT_ID;
 import static com.diamondxe.Utils.PaymentUtils.SALT;
 import static com.diamondxe.Utils.PaymentUtils.SALT_INDEX;
-import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;
+import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;*/
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -51,10 +51,6 @@ import com.diamondxe.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.phonepe.intent.sdk.api.B2BPGRequest;
-import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.PhonePeInitException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -189,6 +185,35 @@ public class CommonUtility {
 		SimpleDateFormat postFormater = new SimpleDateFormat(targetFormat);
 		String newDateStr = postFormater.format(date);
 		Log.d("Lead Response", newDateStr);
+		return newDateStr;
+	}
+
+
+	public static String convertDateFormat1(String dateStr, String sourceFormat, String targetFormat) {
+		dateStr = checkString(dateStr);
+
+		if (dateStr.equals("")) {
+			return "";
+		}
+		Log.d("date", dateStr + "---" + sourceFormat + "---" + targetFormat);
+
+		// Create SimpleDateFormat with the source format
+		SimpleDateFormat form = new SimpleDateFormat(sourceFormat);
+		Date date = null;
+		try {
+			// Parse the date string to a Date object
+			date = form.parse(dateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+
+		// Create the target format for output (YYYY-MM-DD)
+		SimpleDateFormat postFormater = new SimpleDateFormat(targetFormat);
+		// Format the date to the target format
+		String newDateStr = postFormater.format(date);
+		Log.d("Lead Response", newDateStr);
+
 		return newDateStr;
 	}
 
@@ -947,7 +972,7 @@ public class CommonUtility {
 		// Log.e("----Diamond--- : ", "----finalAmount1111--- : " + finalAmount);
 		String finalSubTotal = String.valueOf(finalAmount);
 
-		// Log.e("----Diamond--- : ", "----finalAmount11111--- : " + finalSubTotal);
+		 Log.e("----Diamond--- : ", "----finalAmount11111--- : " + finalSubTotal);
 		subTotalFormat = String.format("%.2f", finalAmount);
 
 		return subTotalFormat;
@@ -1011,7 +1036,7 @@ public class CommonUtility {
 		}
 	}
 
-	public static void createCheckSumPaymentInitiatedAndOpenPhonePe(
+	/*public static void createCheckSumPaymentInitiatedAndOpenPhonePe(
 			Activity activity,
 			String amountInPaisaString,
 			String paymentModeType,
@@ -1066,7 +1091,7 @@ public class CommonUtility {
 					.build();
 
 			// Open PhonePe Here
-			/*try {
+			*//*try {
 				Intent intent1;
 				if (selectedUPIPackage.equalsIgnoreCase("")) {
 					intent1 = PhonePe.getImplicitIntent(activity, b2BPGRequest, TARGET_URL);
@@ -1081,7 +1106,7 @@ public class CommonUtility {
 				}
 			} catch (PhonePeInitException e) {
 				Log.e("phonepe", "PhonePe initialization error", e);
-			}*/
+			}*//*
 
 			// Open PhonePe Here
 			try {
@@ -1094,9 +1119,9 @@ public class CommonUtility {
 				if (intent1 != null) {
 					Log.d("phonepe", "Intent created successfully");
 					// Pass the callback to handle results
-					/*if (activity instanceof PaymentResultCallback) {
+					*//*if (activity instanceof PaymentResultCallback) {
 						((PaymentResultCallback) activity).onPaymentResult(1, Activity.RESULT_OK, intent1);
-					}*/
+					}*//*
 					//intentLauncher.accept(intent1);
 					activity.startActivityForResult(intent1, 1);
 				} else {
@@ -1110,7 +1135,7 @@ public class CommonUtility {
 			e.printStackTrace();
 			Log.e("AmountConversion", "Invalid amount format");
 		}
-	}
+	}*/
 
 
 	// Start the timer

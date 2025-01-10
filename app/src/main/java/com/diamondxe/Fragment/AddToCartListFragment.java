@@ -571,6 +571,7 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
                             model.setSubtotalaftercoupondiscount(CommonUtility.checkDouble(objectCodes.optString("subtotal_after_coupon_discount")));
                             model.setStockId(CommonUtility.checkString(objectCodes.optString("stock_id")));
                             model.setItemName(CommonUtility.checkString(objectCodes.optString("item_name")));
+                            model.setItem_type(CommonUtility.checkString(objectCodes.optString("item_type")));
                             model.setCategory(CommonUtility.checkString(objectCodes.optString("category")));
                             model.setSupplierId(CommonUtility.checkString(objectCodes.optString("supplier_id")));
                             model.setCertificateNo(CommonUtility.checkString(objectCodes.optString("certificate_no")));
@@ -771,7 +772,7 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
             onAddToWishlistAPI(false, modelArrayList.get(position).getCertificateNo());
         } else if (action.equalsIgnoreCase("viewDetails")) {
             Log.e("View details...", "826...........click..");
-
+            String getItemType=modelArrayList.get(position).getItem_type();
             Log.e("View getIsDxeLUXE...", "826...........click.." + modelArrayList.get(position).getIsDxeLUXE());
             Constant.manageClickEventForRedirection = "";
             CommonUtility.setGlobalString(context, "certificate_number", modelArrayList.get(position).getCertificateNo());
@@ -779,6 +780,11 @@ public class AddToCartListFragment extends SuperFragment implements RecyclerInte
             if (modelArrayList.get(position).getIsDxeLUXE() == 1) {
                 intent.putExtra("intentvalue", "dxeluxe");
             }
+            if (getItemType.equalsIgnoreCase("gemstone"))
+            {
+                intent.putExtra("activityvalue", "gemstone");
+            }
+
             startActivity(intent);
             getActivity().overridePendingTransition(0, 0);
         }

@@ -20,8 +20,23 @@ android {
         versionName "v1.03.100"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         multiDexEnabled true
+
+        buildConfigField "String", "RAZORPAY_KEY_ID_DEMO", "\"rzp_test_rfy0AcVmf33RWF\""
+        buildConfigField "String", "RAZORPAY_KEY_ID", "\"rzp_live_qXT4RvIVeG5nMP\""
+
+
+        buildConfigField "String", "PROFILE_ID_DEMO", "\"146752\""
+        buildConfigField "String", "SERVER_KEY_DEMO", "\"SKJ9THKDDW-JJK99WWMTZ-LK6GWN6LWT\""
+        buildConfigField "String", "CLIENT_KEY_DEMO", "\"CDK2KR-RMT666-KPPVVN-TDHHDH\""
+
+        buildConfigField "String", "PROFILE_ID", "\"147332\""
+        buildConfigField "String", "SERVER_KEY", "\"S6J9THKDLD-JJLJMJTGRB-ZKW9ZBZTWG\""
+        buildConfigField "String", "CLIENT_KEY", "\"CVK2KR-RMMD66-B6N67T-H72VB6\""
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -36,11 +51,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_19
-        targetCompatibility JavaVersion.VERSION_19
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '19'
+        jvmTarget = '17'
     }
     /*kapt {
         arguments {
@@ -101,14 +116,13 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.picasso:picasso:2.5.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     //View PAger Indicator
     //#implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-   // implementation 'com.google.android.material:material:1.5.0'
+    // implementation 'com.google.android.material:material:1.5.0'
 
     implementation 'net.orandja.shadowlayout:shadowlayout:1.0.1'
 
@@ -123,12 +137,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // For Phone-pe Payment Gateway
-    implementation 'phonepe.intentsdk.android.release:IntentSDK:2.4.3'
+    //implementation 'phonepe.intentsdk.android.release:IntentSDK:2.4.3'
 
     // DXE Calculator
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
-   // implementation 'com.google.android.material:material:1.8.0'
+    // implementation 'com.google.android.material:material:1.8.0'
 
     //Kotlin coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
@@ -168,7 +182,7 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.1")
 
     implementation "androidx.compose.ui:ui:1.5.1"
-  //  implementation "androidx.compose.material:material:1.5.1"
+    //  implementation "androidx.compose.material:material:1.5.1"
     implementation "androidx.compose.ui:ui-tooling:1.5.1"
     implementation "androidx.compose.runtime:runtime:1.5.1"
     kapt "androidx.compose.compiler:compiler:1.5.1"
@@ -188,4 +202,6 @@ dependencies {
 
     implementation libs.checkout
     implementation libs.payment.sdk
+    //noinspection RiskyLibrary
+    implementation "com.google.android.play:core:1.10.3"
 }

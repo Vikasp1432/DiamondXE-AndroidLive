@@ -4,27 +4,25 @@ import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
-import com.phonepe.intent.sdk.api.B2BPGRequest;
-import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 
 // Java
+/*
 public class PaymentUtils {
 
     // For SandBox Phone-pe Credentials
-    /*public static final String SALT = "1c560f14-86f2-4317-86bf-658f92554b58";
+    */
+/*public static final String SALT = "1c560f14-86f2-4317-86bf-658f92554b58";
     public static final String SALT_INDEX = "1";
     public static final String MERCHANT_ID = "DIAMONDUAT";
     public static final String BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox";
     public static final String API_END_POINT = "/pg/v1/pay";
     public static final String TARGET_URL = "com.phonepe.simulator";
-    public static final String CALL_BACK_URL = "https://admin-uat.diamondxe.com/payments/phonepe-custom-payment-callback";*/
+    public static final String CALL_BACK_URL = "https://admin-uat.diamondxe.com/payments/phonepe-custom-payment-callback";*//*
+
 
     // For Live Phone-pe Credentials
     public static final String SALT = "b74e2a4c-7d13-43c5-a115-c0372ed85dbd"; // salt key
@@ -42,3 +40,4 @@ public class PaymentUtils {
         PhonePe.init(context.getApplicationContext(), PhonePeEnvironment.RELEASE, MERCHANT_ID, SALT); // For Release(Live)
     }
 }
+*/

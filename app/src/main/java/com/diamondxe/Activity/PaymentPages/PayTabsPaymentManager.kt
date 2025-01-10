@@ -3,6 +3,7 @@ package com.diamondxe.Activity.PaymentPages
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.diamondxe.BuildConfig
 import com.payment.paymentsdk.PaymentSdkActivity
 import com.payment.paymentsdk.PaymentSdkConfigBuilder
 import com.payment.paymentsdk.integrationmodels.PaymentSdkApms
@@ -13,31 +14,34 @@ import com.payment.paymentsdk.integrationmodels.PaymentSdkTokenise
 import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionClass
 import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionType
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface
+import com.payment.paymentsdk.sharedclasses.model.response.PaymentResult
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 
 object PayTabsPaymentManager {
 
-    private const val PROFILE_ID = "146752"
-    private const val SERVER_KEY = "SKJ9THKDDW-JJK99WWMTZ-LK6GWN6LWT"
-    private const val CLIENT_KEY = "CDK2KR-RMT666-KPPVVN-TDHHDH"
     private const val MERCHANT_COUNTRY_CODE = "AE"
     private const val TRANSACTION_TITLE = "DiamondXE"
     private  var CURRENCY = ""  //AED
     private  var CART_ID = ""
+    private  var CALL_BACK_URL = ""
     private const val CART_DESCRIPTION = "Cart description"
     private val LANGUAGE_CODE = PaymentSdkLanguageCode.EN
     private var billingDetails: PaymentSdkBillingDetails? = null
 
 
-    fun setCurrencyAndCartId(newCurrency: String, newCartId: String) {
+    fun setCurrencyAndCartId(newCurrency: String, newCartId: String, callbackURL: String) {
         Log.e("Before Update - Currency", CURRENCY)
         Log.e("Before Update - Cart ID", CART_ID)
 
         CURRENCY = newCurrency
         CART_ID = newCartId
+        CALL_BACK_URL=callbackURL
 
         Log.e("After Update - Currency", CURRENCY)
         Log.e("After Update - Cart ID", CART_ID)
+        Log.e("After Update - CALL_BACK_URL", CALL_BACK_URL)
     }
 
 
@@ -72,41 +76,49 @@ object PayTabsPaymentManager {
         val configData = generatePaymentConfiguration(amount)
         PaymentSdkActivity.startCardPayment(context, configData, callback)
     }
-
+    /*profileId = BuildConfig.PROFILE_ID_DEMO,
+    serverKey = BuildConfig.SERVER_KEY_DEMO,
+    clientKey = BuildConfig.CLIENT_KEY_DEMO,*/
     private fun generatePaymentConfiguration(
         amount: Double,
         selectedApm: PaymentSdkApms? = null
     ): PaymentSdkConfigurationDetails {
         val configBuilder = PaymentSdkConfigBuilder(
-            profileId = PROFILE_ID,
-            serverKey = SERVER_KEY,
-            clientKey = CLIENT_KEY,
+            profileId = BuildConfig.PROFILE_ID,
+            serverKey = BuildConfig.SERVER_KEY,
+            clientKey = BuildConfig.CLIENT_KEY,
             amount = amount,
-            currencyCode = CURRENCY.trim()
+            currencyCode = CURRENCY.trim(),
         ).apply {
 
-            Log.e("After Update - Currency..***********", CURRENCY)
-            Log.e("After Update - Cart ID..************", CART_ID)
-
+            Log.e("Update Currency..***********", CURRENCY)
+            Log.e("Update Cart ID..************", CART_ID)
+            Log.e("Update CALL_BACK_URL..************", CALL_BACK_URL)
             setCartDescription(CART_DESCRIPTION)
             setLanguageCode(LANGUAGE_CODE)
             setMerchantCountryCode(MERCHANT_COUNTRY_CODE)
-            setTransactionType(PaymentSdkTransactionType.SALE)
             setTokenise(PaymentSdkTokenise.MERCHANT_MANDATORY)
-            setTransactionClass(PaymentSdkTransactionClass.ECOM)
             setBillingData(billingDetails)
-            setCartId(CART_ID.trim())
+            setCartId(CART_ID)
             showBillingInfo(true)
             showShippingInfo(false)
             forceShippingInfo(false)
             hideCardScanner(false)
             linkBillingNameWithCard(false)
             setScreenTitle(TRANSACTION_TITLE)
+            /*callbackFlow<String> { CALL_BACK_URL }
+            setCallback(CALL_BACK_URL)*/
             selectedApm?.let { setAlternativePaymentMethods(listOf(it)) }
         }
+
+        configBuilder.setCallback(CALL_BACK_URL)
         return configBuilder.build()
     }
 }
+
+
+//setCallback()  setCallback(CALL_BACK_URL)
+//call back url pass
 
 /*object PayTabsPaymentManager {
 

@@ -75,12 +75,12 @@
                     android:layout_weight="1.2"
                     android:paddingTop="@dimen/dimen_10"
                     android:paddingBottom="@dimen/dimen_10"
-                    android:text="@string/shape"
+                    android:text="@string/origin"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_shapes"
+                    android:id="@+id/recycler_origin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.8" />

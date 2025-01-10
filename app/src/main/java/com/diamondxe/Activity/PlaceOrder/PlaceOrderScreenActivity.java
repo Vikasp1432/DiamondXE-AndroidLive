@@ -1,5 +1,6 @@
 package com.diamondxe.Activity.PlaceOrder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -59,11 +60,11 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
     private ImageView back_img, shipping_img, kyc_img, payment_img, drop_arrow_img, other_tax_info_img, diamond_tax_info_img;
     private CardView no_shipping_address_card, no_billing_address_card, shipping_card_view, kyc_card_view, payment_card_view;
-    private TextView add_shipping_address_tv, orderitemprice,add_billing_address_tv, continue_tv, kyc_verified_lbl,kyc_verified_lbl1, total_amount_tv,
-            final_amount_tv1,shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
-            sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
+    private TextView add_shipping_address_tv, orderitemprice, add_billing_address_tv, continue_tv, kyc_verified_lbl, kyc_verified_lbl1, total_amount_tv,
+            final_amount_tv1, shipping_and_handling_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
+            sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv,gemstone_txt_gst_perc_tv;
     private RelativeLayout shipping_rel, kyc_rel, payment_rel, viewpager_layout, rel_other_tax, rel_diamond_tax;
-    private LinearLayout address_main_lin,  view_order_summary_details_lin;
+    private LinearLayout address_main_lin, view_order_summary_details_lin;
     private CardView order_summary_view_card;
     private ScrollView scrollView;
     private CheckBox save_shipping_cost_checkbox;
@@ -85,7 +86,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
     boolean isSelectBillingAddress = false;
     private boolean isArrowDown = false;
     int lastPosition = 0;
-    String wheretoRemove="", shippingAddressID="",billingAddressID="",userRole="",document_status="",setAsPickupAddress="";
+    String wheretoRemove = "", shippingAddressID = "", billingAddressID = "", userRole = "", document_status = "", setAsPickupAddress = "";
     String ADDRESS = "address";
     String KYC_VERIFICATION = "kycVerification";
     String selectedTab = ADDRESS;
@@ -93,17 +94,21 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
     int newWith;
     int width;
-    String selectedCurrencyValue ="",selectedCurrencyCode = "",selectedCurrencyDesc="",selectedCurrencyImage="";
-    String isCoupanApplied = "", orderCouponCode = "", orderCouponValue = "", orderCouponDiscount = "", orderSubTotal = "", orderCgst = "", orderCgstPerc = "",
-    orderSgst = "", orderSgstPerc = "", orderIgst = "", orderIgstPerc = "", orderDiscountPerc = "", orderTax = "", orderSubTotalWithTax = "", orderShippingCharge = "", orderPlatformFee = "",
-    orderTotalCharge = "", orderTotalChargeTax = "", orderTotalChargeWithTax = "", orderTotalTaxes = "", orderTotalAmount = "", orderTaxPerOnCharges = "", orderFinalAmount = "", orderBankCharge = "", orderBankChargePerc = "";
+    String selectedCurrencyValue = "", selectedCurrencyCode = "", selectedCurrencyDesc = "", selectedCurrencyImage = "";
+    String isCoupanApplied = "", orderCouponCode = "", orderGemstonePrice = "", orderCouponValue = "", orderCouponDiscount = "", orderSubTotal = "", orderCgst = "", orderCgstPerc = "",
+            orderSgst = "", orderSgstPerc = "", orderIgst = "", orderIgstPerc = "", orderDiscountPerc = "", orderTax = "", orderSubTotalWithTax = "", orderShippingCharge = "", orderPlatformFee = "",
+            orderTotalCharge = "", orderTotalChargeTax = "", orderTotalChargeWithTax = "", orderTotalTaxes = "", orderTotalAmount = "", orderTaxPerOnCharges = "", orderFinalAmount = "", orderBankCharge = "", orderBankChargePerc = "";
+    RelativeLayout gemstone_rv, diamond_rv;
+    TextView gemstone_tv, gemstone_tv_price;
+    LinearLayout tax_dialog_lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order_screen);
 
         context = activity = this;
-        
+
         shippingAddressArrayList = new ArrayList<>();
         billingAddressArrayList = new ArrayList<>();
         orderItemArrayList = new ArrayList<>();
@@ -117,7 +122,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         total_amount_tv = findViewById(R.id.total_amount_tv);
         final_amount_tv1 = findViewById(R.id.final_amount_tv1);
-        orderitemprice=findViewById(R.id.orderitemprice);
+        orderitemprice = findViewById(R.id.orderitemprice);
         shipping_and_handling_tv = findViewById(R.id.shipping_and_handling_tv);
         platform_fees_tv = findViewById(R.id.platform_fees_tv);
         total_charges_tv = findViewById(R.id.total_charges_tv);
@@ -129,7 +134,8 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         final_amount_tv = findViewById(R.id.final_amount_tv);
         others_txt_gst_perc_tv = findViewById(R.id.others_txt_gst_perc_tv);
         diamond_txt_gst_perc_tv = findViewById(R.id.diamond_txt_gst_perc_tv);
-
+        gemstone_txt_gst_perc_tv=findViewById(R.id.gemstone_txt_gst_perc_tv);
+        tax_dialog_lv=findViewById(R.id.tax_dialog_lv);
         continue_tv = findViewById(R.id.continue_tv);
         continue_tv.setOnClickListener(this);
 
@@ -170,6 +176,10 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         rel_diamond_tax = findViewById(R.id.rel_diamond_tax);
         rel_diamond_tax.setOnClickListener(this);
 
+        diamond_rv = findViewById(R.id.diamond_rv);
+        gemstone_rv = findViewById(R.id.gemstone_rv);
+        gemstone_tv = findViewById(R.id.gemstone_tv);
+        gemstone_tv_price = findViewById(R.id.gemstone_tv_price);
         /*diamond_tax_info_img = findViewById(R.id.diamond_tax_info_img);
         diamond_tax_info_img.setOnClickListener(this);*/
 
@@ -196,7 +206,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         order_summary_view_card = findViewById(R.id.order_summary_view_card);
         order_summary_view_card.setOnClickListener(this);
 
-        viewPager = findViewById (R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);
         tabLayout = findViewById(R.id.tab_layout);
         viewpager_layout = findViewById(R.id.viewpager_layout);
@@ -205,17 +215,15 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         getPickupAddressCheckBoxValue();
 
-        newWith = (int) (width/1.2);
+        newWith = (int) (width / 1.2);
 
     }
 
-    void getPickupAddressCheckBoxValue()
-    {
+    void getPickupAddressCheckBoxValue() {
         save_shipping_cost_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (save_shipping_cost_checkbox.isChecked())
-                {
+                if (save_shipping_cost_checkbox.isChecked()) {
                     Constant.collectFromHub = "Mumbai";
                     getCheckOutDetailsAPI(false);
                 } else {
@@ -226,9 +234,9 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         });
 
     }
+
     // Get Currency Value Code and Image
-    void getCurrencyData()
-    {
+    void getCurrencyData() {
         selectedCurrencyValue = CommonUtility.getGlobalString(context, "selected_currency_value");
         selectedCurrencyCode = CommonUtility.getGlobalString(context, "selected_currency_code");
         selectedCurrencyDesc = CommonUtility.getGlobalString(context, "selected_currency_desc");
@@ -236,39 +244,31 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
     }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         Intent intent;
         int id = view.getId();
 
-        if(id == R.id.back_img)
-        {
+        if (id == R.id.back_img) {
             Utils.hideKeyboard(activity);
-            Constant.manageShippingBillingAddressSelection="";
+            Constant.manageShippingBillingAddressSelection = "";
             Constant.manageBillingByAddressAddUpdate = "";
             Constant.manageShippingByAddressAddUpdate = "";
             finish();
-        }
-        else if(id == R.id.add_shipping_address_tv)
-        {
+        } else if (id == R.id.add_shipping_address_tv) {
             Utils.hideKeyboard(activity);
             Constant.editShippingAddress = "";
             Constant.addressID = "";
             intent = new Intent(activity, AddShippingAddressActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.add_billing_address_tv)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.add_billing_address_tv) {
             Utils.hideKeyboard(activity);
             Constant.editBillingAddress = "";
             Constant.addressID = "";
             intent = new Intent(activity, AddBillingAddressActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(id == R.id.order_summary_view_card)
-        {
+            overridePendingTransition(0, 0);
+        } else if (id == R.id.order_summary_view_card) {
             Utils.hideKeyboard(activity);
             if (isArrowDown) {
                 drop_arrow_img.setImageResource(R.drawable.down);
@@ -278,9 +278,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 view_order_summary_details_lin.setVisibility(View.VISIBLE);
             }
             isArrowDown = !isArrowDown;
-        }
-        else if(id == R.id.rel_other_tax)
-        {
+        } else if (id == R.id.rel_other_tax) {
             Utils.hideKeyboard(activity);
             others_txt_gst_perc_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
@@ -289,30 +287,29 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                     others_txt_gst_perc_tv.setVisibility(View.GONE);
                 }
             }, 2000);
-        }
-        else if(id == R.id.rel_diamond_tax)
-        {
+        } else if (id == R.id.rel_diamond_tax) {
             Utils.hideKeyboard(activity);
-            diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+
+           // diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    tax_dialog_lv.setVisibility(View.GONE);
+                    //diamond_txt_gst_perc_tv.setVisibility(View.GONE);
                 }
             }, 2000);
-        }
-        else if(id == R.id.continue_tv)
-        {
+        } else if (id == R.id.continue_tv) {
             Utils.hideKeyboard(activity);
-            if(validateFields())
-            {
+            if (validateFields()) {
                 boolean isShippingAddressValid = validateShippingAddress();
                 boolean isBillingAddressValid = false;
 
                 // Check Address Selection Validation
                 if (isShippingAddressValid) {
                     isBillingAddressValid = validateBillingAddress();
-                }else{}
+                } else {
+                }
 
                 if (isShippingAddressValid && isBillingAddressValid) {
 
@@ -330,69 +327,58 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                     // This is USe For placeOrder KYC Verification Screen Intent.
                     gotoPlaceOrderKYCVerificationRedirection();
                 }
-            }else{}
-        }
-        else if(id == R.id.shipping_card_view)
-        {
+            } else {
+            }
+        } else if (id == R.id.shipping_card_view) {
             Utils.hideKeyboard(activity);
 
             selectShippingIcon();
-        }
-        else if(id == R.id.kyc_card_view)
-        {
+        } else if (id == R.id.kyc_card_view) {
             Utils.hideKeyboard(activity);
 
-           selectKYCVerificationIcon();
+            selectKYCVerificationIcon();
 
-        }
-        else if(id == R.id.payment_card_view)
-        {
+        } else if (id == R.id.payment_card_view) {
             Utils.hideKeyboard(activity);
 
             selectPaymentIcon();
         }
     }
 
-    void gotoPlaceOrderKYCVerificationRedirection()
-    {
-        if(userRole.equalsIgnoreCase("DEALER"))
-        {
-            Constant.manageShippingBillingAddressSelection="";
+    void gotoPlaceOrderKYCVerificationRedirection() {
+        if (userRole.equalsIgnoreCase("DEALER")) {
+            Constant.manageShippingBillingAddressSelection = "";
             Constant.manageBillingByAddressAddUpdate = "";
             Constant.manageShippingByAddressAddUpdate = "";
             Intent intent = new Intent(activity, PlaceOrderKYCVerificationActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
             finish();
-        }
-        else{
-           // Log.e("------document_status-------- :" , document_status.toString());
-            if(document_status.equalsIgnoreCase("0"))
-            {
-                Constant.manageShippingBillingAddressSelection="";
+        } else {
+            // Log.e("------document_status-------- :" , document_status.toString());
+            if (document_status.equalsIgnoreCase("0")) {
+                Constant.manageShippingBillingAddressSelection = "";
                 Constant.manageBillingByAddressAddUpdate = "";
                 Constant.manageShippingByAddressAddUpdate = "";
                 Constant.documentStatus = document_status; // For Check Validation Upload At least one document.
                 Intent intent = new Intent(activity, PlaceOrderBuyerKYCVerificationDocUploadActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
-            }
-            else{
-                Constant.manageShippingBillingAddressSelection="";
+            } else {
+                Constant.manageShippingBillingAddressSelection = "";
                 Constant.manageBillingByAddressAddUpdate = "";
                 Constant.manageShippingByAddressAddUpdate = "";
                 Intent intent = new Intent(activity, PlaceOrderBuyerKYCVerificationActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
             }
         }
 
     }
 
-    void selectShippingIcon()
-    {
+    void selectShippingIcon() {
         selectedTab = ADDRESS;
 
         shipping_rel.setBackgroundResource(R.drawable.background_image_purple);
@@ -409,29 +395,21 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         scrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
-    void selectKYCVerificationIcon()
-    {
-        if (!shippingAddressArrayList.isEmpty())
-        {
-            if(!billingAddressArrayList.isEmpty())
-            {
+    void selectKYCVerificationIcon() {
+        if (!shippingAddressArrayList.isEmpty()) {
+            if (!billingAddressArrayList.isEmpty()) {
                 gotoPlaceOrderKYCVerificationRedirection();
-            }
-            else{
+            } else {
                 Toast.makeText(activity, getResources().getString(R.string.please_add_billing_address), Toast.LENGTH_SHORT).show();
             }
-        }
-        else{
+        } else {
             Toast.makeText(activity, getResources().getString(R.string.please_add_shipping_address), Toast.LENGTH_SHORT).show();
         }
     }
 
-    void selectPaymentIcon()
-    {
-        if (!shippingAddressArrayList.isEmpty())
-        {
-            if(!billingAddressArrayList.isEmpty())
-            {
+    void selectPaymentIcon() {
+        if (!shippingAddressArrayList.isEmpty()) {
+            if (!billingAddressArrayList.isEmpty()) {
                 /*shipping_rel.setBackgroundResource(R.drawable.background_image_white);
                 shipping_img.setColorFilter(ContextCompat.getColor(context, R.color.purple_light));
 
@@ -441,19 +419,17 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 payment_rel.setBackgroundResource(R.drawable.background_image_purple);
                 payment_img.setColorFilter(ContextCompat.getColor(context, R.color.white));*/
 
-                Constant.manageShippingBillingAddressSelection="";
+                Constant.manageShippingBillingAddressSelection = "";
                 Constant.manageBillingByAddressAddUpdate = "";
                 Constant.manageShippingByAddressAddUpdate = "";
                 Intent intent = new Intent(activity, PaymentProcessedScreenActivity.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
-            }
-            else{
+            } else {
                 Toast.makeText(activity, getResources().getString(R.string.please_add_billing_address), Toast.LENGTH_SHORT).show();
             }
-        }
-        else{
+        } else {
             Toast.makeText(activity, getResources().getString(R.string.please_add_shipping_address), Toast.LENGTH_SHORT).show();
         }
     }
@@ -464,54 +440,48 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         getCurrencyData();
 
-        if(Constant.manageShippingBillingAddressSelection.equalsIgnoreCase(""))
-        {
+        if (Constant.manageShippingBillingAddressSelection.equalsIgnoreCase("")) {
             getShippingAddressListAPI(false);
             getBillingAddressListAPI(true);
-        } else{}
+        } else {
+        }
 
         userRole = CommonUtility.getGlobalString(activity, "login_user_role");
 
-        if(userRole.equalsIgnoreCase("BUYER"))
-        {
+        if (userRole.equalsIgnoreCase("BUYER")) {
             getKYCDetailsAPI(true);
-        }else{}
+        } else {
+        }
 
         // Check Condition manageBillingByAddressAddUpdate and manageShippingByAddressAddUpdate any one hold key getCheckOutDetailsAPI api not Call
-        if(Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes") ||
-                Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes"))
-        {
-        }
-        else{
+        if (Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes") ||
+                Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes")) {
+        } else {
             getCheckOutDetailsAPI(true);
         }
 
     }
 
-    public void getKYCDetailsAPI(boolean showLoader)
-    {
-        if (Utils.isNetworkAvailable(context))
-        {
+    public void getKYCDetailsAPI(boolean showLoader) {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_KYC_DETAILS, ApiConstants.GET_KYC_DETAILS_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_KYC_DETAILS, ApiConstants.GET_KYC_DETAILS_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
 
-    public void getCheckOutDetailsAPI(boolean showLoader)
-    {
-        if (Utils.isNetworkAvailable(context))
-        {
+    public void getCheckOutDetailsAPI(boolean showLoader) {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
-            Log.e("collectFromHub","...521..."+Constant.collectFromHub);
-            Log.e("shippingCountryName","...521..."+Constant.shippingCountryName);
-            Log.e("billingCountryName","...521..."+Constant.billingCountryName);
-            Log.e("certificateNumber","...521..."+Constant.certificateNumber);
+            Log.e("collectFromHub", "...521..." + Constant.collectFromHub);
+            Log.e("shippingCountryName", "...521..." + Constant.shippingCountryName);
+            Log.e("billingCountryName", "...521..." + Constant.billingCountryName);
+            Log.e("certificateNumber", "...521..." + Constant.certificateNumber);
 
 
             urlParameter.put("couponCode", "");
@@ -524,59 +494,54 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             urlParameter.put("billingCountry", Constant.billingCountryName);
             urlParameter.put("shippingCountry", Constant.shippingCountryName);
 
-            Log.e("urlParameter","...521..."+urlParameter);
+            Log.e("urlParameter", "...521..." + urlParameter);
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID, showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
 
-    public void getShippingAddressListAPI(boolean showLoader)
-    {
-        if (Utils.isNetworkAvailable(context))
-        {
+    public void getShippingAddressListAPI(boolean showLoader) {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_ADDRESS_SHIPPING, ApiConstants.GET_ADDRESS_SHIPPING_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_ADDRESS_SHIPPING, ApiConstants.GET_ADDRESS_SHIPPING_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
 
-    public void getBillingAddressListAPI(boolean showLoader)
-    {
-        if (Utils.isNetworkAvailable(context))
-        {
+    public void getBillingAddressListAPI(boolean showLoader) {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_ADDRESS_BILLING, ApiConstants.GET_ADDRESS_BILLING_ID,showLoader, "GET");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.GET_ADDRESS_BILLING, ApiConstants.GET_ADDRESS_BILLING_ID, showLoader, "GET");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
 
-    public void getRemoveAddressAPI(boolean showLoader, String addressID)
-    {
-        if (Utils.isNetworkAvailable(context))
-        {
+    public void getRemoveAddressAPI(boolean showLoader, String addressID) {
+        if (Utils.isNetworkAvailable(context)) {
             urlParameter = new HashMap<String, String>();
 
-            urlParameter.put("addressId", ""+ addressID);
+            urlParameter.put("addressId", "" + addressID);
 
             vollyApiActivity = null;
-            vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.REMOVE_ADDRESS, ApiConstants.REMOVE_ADDRESS_ID,showLoader, "POST");
+            vollyApiActivity = new VollyApiActivity(context, this, urlParameter, ApiConstants.REMOVE_ADDRESS, ApiConstants.REMOVE_ADDRESS_ID, showLoader, "POST");
 
         } else {
             showToast(ApiConstants.MSG_INTERNETERROR);
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void getSuccessResponce(JSONObject jsonObject, int service_ID) {
 
@@ -589,19 +554,17 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             switch (service_ID) {
                 case ApiConstants.GET_ADDRESS_SHIPPING_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Log.e("Diamonds : ", "---594-----JSONObject----Shipping---- : " + jsonObject);
 
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
-                        if(shippingAddressArrayList.size() > 0)
-                        {
+                        if (shippingAddressArrayList.size() > 0) {
                             shippingAddressArrayList.clear();
-                        } else{}
+                        } else {
+                        }
 
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             AddressListModel model = new AddressListModel();
@@ -627,8 +590,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             model.setMobileNumber(CommonUtility.checkString(objectCodes.optString("MobileNumber")));
 
                             // Check IS Default Address Set Selected For Select Radio Button
-                            if(objectCodes.optString("IsDefault").equalsIgnoreCase("1"))
-                            {
+                            if (objectCodes.optString("IsDefault").equalsIgnoreCase("1")) {
                                 /*Log.e("CountryNameS",""+CommonUtility.checkString(objectCodes.optString("CountryNameS")));
                                 Log.e("PinCode",""+CommonUtility.checkString(objectCodes.optString("PinCode")));
                                 Log.e("AddressId",""+CommonUtility.checkString(objectCodes.optString("AddressId")));*/
@@ -638,59 +600,49 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                                 Constant.shippingAddressID = CommonUtility.checkString(objectCodes.optString("AddressId"));
                                 Constant.shippingAddressNameForShowHidePaymentOption = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
                                 Constant.shippingCountryName = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
-                            }
-                            else{
+                            } else {
                                 model.setSelected(false);
                             }
                             shippingAddressArrayList.add(model);
                         }
 
-                        if(shippingAddressArrayList.size()>0)
-                        {
+                        if (shippingAddressArrayList.size() > 0) {
                             no_shipping_address_card.setVisibility(View.GONE);
                             shipping_address_recycler_view.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             no_shipping_address_card.setVisibility(View.VISIBLE);
                             shipping_address_recycler_view.setVisibility(View.GONE);
                         }
 
-                        addressListAdapter = new PlaceOrderShippingAddressListAdapter(shippingAddressArrayList,context,this, newWith);
+                        addressListAdapter = new PlaceOrderShippingAddressListAdapter(shippingAddressArrayList, context, this, newWith);
                         shipping_address_recycler_view.setAdapter(addressListAdapter);
 
-                        if(Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes"))
-                        {
+                        if (Constant.manageShippingByAddressAddUpdate.equalsIgnoreCase("yes")) {
                             Constant.manageShippingByAddressAddUpdate = "";
                             getCheckOutDetailsAPI(true);
-                        }else{}
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                        } else {
+                        }
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.GET_ADDRESS_BILLING_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Log.e("Diamonds : ", "--------JSONObject----Billing---- : " + jsonObject);
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
-                        if(billingAddressArrayList.size() > 0)
-                        {
+                        if (billingAddressArrayList.size() > 0) {
                             billingAddressArrayList.clear();
-                        } else{}
+                        } else {
+                        }
 
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             AddressListModel model = new AddressListModel();
@@ -716,86 +668,68 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             model.setMobileNumber(CommonUtility.checkString(objectCodes.optString("MobileNumber")));
 
                             // Check IS Default Address Set Selected For Select Radio Button
-                            if(objectCodes.optString("IsDefault").equalsIgnoreCase("1"))
-                            {
+                            if (objectCodes.optString("IsDefault").equalsIgnoreCase("1")) {
                                 model.setSelected(true);
                                 isSelectBillingAddress = true;
                                 Constant.billingAddressID = CommonUtility.checkString(objectCodes.optString("AddressId"));
                                 Constant.billingCountryName = CommonUtility.checkString(objectCodes.optString("CountryNameS"));
-                            }
-                            else{
+                            } else {
                                 model.setSelected(false);
                             }
 
                             billingAddressArrayList.add(model);
                         }
 
-                        if(billingAddressArrayList.size()>0)
-                        {
+                        if (billingAddressArrayList.size() > 0) {
                             no_billing_address_card.setVisibility(View.GONE);
                             billing_address_recycler_view.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             no_billing_address_card.setVisibility(View.VISIBLE);
                             billing_address_recycler_view.setVisibility(View.GONE);
                         }
 
-                        billingAddressListAdapter = new PlaceOrderBillingAddressListAdapter(billingAddressArrayList,context,this, newWith);
+                        billingAddressListAdapter = new PlaceOrderBillingAddressListAdapter(billingAddressArrayList, context, this, newWith);
                         billing_address_recycler_view.setAdapter(billingAddressListAdapter);
 
-                        if(Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes"))
-                        {
+                        if (Constant.manageBillingByAddressAddUpdate.equalsIgnoreCase("yes")) {
                             Constant.manageBillingByAddressAddUpdate = "";
                             getCheckOutDetailsAPI(true);
-                        }else{}
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                        } else {
+                        }
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.REMOVE_ADDRESS_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
 
-                        if(wheretoRemove.equalsIgnoreCase("shippingAddress"))
-                        {
+                        if (wheretoRemove.equalsIgnoreCase("shippingAddress")) {
                             shippingAddressArrayList.remove(lastPosition);
                             addressListAdapter.notifyDataSetChanged();
-                        }
-                        else if(wheretoRemove.equalsIgnoreCase("billingAddress"))
-                        {
+                        } else if (wheretoRemove.equalsIgnoreCase("billingAddress")) {
                             billingAddressArrayList.remove(lastPosition);
                             billingAddressListAdapter.notifyDataSetChanged();
-                        }else{}
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                        } else {
+                        }
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.GET_KYC_DETAILS_ID:
 
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
                         Log.e("Diamonds : ", "--------KYC_DETAILS-------- : " + jsonObjectData);
                         document_status = jsonObjectData.optString("document_status");
 
@@ -803,184 +737,233 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
-                        if(document_status.equalsIgnoreCase("0"))
-                        {}
-                        else if(document_status.equalsIgnoreCase("1"))
-                        {}
-                        else if(document_status.equalsIgnoreCase("2"))
-                        {}
-                        else if(document_status.equalsIgnoreCase("3"))
-                        {}
-                        else{}
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                        if (document_status.equalsIgnoreCase("0")) {
+                        } else if (document_status.equalsIgnoreCase("1")) {
+                        } else if (document_status.equalsIgnoreCase("2")) {
+                        } else if (document_status.equalsIgnoreCase("3")) {
+                        } else {
+                        }
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case ApiConstants.GET_CHECKOUT_DETAILS_ID:
-                    if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
-                    {
-                        Log.v("------Diamond----- : ", "--------CheckOut_Details------- : " + jsonObject);
+                    if (jsonObjectData.optString("status").equalsIgnoreCase("1")) {
+                        Log.v("------Diamond----- : ", "----832@@##----CheckOut_Details------- : " + jsonObject);
+                        JSONObject priceBreakup = jsonObject.optJSONObject("price_breakup");
 
-                         isCoupanApplied = CommonUtility.checkString(jsonObjectData.optString("is_coupan_applied"));
-                         orderCouponCode = CommonUtility.checkString(jsonObjectData.optString("coupon_code"));
-                         orderCouponValue = CommonUtility.checkString(jsonObjectData.optString("coupon_value"));
-                         orderCouponDiscount = CommonUtility.checkString(jsonObjectData.optString("coupon_discount"));
-                         orderSubTotal = CommonUtility.checkString(jsonObjectData.optString("sub_total"));
-                         orderCgst = CommonUtility.checkString(jsonObjectData.optString("cgst"));
-                         orderCgstPerc = CommonUtility.checkString(jsonObjectData.optString("cgst_perc"));
-                         orderSgst = CommonUtility.checkString(jsonObjectData.optString("sgst"));
-                         orderSgstPerc = CommonUtility.checkString(jsonObjectData.optString("sgst_perc"));
-                         orderIgst = CommonUtility.checkString(jsonObjectData.optString("igst"));
-                         orderIgstPerc = CommonUtility.checkString(jsonObjectData.optString("igst_perc"));
-                         orderDiscountPerc = CommonUtility.checkString(jsonObjectData.optString("discount_perc"));
-                         orderTax = CommonUtility.checkString(jsonObjectData.optString("tax"));
-                         orderSubTotalWithTax = CommonUtility.checkString(jsonObjectData.optString("sub_total_with_tax"));
-                         orderShippingCharge = CommonUtility.checkString(jsonObjectData.optString("shipping_charge"));
-                         orderPlatformFee = CommonUtility.checkString(jsonObjectData.optString("platform_fee"));
-                         orderTotalCharge = CommonUtility.checkString(jsonObjectData.optString("total_charge"));
-                         orderTotalChargeTax = CommonUtility.checkString(jsonObjectData.optString("total_charge_tax"));
-                         orderTotalChargeWithTax = CommonUtility.checkString(jsonObjectData.optString("total_charge_with_tax"));
-                         orderTotalTaxes = CommonUtility.checkString(jsonObjectData.optString("total_taxes"));
-                         orderTotalAmount = CommonUtility.checkString(jsonObjectData.optString("total_amount"));
-                         orderTaxPerOnCharges = CommonUtility.checkString(jsonObjectData.optString("tax_per_on_charges"));
-                         orderFinalAmount = CommonUtility.checkString(jsonObjectData.optString("final_amount"));
-                         orderBankCharge = CommonUtility.checkString(jsonObjectData.optString("bank_charge"));
-                         orderBankChargePerc = CommonUtility.checkString(jsonObjectData.optString("bank_charge_perc"));
+
+                        isCoupanApplied = CommonUtility.checkString(jsonObjectData.optString("is_coupan_applied"));
+                        orderCouponCode = CommonUtility.checkString(jsonObjectData.optString("coupon_code"));
+                        orderCouponValue = CommonUtility.checkString(jsonObjectData.optString("coupon_value"));
+                        orderCouponDiscount = CommonUtility.checkString(jsonObjectData.optString("coupon_discount"));
+                        orderSubTotal = CommonUtility.checkString(jsonObjectData.optString("sub_total"));
+                        orderCgst = CommonUtility.checkString(jsonObjectData.optString("cgst"));
+                        orderCgstPerc = CommonUtility.checkString(jsonObjectData.optString("cgst_perc"));
+                        orderSgst = CommonUtility.checkString(jsonObjectData.optString("sgst"));
+                        orderSgstPerc = CommonUtility.checkString(jsonObjectData.optString("sgst_perc"));
+                        orderIgst = CommonUtility.checkString(jsonObjectData.optString("igst"));
+                        orderIgstPerc = CommonUtility.checkString(jsonObjectData.optString("igst_perc"));
+                        orderDiscountPerc = CommonUtility.checkString(jsonObjectData.optString("discount_perc"));
+                        orderTax = CommonUtility.checkString(jsonObjectData.optString("tax"));
+                        orderSubTotalWithTax = CommonUtility.checkString(jsonObjectData.optString("sub_total_with_tax"));
+                        orderShippingCharge = CommonUtility.checkString(jsonObjectData.optString("shipping_charge"));
+                        orderPlatformFee = CommonUtility.checkString(jsonObjectData.optString("platform_fee"));
+                        orderTotalCharge = CommonUtility.checkString(jsonObjectData.optString("total_charge"));
+                        orderTotalChargeTax = CommonUtility.checkString(jsonObjectData.optString("total_charge_tax"));
+                        orderTotalChargeWithTax = CommonUtility.checkString(jsonObjectData.optString("total_charge_with_tax"));
+                        orderTotalTaxes = CommonUtility.checkString(jsonObjectData.optString("total_taxes"));
+                        orderTotalAmount = CommonUtility.checkString(jsonObjectData.optString("total_amount"));
+                        orderTaxPerOnCharges = CommonUtility.checkString(jsonObjectData.optString("tax_per_on_charges"));
+                        orderFinalAmount = CommonUtility.checkString(jsonObjectData.optString("final_amount"));
+                        orderBankCharge = CommonUtility.checkString(jsonObjectData.optString("bank_charge"));
+                        orderBankChargePerc = CommonUtility.checkString(jsonObjectData.optString("bank_charge_perc"));
+
+
+                        String getCurrencySymbol1 = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+
+
+
+                        if (priceBreakup != null) {
+
+                            JSONObject subtotal = priceBreakup.optJSONObject("subtotal");
+                            if (subtotal != null) {
+                                if (subtotal.has("gemstone")) {
+                                    int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                    System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                    gemstone_tv_price.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    gemstone_tv_price.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                } else {
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                    gemstone_rv.setVisibility(View.GONE);
+                                }
+                                if (subtotal.has("diamond"))
+                                {
+                                    int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                    System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                    orderitemprice.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                }
+                                else {
+                                    diamond_rv.setVisibility(View.GONE);
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                }
+
+
+                                JSONObject taxPerc = priceBreakup.optJSONObject("tax_perc");
+                                if (taxPerc != null) {
+                                    if (taxPerc.has("gemstone"))
+                                    {
+                                        double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                        System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                        gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                    } else {
+                                        gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Tax Percentage: Not Available");
+                                    }
+
+                                    if (taxPerc.has("diamond"))
+                                    {
+                                        double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                        System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                        diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                    }
+                                    else {
+                                        diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                            }
+                        }
 
                         // Sub Total Charges
-                        if(orderSubTotal!=null && !orderSubTotal.equalsIgnoreCase(""))
-                        {
-                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderSubTotal);
+                        if (orderSubTotal != null && !orderSubTotal.equalsIgnoreCase("")) {
+                            String subTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderSubTotal);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
-                        } else{}
+
+                        } else {
+                        }
 
                         // Final Amount
-                        if(orderFinalAmount!=null && !orderFinalAmount.equalsIgnoreCase(""))
-                        {
-                            String finalAmountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderFinalAmount);
+                        if (orderFinalAmount != null && !orderFinalAmount.equalsIgnoreCase("")) {
+                            String finalAmountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderFinalAmount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             total_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(finalAmountTotalFormat));
                             final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(finalAmountTotalFormat));
-                        } else{}
+                        } else {
+                        }
 
+                        Log.e("orderShippingCharge","..867....."+orderShippingCharge);
                         // Shipping Charges
-                        if(orderShippingCharge!=null && !orderShippingCharge.equalsIgnoreCase(""))
-                        {
-                            if(orderShippingCharge.equalsIgnoreCase("0"))
-                            {
+                        if (orderShippingCharge != null && !orderShippingCharge.equalsIgnoreCase("")) {
+                            if (orderShippingCharge.equalsIgnoreCase("0")) {
                                 shipping_and_handling_tv.setText(getResources().getString(R.string.free_shipping));
                                 shipping_and_handling_tv.setTextColor(ContextCompat.getColor(context, R.color.green));
-                            }
-                            else{
-                                String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderShippingCharge);
+                            } else {
+                                String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderShippingCharge);
                                 String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                                 shipping_and_handling_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
                                 shipping_and_handling_tv.setTextColor(ContextCompat.getColor(context, R.color.grey));
                             }
-                        }else{}
+                        } else {
+                        }
 
                         // PlatFrom Charges
-                        if(orderPlatformFee!=null && !orderPlatformFee.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderPlatformFee);
+                        if (orderPlatformFee != null && !orderPlatformFee.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderPlatformFee);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             platform_fees_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Total Charges
-                        if(orderTotalCharge!=null && !orderTotalCharge.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalCharge);
+                        if (orderTotalCharge != null && !orderTotalCharge.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalCharge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             total_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Other Taxes
-                        if(orderTotalChargeTax!=null && !orderTotalChargeTax.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalChargeTax);
+                        if (orderTotalChargeTax != null && !orderTotalChargeTax.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalChargeTax);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             other_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Other Text GST
-                        if(orderTaxPerOnCharges!=null && !orderTaxPerOnCharges.equalsIgnoreCase(""))
-                        {
+                        if (orderTaxPerOnCharges != null && !orderTaxPerOnCharges.equalsIgnoreCase("")) {
                             others_txt_gst_perc_tv.setText(orderTaxPerOnCharges + "% GST");
-                        }else{}
+                        } else {
+                        }
 
                         // Diamond Taxes
-                        if(orderTax!=null && !orderTax.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTax);
+                        if (orderTax != null && !orderTax.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTax);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             diamond_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Total Taxes
-                        if(orderTotalTaxes!=null && !orderTotalTaxes.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalTaxes);
+                        if (orderTotalTaxes != null && !orderTotalTaxes.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalTaxes);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             total_taxes_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Sub Total
-                        if(orderTotalAmount!=null && !orderTotalAmount.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalAmount);
+                        if (orderTotalAmount != null && !orderTotalAmount.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalAmount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Bank Charges
-                        if(orderBankCharge!=null && !orderBankCharge.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderBankCharge);
+                        if (orderBankCharge != null && !orderBankCharge.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderBankCharge);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             bank_charges_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
                         // Final Amount
-                        if(orderFinalAmount!=null && !orderFinalAmount.equalsIgnoreCase(""))
-                        {
-                            String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderFinalAmount);
+                        if (orderFinalAmount != null && !orderFinalAmount.equalsIgnoreCase("")) {
+                            String amountTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderFinalAmount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             final_amount_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
 
-                        }else{}
+                        } else {
+                        }
 
 
                         JSONArray details = jsonObjectData.getJSONArray("details");
 
-                        if(orderItemArrayList.size() > 0)
-                        {
+                        if (orderItemArrayList.size() > 0) {
                             orderItemArrayList.clear();
                         }
-                        for (int i = 0; i < details.length(); i++)
-                        {
+                        for (int i = 0; i < details.length(); i++) {
                             JSONObject objectCodes = details.getJSONObject(i);
 
                             AddToCartListModel model = new AddToCartListModel();
@@ -1005,7 +988,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                             model.setStockNo(CommonUtility.checkString(objectCodes.optString("stock_no")));
                             model.setIsDxeLUXE(CommonUtility.checkInt(objectCodes.optString("isDxeLUXE")));
 
-                            String subTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
+                            String subTotalFormat = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, CommonUtility.checkString(objectCodes.optString("subtotal")));
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             model.setShowingSubTotal(subTotalFormat);
@@ -1015,26 +998,19 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                         }
 
                         //Log.e("recommandDiamondArrayList", "" + recommandDiamondArrayList.size());
-                        if(orderItemArrayList!=null && orderItemArrayList.size()>0)
-                        {
+                        if (orderItemArrayList != null && orderItemArrayList.size() > 0) {
                             viewpager_layout.setVisibility(View.VISIBLE);
                             setPlaceItemListPager();
-                        }
-                        else{
+                        } else {
                             viewpager_layout.setVisibility(View.GONE);
                         }
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("0"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("0")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                         finish();
-                    }
-                    else if (jsonObjectData.optString("status").equalsIgnoreCase("4"))
-                    {
+                    } else if (jsonObjectData.optString("status").equalsIgnoreCase("4")) {
                         Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(activity, ""+message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "" + message, Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -1051,10 +1027,8 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
     }
 
     @Override
-    public void itemClick(int position, String action)
-    {
-        if(action.equalsIgnoreCase("selectBillingAddress"))
-        {
+    public void itemClick(int position, String action) {
+        if (action.equalsIgnoreCase("selectBillingAddress")) {
             boolean shouldSelect = !billingAddressArrayList.get(position).isSelected();
 
             Constant.manageShippingBillingAddressSelection = "billingAddressSelect";
@@ -1078,9 +1052,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             Constant.billingCountryName = billingAddressArrayList.get(position).getCountryNameS();
             billingAddressListAdapter.notifyDataSetChanged();
             getCheckOutDetailsAPI(false);
-        }
-        else if(action.equalsIgnoreCase("selectShippingAddress"))
-        {
+        } else if (action.equalsIgnoreCase("selectShippingAddress")) {
             //Toast.makeText(this,".."+shippingAddressArrayList.get(position).getCountryNameS(),Toast.LENGTH_SHORT).show();
             boolean shouldSelect = !shippingAddressArrayList.get(position).isSelected();
             Constant.manageShippingBillingAddressSelection = "shippingAddressSelect";
@@ -1105,9 +1077,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             Constant.shippingCountryName = shippingAddressArrayList.get(position).getCountryNameS();
             addressListAdapter.notifyDataSetChanged();
             getCheckOutDetailsAPI(false);
-        }
-        else  if(action.equalsIgnoreCase("editAddress"))
-        {
+        } else if (action.equalsIgnoreCase("editAddress")) {
             Constant.editShippingAddress = "yes";
             AddressListModel model = shippingAddressArrayList.get(position);
 
@@ -1128,24 +1098,18 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
             Intent intent = new Intent(activity, AddShippingAddressActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(action.equalsIgnoreCase("deleteAddress"))
-        {
+            overridePendingTransition(0, 0);
+        } else if (action.equalsIgnoreCase("deleteAddress")) {
             AddressListModel model = shippingAddressArrayList.get(position);
             wheretoRemove = "shippingAddress";
             lastPosition = position;
 
-            if(shippingAddressArrayList.get(position).getIsDefault().equalsIgnoreCase("1"))
-            {
+            if (shippingAddressArrayList.get(position).getIsDefault().equalsIgnoreCase("1")) {
                 Toast.makeText(activity, getResources().getString(R.string.default_address_can_not_delete), Toast.LENGTH_SHORT).show();
+            } else {
+                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg), model.getAddressId(), lastPosition);
             }
-            else{
-                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg), model.getAddressId(),lastPosition);
-            }
-        }
-        else if(action.equalsIgnoreCase("editBillingAddress"))
-        {
+        } else if (action.equalsIgnoreCase("editBillingAddress")) {
             AddressListModel model = billingAddressArrayList.get(position);
 
             Constant.editBillingAddress = "yes";
@@ -1168,26 +1132,21 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
             Intent intent = new Intent(activity, AddBillingAddressActivity.class);
             startActivity(intent);
-            overridePendingTransition(0,0);
-        }
-        else if(action.equalsIgnoreCase("deleteBillingAddress"))
-        {
+            overridePendingTransition(0, 0);
+        } else if (action.equalsIgnoreCase("deleteBillingAddress")) {
             AddressListModel model = billingAddressArrayList.get(position);
             lastPosition = position;
             wheretoRemove = "billingAddress";
 
-            if(billingAddressArrayList.get(position).getIsDefault().equalsIgnoreCase("1"))
-            {
+            if (billingAddressArrayList.get(position).getIsDefault().equalsIgnoreCase("1")) {
                 Toast.makeText(activity, getResources().getString(R.string.default_address_can_not_delete), Toast.LENGTH_SHORT).show();
-            }
-            else{
-                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg), model.getAddressId(),lastPosition);
+            } else {
+                removeAddressConfirmationPopup(activity, context, getResources().getString(R.string.address_delete_msg), model.getAddressId(), lastPosition);
             }
         }
     }
 
-    void removeAddressConfirmationPopup(final Activity activity,final Context context,String message, String addressID, int position)
-    {
+    void removeAddressConfirmationPopup(final Activity activity, final Context context, String message, String addressID, int position) {
         android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -1196,18 +1155,17 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         final android.app.AlertDialog alertDialog = dialogBuilder.create();
 
         final TextView title = dialogView.findViewById(R.id.title);
-        final TextView message1 =  dialogView.findViewById(R.id.message);
-        final TextView yes_tv =  dialogView.findViewById(R.id.yes_tv);
-        final TextView no_tv =  dialogView.findViewById(R.id.no_tv);
+        final TextView message1 = dialogView.findViewById(R.id.message);
+        final TextView yes_tv = dialogView.findViewById(R.id.yes_tv);
+        final TextView no_tv = dialogView.findViewById(R.id.no_tv);
 
-        title.setText(""+context.getResources().getString(R.string.app_name));
+        title.setText("" + context.getResources().getString(R.string.app_name));
 
-        message1.setText(""+message);
+        message1.setText("" + message);
 
         yes_tv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 getRemoveAddressAPI(false, addressID);
                 alertDialog.dismiss();
             }
@@ -1227,13 +1185,11 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
     }
 
-    private boolean validateFields()
-    {
+    private boolean validateFields() {
         if (shippingAddressArrayList == null || shippingAddressArrayList.isEmpty()) {
             Toast.makeText(activity, getResources().getString(R.string.please_add_shipping_address), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if (billingAddressArrayList == null ||  billingAddressArrayList.isEmpty()) {
+        } else if (billingAddressArrayList == null || billingAddressArrayList.isEmpty()) {
             Toast.makeText(activity, getResources().getString(R.string.please_add_billing_address), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -1251,6 +1207,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         Toast.makeText(activity, getResources().getString(R.string.please_select_shipping_address), Toast.LENGTH_SHORT).show();
         return false;
     }
+
     private boolean validateBillingAddress() {
         for (int i = 0; i < billingAddressArrayList.size(); i++) {
             if (billingAddressArrayList.get(i).isSelected()) {
@@ -1273,6 +1230,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         }
         return true; // Valid shipping address
     }
+
     private boolean validateBillingAddress1() {
         for (int i = 0; i < billingAddressArrayList.size(); i++) {
             if (!billingAddressArrayList.get(i).isSelected()) {
@@ -1293,18 +1251,15 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
         viewPager.setAdapter(new MyPagerAdapter(activity, orderItemArrayList));
         tabLayout.setupWithViewPager(viewPager, true);
         final float density = getResources().getDisplayMetrics().density;
-        if(orderItemArrayList!=null && orderItemArrayList.size()>=1)
-        {
+        if (orderItemArrayList != null && orderItemArrayList.size() >= 1) {
             viewpager_layout.setVisibility(View.VISIBLE);
 
-            if(orderItemArrayList.size()>1){
+            if (orderItemArrayList.size() > 1) {
                 tabLayout.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tabLayout.setVisibility(View.VISIBLE);
             }
-        }
-        else
-        {
+        } else {
             viewpager_layout.setVisibility(View.GONE);
             tabLayout.setVisibility(View.VISIBLE);
         }
@@ -1366,6 +1321,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
         ArrayList<AddToCartListModel> list;
         LayoutInflater inflater;
+
         public MyPagerAdapter(Context context, ArrayList<AddToCartListModel> list) {
             this.list = list;
         }
@@ -1393,7 +1349,7 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             ImageView pagerImg, status_img, returnable_img;
             CardView root_layout;
             RelativeLayout luex_tag;
-            TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv,  return_policy_tv, sub_total_tv,diamond_type;
+            TextView supplier_id_tv_pager, name_tv_Pager, item_type_tv, return_policy_tv, sub_total_tv, diamond_type;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View itemView = inflater.inflate(R.layout.row_place_order_item_list, container, false);
             pagerImg = (ImageView) itemView.findViewById(R.id.image_view);
@@ -1410,15 +1366,13 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             return_policy_tv = itemView.findViewById(R.id.return_policy_tv);
             sub_total_tv = itemView.findViewById(R.id.sub_total_tv);
 
-            if(!list.get(position).getDiamondImage().equalsIgnoreCase(""))
-            {
+            if (!list.get(position).getDiamondImage().equalsIgnoreCase("")) {
                 Picasso.with(context)
                         .load(list.get(position).getDiamondImage())
                         .placeholder(R.mipmap.phl_diamond)
                         .error(R.mipmap.phl_diamond)
                         .into(pagerImg);
-            }
-            else{
+            } else {
                 Picasso.with(context)
                         .load(R.mipmap.phl_diamond)
                         .placeholder(R.mipmap.phl_diamond)
@@ -1427,25 +1381,21 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
             }
 
 
-            if (list.get(position).getIsDxeLUXE()==1)
-            {
+            if (list.get(position).getIsDxeLUXE() == 1) {
                 luex_tag.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 luex_tag.setVisibility(View.GONE);
             }
 
-            supplier_id_tv_pager.setText("#"+list.get(position).getStockNo() + " | " + list.get(position).getSupplierId());
+            supplier_id_tv_pager.setText("#" + list.get(position).getStockNo() + " | " + list.get(position).getSupplierId());
             name_tv_Pager.setText(list.get(position).getShape());
             item_type_tv.setText(list.get(position).getCarat() + getResources().getString(R.string.ct) + " " + list.get(position).getColor() + " " + list.get(position).getClarity());
 
 
-            if(list.get(position).getCategory().equalsIgnoreCase("Natural"))
-            {
+            if (list.get(position).getCategory().equalsIgnoreCase("Natural")) {
                 diamond_type.setBackgroundResource(R.drawable.background_yellow);
                 diamond_type.setText("NATURAL");
-            }
-            else{
+            } else {
                 diamond_type.setBackgroundResource(R.drawable.background_green_light_small_round_cornor);
                 diamond_type.setText("LAB");
             }
@@ -1453,16 +1403,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
 
             DecimalFormat formatter = new DecimalFormat("#,###,###");
 
-            if(!list.get(position).getSubtotal().equalsIgnoreCase(""))
-            {
+            if (!list.get(position).getSubtotal().equalsIgnoreCase("")) {
                 sub_total_tv.setText(list.get(position).getCurrencySymbol() + "" + CommonUtility.currencyFormat(list.get(position).getShowingSubTotal()));
-            }else {}
-
-            if(list.get(position).getIsReturnable().equalsIgnoreCase("1"))
-            {
-                returnable_img.setVisibility(View.VISIBLE);
+            } else {
             }
-            else{
+
+            if (list.get(position).getIsReturnable().equalsIgnoreCase("1")) {
+                returnable_img.setVisibility(View.VISIBLE);
+            } else {
                 returnable_img.setVisibility(View.GONE);
             }
 
@@ -1481,18 +1429,14 @@ public class PlaceOrderScreenActivity extends SuperActivity implements RecyclerI
                 }
             });
 
-            if(list.get(position).getStatus().equalsIgnoreCase("Available"))
-            {
+            if (list.get(position).getStatus().equalsIgnoreCase("Available")) {
                 status_img.setVisibility(View.VISIBLE);
 
                 status_img.setBackgroundResource(R.drawable.available);
-            }
-            else if(list.get(position).getStatus().equalsIgnoreCase("On Hold")){
+            } else if (list.get(position).getStatus().equalsIgnoreCase("On Hold")) {
                 status_img.setVisibility(View.VISIBLE);
                 status_img.setBackgroundResource(R.drawable.onhold);
-            }
-            else
-            {
+            } else {
                 status_img.setVisibility(View.GONE);
             }
 

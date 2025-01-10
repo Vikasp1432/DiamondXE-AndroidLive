@@ -1,11 +1,6 @@
 package com.diamondxe.Activity.Dealer;
 
-import static com.diamondxe.Utils.PaymentUtils.API_END_POINT;
-import static com.diamondxe.Utils.PaymentUtils.BASE_URL;
-import static com.diamondxe.Utils.PaymentUtils.MERCHANT_ID;
-import static com.diamondxe.Utils.PaymentUtils.SALT;
-import static com.diamondxe.Utils.PaymentUtils.SALT_INDEX;
-import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -57,16 +52,11 @@ import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
-import com.diamondxe.Utils.PaymentUtils;
 import com.diamondxe.Utils.Utils;
 import com.payment.paymentsdk.integrationmodels.PaymentSdkApms;
 import com.payment.paymentsdk.integrationmodels.PaymentSdkError;
 import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionDetails;
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface;
-import com.phonepe.intent.sdk.api.B2BPGRequest;
-import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.PhonePeInitException;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 
@@ -126,7 +116,6 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     double netBankingCharges = 0;
     double cardCharges = 0;
 
-    B2BPGRequest b2BPGRequest;
     String payloadBase64 = "", checksum="", amountInPaisaString="",dob="",send_dob_server="",  selectedUPIPackage="", finalSubmitValue="";
     String paymentModeType= "NEFT"; // By Default Payment Mode NEFT
     double amountInRupees = 0;
@@ -268,7 +257,6 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         proceed_to_pay_rel.setOnClickListener(this);
         upi_option_lin.setVisibility(View.GONE);
         // Initialize PhonePe
-        PaymentUtils.initializePhonePe(this);
 
          //PhonePe.init(getApplicationContext(), PhonePeEnvironment.SANDBOX, MERCHANT_ID, SALT); // For SendBox
          //PhonePe.init(getApplicationContext(), PhonePeEnvironment.RELEASE, MERCHANT_ID, SALT); // For Live
@@ -507,7 +495,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     }
 
     // Create Check Sum For Payment Initiated and Open PhonePay.
-    void createCheckSumPaymentInitiatedAndOpenPhonePe()
+   /* void createCheckSumPaymentInitiatedAndOpenPhonePe()
     {
         amountInPaisaString = total_amount_tv.getText().toString().trim();
 
@@ -552,7 +540,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
             //paymentInstrument.put("targetApp", TARGET_URL);
 
-            data.put("paymentInstrument", paymentInstrument);
+            *//*data.put("paymentInstrument", paymentInstrument);
 
             JSONObject deviceContext = new JSONObject();
             deviceContext.put("deviceOS", "ANDROID");
@@ -592,13 +580,13 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                 }
             } catch (PhonePeInitException e) {
                 Log.e("phonepe", "PhonePe initialization error", e);
-            }
+            }*//*
 
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("AmountConversion", "Invalid amount format");
         }
-    }
+    }*/
 
     // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
     void editTextAndTextViewValueBlank()
@@ -1322,11 +1310,14 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                             else{
                                 totalAmount = CommonUtility.checkString(jObjDetails.optString("total_amount"));
                                 callbackUrl = CommonUtility.checkString(jObjDetails.optString("callback_url"));
+                               String razorpayOrderID = CommonUtility.checkString(jObjDetails.optString("razorpay_order_id"));
+                                Log.e("razorpayOrderID","..1240....."+razorpayOrderID);
                                 ///Phone Pe comment here
                                 //createCheckSumPaymentInitiatedAndOpenPhonePe();
                                 Log.e("amount_et","..1239...****************....."+amount_et.getText().toString());
                                 Log.e("Amount In INT","..1240....."+Integer.parseInt(amount_et.getText().toString()));
                                 Log.e("RegionType","..1307...."+RegionType);
+                                Log.e("razorpayOrderID","..1307...."+razorpayOrderID);
 
                                 JSONObject billingAddress = jObjUserDetails.optJSONObject("billing_address");
 
@@ -1341,7 +1332,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                                                 user_email,
                                                 PaymentMethod.UPI,
                                                 context.getResources().getString(R.string.app_name),
-                                                R.drawable.appicon
+                                                razorpayOrderID
                                         );
                                     }
                                     else if(paymentModeType.equalsIgnoreCase(NET_BANKING))
@@ -1353,7 +1344,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                                                 user_email,
                                                 PaymentMethod.NET_BANKING,
                                                 context.getResources().getString(R.string.app_name),
-                                                R.drawable.appicon
+                                                razorpayOrderID
                                         );
                                     }
                                     else if(paymentModeType.equalsIgnoreCase(CREDIT_CARD))
@@ -1365,7 +1356,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
                                                 user_email,
                                                 PaymentMethod.CARD,
                                                 context.getResources().getString(R.string.app_name),
-                                                R.drawable.appicon
+                                                razorpayOrderID
                                         );
                                     }
                                 }
@@ -1406,11 +1397,15 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
 
                                         String currecnySymbol=jObjDetails.optString("currency_symbol");
                                         String orderID=jObjDetails.optString("order_id");
+                                      //  String callbackurl=jObjDetails.optString("callback_url");
 
+                                        String callbackurl = CommonUtility.checkString(jObjDetails.optString("callback_url"));
+                                        Log.e("callbackurl","#####..1403...."+callbackurl);
                                         Log.e("currecnySymbol","..1424...."+currecnySymbol+"....orderID...."+orderID);
                                         PayTabsPaymentManager.INSTANCE.setCurrencyAndCartId(
                                                 currecnySymbol,
-                                                orderID
+                                                orderID,
+                                                callbackurl
                                         );
 
                                         PayTabsPaymentManager.INSTANCE.setBillingDetails(
@@ -1824,7 +1819,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
     }
 
     // Create Check Sum Fot Payment Status.
-    private void checkStatus()
+  /*  private void checkStatus()
     {
         String xVerify = CommonUtility.sha256("/pg/v1/status/" + MERCHANT_ID + "/" + CommonUtility.generateTransactionId() + SALT) + "###"+SALT_INDEX;
         Log.d("phonepe", "xVerify: " + xVerify);
@@ -1866,7 +1861,7 @@ public class CustomPaymentScreenActivity extends SuperActivity implements Recycl
         };
 
         requestQueue.add(stringRequest);
-    }
+    }*/
 
     private boolean validateFields()
     {

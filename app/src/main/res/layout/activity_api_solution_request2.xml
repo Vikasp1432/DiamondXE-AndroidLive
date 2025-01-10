@@ -644,7 +644,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/background_top_shadow"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <View
                 android:layout_width="match_parent"

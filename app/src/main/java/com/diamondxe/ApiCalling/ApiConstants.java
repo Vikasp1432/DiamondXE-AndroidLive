@@ -2,15 +2,13 @@ package com.diamondxe.ApiCalling;
 
 import android.content.Context;
 
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
 
 public interface ApiConstants {
 
-    String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
+     //String DOMAIN_NAME = "https://app-uat.diamondxe.com/app/v1/";
 
     // Live Server URL
-    //String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
+    String DOMAIN_NAME = "https://app.diamondxe.com/app/v1/";
 
     /*String DOMAIN_IMAGE_NAME = "http://192.168.2.194/diamond/";
     String DOMAIN_IMAGE = "http://192.168.2.194/diamond";*/
@@ -92,6 +90,8 @@ public interface ApiConstants {
     String DISMISS_ORDER = "dismiss-order";
     String GET_GEMSTONES = "get-gemstones";
     String GET_GEMSTONES_DETAILS = "get-gemstone-details";
+    String GET_APP_CHECK_VERSION = "check-version";
+    String GET_NOVVARA_FROM = "novaara-inquiry";
     //account-recharge
 
 
@@ -174,7 +174,8 @@ public interface ApiConstants {
     int DISMISS_ORDER_ID=78;
     int GET_GEMSTONES_ID=79;
     int GET_GEMSTONES_DETAILS_ID=80;
-
+    int GET_APP_CHECK_VERSION_ID=81;
+    int GET_NOVVARA_FROM_ID=82;
 
     String MSG_INTERNETERROR = "Internet connection is not available.";
     String SERVER_ERROR="Oops ! - server not responding, please try after some time.";

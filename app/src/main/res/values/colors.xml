@@ -158,5 +158,8 @@
 
     <!--top status bar color change-->
     <color name="payment_sdk_status_bar_color">#7E3080</color>
+    <color name="color_CFA565">#CFA565</color>
+
+    <color name="color_525252">#525252</color>
 
 </resources>

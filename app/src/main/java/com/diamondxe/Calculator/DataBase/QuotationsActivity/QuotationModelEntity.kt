@@ -32,7 +32,11 @@ data class QuotationModelEntity(
     var radiobuttonName:String,
     var chargeTxt:String,
     var solitairetxt:String,
-    var sidediatxt:String
+    var sidediatxt:String,
+    var currencyCode:String= "",
+    var currencysymbol:String= "",
+    var currencyvalue:String= "",
+    var currencyRate:String= ""
 
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -58,6 +62,10 @@ data class QuotationModelEntity(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
+        parcel.readString() ?:"",
+        parcel.readString() ?:"",
+        parcel.readString() ?:"",
+        parcel.readString() ?:"",
         parcel.readString() ?:"",
         parcel.readString() ?:"",
         parcel.readString() ?:"",
@@ -91,6 +99,10 @@ data class QuotationModelEntity(
         parcel.writeString(chargeTxt)
         parcel.writeString(solitairetxt)
         parcel.writeString(sidediatxt)
+        parcel.writeString(currencyCode)
+        parcel.writeString(currencysymbol)
+        parcel.writeString(currencyvalue)
+        parcel.writeString(currencyRate)
     }
 
     override fun describeContents(): Int {

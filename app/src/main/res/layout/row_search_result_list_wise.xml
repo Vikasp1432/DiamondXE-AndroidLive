@@ -178,6 +178,7 @@
                                 android:layout_toLeftOf="@+id/add_to_favt_card">
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/cut_grade_tv"
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
@@ -193,6 +194,7 @@
                                     android:textSize="@dimen/dimen_11" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/polish_tv"
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
@@ -209,6 +211,7 @@
                                     android:textSize="@dimen/dimen_11" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/symmetry_tv"
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
@@ -225,6 +228,7 @@
                                     android:textSize="@dimen/dimen_11" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/fluorescence_intensity_tv"
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
@@ -245,6 +249,21 @@
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:background="@drawable/background_search_item_with_border"
+                                    android:gravity="center"
+                                    android:hint="GIA"
+                                    android:paddingLeft="@dimen/dimen_5"
+                                    android:paddingTop="@dimen/dimen_5"
+                                    android:paddingRight="@dimen/dimen_5"
+                                    android:paddingBottom="@dimen/dimen_5"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_11" />
+
+                                <TextView
+                                    android:id="@+id/inscription"
+                                    style="@style/SemiBoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dimen_7"
                                     android:background="@drawable/background_search_item_with_border"
                                     android:gravity="center"
@@ -257,6 +276,7 @@
                                     android:textSize="@dimen/dimen_11" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/discount_tv"
                                     style="@style/SemiBoldFontType"
                                     android:layout_width="wrap_content"
@@ -362,6 +382,7 @@
                     android:layout_toLeftOf="@+id/allprice">
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/table_perc_tv"
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
@@ -377,6 +398,7 @@
                         android:textSize="@dimen/dimen_11" />
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="1dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center"
@@ -384,6 +406,7 @@
                         android:background="@color/black" />
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/depth_perc"
                         style="@style/SemiBoldFontType"
                         android:layout_width="wrap_content"
@@ -400,6 +423,7 @@
                         android:textSize="@dimen/dimen_11" />
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="1dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center"

@@ -285,7 +285,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/dimen_5"
                         android:paddingBottom="@dimen/dimen_5"
-                        android:text="@string/shape"
+                        android:text="@string/type"
                         android:textColor="@color/purple_light"
                         android:textSize="@dimen/dimen_16" />
 

@@ -79,7 +79,17 @@ public class AddToCartListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         holder.supplier_id_tv.setText(list.get(position).getStockNo() + " | " + "ID: " +  list.get(position).getSupplierId());
         holder.name_tv.setText(list.get(position).getShape());
-        holder.item_type_tv.setText(list.get(position).getCarat() + " | " + list.get(position).getColor() + " | " + list.get(position).getClarity());
+        /*holder.item_type_tv.setText(list.get(position).getCarat() + " | " + list.get(position).getColor() + " | " + list.get(position).getClarity());*/
+
+        if (list.get(position).getItem_type().equalsIgnoreCase("gemstone"))
+        {
+            holder.item_type_tv.setText(list.get(position).getCarat() +  context.getString(R.string.ct_gem)+ " | " + list.get(position).getClarity());
+        }
+        else {
+            holder.item_type_tv.setText(list.get(position).getCarat() + " | " + list.get(position).getColor() + " | " + list.get(position).getClarity());
+        }
+
+
 
         /*holder.cut_grade_tv.setText(list.get(position).getCut_grade());
         holder.polish_tv.setText(list.get(position).getPolish());

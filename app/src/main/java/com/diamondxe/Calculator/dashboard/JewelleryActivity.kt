@@ -1,18 +1,22 @@
 package com.dxe.calc.dashboard
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -20,7 +24,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.diamondxe.Activity.HomeScreenActivity
+import com.diamondxe.Adapter.CurrencyListAdapter
+import com.diamondxe.Beans.CountryListModel
+import com.diamondxe.Interface.RecyclerInterface
 import com.diamondxe.R
+import com.diamondxe.Utils.CommonUtility
+import com.diamondxe.Utils.Constant
 import com.diamondxe.databinding.ActivityJewelleryBinding
 import com.dxe.calc.DataBase.MenuDB.PurityDatabase
 import com.dxe.calc.DataBase.QuotationsActivity.QuotationDatabase
@@ -28,6 +40,7 @@ import com.dxe.calc.DataBase.QuotationsActivity.QuotationModelDao
 import com.dxe.calc.DataBase.QuotationsActivity.QuotationModelEntity
 import com.dxe.calc.DataBase.QuotationsActivity.QuotationModelManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,42 +48,78 @@ import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.round
 
 
-class JewelleryActivity : AppCompatActivity() {
+class JewelleryActivity : AppCompatActivity(), RecyclerInterface {
 
     private var isMetalCalculationActive = false
     private var isLabourCalculationActive = false
     private var isSolitaireCalculationActive = false
     private var isSideCalculationActive = false
     private var isColStoneCalculationActive = false
-    var radiobuttonName:String ="Natural Diamond"
-    var finalTotalPrice:String=""
-    var chargeType:String=""
-    var chargeText:String=""
-    var solitaireText:String=""
-    var sideDIAText:String=""
-    var caret:String=""
-    var caretIntent:String=""
+    var radiobuttonName: String = "Natural Diamond"
+    var finalTotalPrice: String = ""
+    var chargeType: String = ""
+    var chargeText: String = ""
+    var solitaireText: String = ""
+    var sideDIAText: String = ""
+    var caret: String = ""
+    var caretIntent: String = ""
     private lateinit var dataModelManager: QuotationModelManager
     private lateinit var database: QuotationDatabase
     private lateinit var dao: QuotationModelDao
     private lateinit var binding: ActivityJewelleryBinding
+    lateinit var currencyListAdapter: CurrencyListAdapter
+    var currencyValue: String = ""
+    var currencyCode: String = ""
+    var currencyRate: String = "1"
+    var selectmetalrate: String = ""
+    var getLabourFromDB: String = ""
+    var getChargesFromDB: String = ""
+    var selectedCurrencyCode: String = ""
 
+    var dbCurrencyValue: String = ""
+    var dbPurityEditValue: String = ""
+    var PurityselectValue: String = ""
+    var selectmetalrateDB: String = ""
+    var priviousCurrency: String = "1"
+    var currentCurrencySelect: String = "1"
+    lateinit var recyclerViewCurrency: RecyclerView
+    var isreceivedFromDB = false
+    var localCurrencyArrayList: ArrayList<CountryListModel> = ArrayList()
+
+    var Metalactualvalue: String = ""
+    var Labouractualvalue: String = ""
+    var Solitairectualvalue: String = ""
+    var Sidealvalue: String = ""
+    var Colactualvalue: String = ""
+    var chargesactualvalue: String = ""
+    var solEdit:String=""
+    var sideEdit:String=""
+    var colEdit:String=""
+
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        binding=ActivityJewelleryBinding.inflate(layoutInflater)
+        binding = ActivityJewelleryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.backButton.setOnClickListener(){
+        binding.backButton.setOnClickListener() {
             onBackPressed()
         }
 
+        binding.solitairerategm.setText("0.0")
+        binding.sidediarategm.setText("0.0")
+        binding.colstonerategm.setText("0.0")
+
         getEditQuotationDetails()
-        binding.menu.setOnClickListener { startActivity(Intent(this, MenuActivity::class.java))
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)}
+        binding.menu.setOnClickListener {
+            startActivity(Intent(this, MenuActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
         binding.solitalerNote.setOnClickListener {
             openBottomSheetDialog(R.string.mainsolitaore_note, "solitaire")
@@ -83,135 +132,179 @@ class JewelleryActivity : AppCompatActivity() {
             openBottomSheetDialog(R.string.otherchargesnote, "charges")
         }
 
-        val radiobuttonNameIntent = intent.getStringExtra("radiobuttonName")?.takeIf { it.isNotBlank() } ?: ""
-        if (radiobuttonNameIntent!="")
-        {
-            if(radiobuttonNameIntent=="Natural Diamond")
-            {
-                radiobuttonName="Natural Diamond"
-                binding.natural.isChecked=true
-                binding.labGrown.isChecked=false
-                binding.natural.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_7E3080)
-                binding.labGrown.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_37083B)
-            }
-            else
-            {
-                radiobuttonName="Lab Grown"
-                binding.natural.isChecked=false
-                binding.labGrown.isChecked=true
-                binding.labGrown.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_7E3080)
-                binding.natural.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_37083B)
+        binding.currencyPriceValue.text = currencyCode
+
+        val radiobuttonNameIntent =
+            intent.getStringExtra("radiobuttonName")?.takeIf { it.isNotBlank() } ?: ""
+        if (radiobuttonNameIntent != "") {
+            if (radiobuttonNameIntent == "Natural Diamond") {
+                radiobuttonName = "Natural Diamond"
+                binding.natural.isChecked = true
+                binding.labGrown.isChecked = false
+                binding.natural.buttonTintList =
+                    ContextCompat.getColorStateList(this, R.color.color_7E3080)
+                binding.labGrown.buttonTintList =
+                    ContextCompat.getColorStateList(this, R.color.color_37083B)
+            } else {
+                radiobuttonName = "Lab Grown"
+                binding.natural.isChecked = false
+                binding.labGrown.isChecked = true
+                binding.labGrown.buttonTintList =
+                    ContextCompat.getColorStateList(this, R.color.color_7E3080)
+                binding.natural.buttonTintList =
+                    ContextCompat.getColorStateList(this, R.color.color_37083B)
             }
         }
-
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.natural -> {
                     val selectedOption = getString(R.string.natural)
-                    binding.natural.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_7E3080)
-                    binding.labGrown.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_37083B)
-                    radiobuttonName="Natural Diamond"
-                    Log.e("RadioGroup", "Selected: $selectedOption")
+                    binding.natural.buttonTintList =
+                        ContextCompat.getColorStateList(this, R.color.color_7E3080)
+                    binding.labGrown.buttonTintList =
+                        ContextCompat.getColorStateList(this, R.color.color_37083B)
+                    radiobuttonName = "Natural Diamond"
                 }
+
                 R.id.lab_grown -> {
                     val selectedOption = getString(R.string.lab_grown)
-                    binding.labGrown.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_7E3080)
-                    binding.natural.buttonTintList= ContextCompat.getColorStateList(this, R.color.color_37083B)
-                    Log.e("RadioGroup", "Selected: $selectedOption")
-                    radiobuttonName="Lab Grown"
+                    binding.labGrown.buttonTintList =
+                        ContextCompat.getColorStateList(this, R.color.color_7E3080)
+                    binding.natural.buttonTintList =
+                        ContextCompat.getColorStateList(this, R.color.color_37083B)
+                    radiobuttonName = "Lab Grown"
                 }
             }
         }
 
-        binding.dataclear.setOnClickListener(){
+        binding.dataclear.setOnClickListener() {
             binding.metalwt.setText("")
-            binding.metalwt.setHint("00.00")
+            binding.metalwt.hint="00.00"
             binding.metalrateop.setText("")
-            binding.metalrateop.setHint("00.00")
+            binding.metalrateop.hint="00.00"
 
             binding.labour.setText("")
-            binding.labour.setHint("00.00")
+            binding.labour.hint="00.00"
             binding.labourop.setText("")
-            binding.labourop.setHint("00.00")
+            binding.labourop.hint="00.00"
 
             binding.solitaire.setText("")
-            binding.solitaire.setHint("00.00")
+            binding.solitaire.hint="00.00"
             binding.solitaireop.setText("")
-            binding.solitaireop.setHint("00.00")
+            binding.solitaireop.hint="00.00"
             binding.solitairerategm.setText("")
-            binding.solitairerategm.setHint("00.00")
+            binding.solitairerategm.hint="00.00"
 
             binding.sidedia.setText("")
-            binding.sidedia.setHint("00.00")
+            binding.sidedia.hint="00.00"
             binding.sidediaop.setText("")
-            binding.sidediaop.setHint("00.00")
+            binding.sidediaop.hint="00.00"
             binding.sidediarategm.setText("")
-            binding.sidediarategm.setHint("00.00")
+            binding.sidediarategm.hint="00.00"
 
 
             binding.colstonewt.setText("")
-            binding.colstonewt.setHint("00.00")
+            binding.colstonewt.hint="00.00"
             binding.colstonerategm.setText("")
-            binding.colstonerategm.setHint("00.00")
+            binding.colstonerategm.hint="00.00"
             binding.colstoneop.setText("")
-            binding.colstoneop.setHint("00.00")
+            binding.colstoneop.hint="00.00"
 
-            binding.totalPrice.setText("00")
+            binding.totalPrice.text="00"
         }
         database = QuotationDatabase.getDatabase(this)
         dao = database.dataModelDao()
         dataModelManager = QuotationModelManager(dao)
 
+        binding.flagImg.setOnClickListener({
+
+            if (isreceivedFromDB) {
+                //getAllSaveData()
+                lifecycleScope.launch {
+                    val quotationModelEntity = getAllSaveData()
+                    priviousCurrency = quotationModelEntity!!.currencyRate
+                    selectmetalrate = quotationModelEntity.metalRate
+                    getLabourFromDB = quotationModelEntity.labourRate
+                    getChargesFromDB = quotationModelEntity.charges
+
+                    Metalactualvalue = quotationModelEntity.metalRate
+                    Labouractualvalue = quotationModelEntity.labourRate
+                    chargesactualvalue = quotationModelEntity.charges
+
+                    Solitairectualvalue = quotationModelEntity.solitaireRate
+                    Sidealvalue = quotationModelEntity.sideRate
+                    Colactualvalue = quotationModelEntity.colStoneRate
+
+
+                }
+            }
+            initiateCurrencyPopupWindow()
+
+        })
         binding.getQuotation.setOnClickListener()
         {
-            Log.e("Enable",",..166....."+binding.getQuotation.isEnabled)
-            if (binding.getQuotation.isEnabled)
-            {
-
+            if (binding.getQuotation.isEnabled) {
                 val intentID = intent.getLongExtra("ID", 0L).takeIf { it != 0L } ?: 0L
-                Log.e("intentID", "169...**********........$intentID")
-
+                if (Metalactualvalue == "") {
+                    Metalactualvalue = binding.metalrategm.text.toString()
+                }
+                if (Labouractualvalue == "") {
+                    Labouractualvalue = binding.labourrategm.text.toString()
+                }
+                if (chargesactualvalue == "") {
+                    chargesactualvalue = binding.charges.text.toString()
+                }
+                if (Solitairectualvalue == "" || solEdit =="1") {
+                    Solitairectualvalue = binding.solitairerategm.text.toString()
+                }
+                if (Sidealvalue == "" || sideEdit =="1") {
+                    Sidealvalue = binding.sidediarategm.text.toString()
+                }
+                if (Colactualvalue == "" || solEdit =="1" ) {
+                    Colactualvalue = binding.colstonerategm.text.toString()
+                }
 
                 val metalwt = binding.metalwt.text.toString()
-                val metalrategm = binding.metalrategm.text.toString()
+                val metalrategm = Metalactualvalue
                 val metalrateop = binding.metalrateop.text.toString()
 
                 val labour = binding.labour.text.toString()
-                val labourrategm = binding.labourrategm.text.toString()
+                val labourrategm = Labouractualvalue
                 val labourop = binding.labourop.text.toString()
 
                 val solitaire = binding.solitaire.text.toString()
-                val solitairerategm = binding.solitairerategm.text.toString()
+                val solitairerategm = Solitairectualvalue
                 val solitaireop = binding.solitaireop.text.toString()
 
                 val sidedia = binding.sidedia.text.toString()
-                val sidediarategm = binding.sidediarategm.text.toString()
+                val sidediarategm = Sidealvalue
                 val sidediaop = binding.sidediaop.text.toString()
 
                 val colstonewt = binding.colstonewt.text.toString()
-                val colstonerategm = binding.colstonerategm.text.toString()
+                val colstonerategm = Colactualvalue
                 val colstoneop = binding.colstoneop.text.toString()
 
-                val charges = binding.charges.text.toString()
+                val charges = chargesactualvalue
                 val tax = binding.tax.text.toString()
                 val totalPrice = finalTotalPrice
 
 
                 val itemName = binding.itemname.text.toString()
                 var RBName = radiobuttonName
-                /*val totalPrice = binding.totalPrice.text.toString()
-                val totalPrice = binding.totalPrice.text.toString()*/
-                Log.e("chargeText",""+chargeText)
-                Log.e("chargeType",""+chargeType)
 
-                Log.e("itemname",""+binding.itemname.text.toString())
-                Log.e("radiobuttonName",""+radiobuttonName)
-                Log.e("radiobuttonName",""+radiobuttonName)
-                Log.e("caret",""+caret)
+                val getCurrencySymbol = CommonUtility.getCurrencySymbol(currencyCode)
                 val formattedDateTime = getCurrentDateTime()
-                Log.e("formattedDateTime",""+formattedDateTime)
-                // println(formattedDateTime)
+
+                /*Log.e("", "================== SAVE DATA CAll =======================================")
+                Log.e("metalrategm", "" + metalrategm)
+                Log.e("labourrategm", "" + labourrategm)
+                Log.e("charges", "" + charges)
+                Log.e("solitairerategm", "" + solitairerategm)
+                Log.e("sidediarategm", "" + sidediarategm)
+                Log.e("colstonerategm", "" + colstonerategm)
+                Log.e("", "=============================================================================")*/
+
                 val dataModel = QuotationModelEntity(
                     metalWeight = binding.metalwt.text.toString(),
                     metalRate = metalrategm,
@@ -232,99 +325,107 @@ class JewelleryActivity : AppCompatActivity() {
                     tax = tax,
                     totalPrice = totalPrice,
                     currentdatetime = formattedDateTime,
-                    caret =caret ,
+                    caret = caret,
                     itemName = itemName,
                     radiobuttonName = radiobuttonName,
                     chargeTxt = chargeText,
                     solitairetxt = solitaireText,
-                    sidediatxt = sideDIAText
-                )
-                saveDataToDatabase(dataModel,intentID!!)
+                    sidediatxt = sideDIAText,
+                    currencyCode = currencyCode,
+                    currencysymbol = getCurrencySymbol,
+                    currencyvalue = currencyValue,
+                    currencyRate = currencyRate)
 
-
-                val intent = Intent(this, GetQuotationActivity::class.java)
-                intent.putExtra("metalwt", metalwt)
-                intent.putExtra("metalrategm", metalrategm)
-                intent.putExtra("metalrateop", metalrateop)
-
-                intent.putExtra("labour", labour)
-                intent.putExtra("labourrategm", labourrategm)
-                intent.putExtra("labourop", labourop)
-
-                intent.putExtra("solitaire", solitaire)
-                intent.putExtra("solitairerategm", solitairerategm)
-                intent.putExtra("solitaireop", solitaireop)
-
-                intent.putExtra("sidedia", sidedia)
-                intent.putExtra("sidediarategm", sidediarategm)
-                intent.putExtra("sidediaop", sidediaop)
-
-                intent.putExtra("colstonewt", colstonewt)
-                intent.putExtra("colstonerategm", colstonerategm)
-                intent.putExtra("colstoneop", colstoneop)
-
-                intent.putExtra("charges", charges)
-                intent.putExtra("tax", tax)
-                intent.putExtra("totalPrice", totalPrice)
-
-                intent.putExtra("date", formattedDateTime)
-                intent.putExtra("itemName", itemName)
-                intent.putExtra("radiobuttonName", radiobuttonName)
-                intent.putExtra("caret", caret)
-                intent.putExtra("chargeText", chargeText)
-                intent.putExtra("solitaireText", solitaireText)
-                intent.putExtra("sideDIAText", sideDIAText)
-
-                startActivity(intent)
+                saveDataToDatabase(dataModel, intentID)
             } else {
-                Toast.makeText(this, "Total price is zero, please update the amounts.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Total price is zero, please update the amounts.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
 
+        val getcurrencyCode =
+            intent.getStringExtra("currencyCode")?.takeIf { it.isNotBlank() } ?: ""
+        val getcurrencyValue =
+            intent.getStringExtra("currencyValue")?.takeIf { it.isNotBlank() } ?: ""
+
+
+        if (Constant.currencyArrayList != null) {
+            for (country in Constant.currencyArrayList) {
+                if (country.currency == getcurrencyCode) {
+                    if (!country.image.equals("", ignoreCase = true)) {
+                        Picasso.with(HomeScreenActivity.context)
+                            .load(country.image)
+                            .into(binding.flagImg)
+                    } else {
+                    }
+                }
+            }
+        }
+
+        if (getcurrencyCode == "" && getcurrencyValue == "") {
+            currencyCode =
+                CommonUtility.getGlobalString(HomeScreenActivity.context, "selected_currency_code")
+            currencyValue =
+                CommonUtility.getGlobalString(HomeScreenActivity.context, "selected_currency_value")
+            Log.e("currency Value...", "If.......$currencyValue...$currencyCode")
+        } else {
+            currencyCode = getcurrencyCode
+            currencyValue = getcurrencyValue
+        }
         val caretIntent = intent.getStringExtra("caret")?.takeIf { it.isNotBlank() } ?: ""
-        val labourrategmIntent= intent.getStringExtra("labourrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+        val labourrategmIntent =
+            intent.getStringExtra("labourrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
         val chargesIntent = intent.getStringExtra("charges")?.takeIf { it.isNotBlank() } ?: "0.0"
         val taxIntent = intent.getStringExtra("tax")?.takeIf { it.isNotBlank() } ?: "0.0"
+
         CoroutineScope(Dispatchers.IO).launch {
+
             val purityDao = PurityDatabase.getDatabase(this@JewelleryActivity).purityDao()
             val laborValueFromDb = purityDao.getValueByType("labor")
+            if (laborValueFromDb != null) {
+                getLabourFromDB = laborValueFromDb
+            }
+
             val chargesValueFromDb = purityDao.getValueByType("charges")
+            if (chargesValueFromDb != null) {
+                getChargesFromDB = chargesValueFromDb
+            }
+
             val taxValueFromDb = purityDao.getValueByType("tax")
             val purityListFromDb = purityDao.getAllPurities()
+
 
             withContext(Dispatchers.Main) {
                 try {
 
-                    if (labourrategmIntent=="0.0")
-                    {
+                    if (labourrategmIntent == "0.0") {
                         binding.labourrategm.setText(laborValueFromDb)
-                    }
-                    else{
+                    } else {
                         binding.labourrategm.setText(labourrategmIntent)
                     }
 
-                    if (chargesIntent=="0.0")
-                    {
+                    if (chargesIntent == "0.0") {
                         binding.charges.setText(chargesValueFromDb)
-                    }
-                    else{
+                    } else {
                         binding.charges.setText(chargesIntent)
                     }
 
-                    if (taxIntent=="0.0")
-                    {
+                    if (taxIntent == "0.0") {
                         binding.tax.setText(taxValueFromDb)
-                    }
-                    else{
+                    } else {
                         binding.tax.setText(taxIntent)
                     }
                     val purityTypes: List<String> = if (purityListFromDb.isNotEmpty()) {
                         purityListFromDb.map { it.purityType }.also {
                             Log.e("purityTypes", "Database values: $it")
+
                         }
                     } else {
-                        listOf("22K", "18K", "14K", "9K", "Other").also {
+                        listOf("18K","22K", "14K", "9K", "Other").also {
                             Log.e("purityTypes", "No purities in DB, using predefined values: $it")
                         }
                     }
@@ -339,13 +440,19 @@ class JewelleryActivity : AppCompatActivity() {
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     binding.spinner.adapter = adapter
+
                     filteredPurityType?.let {
                         val defaultIndex = purityTypes.indexOf(it)
                         if (defaultIndex != -1) {
                             binding.spinner.setSelection(defaultIndex)
                             Log.e("SpinnerSelection", "Set default selection to: $it")
+                            dbPurityEditValue = it
+
                         } else {
-                            Log.e("SpinnerSelection", "Caret intent value not found in purity types: $caretIntent")
+                            Log.e(
+                                "SpinnerSelection",
+                                "Caret intent value not found in purity types: $caretIntent"
+                            )
                         }
                     }
                 } catch (e: Exception) {
@@ -353,30 +460,63 @@ class JewelleryActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.spinner.setOnTouchListener { _, _ ->
+            isreceivedFromDB = false
+            false
+        }
 
-        binding.spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (binding.spinner.adapter?.count == 0) {
                     Log.e("SpinnerSelection", "No items in the spinner.")
                     return
                 }
 
                 val selectedPurityType = parent?.getItemAtPosition(position).toString()
+                PurityselectValue = selectedPurityType
 
                 CoroutineScope(Dispatchers.IO).launch {
                     val purityDao = PurityDatabase.getDatabase(this@JewelleryActivity).purityDao()
                     val purityListFromDb = purityDao.getAllPurities()
                     val purityMap = purityListFromDb.associate { it.purityType to it.purityValue }
-
                     val selectedPurityValue = purityMap[selectedPurityType]
+
                     caret = selectedPurityType
                     withContext(Dispatchers.Main) {
                         try {
                             selectedPurityValue?.let {
-                                binding.metalrategm.setText(it.toString())
+                                if (isreceivedFromDB) {
+                                    lifecycleScope.launch {
+                                        val quotationModelEntity = getAllSaveData()
+                                        selectmetalrate =
+                                            quotationModelEntity!!.metalRate.toString()
+                                        getLabourFromDB = quotationModelEntity.labourRate.toString()
+                                        selectmetalrateDB =
+                                            quotationModelEntity.metalRate.toString()
+                                        priviousCurrency = quotationModelEntity.currencyRate
+                                        getChargesFromDB = quotationModelEntity.charges
+                                    }
+
+                                } else {
+                                    val finalvalue = calculateMetalRateFinalValue(
+                                        priviousCurrency.toDouble(),
+                                        currentCurrencySelect.toDouble(),
+                                        it.toDouble()
+                                    )
+
+                                    val FinalValueCharges = String.format("%.2f", finalvalue)
+                                    binding.metalrategm.setText(FinalValueCharges)
+
+                                }
+
+
                             } ?: run {
                                 binding.metalrategm.setText("0.0")
-                                Log.e("SpinnerSelection", "Purity value not found for type: $selectedPurityType")
                             }
                             calculateMetalOutput()
                         } catch (e: Exception) {
@@ -388,10 +528,54 @@ class JewelleryActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-        })
+        }
 
         setupListeners()
+    }
 
+    private var mDropdown: PopupWindow? = null
+    var mInflater: LayoutInflater? = null
+
+    // Button pop;
+    private fun initiateCurrencyPopupWindow(): PopupWindow {
+        try {
+
+            if (mDropdown != null && mDropdown!!.isShowing()) {
+                mDropdown!!.dismiss()
+            }
+            mInflater =
+                applicationContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout: View = mInflater!!.inflate(R.layout.custom_menu_currency, null)
+
+            recyclerViewCurrency =
+                layout.findViewById<RecyclerView>(R.id.recycler_view_currency)
+            val layoutManager = LinearLayoutManager(HomeScreenActivity.context)
+            recyclerViewCurrency.layoutManager = layoutManager
+
+            updateLocalCurrencyList()
+
+            val fixedWidth: Int = dpToPx(200) // Width in dp
+            mDropdown = PopupWindow(layout, fixedWidth, FrameLayout.LayoutParams.WRAP_CONTENT, true)
+            if (binding.flagImg != null) {
+                mDropdown!!.showAsDropDown(binding.flagImg, 5, -40)
+                //dimOverlay.visibility = View.VISIBLE
+            } else {
+                Log.e("PopupWindow", "flag_img is null")
+            }
+
+            mDropdown!!.setOnDismissListener(PopupWindow.OnDismissListener {
+                //dimOverlay.visibility = View.GONE
+            })
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return mDropdown!!
+    }
+
+    fun dpToPx(dp: Int): Int {
+        val density = HomeScreenActivity.context.resources.displayMetrics.density
+        return Math.round(dp * density)
     }
 
     override fun onBackPressed() {
@@ -407,17 +591,39 @@ class JewelleryActivity : AppCompatActivity() {
         return currentDateTime.format(formatter)
     }
 
-    private fun saveDataToDatabase(dataModel: QuotationModelEntity,DataID:Long) {
-        dataModelManager = QuotationModelManager(dao)
+    suspend fun getAllSaveData(): QuotationModelEntity? {
+        return withContext(Dispatchers.IO) {
+            var existingDataModel: QuotationModelEntity? = null
 
+            if (intent?.extras != null) {
+                val intentID = intent.getLongExtra("ID", 0L).takeIf { it != 0L } ?: 0L
+
+                if (intentID != 0L) {
+                    val dataModelCheck = dataModelManager.getDataModelById(intentID)
+                    existingDataModel =
+                        dataModelManager.getDataModelByItemName(dataModelCheck!!.id.toString())
+
+                    if (existingDataModel != null) {
+                        dbCurrencyValue = existingDataModel.currencyCode
+                    }
+                } else {
+                }
+            } else {
+            }
+            existingDataModel
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveDataToDatabase(dataModel: QuotationModelEntity, DataID: Long) {
+        dataModelManager = QuotationModelManager(dao)
+        var savedDataID: Long = 0
         lifecycleScope.launch {
-            if(DataID!=null)
-            {
+            if (DataID != null) {
                 val dataModelCheck = dataModelManager.getDataModelById(DataID!!)
                 if (dataModelCheck != null) {
-                    Log.e("DataModel", "Found data model with ID: ${dataModelCheck.itemName}")
-                    var existingDataModel = dataModelManager.getDataModelByItemName(dataModelCheck.id.toString())
-
+                    val existingDataModel =
+                        dataModelManager.getDataModelByItemName(dataModelCheck.id.toString())
                     existingDataModel!!.metalWeight = dataModel.metalWeight
                     existingDataModel.metalRate = dataModel.metalRate
                     existingDataModel.metalOutput = dataModel.metalOutput
@@ -442,26 +648,146 @@ class JewelleryActivity : AppCompatActivity() {
                     existingDataModel.solitairetxt = dataModel.solitairetxt
                     existingDataModel.sidediatxt = dataModel.sidediatxt
                     existingDataModel.currentdatetime = dataModel.currentdatetime
+                    existingDataModel.currencyCode = dataModel.currencyCode
+                    existingDataModel.currencyRate = dataModel.currencyRate
+                    existingDataModel.currencyvalue = dataModel.currencyvalue
+                    existingDataModel.currencysymbol = dataModel.currencysymbol
+                    existingDataModel.itemName = dataModel.itemName
                     dataModelManager.updateDataModel(existingDataModel)
+                    savedDataID = existingDataModel.id
+                    passDataToIntent(savedDataID)
 
                 } else {
-                    Log.e("DataModel", "No data model found with ID: check else ")
 
                     dataModelManager.addDataModel(dataModel)
+                    var savedDataIDDB = dataModelManager.addDataModel(dataModel)
+                    savedDataID = savedDataIDDB
+                    passDataToIntent(savedDataID)
                 }
 
-            }
-            else
-            {
-                Log.e("DataModel", "No data model found with ID: Else ")
-                dataModelManager.addDataModel(dataModel)
+            } else {
+                var savedDataIDDB = dataModelManager.addDataModel(dataModel)
+                passDataToIntent(savedDataIDDB)
             }
 
         }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun passDataToIntent(savedDataID: Long) {
+
+        if (Metalactualvalue == "") {
+            Metalactualvalue = binding.metalrategm.text.toString()
+        }
+        if (Labouractualvalue == "") {
+            Labouractualvalue = binding.labourrategm.text.toString()
+        }
+        if (Solitairectualvalue == "" || solEdit =="1") {
+            Solitairectualvalue = binding.solitairerategm.text.toString()
+        }
+        if (Sidealvalue == "" || sideEdit=="1") {
+            Sidealvalue = binding.sidediarategm.text.toString()
+        }
+        if (Colactualvalue == ""|| colEdit=="1") {
+            Colactualvalue = binding.colstonerategm.text.toString()
+        }
+        if (chargesactualvalue == "") {
+            chargesactualvalue = binding.charges.text.toString()
+        }
+
+        val metalwt = binding.metalwt.text.toString()
+        val metalrategm = Metalactualvalue
+        val metalrateop = binding.metalrateop.text.toString()
+
+        val labour = binding.labour.text.toString()
+        val labourrategm = Labouractualvalue
+        val labourop = binding.labourop.text.toString()
+
+        val solitaire = binding.solitaire.text.toString()
+        val solitairerategm = Solitairectualvalue
+        val solitaireop = binding.solitaireop.text.toString()
+
+        val sidedia = binding.sidedia.text.toString()
+        val sidediarategm = Sidealvalue
+        val sidediaop = binding.sidediaop.text.toString()
+
+        val colstonewt = binding.colstonewt.text.toString()
+        val colstonerategm = Colactualvalue
+        val colstoneop = binding.colstoneop.text.toString()
+
+        val charges = chargesactualvalue
+        val tax = binding.tax.text.toString()
+        val totalPrice = finalTotalPrice
+        val formattedDateTime = getCurrentDateTime()
+        val itemName = binding.itemname.text.toString()
+
+        val intent = Intent(this, GetQuotationActivity::class.java).apply {
+            putExtra("metalwt", metalwt)
+            putExtra("ID", savedDataID)
+            putExtra("metalrategm", metalrategm)
+            putExtra("metalrateop", metalrateop)
+            putExtra("labour", labour)
+            putExtra("labourrategm", labourrategm)
+            putExtra("labourop", labourop)
+            putExtra("solitaire", solitaire)
+            putExtra("solitairerategm", solitairerategm)
+            putExtra("solitaireop", solitaireop)
+            putExtra("sidedia", sidedia)
+            putExtra("sidediarategm", sidediarategm)
+            putExtra("sidediaop", sidediaop)
+            putExtra("colstonewt", colstonewt)
+            putExtra("colstonerategm", colstonerategm)
+            putExtra("colstoneop", colstoneop)
+            putExtra("charges", charges)
+            putExtra("tax", tax)
+            putExtra("totalPrice", totalPrice)
+            putExtra("date", formattedDateTime)
+            putExtra("itemName", itemName)
+            putExtra("radiobuttonName", radiobuttonName)
+            putExtra("caret", caret)
+            putExtra("chargeText", chargeText)
+            putExtra("solitaireText", solitaireText)
+            putExtra("sideDIAText", sideDIAText)
+            putExtra("currencyCode", currencyCode)
+            putExtra("currencyValue", currencyValue)
+            putExtra("currencyRate", currencyRate)
+
+        }
+        solEdit="0"
+        sideEdit="0"
+        colEdit="0"
+        startActivity(intent)
     }
 
     fun setupListeners() {
 
+
+
+        binding.solitairerategm.setOnFocusChangeListener{v,hasFocus ->
+            if (hasFocus) {
+                solEdit="1"
+                println("Course is focused.")
+            } else {
+                println("Course is not focused.")
+            }
+        }
+        binding.sidediarategm.setOnFocusChangeListener{v,hasFocus ->
+            if (hasFocus) {
+                sideEdit="1"
+                println("Course is focused.")
+            } else {
+                println("Course is not focused.")
+            }
+        }
+        binding.colstonerategm.setOnFocusChangeListener{v,hasFocus ->
+            if (hasFocus) {
+                colEdit="1"
+                println("Course is focused.")
+            } else {
+                println("Course is not focused.")
+            }
+        }
         //Metal wt
         binding.metalwt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -473,10 +799,10 @@ class JewelleryActivity : AppCompatActivity() {
                     isMetalCalculationActive = true
                     val input = s.toString()
 
-                   /* if (input != binding.labour.text.toString()) {
-                        binding.labour.setText(input)
-                        Log.e("metalwt", "...." + input)
-                    }*/
+                    /* if (input != binding.labour.text.toString()) {
+                         binding.labour.setText(input)
+                         Log.e("metalwt", "...." + input)
+                     }*/
                     calculateMetalOutput()
                     isMetalCalculationActive = false
                 }
@@ -547,8 +873,15 @@ class JewelleryActivity : AppCompatActivity() {
                 calculateSolitaireOutput()
             }
         }
+
         binding.solitairerategm.doAfterTextChanged {
+
             if (!isSolitaireCalculationActive) {
+                Log.e("", "Call...........921")
+
+                /*if (Solitairectualvalue != "") {
+                    Solitairectualvalue = binding.solitairerategm.text.toString()
+                }*/
                 calculateSolitaireOutput()
             }
         }
@@ -606,7 +939,7 @@ class JewelleryActivity : AppCompatActivity() {
 
     private fun openBottomSheetDialog(headerTextResId: Int, type: String) {
         Log.e("Bottom sheet", "Open....22..........")
-        val dialog = BottomSheetDialog(this,R.style.DialogStyle)
+        val dialog = BottomSheetDialog(this, R.style.DialogStyle)
 
         val view = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
         val headertext = view.findViewById<TextView>(R.id.headertext)
@@ -618,9 +951,11 @@ class JewelleryActivity : AppCompatActivity() {
             "solitaire" -> {
                 bottomEdit.hint = "Enter Solitaire Note"
             }
+
             "sidedia" -> {
                 bottomEdit.hint = "Enter Side DIA Note"
             }
+
             "charges" -> {
                 bottomEdit.hint = "Enter Other Charges Note"
             }
@@ -641,22 +976,19 @@ class JewelleryActivity : AppCompatActivity() {
         val btnSave = view.findViewById<TextView>(R.id.btn_done)
         btnSave.setOnClickListener {
 
-            Log.e("type",""+type)
-            Log.e("bottomEdit",""+bottomEdit)
+            Log.e("type", "" + type)
+            Log.e("bottomEdit", "" + bottomEdit)
 
-            if(type=="charges")
-            {
-                chargeText=bottomEdit.text.toString()
-                chargeType=type
+            if (type == "charges") {
+                chargeText = bottomEdit.text.toString()
+                chargeType = type
             }
-             if(type=="solitaire")
-            {
-                solitaireText=bottomEdit.text.toString()
+            if (type == "solitaire") {
+                solitaireText = bottomEdit.text.toString()
 
             }
-             if(type=="sidedia")
-            {
-                sideDIAText=bottomEdit.text.toString()
+            if (type == "sidedia") {
+                sideDIAText = bottomEdit.text.toString()
             }
 
             dialog.dismiss()
@@ -668,22 +1000,17 @@ class JewelleryActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
-
     private val decimalFormat = DecimalFormat("#.00")
 
     private fun calculateMetalOutput() {
         val weight = binding.metalwt.text.toString().toDoubleOrNull() ?: 0.0
         val rate = binding.metalrategm.text.toString().toDoubleOrNull() ?: 0.0
         val output = weight * rate
-        Log.e("metal o/p","....   "+decimalFormat.format(output))
+        //Log.e("metal o/p", "....   " + decimalFormat.format(output))
         val formattedOutput = if (output == 0.0) "00" else decimalFormat.format(output)
-        if(formattedOutput=="00"){
-            binding.metalrateop.hint="00"
-        }
-        else{
-            //val roundedOutput = Math.round(formattedOutput.toDouble())
-            //val roundedOutput = Math.ceil(output).toInt()
+        if (formattedOutput == "00") {
+            binding.metalrateop.hint = "00"
+        } else {
             val integerPart = output.toInt()
             val fractionalPart = output - integerPart
             val roundedOutput = if (fractionalPart > 0.50) {
@@ -691,12 +1018,8 @@ class JewelleryActivity : AppCompatActivity() {
             } else {
                 integerPart
             }
-
-            // Set the rounded value as text in the TextView
             binding.metalrateop.setText(roundedOutput.toString())
-            //binding.metalrateop.setText(formattedOutput)
         }
-        //binding.metalrateop.setText(formattedOutput)
     }
 
     private fun reverseCalculateMetal() {
@@ -717,11 +1040,9 @@ class JewelleryActivity : AppCompatActivity() {
         val rate = binding.labourrategm.text.toString().toDoubleOrNull() ?: 0.0
         val output = weight * rate
         val formattedOutput = if (output == 0.0) "00" else decimalFormat.format(output)
-        Log.e("Labour..", "calculateLabourOutput: $output")
-        if(formattedOutput=="00"){
-            binding.labourop.hint="00"
-        }
-        else{
+        if (formattedOutput == "00") {
+            binding.labourop.hint = "00"
+        } else {
             val integerPart = output.toInt()
             val fractionalPart = output - integerPart
             val roundedOutput = if (fractionalPart > 0.50) {
@@ -780,7 +1101,7 @@ class JewelleryActivity : AppCompatActivity() {
         val weight = binding.solitaire.text.toString().toDoubleOrNull() ?: 0.0
         if (weight != 0.0) {
             val rate = output / weight
-            Log.e("Sol..........",".........."+decimalFormat.format(rate))
+            Log.e("Sol..........", ".........." + decimalFormat.format(rate))
             binding.solitairerategm.setText(decimalFormat.format(rate))
         }
 
@@ -824,7 +1145,6 @@ class JewelleryActivity : AppCompatActivity() {
         isSideCalculationActive = false
     }
 
-
     //Col Stone wt.
     private fun calculateColStoneOutput() {
         if (isColStoneCalculationActive) return
@@ -861,6 +1181,7 @@ class JewelleryActivity : AppCompatActivity() {
         isColStoneCalculationActive = false
     }
 
+    @SuppressLint("SetTextI18n")
     private fun calculateTotalPrice() {
         val metalOutput = binding.metalrateop.text.toString().toDoubleOrNull() ?: 0.0
         val solitaireOutput = binding.solitaireop.text.toString().toDoubleOrNull() ?: 0.0
@@ -868,16 +1189,16 @@ class JewelleryActivity : AppCompatActivity() {
         val sideOutput = binding.sidediaop.text.toString().toDoubleOrNull() ?: 0.0
         val colStoneOutput = binding.colstoneop.text.toString().toDoubleOrNull() ?: 0.0
 
-        var totalPrice = metalOutput + solitaireOutput + sideOutput + colStoneOutput+labuorOutput
+        var totalPrice = metalOutput + solitaireOutput + sideOutput + colStoneOutput + labuorOutput
         var chargeAmount = binding.charges.text.toString().toDoubleOrNull() ?: 0.0
         totalPrice += chargeAmount
 
         val taxPercentage = binding.tax.text.toString().toDoubleOrNull() ?: 0.0
         val taxAmount = (totalPrice * taxPercentage) / 100
         totalPrice += taxAmount
+
         totalPrice = Math.round(totalPrice).toDouble()
 
-        Log.e("totalPrice","341......"+totalPrice)
 
         val integerPart = totalPrice.toInt()
         val fractionalPart = totalPrice - integerPart
@@ -886,10 +1207,10 @@ class JewelleryActivity : AppCompatActivity() {
         } else {
             integerPart
         }
-        finalTotalPrice=roundedOutput.toString()
-        binding.totalPrice.text =formatAmountWithCommas(roundedOutput.toString())
-
-
+        finalTotalPrice = roundedOutput.toString()
+        val getCurrencySymbol = CommonUtility.getCurrencySymbol(currencyCode)
+        binding.totalPrice.text ="$getCurrencySymbol ${formatAmountWithCommas(finalTotalPrice)}"
+        binding.currencyPriceValue.text = "($currencyCode)"
         val isEnabled = totalPrice > 0
         binding.getQuotation.isEnabled = isEnabled
 
@@ -907,80 +1228,201 @@ class JewelleryActivity : AppCompatActivity() {
         return formatter.format(parsedAmount)
     }
 
-    fun getEditQuotationDetails()
-    {
-        if (intent?.extras != null)
-        {
-            Log.e("Intent..","Cal.l.........@@@@@@@@@@............")
-            val metalwt = intent.getStringExtra("metalwt")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val metalrategm = intent.getStringExtra("metalrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val metalrateop = intent.getStringExtra("metalrateop")?.takeIf { it.isNotBlank() } ?: "0.0"
+    fun getEditQuotationDetails() {
+        if (intent?.extras != null) {
 
+            isreceivedFromDB = true
+            val metalwt = intent.getStringExtra("metalwt")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val metalrategm =
+                intent.getStringExtra("metalrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val metalrateop =
+                intent.getStringExtra("metalrateop")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val currencyCode =
+                intent.getStringExtra("currencyCode")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val labour = intent.getStringExtra("labour")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val labourrategm =
+                intent.getStringExtra("labourrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val labourop = intent.getStringExtra("labourop")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val solitaire = intent.getStringExtra("solitaire")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val solitairerategm =
+                intent.getStringExtra("solitairerategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val solitaireop =
+                intent.getStringExtra("solitaireop")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val sidedia = intent.getStringExtra("sidedia")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val sidediarategm =
+                intent.getStringExtra("sidediarategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val sidediaop = intent.getStringExtra("sidediaop")?.takeIf { it.isNotBlank() } ?: "0.0"
+
+            val colstonewt =
+                intent.getStringExtra("colstonewt")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val colstonerategm =
+                intent.getStringExtra("colstonerategm")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val colstoneop =
+                intent.getStringExtra("colstoneop")?.takeIf { it.isNotBlank() } ?: "0.0"
+            val tax = intent.getStringExtra("tax")?.takeIf { it.isNotBlank() } ?: "0"
+            val itemName = intent.getStringExtra("itemName")?.takeIf { it.isNotBlank() } ?: ""
+            val caret = intent.getStringExtra("caret")?.takeIf { it.isNotBlank() } ?: ""
+
+            selectedCurrencyCode = currencyCode
             binding.metalwt.setText(metalwt)
             binding.metalrategm.setText(metalrategm)
             binding.metalrateop.setText(metalrateop)
-
-            val labour = intent.getStringExtra("labour")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val labourrategm = intent.getStringExtra("labourrategm")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val labourop = intent.getStringExtra("labourop")?.takeIf { it.isNotBlank() } ?: "0.0"
-
             binding.labour.setText(labour)
             binding.labourrategm.setText(labourrategm)
             binding.labourop.setText(labourop)
-
-            val solitaire = intent.getStringExtra("solitaire")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val solitairerategm = intent.getStringExtra("solitairerategm")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val solitaireop = intent.getStringExtra("solitaireop")?.takeIf { it.isNotBlank() } ?: "0.0"
-
+            selectmetalrate = metalrategm
+            getLabourFromDB = labourrategm
             binding.solitaire.setText(solitaire)
             binding.solitairerategm.setText(solitairerategm)
             binding.solitaireop.setText(solitaireop)
-
-            val sidedia = intent.getStringExtra("sidedia")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val sidediarategm = intent.getStringExtra("sidediarategm")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val sidediaop = intent.getStringExtra("sidediaop")?.takeIf { it.isNotBlank() } ?: "0.0"
-
             binding.sidedia.setText(sidedia)
             binding.sidediarategm.setText(sidediarategm)
             binding.sidediaop.setText(sidediaop)
-
-            val colstonewt = intent.getStringExtra("colstonewt")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val colstonerategm = intent.getStringExtra("colstonerategm")?.takeIf { it.isNotBlank() } ?: "0.0"
-            val colstoneop = intent.getStringExtra("colstoneop")?.takeIf { it.isNotBlank() } ?: "0.0"
-
             binding.colstonewt.setText(colstonewt)
             binding.colstonerategm.setText(colstonerategm)
             binding.colstoneop.setText(colstoneop)
-
-            val charges = intent.getStringExtra("charges")?.takeIf { it.isNotBlank() } ?: "0"
-            val tax = intent.getStringExtra("tax")?.takeIf { it.isNotBlank() } ?: "0"
-            var totalPrice = intent.getStringExtra("totalPrice")?.takeIf { it.isNotBlank() } ?: "0"
-
-            /*binding.charges.setText(charges)
-            binding.tax.setText(tax)*/
-            binding.totalPrice.setText(tax)
-
-            val itemName = intent.getStringExtra("itemName")?.takeIf { it.isNotBlank() } ?: ""
-            val radiobuttonName = intent.getStringExtra("radiobuttonName")?.takeIf { it.isNotBlank() } ?: ""
-            val caret = intent.getStringExtra("caret")?.takeIf { it.isNotBlank() } ?: ""
-            val chargeText = intent.getStringExtra("chargeText")?.takeIf { it.isNotBlank() } ?: ""
-
+            binding.totalPrice.text = tax
             binding.itemname.setText(itemName)
 
-            val solitaireText = intent.getStringExtra("solitaireText")?.takeIf { it.isNotBlank() } ?: ""
-            val sideDIAText = intent.getStringExtra("sideDIAText")?.takeIf { it.isNotBlank() } ?: ""
+            caretIntent = caret
 
-            caretIntent=caret
-            Log.e("radiobuttonName..","Cal.l.@@@@@@....  "+radiobuttonName)
-            Log.e("caret..","Cal.l.........@.  "+caret)
-            Log.e("chargeText..","Cal.@@@@@............  "+chargeText)
-            Log.e("solitaireText..","Call.@@@@@@.......  "+solitaireText)
-            Log.e("sideDIAText..","Call.@@@@@@.......  "+sideDIAText)
-
+        } else {
         }
-        else
-        {
-            Log.e("Intent..","Cal.l..Nulll.......@@@@@@@@@@............")
+    }
+
+
+    fun calculateMetalRateFinalValue(
+        previousCurrency: Double,
+        currencyRate: Double,
+        selectMetalRate: Double
+    ): Double {
+        val estimateValue = previousCurrency / currencyRate
+        //Log.e("estimateValue", ".......$estimateValue")
+        val metalRateFinalValue = estimateValue * selectMetalRate
+
+        return metalRateFinalValue
+    }
+
+    fun updateLocalCurrencyList() {
+        localCurrencyArrayList.clear()
+        for (i in Constant.currencyArrayList.indices) {
+            if (Constant.currencyArrayList[i].currency != selectedCurrencyCode) {
+                localCurrencyArrayList.add(Constant.currencyArrayList[i])
+            } else {
+            }
+        }
+        currencyListAdapter = CurrencyListAdapter(localCurrencyArrayList, this, this)
+        recyclerViewCurrency.adapter = currencyListAdapter
+        currencyListAdapter.notifyDataSetChanged()
+    }
+
+    fun currencyConverter(value: String, currencyCode: String, subTotalAmount: String): String {
+        val currencyValue = value.toDouble()
+        val subTotal = subTotalAmount.toDouble()
+
+        val valueType = if (currencyCode.equals("INR", ignoreCase = true)) {
+            currencyValue
+        } else {
+            currencyValue
+        }
+        val finalAmount = subTotal / valueType
+        //val subTotalFormat = String.format("%.2f", finalAmount)
+        val roundedAmount = round(finalAmount)
+        return roundedAmount.toInt().toString()
+    }
+
+    override fun itemClick(position: Int, action: String?) {
+
+        if (action.equals("countryType", ignoreCase = true)) {
+            val model = localCurrencyArrayList[position]
+            currencyValue = model.value
+            currencyCode = model.currency
+            currencyRate = model.currencyRate
+            selectedCurrencyCode = model.currency
+            currentCurrencySelect = model.currencyRate.toString()
+           /* Log.e(
+                "************",
+                "================== FLAG CHANGE DATA BEFORE =============================================="
+            )
+            Log.e("priviousCurrency", "priviousCurrency   ...." + priviousCurrency.toDouble())
+            Log.e(
+                "currentCurrencySelect",
+                "currentCurrencySelect  ...." + currentCurrencySelect.toDouble()
+            )
+            Log.e("selectmetalrate", "Metalactualvalue  ...." + Metalactualvalue.toDouble())
+            Log.e("getChargesFromDB ..", "getChargesFromDB  ...." + getChargesFromDB)
+            Log.e("Labouractualvalue ..", "Labouractualvalue  ...." + Labouractualvalue)
+            Log.e("chargesactualvalue ..", "chargesactualvalue   ...." + chargesactualvalue)
+            Log.e("Solitairectualvalue ..", "Solitairectualvalue  ...." + Solitairectualvalue)
+            Log.e("Sidealvalue ..", "Sidealvalue  ...." + Sidealvalue)
+            Log.e("Colactualvalue ..", "Colactualvalue  ...." + Colactualvalue)
+
+
+            Log.e(
+                "************",
+                "=================================================================="
+            )*/
+
+            val finalvalueMetal = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                Metalactualvalue.toDouble()
+            )
+            Metalactualvalue = finalvalueMetal.toString()
+
+            val finalvalueLabour = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                Labouractualvalue.toDouble()
+            )
+            Labouractualvalue = finalvalueLabour.toString()
+
+            val finalvalueCharges = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                chargesactualvalue.toDouble()
+            )
+
+            chargesactualvalue = finalvalueCharges.toString()
+
+            val finalvalueSolitaire = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                Solitairectualvalue.toDouble()
+            )
+            Solitairectualvalue = finalvalueSolitaire.toString()
+            val finalvalueSide = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                Sidealvalue.toDouble()
+            )
+            Sidealvalue = finalvalueSide.toString()
+            val finalvalueCol = calculateMetalRateFinalValue(
+                priviousCurrency.toDouble(), currentCurrencySelect.toDouble(),
+                Colactualvalue.toDouble()
+            )
+            Colactualvalue = finalvalueCol.toString()
+            val FinalValueMetal = String.format("%.2f", finalvalueMetal)
+            val FinalValueLabour = String.format("%.2f", finalvalueLabour)
+            val FinalValueCharges = String.format("%.2f", finalvalueCharges)
+            val FinalValueSolitaire = String.format("%.2f", finalvalueSolitaire)
+            val FinalValueSideDIA = String.format("%.2f", finalvalueSide)
+            val FinalValueCOL = String.format("%.2f", finalvalueCol)
+            binding.metalrategm.setText(FinalValueMetal)
+            binding.labourrategm.setText(FinalValueLabour)
+            binding.charges.setText(FinalValueCharges)
+            binding.solitairerategm.setText(FinalValueSolitaire)
+            binding.sidediarategm.setText(FinalValueSideDIA)
+            binding.colstonerategm.setText(FinalValueCOL)
+
+            if (!model.image.equals("", ignoreCase = true)) {
+                Picasso.with(HomeScreenActivity.context)
+                    .load(model.image)
+                    .into(binding.flagImg)
+            }
+            if (mDropdown != null && mDropdown!!.isShowing) {
+                mDropdown!!.dismiss()
+            } else {
+                Log.e("PopupWindow", "mDropdown is null or not showing")
+            }
+            calculateTotalPrice()
+            updateLocalCurrencyList()
         }
     }
 }
+

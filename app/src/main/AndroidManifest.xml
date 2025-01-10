@@ -45,7 +45,7 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.Gemstones.GemStoneDetails"
+            android:name=".Activity.NovaaraFrom.NovaaraFromActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.Gemstones.GemSearchResultActivity"
@@ -105,7 +105,7 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:node="replace" />
         <activity
-            android:name=".Activity.DXELuex.DXELuexRegisterActivity"
+            android:name=".Activity.DXELuex.DXELuxeRegisterActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"

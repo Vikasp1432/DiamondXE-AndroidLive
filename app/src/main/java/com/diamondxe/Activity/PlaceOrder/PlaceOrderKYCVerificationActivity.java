@@ -51,7 +51,7 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
     private ImageView back_img, shipping_img, kyc_img, payment_img, drop_arrow_img, other_tax_info_img, diamond_tax_info_img,document_drop_down_img;
     private CardView  shipping_card_view, kyc_card_view, payment_card_view;
     private TextView  continue_tv, kyc_verified_lbl,kyc_verified_lbl1, total_amount_tv, kyc_document_resubmit,
-            final_amount_tv1,shipping_and_handling_tv,orderitemprice, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
+            final_amount_tv1,shipping_and_handling_tv,orderitemprice,gemstone_txt_gst_perc_tv, platform_fees_tv, total_charges_tv, other_taxes_tv, diamond_taxes_tv, total_taxes_tv,
             sub_total_tv, bank_charges_tv, final_amount_tv, others_txt_gst_perc_tv, diamond_txt_gst_perc_tv;
     private RelativeLayout shipping_rel, kyc_rel, payment_rel, viewpager_layout, rel_other_tax, rel_diamond_tax;
     private LinearLayout address_main_lin, kyc_verification_main_lin, view_order_summary_details_lin, kyc_document_layout_lin, open_document_lin;
@@ -89,10 +89,23 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
             orderSgst = "", orderSgstPerc = "", orderIgst = "", orderIgstPerc = "", orderDiscountPerc = "", orderTax = "", orderSubTotalWithTax = "", orderShippingCharge = "", orderPlatformFee = "",
             orderTotalCharge = "", orderTotalChargeTax = "", orderTotalChargeWithTax = "", orderTotalTaxes = "", orderTotalAmount = "", orderTaxPerOnCharges = "", orderFinalAmount = "", orderBankCharge = "", orderBankChargePerc = "";
 
+    RelativeLayout gemstone_rv, diamond_rv;
+    TextView gemstone_tv, gemstone_tv_price;
+    LinearLayout tax_dialog_lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order_kycverification);
+
+        tax_dialog_lv=findViewById(R.id.tax_dialog_lv);
+        diamond_rv = findViewById(R.id.diamond_rv);
+        gemstone_rv = findViewById(R.id.gemstone_rv);
+        gemstone_tv = findViewById(R.id.gemstone_tv);
+        gemstone_tv_price = findViewById(R.id.gemstone_tv_price);
+        orderitemprice=findViewById(R.id.orderitemprice);
+        gemstone_txt_gst_perc_tv=findViewById(R.id.gemstone_txt_gst_perc_tv);
+       // Toast.makeText(this,"PlaceOrder...@@@...",Toast.LENGTH_SHORT).show();
 
         context = activity = this;
 
@@ -249,11 +262,13 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
         else if(id == R.id.rel_diamond_tax)
         {
             Utils.hideKeyboard(activity);
-            diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+           // diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    tax_dialog_lv.setVisibility(View.GONE);
+                    //diamond_txt_gst_perc_tv.setVisibility(View.GONE);
                 }
             }, 2000);
         }
@@ -639,6 +654,64 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                         orderBankCharge = CommonUtility.checkString(jsonObjectData.optString("bank_charge"));
                         orderBankChargePerc = CommonUtility.checkString(jsonObjectData.optString("bank_charge_perc"));
 
+
+                        String getCurrencySymbol1 = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                        JSONObject priceBreakup = jsonObject.optJSONObject("price_breakup");
+                        if (priceBreakup != null) {
+
+                            JSONObject subtotal = priceBreakup.optJSONObject("subtotal");
+                            if (subtotal != null) {
+                                if (subtotal.has("gemstone")) {
+                                    int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                    System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                    gemstone_tv_price.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    gemstone_tv_price.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                } else {
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                    gemstone_rv.setVisibility(View.GONE);
+                                }
+                                if (subtotal.has("diamond"))
+                                {
+                                    int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                    System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                    orderitemprice.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                }
+                                else {
+                                    diamond_rv.setVisibility(View.GONE);
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                }
+
+
+                                JSONObject taxPerc = priceBreakup.optJSONObject("tax_perc");
+                                if (taxPerc != null) {
+                                    if (taxPerc.has("gemstone"))
+                                    {
+                                        double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                        System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                        gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                    } else {
+                                        gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Tax Percentage: Not Available");
+                                    }
+
+                                    if (taxPerc.has("diamond"))
+                                    {
+                                        double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                        System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                        diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                    }
+                                    else {
+                                        diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                            }
+                        }
+
                         Log.e("orderSubTotal","..642###........"+orderSubTotal);
                         // Sub Total Charges
                         if(orderSubTotal!=null && !orderSubTotal.equalsIgnoreCase(""))
@@ -647,9 +720,6 @@ public class PlaceOrderKYCVerificationActivity extends SuperActivity implements 
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
 
                             final_amount_tv1.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-
-                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(subTotalFormat));
-                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
                         } else{}
 
                         // Final Amount

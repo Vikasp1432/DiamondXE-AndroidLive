@@ -44,17 +44,16 @@ class QuotationsListActivity : AppCompatActivity() {
         binding.back.setOnClickListener(){onBackPressed()
             finish()}
 
-
-        binding.countrySearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        // comment for test
+        /*binding.countrySearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 dataModelAdapter.filter.filter(newText)
                 return false
             }
-        })
+        })*/
 
         database = QuotationDatabase.getDatabase(this)
         dao = database.dataModelDao()
@@ -71,9 +70,13 @@ class QuotationsListActivity : AppCompatActivity() {
                 }
             }
         }
-        loadDataFromDatabase()
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadDataFromDatabase()
+    }
     private fun loadDataFromDatabase() {
         val selectedRadioButton = findViewById<RadioButton>(binding.radioGroup.checkedRadioButtonId)
         var selectedValue = selectedRadioButton.text.toString()
@@ -86,7 +89,8 @@ class QuotationsListActivity : AppCompatActivity() {
         {
             selectedValue="Lab Grown"
         }
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO)
+        {
             val dataModels = dataModelManager.getDataModels()
 
             val filteredDataModels = dataModels.filter { it.radiobuttonName == selectedValue }
@@ -108,8 +112,19 @@ class QuotationsListActivity : AppCompatActivity() {
                 binding.quotationrv.adapter = dataModelAdapter
             }
         }
-    }
 
+
+        binding.countrySearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                dataModelAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
 
     private fun showDetailsOfDataModel(quotationDetails: QuotationModelEntity) {
 
@@ -132,7 +147,7 @@ class QuotationsListActivity : AppCompatActivity() {
         intent.putExtra("sidediaop", quotationDetails.sideOutput)
 
         intent.putExtra("colstonewt", quotationDetails.colStoneWeight)
-        intent.putExtra("colstonerategm", quotationDetails.colStoneWeight)
+        intent.putExtra("colstonerategm", quotationDetails.colStoneRate)
         intent.putExtra("colstoneop", quotationDetails.colStoneOutput)
 
         intent.putExtra("charges", quotationDetails.charges)
@@ -146,6 +161,9 @@ class QuotationsListActivity : AppCompatActivity() {
         intent.putExtra("chargeText", quotationDetails.charges)
         intent.putExtra("solitaireText", quotationDetails.solitairetxt)
         intent.putExtra("sideDIAText", quotationDetails.sidediatxt)
+
+        intent.putExtra("currencyCode", quotationDetails.currencyCode)
+        intent.putExtra("currencyValue", quotationDetails.currencyvalue)
         startActivity(intent)
     }
 

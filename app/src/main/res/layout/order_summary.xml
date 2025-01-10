@@ -154,9 +154,9 @@
                             android:paddingTop="@dimen/dimen_8"
                             android:paddingBottom="@dimen/dimen_8">
 
-                            <!--total id-->
+                            <!--Diamond Rv-->
                             <RelativeLayout
-                                android:id="@+id/orderlv"
+                                android:id="@+id/diamond_rv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_10"
@@ -174,6 +174,35 @@
 
                                 <TextView
                                     android:id="@+id/orderitemprice"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="₹0"
+                                    android:textColor="@color/grey"
+                                    android:textSize="@dimen/dimen_16" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_marginTop="@dimen/dimen_8"
+                                android:id="@+id/gemstone_rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_marginRight="@dimen/dimen_10">
+
+                                <TextView
+                                    android:text="Gemstone"
+                                    android:id="@+id/gemstone_tv"
+                                    style="@style/BoldFontType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen_3"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_14" />
+
+                                <TextView
+                                    android:id="@+id/gemstone_tv_price"
                                     style="@style/BoldFontType"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -428,22 +457,45 @@
                                 </RelativeLayout>
 
 
-                                <TextView
-                                    android:id="@+id/diamond_txt_gst_perc_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="@dimen/dimen_70"
-                                    android:layout_marginTop="@dimen/dimen_10"
+                                <LinearLayout
+                                    android:id="@+id/tax_dialog_lv"
+                                    android:visibility="gone"
+                                    android:orientation="vertical"
+                                    android:layout_marginLeft="@dimen/dimen_60"
                                     android:background="@drawable/background_black"
-                                    android:paddingLeft="@dimen/dimen_10"
-                                    android:paddingTop="@dimen/dimen_5"
-                                    android:paddingRight="@dimen/dimen_10"
-                                    android:paddingBottom="@dimen/dimen_5"
-                                    android:text="1.5% GST"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/dimen_11"
-                                    android:visibility="gone" />
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/diamond_txt_gst_perc_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_5"
+                                        android:paddingRight="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_5"
+                                        android:text="1.5% GST"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/dimen_11"
+                                        android:visibility="visible" />
+                                    <TextView
+                                        android:id="@+id/gemstone_txt_gst_perc_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/dimen_2"
+                                        android:paddingLeft="@dimen/dimen_10"
+                                        android:paddingTop="@dimen/dimen_5"
+                                        android:paddingRight="@dimen/dimen_10"
+                                        android:paddingBottom="@dimen/dimen_5"
+                                        android:text="1.5% GST"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/dimen_11"
+                                        android:visibility="visible" />
+
+                                </LinearLayout>
+
 
 
                             </RelativeLayout>

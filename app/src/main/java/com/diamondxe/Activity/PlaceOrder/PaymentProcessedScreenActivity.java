@@ -1,11 +1,12 @@
 package com.diamondxe.Activity.PlaceOrder;
 
-import static com.diamondxe.Utils.PaymentUtils.API_END_POINT;
+/*import static com.diamondxe.Utils.PaymentUtils.API_END_POINT;
 import static com.diamondxe.Utils.PaymentUtils.MERCHANT_ID;
 import static com.diamondxe.Utils.PaymentUtils.SALT;
 import static com.diamondxe.Utils.PaymentUtils.SALT_INDEX;
-import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;
+import static com.diamondxe.Utils.PaymentUtils.TARGET_URL;*/
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -73,17 +74,12 @@ import com.diamondxe.Network.SuperActivity;
 import com.diamondxe.R;
 import com.diamondxe.Utils.CommonUtility;
 import com.diamondxe.Utils.Constant;
-import com.diamondxe.Utils.PaymentUtils;
 import com.diamondxe.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.payment.paymentsdk.integrationmodels.PaymentSdkError;
 import com.payment.paymentsdk.integrationmodels.PaymentSdkTransactionDetails;
 import com.payment.paymentsdk.sharedclasses.interfaces.CallbackPaymentInterface;
-import com.phonepe.intent.sdk.api.B2BPGRequest;
-import com.phonepe.intent.sdk.api.B2BPGRequestBuilder;
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.PhonePeInitException;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 import com.squareup.picasso.Picasso;
@@ -97,6 +93,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 public class PaymentProcessedScreenActivity extends SuperActivity implements RecyclerInterface, DialogItemClickInterface, PaymentResultCallback , PaymentResultWithDataListener, CallbackPaymentInterface {
@@ -141,7 +138,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     double cardCharges = 0;
     boolean isWalletPointApplied = false;
     boolean isCouponCodeApplied = false;
-    B2BPGRequest b2BPGRequest;
+    //B2BPGRequest b2BPGRequest;
     String payloadBase64 = "", checksum="", amountInPaisaString="",dob="",send_dob_server="",  selectedUPIPackage="", finalSubmitValue="";
     String paymentModeType= "NEFT"; // By Default Payment Mode NEFT
     double amountInRupees = 0;
@@ -149,7 +146,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     String NEFT = "NEFT";
     String CREDIT_CARD = "CreditCard";
     String NET_BANKING = "NetBanking";
-    String UPI = "UPI";
+    String UPI = "upi";
+    String RegionType="IND";
     String PAYMENT_BY_UPI = "UPI_INTENT";
     String PAYMENT_BY_NET_BANKING = "NET_BANKING";
     //String PAYMENT_BY_CARD = "CARD";
@@ -159,7 +157,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     //-------------------------------------------------Payment End-------------------------------------------------------------
     ViewPager viewPager;
     TabLayout tabLayout;
-
+    String paymentGetwayType="";
     private Activity activity;
     private Context context;
     private VollyApiActivity vollyApiActivity;
@@ -178,17 +176,25 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     private ActivityResultLauncher<Intent> activityResultLauncher;
     TextView viewallcoupon;
     LinearLayout india_layout,international_layout,payment_button_select;
-    String RegionType="IND";
-    String paymentGetwayType="";
     ImageView payment_image;
     TextView india_text,international_text;
     String checkAmount="";
-
+    RelativeLayout gemstone_rv, diamond_rv;
+    TextView gemstone_tv, gemstone_tv_price,gemstone_txt_gst_perc_tv;
+    LinearLayout tax_dialog_lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_processed_screen);
+
+        tax_dialog_lv=findViewById(R.id.tax_dialog_lv);
+        diamond_rv = findViewById(R.id.diamond_rv);
+        gemstone_rv = findViewById(R.id.gemstone_rv);
+        gemstone_tv = findViewById(R.id.gemstone_tv);
+        gemstone_tv_price = findViewById(R.id.gemstone_tv_price);
+        orderitemprice=findViewById(R.id.orderitemprice);
+        gemstone_txt_gst_perc_tv=findViewById(R.id.gemstone_txt_gst_perc_tv);
 
         context = activity = this;
 
@@ -422,8 +428,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         Log.e("shippingCountryName","..422..."+Constant.shippingCountryName);
         if(Constant.shippingCountryName.equalsIgnoreCase("united arab emirates"))
         {
-            payment_image.setImageDrawable(
-                    ContextCompat.getDrawable(this, R.drawable.paytabs_logo));
+            payment_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.paytabs_logo));
             net_banking_main_lin.setVisibility(View.INVISIBLE);
             credit_card_main_lin.setVisibility(View.VISIBLE);
             upi_main_lin.setVisibility(View.INVISIBLE);
@@ -464,7 +469,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         }
 
         // Initialize PhonePe
-        PaymentUtils.initializePhonePe(this);
+        //PaymentUtils.initializePhonePe(this);
 
         //PhonePe.init(getApplicationContext(), PhonePeEnvironment.SANDBOX, MERCHANT_ID, SALT); // For SendBox
         //PhonePe.init(getApplicationContext(), PhonePeEnvironment.RELEASE, MERCHANT_ID, SALT); // For Live
@@ -650,7 +655,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
             //data.put("merchantTransactionId", CommonUtility.generateTransactionId()); // String. Mandatory
             data.put("merchantTransactionId", Constant.paymentOrderID); // String. Mandatory
-            data.put("merchantId", MERCHANT_ID); // String. Mandatory
+            //data.put("merchantId", MERCHANT_ID); // String. Mandatory
             data.put("merchantUserId", Constant.paymentUserID); // String. Mandatory
             data.put("amount", amountInPaisa * 100);
             data.put("mobileNumber", CommonUtility.getGlobalString(activity, "login_mobile_no")); // String. Optional
@@ -690,21 +695,21 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             data.put("deviceContext", deviceContext);
 
             payloadBase64 = Base64.encodeToString(data.toString().getBytes(StandardCharsets.UTF_8), Base64.NO_WRAP);
-            checksum = CommonUtility.sha256(payloadBase64 + API_END_POINT + SALT) + "###"+SALT_INDEX;
+           /* checksum = CommonUtility.sha256(payloadBase64 + API_END_POINT + SALT) + "###"+SALT_INDEX;
 
             b2BPGRequest = new B2BPGRequestBuilder()
                     .setData(payloadBase64)
                     .setChecksum(checksum)
                     .setUrl(API_END_POINT)
-                    .build();
+                    .build();*/
 
             Log.d("PAPAYACODERS", "onCreate: " + data.toString());
             Log.d("PAPAYACODERS", "onCreate: " + payloadBase64);
             Log.d("PAPAYACODERS", "onCreate: " + checksum);
-            Log.d("PAPAYACODERS", "onCreate: " + b2BPGRequest);
+            //Log.d("PAPAYACODERS", "onCreate: " + b2BPGRequest);
 
             // Open Phone Pe Here
-            try {
+            /*try {
                 Intent intent1;
                 if(selectedUPIPackage.equalsIgnoreCase(""))
                 {
@@ -721,7 +726,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                 }
             } catch (PhonePeInitException e) {
                 Log.e("phonepe", "PhonePe initialization error", e);
-            }
+            }*/
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -989,11 +994,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         else if(id == R.id.rel_diamond_tax)
         {
             Utils.hideKeyboard(activity);
-            diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
+            tax_dialog_lv.setVisibility(View.VISIBLE);
+           // diamond_txt_gst_perc_tv.setVisibility(View.VISIBLE);
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    //diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                    tax_dialog_lv.setVisibility(View.GONE);
                 }
             }, 2000);
         }
@@ -1004,6 +1011,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             if(validateFields())
             {
                 //createCheckSumPaymentInitiatedAndOpenPhonePe();
+
                 getCreateOrderAPI(false);
 
             }else{}
@@ -1196,7 +1204,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
         lastPosition = 0;
         setNEFTBanKDetails(); // 0 Position Bank Selected and Show Details
-
+        RegionType="";
+        paymentGetwayType="";
         paymentModeType = NEFT;
         Log.e("modelArrayList","....Custom...215...."+modelArrayList.size());
         adapter = new BankNEFTListAdapter(modelArrayList, context , this);
@@ -1213,6 +1222,15 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     // Debit/Credit Card Option Selected
     void creditCardSelected()
     {
+       // paymentGetwayType="RAZORPAY";
+        if (RegionType.equalsIgnoreCase("GCC")){
+            paymentGetwayType="PAYTABS";
+        }
+        else
+        {
+            paymentGetwayType="RAZORPAY";
+        }
+      //  Toast.makeText(activity, "creditCardSelected : 1225", Toast.LENGTH_SHORT).show();
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_select_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
@@ -1235,7 +1253,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         selectPaymentOptionClearUPIOption(CREDIT_CARD); // UPI Option Clear
 
         isSelectNetBankingBank = false; // Use For Check Validation Net Banking Bank Not Selected
-
+        //RegionType="";
         paymentModeType = CREDIT_CARD;
 
         // Amount Calculated Final Amount and Show Amount in Bottom of Screen
@@ -1249,7 +1267,15 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     //UPI Select
     void UPISelected()
     {
-
+       /* paymentGetwayType="RAZORPAY";*/
+        if (RegionType.equalsIgnoreCase("GCC")){
+            paymentGetwayType="PAYTABS";
+        }
+        else
+        {
+            paymentGetwayType="RAZORPAY";
+        }
+       // Toast.makeText(activity, "UPI : 1262", Toast.LENGTH_SHORT).show();
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
         net_banking_rel.setBackgroundResource(R.drawable.background_payment_option);
@@ -1295,6 +1321,15 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     // Net Banking Option Selected
     void netBankingSelected()
     {
+        if (RegionType.equalsIgnoreCase("GCC")){
+            paymentGetwayType="PAYTABS";
+        }
+        else
+        {
+            paymentGetwayType="RAZORPAY";
+        }
+
+        //Toast.makeText(activity, "Netbanckign : 1308", Toast.LENGTH_SHORT).show();
         rtgs_rel.setBackgroundResource(R.drawable.background_payment_option);
         card_type_rel.setBackgroundResource(R.drawable.background_payment_option);
         upi_relative.setBackgroundResource(R.drawable.background_payment_option);
@@ -1330,13 +1365,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             popularBankArrayList.get(i).setSelected(false);
         }
 
-        select_bank_tv.setText(""); // Bank Name TextView Blank
+        select_bank_tv.setText("");
         select_bank_tv.setHint(getResources().getString(R.string.select_bank));
         select_bank_tv.setVisibility(View.GONE);
         /*popularBankListAdapter = new PopularBankListAdapter(popularBankArrayList, context , this);
         recycler_view.setAdapter(popularBankListAdapter);*/
         show_upi_list.setVisibility(View.GONE);
-        bank_account_details_lin.setVisibility(View.GONE); // Bank Account Details Layout
+        bank_account_details_lin.setVisibility(View.GONE);
         show_all_bank_lin.setVisibility(View.GONE);
         show_bank_name_lin.setVisibility(View.GONE);
         //show_bank_name_lin.setVisibility(View.VISIBLE); // Bank List Layout
@@ -1346,6 +1381,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
     // UPI Option Selected
     void upiSelected()
     {
+      //  Toast.makeText(activity, "UPI else waal : 1225", Toast.LENGTH_SHORT).show();
         // If Payment Mode Not Selected NEFT/RGTS Then Value Blank
         editTextAndTextViewValueBlank();
 
@@ -1358,15 +1394,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                 upi_option_down_arrow_img.setImageResource(R.drawable.drop_down);
             }
             isArrowDown = !isArrowDown;*/
-       // show_upi_list.setVisibility(View.VISIBLE);
-        recycler_view_upi.setVisibility(View.VISIBLE); // UPI Option Show List Layout
+        recycler_view_upi.setVisibility(View.VISIBLE);
 
         selectPaymentOptionClearUPIOption(UPI);
-
-        //ArrayList<UPIAppInfoListModel> upiAppsArrayList = getInstalledUPIApps();
     }
 
     // If Select Payment Option Like RTGS/CreditCard/DebitCard/Net Banking Or If User Select UPI Option clear Payment Option.
+    @SuppressLint("NotifyDataSetChanged")
     void selectPaymentOptionClearUPIOption(String paymentOptionSelectionType)
     {
         if(paymentOptionSelectionType.equalsIgnoreCase(UPI))
@@ -1491,6 +1525,10 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             urlParameter.put("billingCountry", Constant.billingCountryName);
             urlParameter.put("shippingCountry", Constant.shippingCountryName);
 
+
+            for (Map.Entry<String, String> entry : urlParameter.entrySet()) {
+                Log.e("TAG", "1509  Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            }
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.GET_CHECKOUT_DETAILS, ApiConstants.GET_CHECKOUT_DETAILS_ID,showLoader, "POST");
 
@@ -1504,8 +1542,9 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
         String uuid = CommonUtility.getAndroidId(context);
         if (Utils.isNetworkAvailable(context))
         {
-            urlParameter = new HashMap<String, String>();
 
+            Log.e("paymentModeType", "1532....@@ " + paymentModeType);
+            urlParameter = new HashMap<String, String>();
             urlParameter.put("sessionId", "" + uuid);
             urlParameter.put("billingAddress", Constant.billingAddressID);
             urlParameter.put("shippingAddress", Constant.shippingAddressID);
@@ -1523,6 +1562,13 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             urlParameter.put("certificateNo", Constant.certificateNumber);
             urlParameter.put("deviceType", "Android");
             urlParameter.put("deviceId", ""+ uuid);
+            urlParameter.put("region", ""+ RegionType);
+            urlParameter.put("paymentGateway", ""+ paymentGetwayType);
+            urlParameter.put("UPI", ""+ "RAZORPAY");
+
+            for (Map.Entry<String, String> entry : urlParameter.entrySet()) {
+                Log.e("TAG", "1549..@@  Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            }
 
             vollyApiActivity = null;
             vollyApiActivity = new VollyApiActivity(context,this, urlParameter, ApiConstants.CREATE_ORDER, ApiConstants.CREATE_ORDER_ID,
@@ -1606,8 +1652,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
             JSONObject jsonObjectData = jsonObject;
             String message = jsonObjectData.optString("msg");
 
-            switch (service_ID) {
-
+            switch (service_ID)
+            {
                 case ApiConstants.GET_DXE_BANK_DETAILS_ID:
 
                     if(!modelArrayList.isEmpty())
@@ -1721,9 +1767,11 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                 case ApiConstants.CREATE_ORDER_ID:
 
                     //Log.e("Final Amount","...1673..........."+CommonUtility.currencyFormat(finalAmountTotalFormat));
+
+              //      Log.e("jsonObjectData","....1685..........................."+jsonObjectData);
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.e("-------Diamond : ", "Create Order : " + jsonObjectData.toString());
+                        Log.e("--1774----Diamond : ", "Create Order : " + jsonObjectData.toString());
 
                         JSONObject jObjDetails = jsonObjectData.optJSONObject("details");
 
@@ -1741,7 +1789,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                         String user_email = CommonUtility.checkString(jObjUserDetails.optString("email"));
                         String user_mobile = CommonUtility.checkString(jObjUserDetails.optString("mobile"));
                         //Log.e("", "Constant.paymentUserID : " + Constant.paymentUserID);
-
+                        Log.e("paymentModeType","paymentModeType......1776.."+paymentModeType);
                         if(paymentModeType.equalsIgnoreCase(NEFT))
                         {
                             Constant.comeFrom = "diamondOrder";
@@ -1753,9 +1801,11 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                             totalAmount = CommonUtility.checkString(jObjDetails.optString("total_amount"));
                             callbackUrl = CommonUtility.checkString(jObjDetails.optString("callback_url"));
                            // createCheckSumPaymentInitiatedAndOpenPhonePe();
+                            String razorpayOrderID = CommonUtility.checkString(jObjDetails.optString("razorpay_order_id"));
+                            Log.e("razorpayOrderID","..1240....."+razorpayOrderID);
 
                             JSONObject billingAddress = jObjUserDetails.optJSONObject("billing_address");
-
+                            Log.e("RegionType","paymentModeType......1790....."+RegionType);
                             if (RegionType.equalsIgnoreCase("IND"))
                             {
                                 if(paymentModeType.equalsIgnoreCase(UPI))
@@ -1767,7 +1817,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                                             user_email,
                                             PaymentMethod.UPI,
                                             context.getResources().getString(R.string.app_name),
-                                            R.drawable.appicon
+                                            razorpayOrderID
                                     );
                                 }
                                 else if(paymentModeType.equalsIgnoreCase(NET_BANKING))
@@ -1779,7 +1829,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                                             user_email,
                                             PaymentMethod.NET_BANKING,
                                             context.getResources().getString(R.string.app_name),
-                                            R.drawable.appicon
+                                            razorpayOrderID
                                     );
                                 }
                                 else if(paymentModeType.equalsIgnoreCase(CREDIT_CARD))
@@ -1791,7 +1841,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                                             user_email,
                                             PaymentMethod.CARD,
                                             context.getResources().getString(R.string.app_name),
-                                            R.drawable.appicon
+                                            razorpayOrderID
                                     );
                                 }
                             }
@@ -1814,6 +1864,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                                     //Log.e("Billing Address", "IP: " + ip);
                                 }
 
+                                Log.e("paymentModeType","............1866..........."+paymentModeType);
+
                                 if(paymentModeType.equalsIgnoreCase(CREDIT_CARD)){
 
                                         /*Log.e("exchange_rate",".1399......"+CommonUtility.checkDouble(jObjDetails.optString("exchange_rate")));
@@ -1829,6 +1881,9 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
                                     double resultWithTwoDecimals = Double.parseDouble(formattedResult);
                                     Log.e("result", "..14000..." + result);
+                                    String callbackurl = CommonUtility.checkString(jObjDetails.optString("callback_url"));
+                                    Log.e("callbackurl","#####..1867........"+callbackurl);
+
 
                                     String currecnySymbol=jObjDetails.optString("currency_code");
                                     String orderID=jObjDetails.optString("order_id");
@@ -1836,7 +1891,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                                     Log.e("currecnySymbol","..1424...."+currecnySymbol+"....orderID...."+orderID);
                                     PayTabsPaymentManager.INSTANCE.setCurrencyAndCartId(
                                             currecnySymbol,
-                                            orderID
+                                            orderID,
+                                            callbackurl
                                     );
 
                                     PayTabsPaymentManager.INSTANCE.setBillingDetails(
@@ -1917,7 +1973,7 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
                     if (jsonObjectData.optString("status").equalsIgnoreCase("1"))
                     {
-                        Log.v("------Diamond----- : ", "--------CheckOut_Details------- : " + jsonObject);
+                        Log.v("------Diamond----- : ", "--1925------CheckOut_Details------- : " + jsonObject);
 
                         isCoupanApplied = CommonUtility.checkString(jsonObjectData.optString("is_coupan_applied"));
                         orderCouponCode = CommonUtility.checkString(jsonObjectData.optString("coupon_code"));
@@ -1949,6 +2005,64 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                         orderBankChargePerc = CommonUtility.checkString(jsonObjectData.optString("bank_charge_perc"));
                         orderWalletPonits = CommonUtility.checkString(jsonObjectData.optString("wallet_points"));
                         availableWalletPoints = CommonUtility.checkString(jsonObjectData.optString("available_wallet_points"));
+
+
+                        String getCurrencySymbol1 = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
+                        JSONObject priceBreakup = jsonObject.optJSONObject("price_breakup");
+                        if (priceBreakup != null) {
+
+                            JSONObject subtotal = priceBreakup.optJSONObject("subtotal");
+                            if (subtotal != null) {
+                                if (subtotal.has("gemstone")) {
+                                    int gemstoneSubtotal = subtotal.optInt("gemstone", 0);
+                                    System.out.println("Gemstone Subtotal: " + gemstoneSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(gemstoneSubtotal));
+                                    gemstone_tv_price.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    gemstone_tv_price.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                } else {
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                    gemstone_rv.setVisibility(View.GONE);
+                                }
+                                if (subtotal.has("diamond"))
+                                {
+                                    int diamondSubtotal = subtotal.optInt("diamond", 0);
+                                    System.out.println("Diamond Subtotal: " + diamondSubtotal);
+                                    String subTotalFormat1 = CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, String.valueOf(diamondSubtotal));
+                                    orderitemprice.setText(getCurrencySymbol1 + "" + CommonUtility.currencyFormat(subTotalFormat1));
+                                    orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                }
+                                else {
+                                    diamond_rv.setVisibility(View.GONE);
+                                    System.out.println("Gemstone Subtotal: Not Available");
+                                }
+
+
+                                JSONObject taxPerc = priceBreakup.optJSONObject("tax_perc");
+                                if (taxPerc != null) {
+                                    if (taxPerc.has("gemstone"))
+                                    {
+                                        double gemstoneTaxPerc = taxPerc.optDouble("gemstone", 0.0);
+                                        System.out.println("Gemstone Tax Percentage: " + gemstoneTaxPerc);
+                                        gemstone_txt_gst_perc_tv.setText("Gemstone Tax "+gemstoneTaxPerc+" % GST");
+                                    } else {
+                                        gemstone_txt_gst_perc_tv.setVisibility(View.GONE);
+                                        System.out.println("Gemstone Tax Percentage: Not Available");
+                                    }
+
+                                    if (taxPerc.has("diamond"))
+                                    {
+                                        double diamondTaxPerc = taxPerc.optDouble("diamond", 0.0);
+                                        System.out.println("Diamond Tax Percentage: " + diamondTaxPerc);
+                                        diamond_txt_gst_perc_tv.setText("Diamond Tax "+diamondTaxPerc+" % GST");
+                                    }
+                                    else {
+                                        diamond_txt_gst_perc_tv.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                            }
+                        }
 
                         // Check Coupon Applied Or Not.
                         if(isCoupanApplied.equalsIgnoreCase("0")) {}
@@ -2086,8 +2200,8 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
                             String amountTotalFormat =  CommonUtility.currencyConverter(selectedCurrencyValue, selectedCurrencyCode, orderTotalAmount);
                             String getCurrencySymbol = CommonUtility.getCurrencySymbol(selectedCurrencyCode);
                             sub_total_tv.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
-                            orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
-                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));
+                           /* orderitemprice.setText(getCurrencySymbol + "" + CommonUtility.currencyFormat(amountTotalFormat));
+                            orderitemprice.setTextColor(ContextCompat.getColor(context, R.color.black));*/
                         }else{}
 
                         // Bank Charges
@@ -2997,7 +3111,14 @@ public class PaymentProcessedScreenActivity extends SuperActivity implements Rec
 
     @Override
     public void onPaymentFinish(@NonNull PaymentSdkTransactionDetails paymentSdkTransactionDetails) {
-        Log.e("onPaymentFinish","..Paytabs success...*****...........2996.............");
+        Log.e("onPaymentFinish","..Paytabs success...*****......getPaymentInfo.....3113............."+paymentSdkTransactionDetails.getPayResponseReturn());
+        Log.e("onPaymentFinish","..Paytabs success...*****......getPaymentInfo.....3113............."+paymentSdkTransactionDetails.getCartDescription());
+        Log.e("onPaymentFinish","..Paytabs success...*****......getPaymentInfo.....3113............."+paymentSdkTransactionDetails.getPaymentInfo());
+        Log.e("onPaymentFinish","..Paytabs success...*****.......getPaymentResult....3114............."+paymentSdkTransactionDetails.getPaymentResult());
+        Log.e("onPaymentFinish","..Paytabs success...*****.......getPayResponseReturn....3115............."+paymentSdkTransactionDetails.getPayResponseReturn());
+        Log.e("onPaymentFinish","..Paytabs success...*****......getPaymentInfo.....3113............."+paymentSdkTransactionDetails.getErrorCode());
+        Log.e("onPaymentFinish","..Paytabs success...*****......getPaymentInfo.....3113............."+paymentSdkTransactionDetails.getErrorMsg()+"...."+paymentSdkTransactionDetails.getProfileId());
+
         Constant.comeFrom = "diamondOrder";
         Intent intent = new Intent(activity, PaymentStatusScreenActivity.class);
         startActivity(intent);

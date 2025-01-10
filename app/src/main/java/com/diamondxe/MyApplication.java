@@ -9,8 +9,6 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.diamondxe.Activity.TransparentActivity;
-import com.phonepe.intent.sdk.api.PhonePe;
-import com.phonepe.intent.sdk.api.models.PhonePeEnvironment;
 
 
 public class MyApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks{

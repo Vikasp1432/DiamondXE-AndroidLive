@@ -231,7 +231,6 @@ class CreateDemandHome : SuperActivity(), RecyclerInterface {
         binding.emailEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!binding.emailEt.text.toString().equals("", ignoreCase = true)) {
                     binding.emailRequiredErrorTv.visibility = View.GONE
@@ -395,11 +394,10 @@ class CreateDemandHome : SuperActivity(), RecyclerInterface {
         })
     }
 
-    fun getCreateDemand(showLoader: Boolean) {
+    private fun getCreateDemand(showLoader: Boolean) {
         val uuid = CommonUtility.getAndroidId(this)
         urlParameter = java.util.HashMap()
         urlParameter!!["sessionId"] = "" + uuid
-
         urlParameter!!["name"] = "" + binding.nameEt.text
         urlParameter!!["emailId"] = "" + binding.emailEt.text
         urlParameter!!["mobileNo"] = "" + binding.mobileNumberEt.text
@@ -423,29 +421,9 @@ class CreateDemandHome : SuperActivity(), RecyclerInterface {
         urlParameter!!["make"] = "" + getMakeItems
         urlParameter!!["instructions"] = "" + binding.instructionsEt.text
 
-
-        Log.e("nameEt", "...." + binding.nameEt.text)
-        Log.e("mobileNumberEt", "...." + binding.mobileNumberEt.text)
-        Log.e("emailEt", "...." + binding.emailEt.text)
-        Log.e("getDiamondType", "...." + getDiamondType)
-        Log.e("getShapes", "...." + getShapes)
-        Log.e("getSelectPriority", "...." + getSelectPriority)
-        Log.e("caratFromEt", "...." + binding.caratFromEt.text)
-        Log.e("caratToEt", "...." + binding.caratToEt.text)
-        Log.e("getSelectCurrencyType", "...." + getSelectCurrencyType)
-        Log.e("getPriceType", "...." + getPriceType)
-        Log.e("priceFrom", "...." + binding.priceFrom.text)
-        Log.e("priceTo", "...." + binding.priceTo.text)
-        Log.e("getSelectNoPieces", "...." + getSelectNoPieces)
-        Log.e("nopiecesEt", "...." + binding.nopiecesEt.text)
-        Log.e("getColorType", "...." + getColorType)
-        Log.e("getColor", "...." + getColor)
-        Log.e("getFancyColor", "...." + getFancyColor)
-        Log.e("getClarity", "...." + getClarity)
-        Log.e("getCertificate", "...." + getCertificate)
-        Log.e("getFluorescence", "...." + getFluorescence)
-        Log.e("getMakeItems", "...." + getMakeItems)
-        Log.e("instructionsEt", "...." + binding.instructionsEt.text)
+        Log.d("UrlParameterLog", urlParameter!!.entries.joinToString(
+            prefix = "..", postfix = "..", separator = ", "
+        ) { (key, value) -> "\"$key\": \"$value\"" })
 
         vollyApiActivity = VollyApiActivity(
             this,
@@ -1155,7 +1133,6 @@ class CreateDemandHome : SuperActivity(), RecyclerInterface {
             binding.emailRequiredErrorTv.text = getString(R.string.email_valid_msg)
             return false
         }
-
 
         return true
     }
